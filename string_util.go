@@ -153,8 +153,7 @@ func JoinSkipEmpty(sep string, a ...string) string {
 		if a[i] == "" {
 			continue
 		}
-
-		if i != 0 {
+		if buf.Len() > 0 {
 			buf.WriteString(sep)
 		}
 		buf.WriteString(a[i])
