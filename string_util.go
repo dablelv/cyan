@@ -84,6 +84,15 @@ func StrToUint8Slice(s string, sep string) []uint8 {
 	return dst
 }
 
+func StrToByteSlice(s string, sep string) []byte {
+	arr := Split(s, sep)
+	dst := make([]byte, len(arr))
+	for i, v := range arr {
+		dst[i] = byte(ToUint8(v))
+	}
+	return dst
+}
+
 func StrToUint16Slice(s string, sep string) []uint16 {
 	arr := Split(s, sep)
 	dst := make([]uint16, len(arr))
@@ -140,12 +149,22 @@ func Split(s, sep string) []string {
 
 func JoinSkipEmpty(sep string, a ...string) string {
 	var buf bytes.Buffer
-	end := len(a)
-	for i := 0; i < end; i++ {
+	for i := 0; i < len(a); i++ {
 		if a[i] == "" {
 			continue
 		}
 
+		if buf.Len() > 0 {
+			buf.WriteString(sep)
+		}
+		buf.WriteString(a[i])
+	}
+	return buf.String()
+}
+
+func JoinNoSkipEmpty(sep string, a ...string) string {
+	var buf bytes.Buffer
+	for i := 0; i < len(a); i++ {
 		if buf.Len() > 0 {
 			buf.WriteString(sep)
 		}

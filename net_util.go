@@ -48,7 +48,7 @@ func init() {
 	}
 }
 
-// IsReservedIP reports whether ip is prive
+// IsReservedIP reports whether ip is private
 // support ipv4/ipv6, refer rfc6890
 // return <0 ip is invalid, =0 ip is public, >0 ip is private
 func IsReservedIP(ip string) int {
@@ -77,8 +77,8 @@ func IsReservedIP(ip string) int {
 	return 0
 }
 
-// NativeEndian gets native byteorder for the current system
-func NativeEndian() binary.ByteOrder {
+// GetNativeEndian gets byteorder for the current system
+func GetNativeEndian() binary.ByteOrder {
 	return nativeEndian
 }
 

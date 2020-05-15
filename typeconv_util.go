@@ -107,12 +107,6 @@ func ToUint(i interface{}) uint {
 	return v
 }
 
-// ToByte converts an interface to a byte type.
-func ToByte(i interface{}) byte {
-	v, _ := ToUint8E(i)
-	return byte(v)
-}
-
 // ToString converts an interface to a string type.
 func ToString(i interface{}) string {
 	v, _ := ToStringE(i)

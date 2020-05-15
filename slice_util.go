@@ -99,7 +99,7 @@ func UniqueByteSlice(src []byte) []byte {
 	tmp, _ := UniqueSlice(src)
 	dst := []byte{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToByte(v))
+		dst = append(dst, byte(ToUint8(v)))
 	}
 	return dst
 }
@@ -111,6 +111,21 @@ func UniqueStrSlice(src []string) []string {
 		dst = append(dst, ToString(v))
 	}
 	return dst
+}
+
+// IsContains check slice or array whether contain target element
+// note: if the target element is a numeric literal, please specify its type explicitly, otherwise it defaults to int.
+// You might call IsContains like IsContains([]int32{1,2,3}, int32(1))
+func IsContains(list interface{}, target interface{}) bool {
+	if reflect.TypeOf(list).Kind() == reflect.Slice || reflect.TypeOf(list).Kind() == reflect.Array {
+		v := reflect.ValueOf(list)
+		for i := 0; i < v.Len(); i++ {
+			if target == v.Index(i).Interface() {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // UniqueSlice delete repeated elements
