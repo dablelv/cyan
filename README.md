@@ -86,8 +86,43 @@ huge.JoinNoSkipEmpty(",", "a", "", "b") // a,,b
 # struct_util
 Some useful functions can be used to handle string.
 
+Example:
+```
+import (
+    huge "github.com/dablelv/go-huge-util"
+)
+
+var st = struct {
+    I int
+    S string
+}{I: 1, S: "a"}
+
+huge.Struct2Map(st)         // map[I:1 S:a]
+huge.Struct2MapString(st)   // map[I:1 S:a]
+```
+
 # time_util
 Some useful functions can be used to handle date and time.
+
+Example:
+```
+import (
+    huge "github.com/dablelv/go-huge-util"
+)
+
+huge.GetNowDate()               // just a example, the same below. 2020-05-16
+huge.GetNowTime()               // 00:15:42
+huge.GetNowDateTime()           // 2020-05-16 00:15:42
+huge.GetNowDateTimeZ()          // 2020-05-16 00:15:42 +08:00
+
+huge.GetNowS()                  // 1589559342
+huge.GetNowMs()                 // 1589559342963
+huge.GetNowUs()                 // 1589559342963062
+huge.GetNowNs()                 // 1589559342964063200
+
+huge.GetDayBeginMoment(time.Now())  // 2020-05-16 00:00:00 +0800 CST
+huge.GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
+```
 
 # typeconv_util
 Some useful functions can be used to type conversion. The most functions are from github.com/spf13/cast and some new functions is added by myself. 
@@ -137,10 +172,20 @@ import (
 var rawUrl=`http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2#name`
 huge.RawUrlGetDomain(rawUrl)    // "www.aspxfans.com"
 huge.RawUrlGetPort(rawUrl)      // "8080"
+
+huge.RawURLGetParam(rawUrl, "page")         // 1 <nil>
+huge.RawURLGetParams(rawUrl, "page")        // [1 2] <nil>
+huge.RawURLGetAllParams(rawUrl)             // map[boardID:[520] page:[1 2]] <nil>
+
+huge.RawURLAddParam(rawUrl, "keyword", "dog")   // http://www.aspxfans.com:8080/news/index.asp?boardID=520&keyword=dog&page=1&page=2#name
+huge.RawURLDelParam(rawUrl, "page")             // http://www.aspxfans.com:8080/news/index.asp?boardID=520#name
+huge.RawURLSetParam(rawUrl, "boardID", "521")   // http://www.aspxfans.com:8080/news/index.asp?boardID=521&page=1&page=2#name
 ```
 
 # other_util
 Some useful functions now unclassified.
 
 # Summary
+The above example is just the tip of the iceberg. For more usage, please read the source code.
+
 Due to the limited personal ability, you are welcome to criticize and correct. Of course, welcome to join in the construction of this library.

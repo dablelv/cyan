@@ -2,8 +2,6 @@ package util
 
 import (
 	"errors"
-	"fmt"
-	"strings"
 	"net/url"
 )
 
@@ -48,10 +46,10 @@ func RawURLGetAllParams(rawUrl string) (map[string][]string, error) {
 
 // if rawUrl=http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2#name and key=page value=3
 // will get http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2&page=3#name
-func RawURLAddParam(sUrl, key, value string) string {
-	stUrl, err := url.Parse(sUrl)
-	if err != nil{
-		return sUrl
+func RawURLAddParam(rawUrl, key, value string) string {
+	stUrl, err := url.Parse(rawUrl)
+	if err != nil {
+		return rawUrl
 	}
 
 	m := stUrl.Query()
@@ -60,12 +58,26 @@ func RawURLAddParam(sUrl, key, value string) string {
 	return stUrl.String()
 }
 
-// e.g. if rawUrl=http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2#name and key=page
+func RawURLAddParams(rawUrl string, params map[string]string) string {
+	stUrl, err := url.Parse(rawUrl)
+	if err != nil {
+		return rawUrl
+	}
+
+	m := stUrl.Query()
+	for k, v := range params {
+		m.Add(k, v)
+	}
+	stUrl.RawQuery = m.Encode()
+	return stUrl.String()
+}
+
+// if rawUrl=http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2#name and key=page
 // will get http://www.aspxfans.com:8080/news/index.asp?boardID=520#name
-func RawURLDelParam(sUrl, key string) string {
-	stUrl, err := url.Parse(sUrl)
-    if err != nil{
-        return sUrl
+func RawURLDelParam(rawUrl, key string) string {
+	stUrl, err := url.Parse(rawUrl)
+	if err != nil {
+		return rawUrl
 	}
 
 	m := stUrl.Query()
@@ -74,12 +86,26 @@ func RawURLDelParam(sUrl, key string) string {
 	return stUrl.String()
 }
 
+func RawURLDelParams(rawUrl string, keys []string) string {
+	stUrl, err := url.Parse(rawUrl)
+	if err != nil {
+		return rawUrl
+	}
+
+	m := stUrl.Query()
+	for _, v := range keys {
+		m.Del(v)
+	}
+	stUrl.RawQuery = m.Encode()
+	return stUrl.String()
+}
+
 // if rawUrl=http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2#name and key=page value=3
 // will get http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=3#name
-func RawURLSetParam(sUrl, key, value string) string {
-	stUrl, err := url.Parse(sUrl)
-	if err != nil{
-		return sUrl
+func RawURLSetParam(rawUrl, key, value string) string {
+	stUrl, err := url.Parse(rawUrl)
+	if err != nil {
+		return rawUrl
 	}
 
 	m := stUrl.Query()
@@ -88,22 +114,18 @@ func RawURLSetParam(sUrl, key, value string) string {
 	return stUrl.String()
 }
 
-func RawURLAppendParam(rawurl, key, value string) (res string) {
-	if strings.ContainsRune(rawurl, '?') {
-		res = fmt.Sprint(rawurl, "&", key, "=", value)
-	} else {
-		res = fmt.Sprint(rawurl, "?", key, "=", value)
+func RawURLSetParams(rawUrl string, params map[string]string) string {
+	stUrl, err := url.Parse(rawUrl)
+	if err != nil {
+		return rawUrl
 	}
-	return
-}
 
-func RawURLAppendParams(rawurl, paras string) (res string) {
-	if strings.ContainsRune(rawurl, '?') {
-		res = fmt.Sprint(rawurl, "&", paras)
-	} else {
-		res = fmt.Sprint(rawurl, "?", paras)
+	m := stUrl.Query()
+	for k, v := range params {
+		m.Set(k, v)
 	}
-	return
+	stUrl.RawQuery = m.Encode()
+	return stUrl.String()
 }
 
 // if rawUrl=http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2#name
