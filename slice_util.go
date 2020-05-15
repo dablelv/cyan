@@ -6,7 +6,7 @@ import (
 )
 
 func UniqueIntSlice(src []int) []int {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []int{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToInt(v))
@@ -15,7 +15,7 @@ func UniqueIntSlice(src []int) []int {
 }
 
 func UniqueInt8Slice(src []int8) []int8 {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []int8{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToInt8(v))
@@ -24,7 +24,7 @@ func UniqueInt8Slice(src []int8) []int8 {
 }
 
 func UniqueInt16Slice(src []int16) []int16 {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []int16{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToInt16(v))
@@ -33,7 +33,7 @@ func UniqueInt16Slice(src []int16) []int16 {
 }
 
 func UniqueInt32Slice(src []int32) []int32 {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []int32{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToInt32(v))
@@ -42,7 +42,7 @@ func UniqueInt32Slice(src []int32) []int32 {
 }
 
 func UniqueInt64Slice(src []int64) []int64 {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []int64{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToInt64(v))
@@ -51,7 +51,7 @@ func UniqueInt64Slice(src []int64) []int64 {
 }
 
 func UniqueUintSlice(src []uint) []uint {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []uint{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToUint(v))
@@ -60,7 +60,7 @@ func UniqueUintSlice(src []uint) []uint {
 }
 
 func UniqueUint8Slice(src []uint8) []uint8 {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []uint8{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToUint8(v))
@@ -69,7 +69,7 @@ func UniqueUint8Slice(src []uint8) []uint8 {
 }
 
 func UniqueUint16Slice(src []uint16) []uint16 {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []uint16{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToUint16(v))
@@ -78,7 +78,7 @@ func UniqueUint16Slice(src []uint16) []uint16 {
 }
 
 func UniqueUint32Slice(src []uint32) []uint32 {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []uint32{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToUint32(v))
@@ -87,7 +87,7 @@ func UniqueUint32Slice(src []uint32) []uint32 {
 }
 
 func UniqueUint64Slice(src []uint64) []uint64 {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []uint64{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToUint64(v))
@@ -95,8 +95,17 @@ func UniqueUint64Slice(src []uint64) []uint64 {
 	return dst
 }
 
+func UniqueByteSlice(src []byte) []byte {
+	tmp, _ := UniqueSlice(src)
+	dst := []byte{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToByte(v))
+	}
+	return dst
+}
+
 func UniqueStrSlice(src []string) []string {
-	tmp, _ := uniqueSlice(src)
+	tmp, _ := UniqueSlice(src)
 	dst := []string{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToString(v))
@@ -113,7 +122,7 @@ func UniqueSlice(slice interface{}) (interface{}, error) {
 
 	var dst []interface{}
 	m := make(map[interface{}]bool)
-	for i :=0; i < v.Len(); i++ {
+	for i := 0; i < v.Len(); i++ {
 		if _, ok := m[v.Index(i).Interface()]; !ok {
 			dst = append(dst, v.Index(i).Interface())
 			m[v.Index(i).Interface()] = true
