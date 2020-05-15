@@ -94,7 +94,7 @@ func Swap32(i uint32) uint32 {
 
 // Htons convert uint16 from host byte order to network byte order
 func Htons(i uint16) uint16 {
-	if NativeEndian() == binary.BigEndian {
+	if GetNativeEndian() == binary.BigEndian {
 		return i
 	}
 	// 大端模式, 高位放在低地址
@@ -105,7 +105,7 @@ func Htons(i uint16) uint16 {
 
 // Htonl convert uint32 from host byte order to network byte order
 func Htonl(i uint32) uint32 {
-	if NativeEndian() == binary.BigEndian {
+	if GetNativeEndian() == binary.BigEndian {
 		return i
 	}
 	// 大端模式, 高位放在低地址
@@ -116,7 +116,7 @@ func Htonl(i uint32) uint32 {
 
 // Ntohs convert uint16 from network byte order to host byte order
 func Ntohs(i uint16) uint16 {
-	if NativeEndian() == binary.BigEndian {
+	if GetNativeEndian() == binary.BigEndian {
 		return i
 	}
 	// 小端模式, 低位放在低地址
@@ -127,7 +127,7 @@ func Ntohs(i uint16) uint16 {
 
 // Ntohl convert uint32 from network byte order to host byte order
 func Ntohl(i uint32) uint32 {
-	if NativeEndian() == binary.BigEndian {
+	if GetNativeEndian() == binary.BigEndian {
 		return i
 	}
 	// 小端模式, 低位放在低地址

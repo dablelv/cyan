@@ -154,7 +154,7 @@ func JoinSkipEmpty(sep string, a ...string) string {
 			continue
 		}
 
-		if buf.Len() > 0 {
+		if i != 0 {
 			buf.WriteString(sep)
 		}
 		buf.WriteString(a[i])
@@ -165,7 +165,7 @@ func JoinSkipEmpty(sep string, a ...string) string {
 func JoinNoSkipEmpty(sep string, a ...string) string {
 	var buf bytes.Buffer
 	for i := 0; i < len(a); i++ {
-		if buf.Len() > 0 {
+		if i != 0 {
 			buf.WriteString(sep)
 		}
 		buf.WriteString(a[i])
