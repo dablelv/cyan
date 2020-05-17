@@ -113,11 +113,119 @@ func UniqueStrSlice(src []string) []string {
 	return dst
 }
 
-// IsContains check slice or array whether contain target element
+func ReverseIntSlice(src []int) []int {
+	tmp, _ := ReverseSlice(src)
+	dst := []int{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToInt(v))
+	}
+	return dst
+}
+
+func ReverseInt8Slice(src []int8) []int8 {
+	tmp, _ := ReverseSlice(src)
+	dst := []int8{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToInt8(v))
+	}
+	return dst
+}
+
+func ReverseInt16Slice(src []int16) []int16 {
+	tmp, _ := ReverseSlice(src)
+	dst := []int16{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToInt16(v))
+	}
+	return dst
+}
+
+func ReverseInt32Slice(src []int32) []int32 {
+	tmp, _ := ReverseSlice(src)
+	dst := []int32{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToInt32(v))
+	}
+	return dst
+}
+
+func ReverseInt64Slice(src []int64) []int64 {
+	tmp, _ := ReverseSlice(src)
+	dst := []int64{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToInt64(v))
+	}
+	return dst
+}
+
+func ReverseUintSlice(src []uint) []uint {
+	tmp, _ := ReverseSlice(src)
+	dst := []uint{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToUint(v))
+	}
+	return dst
+}
+
+func ReverseUint8Slice(src []uint8) []uint8 {
+	tmp, _ := ReverseSlice(src)
+	dst := []uint8{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToUint8(v))
+	}
+	return dst
+}
+
+func ReverseUint16Slice(src []uint16) []uint16 {
+	tmp, _ := ReverseSlice(src)
+	dst := []uint16{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToUint16(v))
+	}
+	return dst
+}
+
+func ReverseUint32Slice(src []uint32) []uint32 {
+	tmp, _ := ReverseSlice(src)
+	dst := []uint32{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToUint32(v))
+	}
+	return dst
+}
+
+func ReverseUint64Slice(src []uint64) []uint64 {
+	tmp, _ := ReverseSlice(src)
+	dst := []uint64{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToUint64(v))
+	}
+	return dst
+}
+
+func ReverseByteSlice(src []byte) []byte {
+	tmp, _ := ReverseSlice(src)
+	dst := []byte{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, byte(ToUint8(v)))
+	}
+	return dst
+}
+
+func ReverseStrSlice(src []string) []string {
+	tmp, _ := ReverseSlice(src)
+	dst := []string{}
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, ToString(v))
+	}
+	return dst
+}
+
+// IsContains check slice whether contain target element
 // note: if the target element is a numeric literal, please specify its type explicitly, otherwise it defaults to int.
 // You might call IsContains like IsContains([]int32{1,2,3}, int32(1))
 func IsContains(list interface{}, target interface{}) bool {
-	if reflect.TypeOf(list).Kind() == reflect.Slice || reflect.TypeOf(list).Kind() == reflect.Array {
+	if reflect.TypeOf(list).Kind() == reflect.Slice {
 		v := reflect.ValueOf(list)
 		for i := 0; i < v.Len(); i++ {
 			if target == v.Index(i).Interface() {
@@ -128,7 +236,7 @@ func IsContains(list interface{}, target interface{}) bool {
 	return false
 }
 
-// UniqueSlice delete repeated elements
+// UniqueSlice delete repeated elements in a slice
 func UniqueSlice(slice interface{}) (interface{}, error) {
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
@@ -142,6 +250,20 @@ func UniqueSlice(slice interface{}) (interface{}, error) {
 			dst = append(dst, v.Index(i).Interface())
 			m[v.Index(i).Interface()] = true
 		}
+	}
+	return dst, nil
+}
+
+// ReverseSlice reverses the specified slice without modifying the original slice
+func ReverseSlice(slice interface{}) (interface{}, error) {
+	v := reflect.ValueOf(slice)
+	if v.Kind() != reflect.Slice {
+		return nil, errors.New("param isn't a slice")
+	}
+
+	var dst []interface{}
+	for i := v.Len() - 1; i >= 0; i-- {
+		dst = append(dst, v.Index(i).Interface())
 	}
 	return dst, nil
 }

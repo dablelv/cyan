@@ -171,3 +171,13 @@ func JoinNoSkipEmpty(sep string, a ...string) string {
 	}
 	return buf.String()
 }
+
+// ReverseStr reverses the specified string without modifying the original string
+func ReverseStr(s string) string {
+	rs := []rune(s)
+	var r []rune
+	for i := len(rs) - 1; i >= 0; i-- {
+		r = append(r, rs[i])
+	}
+	return string(r)
+}

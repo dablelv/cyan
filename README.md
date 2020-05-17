@@ -44,10 +44,13 @@ import (
     huge "github.com/dablelv/go-huge-util"
 )
 
-huge.UniqueIntSlice([]int{1,2,3,3,4})               // [1,2,3,4]
-huge.UniqueUintSlice([]int{1,2,3,3,4})              // [1,2,3,4]
-
+huge.UniqueIntSlice([]int{1,2,2,3})                 // [1 2 3]
+huge.UniqueUintSlice([]int{1,2,2,3})                // [1 2 3]
 huge.UniqueStrSlice([]string{"a", "b", "b", "c"})   // [a b c]
+
+huge.ReverseIntSlice([]int{1,2,3})                  // [3 2 1]
+huge.ReverseUintSlice([]int{1,2,3})                 // [3 2 1]
+huge.ReverseStrSlice([]string{"a", "b", "c"})       // [c b a]
 ```
 
 # sql_util
@@ -81,6 +84,8 @@ huge.Split("a,b,c", ",")            // [a b c]
 
 huge.JoinSkipEmpty(",", "a", "", "b")   // a,b
 huge.JoinNoSkipEmpty(",", "a", "", "b") // a,,b
+
+huge.ReverseStr("abc")                       // cba
 ```
 
 # struct_util
