@@ -44,13 +44,23 @@ import (
     huge "github.com/dablelv/go-huge-util"
 )
 
-huge.UniqueIntSlice([]int{1,2,2,3})                 // [1 2 3]
-huge.UniqueUintSlice([]int{1,2,2,3})                // [1 2 3]
+huge.UniqueIntSlice([]int{1, 2, 2, 3})              // [1 2 3]
+huge.UniqueUintSlice([]uint{1, 2, 2, 3})            // [1 2 3]
 huge.UniqueStrSlice([]string{"a", "b", "b", "c"})   // [a b c]
 
-huge.ReverseIntSlice([]int{1,2,3})                  // [3 2 1]
-huge.ReverseUintSlice([]int{1,2,3})                 // [3 2 1]
+huge.ReverseIntSlice([]int{1, 2, 3})                // [3 2 1]
+huge.ReverseUintSlice([]uint{1, 2, 3})              // [3 2 1]
 huge.ReverseStrSlice([]string{"a", "b", "c"})       // [c b a]
+
+huge.SumSlice([]int{1,2,3})                         // 6
+huge.SumSlice([]uint{1,2,3})                        // 6
+huge.SumSlice([]float32{1.1, 2.2, 3.3})             // 6.6
+huge.SumSlice([]float64{1.1, 2.2, 3.3})             // 6.6
+
+huge.JoinSliceWithSep([]int{1, 2, 3}, ",")              // 1,2,3
+huge.JoinSliceWithSep([]uint{1, 2, 3}, ",")             // 1,2,3
+huge.JoinSliceWithSep([]float64{1.1, 2.2, 3.3}, ",")    // 1.1,2.2,3.3
+huge.JoinSliceWithSep([]string{"a", "b", "c"}, ",")     // a,b,c
 ```
 
 # sql_util

@@ -84,15 +84,6 @@ func StrToUint8Slice(s string, sep string) []uint8 {
 	return dst
 }
 
-func StrToByteSlice(s string, sep string) []byte {
-	arr := Split(s, sep)
-	dst := make([]byte, len(arr))
-	for i, v := range arr {
-		dst[i] = byte(ToUint8(v))
-	}
-	return dst
-}
-
 func StrToUint16Slice(s string, sep string) []uint16 {
 	arr := Split(s, sep)
 	dst := make([]uint16, len(arr))

@@ -95,15 +95,6 @@ func UniqueUint64Slice(src []uint64) []uint64 {
 	return dst
 }
 
-func UniqueByteSlice(src []byte) []byte {
-	tmp, _ := UniqueSlice(src)
-	dst := []byte{}
-	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, byte(ToUint8(v)))
-	}
-	return dst
-}
-
 func UniqueStrSlice(src []string) []string {
 	tmp, _ := UniqueSlice(src)
 	dst := []string{}
@@ -266,4 +257,74 @@ func ReverseSlice(slice interface{}) (interface{}, error) {
 		dst = append(dst, v.Index(i).Interface())
 	}
 	return dst, nil
+}
+
+// SumSlice calculates the sum of slice elements
+func SumSlice(slice interface{}) float64 {
+	v, _ := SumSliceE(slice)
+	return v
+}
+
+// SumSliceE calculates the sum of slice elements and return has an error param
+func SumSliceE(slice interface{}) (float64, error) {
+	v := reflect.ValueOf(slice)
+	if v.Kind() != reflect.Slice {
+		return 0.0, errors.New("param isn't a slice")
+	}
+
+	var sum float64
+	for i := 0; i < v.Len(); i++ {
+		switch v := v.Index(i).Interface().(type) {
+		case int:
+			sum += float64(v)
+		case int8:
+			sum += float64(v)
+		case int16:
+			sum += float64(v)
+		case int32:
+			sum += float64(v)
+		case uint:
+			sum += float64(v)
+		case uint8:
+			sum += float64(v)
+		case uint16:
+			sum += float64(v)
+		case uint32:
+			sum += float64(v)
+		case float32:
+			sum += float64(v)
+		case float64:
+			sum += v
+		default:
+			return 0.0, errors.New("elements in slice aren't numerical type")
+		}
+	}
+	return sum, nil
+}
+
+// JoinSliceWithSep joins all elements in slice with separator
+func JoinSliceWithSep(slice interface{}, sep string) string {
+	s, _ := JoinSliceWithSepE(slice, sep)
+	return s
+}
+
+// JoinSliceWithSepE joins all elements in slice with separator and return has an error param
+func JoinSliceWithSepE(slice interface{}, sep string) (string, error) {
+	v := reflect.ValueOf(slice)
+	if v.Kind() != reflect.Slice {
+		return "", errors.New("param isn't a slice")
+	}
+
+	var s string
+	for i := 0; i < v.Len(); i++ {
+		if len(s) > 0 {
+			s += sep
+		}
+		str, err := ToStringE(v.Index(i).Interface())
+		if err != nil {
+			return "", err
+		}
+		s += str
+	}
+	return s, nil
 }
