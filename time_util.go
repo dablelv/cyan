@@ -106,13 +106,13 @@ func UTs2DateTime(uts int64) string {
 // Part 2: A time counter to count time interval
 //
 
-// TimeCounter be used to count time interval
+// TimeCounter is used to count time interval
 type TimeCounter struct {
 	int64
 }
 
-// NewTimeCount create a time counter
-func NewTimeCount() (t *TimeCounter) {
+// NewTimeCounter create a time counter
+func NewTimeCounter() (t *TimeCounter) {
 	t = new(TimeCounter)
 	t.Set()
 	return t

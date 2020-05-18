@@ -125,6 +125,10 @@ import (
     huge "github.com/dablelv/go-huge-util"
 )
 
+tc := huge.NewTimeCounter()
+// ...                          // do your statements
+tc.GetMs()                      // get the time cost in millisecond
+
 huge.GetNowDate()               // just a example, the same below. 2020-05-16
 huge.GetNowTime()               // 00:15:42
 huge.GetNowDateTime()           // 2020-05-16 00:15:42
