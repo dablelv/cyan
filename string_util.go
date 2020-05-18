@@ -138,7 +138,7 @@ func Split(s, sep string) []string {
 	return strings.Split(s, sep)
 }
 
-func JoinSkipEmpty(sep string, a ...string) string {
+func JoinStrSkipEmpty(sep string, a ...string) string {
 	var buf bytes.Buffer
 	for i := 0; i < len(a); i++ {
 		if a[i] == "" {
@@ -152,7 +152,7 @@ func JoinSkipEmpty(sep string, a ...string) string {
 	return buf.String()
 }
 
-func JoinNoSkipEmpty(sep string, a ...string) string {
+func JoinStrNoSkipEmpty(sep string, a ...string) string {
 	var buf bytes.Buffer
 	for i := 0; i < len(a); i++ {
 		if i != 0 {

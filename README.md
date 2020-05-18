@@ -92,10 +92,10 @@ huge.StrToUintSlice("1,2,3", ",")   // [1 2 3]
 
 huge.Split("a,b,c", ",")            // [a b c]
 
-huge.JoinSkipEmpty(",", "a", "", "b")   // a,b
-huge.JoinNoSkipEmpty(",", "a", "", "b") // a,,b
+huge.JoinStrSkipEmpty(",", "a", "", "b")    // a,b
+huge.JoinStrNoSkipEmpty(",", "a", "", "b")  // a,,b
 
-huge.ReverseStr("abc")                       // cba
+huge.ReverseStr("abc")                      // cba
 ```
 
 # struct_util
