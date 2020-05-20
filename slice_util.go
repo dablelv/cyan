@@ -565,7 +565,7 @@ func InsertSliceE(slice interface{}, index int, value interface{}) (interface{},
 
 	// add the element to the end of slice
 	if index == v.Len() {
-		dst = reflect.Append(dst, v)
+		dst = reflect.AppendSlice(dst, v.Slice(0, v.Len()))
 		dst = reflect.Append(dst, reflect.ValueOf(value))
 		return dst.Interface(), nil
 	}
