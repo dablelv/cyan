@@ -561,19 +561,19 @@ func InsertSliceE(slice interface{}, index int, value interface{}) (interface{},
 		return nil, errors.New("param is invalid")
 	}
 
-	dst := reflect.MakeSlice(reflect.TypeOf(slice), 0, 0)
+	t := reflect.MakeSlice(reflect.TypeOf(slice), 0, 0)
 
 	// add the element to the end of slice
 	if index == v.Len() {
-		dst = reflect.AppendSlice(dst, v.Slice(0, v.Len()))
-		dst = reflect.Append(dst, reflect.ValueOf(value))
+		t = reflect.AppendSlice(t, v.Slice(0, v.Len()))
+		t = reflect.Append(t, reflect.ValueOf(value))
 		return dst.Interface(), nil
 	}
 
-	dst = reflect.AppendSlice(dst, v.Slice(0, index+1))
-	dst = reflect.AppendSlice(dst, v.Slice(index, v.Len()))
-	dst.Index(index).Set(reflect.ValueOf(value))
-	return dst.Interface(), nil
+	t = reflect.AppendSlice(t, v.Slice(0, index+1))
+	t = reflect.AppendSlice(t, v.Slice(index, v.Len()))
+	t.Index(index).Set(reflect.ValueOf(value))
+	return t.Interface(), nil
 }
 
 // DeleteSliceE deletes the specified index element from the slice
@@ -588,10 +588,10 @@ func DeleteSliceE(slice interface{}, index int) (interface{}, error) {
 		return nil, errors.New("param is invalid")
 	}
 
-	dst := reflect.MakeSlice(reflect.TypeOf(slice), 0, 0)
-	dst = reflect.AppendSlice(dst, v.Slice(0, index))
-	dst = reflect.AppendSlice(dst, v.Slice(index+1, v.Len()))
-	return dst.Interface(), nil
+	t := reflect.MakeSlice(reflect.TypeOf(slice), 0, 0)
+	t = reflect.AppendSlice(t, v.Slice(0, index))
+	t = reflect.AppendSlice(t, v.Slice(index+1, v.Len()))
+	return t.Interface(), nil
 }
 
 // UpdateSliceE modifies the specified index element of slice
@@ -606,10 +606,10 @@ func UpdateSliceE(slice interface{}, index int, value interface{}) (interface{},
 		return nil, errors.New("param is invalid")
 	}
 
-	dst := reflect.MakeSlice(reflect.TypeOf(slice), 0, 0)
-	dst = reflect.AppendSlice(dst, v.Slice(0, v.Len()))
-	dst.Index(index).Set(reflect.ValueOf(value))
-	return dst.Interface(), nil
+	t := reflect.MakeSlice(reflect.TypeOf(slice), 0, 0)
+	t = reflect.AppendSlice(t, v.Slice(0, v.Len()))
+	t.Index(index).Set(reflect.ValueOf(value))
+	return t.Interface(), nil
 }
 
 // GetEleIndexesSliceE finds all indexes of the specified element in a slice
