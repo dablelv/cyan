@@ -61,6 +61,19 @@ huge.JoinSliceWithSep([]int{1, 2, 3}, ",")              // 1,2,3
 huge.JoinSliceWithSep([]uint{1, 2, 3}, ",")             // 1,2,3
 huge.JoinSliceWithSep([]float64{1.1, 2.2, 3.3}, ",")    // 1.1,2.2,3.3
 huge.JoinSliceWithSep([]string{"a", "b", "c"}, ",")     // a,b,c
+
+// CRUD(Create Read Update Delete) on slice by index
+fib := []int{1, 1, 2, 3, 5, 8}
+r, _ := huge.InsertSliceE(fib, 5, 13)			// [1 1 2 3 5 8 13]
+r, _ := huge.DeleteSliceE(fib, 0)				// [1 2 3 5 8]
+r, _ := huge.UpdateSliceE(fib, 5, 88)			// [1 1 2 3 5 88]
+r, _ := huge.GetEleIndexesSliceE(fib, 1)		// [0 1]
+
+// or
+r := huge.InsertIntSlice(fib, 5, 13)		// [1 1 2 3 5 8 13]
+r := huge.DeleteIntSliceE(fib, 0)			// [1 2 3 5 8
+r := huge.UpdateIntSliceE(fib, 5, 88)		// [1 1 2 3 5 88]
+r := huge.GetEleIndexesSlice(fib, 1)		// [0 1]
 ```
 
 # sql_util

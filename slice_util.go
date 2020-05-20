@@ -249,7 +249,7 @@ func JoinSliceWithSep(slice interface{}, sep string) string {
 }
 
 //
-// part 5: CRUD(Create Read Update Delete) by index on slice
+// part 5: CRUD(Create Read Update Delete) on slice by index
 //
 
 func InsertIntSlice(src []int, index, value int) []int {
