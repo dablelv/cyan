@@ -450,8 +450,8 @@ func UpdateStrSlice(src []int, index int, value string) []string {
 	return v
 }
 
-func GetEleIndexes(slice interface{}, value interface{}) []int {
-	indexes, _ := GetEleIndexesE(slice, value)
+func GetEleIndexesSlice(slice interface{}, value interface{}) []int {
+	indexes, _ := GetEleIndexesSliceE(slice, value)
 	return indexes
 }
 
@@ -612,8 +612,8 @@ func UpdateSliceE(slice interface{}, index int, value interface{}) (interface{},
 	return dst.Interface(), nil
 }
 
-// GetSliceIndexE finds all indexes of the specified element in a slice
-func GetEleIndexesE(slice interface{}, value interface{}) ([]int, error) {
+// GetEleIndexesSliceE finds all indexes of the specified element in a slice
+func GetEleIndexesSliceE(slice interface{}, value interface{}) ([]int, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
