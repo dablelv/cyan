@@ -111,7 +111,7 @@ func UniqueStrSlice(src []string) []string {
 // part 1: reverse a slice, e.g. input []int32{1, 2, 3} and output is []int32{3, 2, 1}
 //
 func ReverseIntSlice(src []int) []int {
-	tmp, _ := ReverseSlice(src)
+	tmp, _ := ReverseSliceE(src)
 	dst := []int{}
 	for _, v := range tmp.([]interface{}) {
 		dst = append(dst, ToInt(v))
@@ -249,7 +249,7 @@ func JoinSliceWithSep(slice interface{}, sep string) string {
 }
 
 //
-// part 5: CRUD(Create Read Update Delete) on slice
+// part 5: CRUD(Create Read Update Delete) by index on slice
 //
 
 func InsertIntSlice(src []int, index, value int) []int {
