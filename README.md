@@ -261,10 +261,29 @@ huge.HMAC_SHA512("", "")    // B936CEE86C9F87AA5D3C6F2E84CB5A4239A5FE50480A6EC66
 
 // Encryption functions
 p := []byte("plaintext")
-key := []byte("12345678abcdefgh")
-c, _ := Base64AESCBCEncrypt(p, key) // "A67NhD3RBiNaMgG6HTm8LQ=="
+key16 := []byte("12345678abcdefgh")
+c, _ := Base64AESCBCEncrypt(p, key16) // A67NhD3RBiNaMgG6HTm8LQ==
+p, _ = Base64AESCBCDecrypt(c, key16)  // plaintext
 
-p, _ = Base64AESCBCDecrypt(c, key)  // "plaintext"
+key8 := []byte("12345678")
+c, _ := Base64DESCBCEncrypt(p, key8) // UZS/y4By6ksePYMBbvZdig==
+p, _ := Base64DESCBCDecrypt(c, key8) // plaintext
+
+key24 := []byte("12345678abcdefgh12345678")
+c, _ := Base64TripleDESCBCEncrypt(p, key24) // dau0DzmDGQbHasZaOvxxwg==
+p, _ := Base64TripleDESCBCDecrypt(c, key24) // plaintext
+```
+
+# rand_util
+Some functions to create a real non-negative random int number, specified length random string, and so on.
+```
+huge.GetRandInt()               // 2040723487295132865
+huge.GetRandIntn(100)           // 49
+huge.GetRandIntRange(0, 100)    // 44
+huge.GetRandByteSlice(3)        // [241 16 101]
+huge.GetRandStr(3)              // dAt
+huge.GetRandLowerStr(3)         // lts
+huge.GetRandUpperStr(3)         // YUT
 ```
 
 # other_util
