@@ -147,3 +147,33 @@ func RawUrlGetPort(rawUrl string) string {
 	}
 	return stUrl.Port()
 }
+
+// RawQueryGetParam get the specified key parameter from query string
+// rawquery is encoded query values without '?'. key is parameter name
+// e.g. if query is "a=dog&b=tiger" and key is "a" will return dog
+func RawQueryGetParam(rawquery, key string) (string, error) {
+	queries, err := url.ParseQuery(rawquery)
+	if err != nil {
+		return "", err
+	}
+
+	if v, ok := queries[key]; ok && len(v) > 0 {
+		return v[0], nil
+	}
+	return "", errors.New("no param")
+}
+
+// RawQueryGetParams get the specified key parameters from query string
+// rawquery is encoded query values without '?'. key is parameter name
+// e.g. if query is "a=dog&a=cat&b=tiger" and key is "a" will return [dog cat]
+func RawQueryGetParams(rawquery, key string) ([]string, error) {
+	queries, err := url.ParseQuery(rawquery)
+	if err != nil {
+		return nil, err
+	}
+
+	if v, ok := queries[key]; ok && len(v) > 0 {
+		return v, nil
+	}
+	return nil, errors.New("no param")
+}
