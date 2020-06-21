@@ -221,33 +221,31 @@ func PKCS7UnPadding(p []byte) ([]byte, error) {
 
 // AESCBCEncrypt encrypts data with AES algorithm in CBC mode
 // Note that key length must be 16, 24 or 32 bytes to select AES-128, AES-192, or AES-256
+// Note that AES block size is 16 bytes
 func AESCBCEncrypt(p, key []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
 
-	// AES block size is 16 bytes
-	blockSize := block.BlockSize()
-	p = PKCS7Padding(p, blockSize)
+	p = PKCS7Padding(p, block.BlockSize())
 	ciphertext := make([]byte, len(p))
-	blockMode := cipher.NewCBCEncrypter(block, key[:blockSize])
+	blockMode := cipher.NewCBCEncrypter(block, key[:block.BlockSize()])
 	blockMode.CryptBlocks(ciphertext, p)
 	return ciphertext, nil
 }
 
 // AESCBCDecrypt decrypts cipher text with AES algorithm in CBC mode
 // Note that key length must be 16, 24 or 32 bytes to select AES-128, AES-192, or AES-256
+// Note that AES block size is 16 bytes
 func AESCBCDecrypt(c, key []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
 
-	// AES block size is 16 bytes
-	blockSize := block.BlockSize()
 	plaintext := make([]byte, len(c))
-	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])
+	blockMode := cipher.NewCBCDecrypter(block, key[:block.BlockSize()])
 	blockMode.CryptBlocks(plaintext, c)
 	return PKCS7UnPadding(plaintext)
 }
