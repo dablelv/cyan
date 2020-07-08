@@ -14,7 +14,8 @@ import (
 var errNegativeNotAllowed = errors.New("unable to convert negative value")
 
 //
-// type conversion functions not with error
+// Type conversion functions not with error.
+// The most code is copied from github.com/spf13/cast and some new features have been added.
 //
 
 // ToBool converts an interface to a bool type.
@@ -1017,9 +1018,23 @@ func ToStringE(i interface{}) (string, error) {
 		return s.String(), nil
 	case error:
 		return s.Error(), nil
-	default:
-		return "", fmt.Errorf("unable to cast %#v of type %T to string", i, i)
 	}
+
+	// support type redefinition
+	switch reflect.TypeOf(i).Kind() {
+	case reflect.String:
+		return reflect.ValueOf(i).String(), nil
+	case reflect.Bool:
+		return strconv.FormatBool(reflect.ValueOf(i).Bool()), nil
+	case reflect.Float32, reflect.Float64:
+		return strconv.FormatFloat(reflect.ValueOf(i).Float(), 'f', -1, 64), nil
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		return strconv.FormatInt(reflect.ValueOf(i).Int(), 10), nil
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		return strconv.FormatUint(reflect.ValueOf(i).Uint(), 10), nil
+	}
+
+	return "", fmt.Errorf("unable to cast %#v of type %T to string", i, i)
 }
 
 // ToStringMapStringE converts an interface to a map[string]string type.

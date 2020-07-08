@@ -173,6 +173,19 @@ huge.ToString(nil)                // ""
 
 var foo interface{} = "one more time"
 huge.ToString(foo)                // "one more time"
+
+// support type definition
+type Int32Alias int32
+var i32Alias IntAlias = 1
+huge.ToString(i32Alias)         // "1"
+
+type Uint32Alias uint32
+var u32Alias Uint32Alias = 1
+huge.ToString(u32Alias)         // "1"
+
+type StringAlias string
+var sAlias StringAlias = "a"
+huge.ToString(sAlias)         // "a"
 ```
 
 Example ToInt:
