@@ -303,6 +303,22 @@ huge.GetRandUpperStr(3)         // YUT
 Some useful functions now unclassified. Of course, it may be classified and moved to a new go file in the future.
 ```
 huge.IsLittleEndian()   // true
+
+student := struct {
+    Hobby   string
+    Age     int32
+}{
+    "hobby": "pingpopng",
+    "age":   28,
+}
+huge.ToFormattedJSON(&student)
+/*
+output:
+{
+    "Hobby": "pingpopng",
+    "Age": 28
+}
+*/
 ```
 
 # Summary
