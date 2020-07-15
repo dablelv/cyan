@@ -319,6 +319,11 @@ output:
     "Age": 28
 }
 */
+
+res0, _ := VerGTVer("1.0.5", "1.0.4")   // true
+res1, _ := VerLTVer("1.0.5", "2.0.4")   // true
+res2, _ := VerGEVer("2.0.4", "2.0.4")   // true
+res3, _ := VerLEVer("1.0.5", "1.0.5")   // true
 ```
 
 # Summary
