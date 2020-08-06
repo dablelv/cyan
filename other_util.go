@@ -43,8 +43,12 @@ func VerGTVer(ver0, ver1 string) (bool, error) {
 
 	slVer0 := Split(ver0, ".")
 	slVer1 := Split(ver1, ".")
+	if len(slVer0) != len(slVer1) {
+		return false, errors.New("param error")
+	}
+
 	var i64Ver0, i64Ver1 int64
-	for i := 0; i < len(slVer0) && i < len(slVer1); i++ {
+	for i := 0; i < len(slVer0); i++ {
 		v0, err0 := ToInt64E(slVer0[i])
 		if err0 != nil {
 			return false, errors.New("the first version number is ill")
@@ -70,8 +74,12 @@ func VerLTVer(ver0, ver1 string) (bool, error) {
 
 	slVer0 := Split(ver0, ".")
 	slVer1 := Split(ver1, ".")
+	if len(slVer0) != len(slVer1) {
+		return false, errors.New("param error")
+	}
+
 	var i64Ver0, i64Ver1 int64
-	for i := 0; i < len(slVer0) && i < len(slVer1); i++ {
+	for i := 0; i < len(slVer0); i++ {
 		v0, err0 := ToInt64E(slVer0[i])
 		if err0 != nil {
 			return false, errors.New("the first version number is ill")
