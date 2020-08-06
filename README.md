@@ -71,7 +71,7 @@ r, _ := huge.GetEleIndexesSliceE(fib, 1)		// [0 1]
 
 // or
 r := huge.InsertIntSlice(fib, 5, 13)		// [1 1 2 3 5 8 13]
-r := huge.DeleteIntSliceE(fib, 0)			// [1 2 3 5 8
+r := huge.DeleteIntSliceE(fib, 0)			// [1 2 3 5 8]
 r := huge.UpdateIntSliceE(fib, 5, 88)		// [1 1 2 3 5 88]
 r := huge.GetEleIndexesSlice(fib, 1)		// [0 1]
 ```
