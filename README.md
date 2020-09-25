@@ -308,8 +308,8 @@ student := struct {
     Hobby   string
     Age     int32
 }{
-    "hobby": "pingpopng",
-    "age":   28,
+    Hobby: "pingpopng",
+    Age:   28,
 }
 huge.ToFormattedJSON(&student)
 /*
