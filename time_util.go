@@ -1,6 +1,7 @@
 package util
 
 import (
+	"math"
 	"time"
 )
 
@@ -28,6 +29,16 @@ func GetNowNs() int64 {
 	return time.Now().UnixNano()
 }
 
+// GetNowDate get now date in YYYY-MM-DD
+func GetNowDate() string {
+	return time.Now().Format("2006-01-02")
+}
+
+// GetNowDate get now time in hh:mm:ss
+func GetNowTime() string {
+	return time.Now().Format("15:04:05")
+}
+
 // GetNowDateTime get now datetime in YYYY-MM-DD hh:mm:ss
 func GetNowDateTime() string {
 	return time.Now().Format("2006-01-02 15:04:05")
@@ -37,16 +48,6 @@ func GetNowDateTime() string {
 // e.g. 2020-05-11 23:18:07 +08:00
 func GetNowDateTimeZ() string {
 	return time.Now().Format("2006-01-02 15:04:05 Z07:00")
-}
-
-// GetNowDate get now date in YYYY-MM-DD
-func GetNowDate() string {
-	return time.Now().Format("2006-01-02")
-}
-
-// GetNowDate get now time in hh:mm:ss
-func GetNowTime() string {
-	return time.Now().Format("15:04:05")
 }
 
 // GetDayBeginMoment get the starting moment of one day
@@ -81,6 +82,21 @@ func GetDayElapsedUs(t time.Time) int64 {
 // GetDayElapsedNs get the elapsed nanoseconds since the starting moment of one day
 func GetDayElapsedNs(t time.Time) int64 {
 	return t.Unix() - GetDayBeginMoment(t).Unix()
+}
+
+// GetDaysBtwTs calculates the number of days between two timestamps and round down
+func GetDaysBtwTs(ts0, ts1 int64) int64 {
+	return int64(math.Abs(float64(ts0-ts1))) / 86400
+}
+
+// GetHoursBtwTs calculates the number of hours between two timestamps and round down
+func GetHoursBtwTs(ts0, ts1 int64) int64 {
+	return int64(math.Abs(float64(ts0-ts1))) / 3600
+}
+
+// GetMinutesBtwTs calculates the number of hours between two timestamps and round down
+func GetMinutesBtwTs(ts0, ts1 int64) int64 {
+	return int64(math.Abs(float64(ts0-ts1))) / 60
 }
 
 //

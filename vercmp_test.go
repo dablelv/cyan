@@ -15,7 +15,7 @@ func TestVerLTVer(t *testing.T) {
 	assert.Equal(t, false, res1)
 }
 
-func TestVerGTVer(t *testing.T) {
+func TestVerGEVer(t *testing.T) {
 	type args struct {
 		ver0 string
 		ver1 string
@@ -33,20 +33,14 @@ func TestVerGTVer(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:    "lessthan",
-			args:    args{"1.0.5", "1.0.4"},
+			name:    "equal",
+			args:    args{"1.0.5", "1.0.5"},
 			want:    true,
 			wantErr: false,
 		},
 		{
-			name:    "equal",
-			args:    args{"1.0.5", "1.0.5"},
-			want:    false,
-			wantErr: false,
-		},
-		{
 			name:    "lessthan",
-			args:    args{"1.0.5", "2.0.4"},
+			args:    args{"1.0.4", "1.0.5"},
 			want:    false,
 			wantErr: false,
 		},
@@ -58,15 +52,141 @@ func TestVerGTVer(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := VerGTVer(tt.args.ver0, tt.args.ver1)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("VerGTVer() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if got != tt.want {
-				t.Errorf("VerGTVer() got = %v, want %v", got, tt.want)
-			}
-		})
+		got, err := VerGEVer(tt.args.ver0, tt.args.ver1)
+		assert.Equal(t, got, tt.want, tt.name)
+		assert.Equal(t, err != nil, tt.wantErr, tt.name)
+	}
+}
+
+func TestVerLEVer(t *testing.T) {
+	type args struct {
+		ver0 string
+		ver1 string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    bool
+		wantErr bool
+	}{
+		{
+			name:    "lessthan",
+			args:    args{"1.0.4", "1.0.5"},
+			want:    true,
+			wantErr: false,
+		},
+		{
+			name:    "equal",
+			args:    args{"1.0.5", "1.0.5"},
+			want:    true,
+			wantErr: false,
+		},
+		{
+			name:    "greaterthan",
+			args:    args{"1.0.5", "1.0.4"},
+			want:    false,
+			wantErr: false,
+		},
+		{
+			name:    "argill",
+			args:    args{"1.0.5.5", "2.0.4"},
+			want:    false,
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		got, err := VerLEVer(tt.args.ver0, tt.args.ver1)
+		assert.Equal(t, got, tt.want, tt.name)
+		assert.Equal(t, err != nil, tt.wantErr, tt.name)
+	}
+}
+
+func TestVerGEVerMore(t *testing.T) {
+	type args struct {
+		ver0 string
+		ver1 string
+		sep  string
+		num  int
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    bool
+		wantErr bool
+	}{
+		{
+			name:    "greaterthan",
+			args:    args{"2-1-1-1", "2-1-1-0", "-", 4},
+			want:    true,
+			wantErr: false,
+		},
+		{
+			name:    "equal",
+			args:    args{"2-1-1-1", "2-1-1-1", "-", 4},
+			want:    true,
+			wantErr: false,
+		},
+		{
+			name:    "lessthan",
+			args:    args{"2-1-1-0", "2-1-1-1", "-", 4},
+			want:    false,
+			wantErr: false,
+		},
+		{
+			name:    "argill",
+			args:    args{"2-1-1", "2-1-0", "-", 4},
+			want:    false,
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		got, err := VerGEVerMore(tt.args.ver0, tt.args.ver1, tt.args.sep, tt.args.num)
+		assert.Equal(t, got, tt.want, tt.name)
+		assert.Equal(t, err != nil, tt.wantErr, tt.name)
+	}
+}
+
+func TestVerLEVerMore(t *testing.T) {
+	type args struct {
+		ver0 string
+		ver1 string
+		sep  string
+		num  int
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    bool
+		wantErr bool
+	}{
+		{
+			name:    "lessthan",
+			args:    args{"2-1-1-0", "2-1-1-1", "-", 4},
+			want:    true,
+			wantErr: false,
+		},
+		{
+			name:    "equal",
+			args:    args{"2-1-1-1", "2-1-1-1", "-", 4},
+			want:    true,
+			wantErr: false,
+		},
+		{
+			name:    "greaterthan",
+			args:    args{"2-1-1-1", "2-1-1-0", "-", 4},
+			want:    false,
+			wantErr: false,
+		},
+		{
+			name:    "argill",
+			args:    args{"2-1-1", "2-1-0", "-", 4},
+			want:    false,
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		got, err := VerLEVerMore(tt.args.ver0, tt.args.ver1, tt.args.sep, tt.args.num)
+		assert.Equal(t, got, tt.want, tt.name)
+		assert.Equal(t, err != nil, tt.wantErr, tt.name)
 	}
 }
