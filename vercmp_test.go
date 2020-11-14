@@ -53,8 +53,8 @@ func TestVerGEVer(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got, err := VerGEVer(tt.args.ver0, tt.args.ver1)
-		assert.Equal(t, got, tt.want, tt.name)
-		assert.Equal(t, err != nil, tt.wantErr, tt.name)
+		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(t, tt.wantErr, err != nil, tt.name)
 	}
 }
 
@@ -96,8 +96,8 @@ func TestVerLEVer(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got, err := VerLEVer(tt.args.ver0, tt.args.ver1)
-		assert.Equal(t, got, tt.want, tt.name)
-		assert.Equal(t, err != nil, tt.wantErr, tt.name)
+		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(t, tt.wantErr, err != nil, tt.name)
 	}
 }
 
@@ -141,8 +141,8 @@ func TestVerGEVerMore(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got, err := VerGEVerMore(tt.args.ver0, tt.args.ver1, tt.args.sep, tt.args.num)
-		assert.Equal(t, got, tt.want, tt.name)
-		assert.Equal(t, err != nil, tt.wantErr, tt.name)
+		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(t, tt.wantErr, err != nil, tt.name)
 	}
 }
 
@@ -186,7 +186,7 @@ func TestVerLEVerMore(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got, err := VerLEVerMore(tt.args.ver0, tt.args.ver1, tt.args.sep, tt.args.num)
-		assert.Equal(t, got, tt.want, tt.name)
-		assert.Equal(t, err != nil, tt.wantErr, tt.name)
+		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(t, tt.wantErr, err != nil, tt.name)
 	}
 }

@@ -104,9 +104,9 @@ func GetMinutesBtwTs(ts0, ts1 int64) int64 {
 //
 
 // DateTime2UTs convert datetime in YYYY-MM-DD hh:mm:ss to unix timestamp
-func DateTime2UTs(date string) int64 {
+func DateTime2UTs(dt string) int64 {
 	loc, _ := time.LoadLocation("Local")
-	t, err := time.ParseInLocation("2006-01-02 15:04:05", date, loc)
+	t, err := time.ParseInLocation("2006-01-02 15:04:05", dt, loc)
 	if err != nil {
 		return 0
 	}

@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"io/ioutil"
 
-	"golang.org/x/text/transform"
 	"golang.org/x/text/encoding/simplifiedchinese"
+	"golang.org/x/text/transform"
 )
 
 // GbkToUtf8 transform gbk to utf8
