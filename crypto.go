@@ -20,63 +20,63 @@ import (
 // part 0: hash functions
 //
 
-// Hash_md5 generates 32 lowercase hexadecimal characters of MD5 checksum
-func Hash_md5(s string) string {
+// MD5L generates 32 lowercase hexadecimal characters of MD5 checksum
+func MD5L(s string) string {
 	return Hash(s, "md5", false)
 }
 
-// Hash_MD5 generates 32 uppercase hexadecimal characters of MD5 checksum
-func Hash_MD5(s string) string {
+// MD5U generates 32 uppercase hexadecimal characters of MD5 checksum
+func MD5U(s string) string {
 	return Hash(s, "MD5", true)
 }
 
-// Hash_sha1 generates 40 lowercase hexadecimal characters of SHA1 checksum
-func Hash_sha1(s string) string {
+// SHA1L generates 40 lowercase hexadecimal characters of SHA1 checksum
+func SHA1L(s string) string {
 	return Hash(s, "sha1", false)
 }
 
-// Hash_SHA1 generates 40 uppercase hexadecimal characters of SHA1 checksum
-func Hash_SHA1(s string) string {
+// SHA1U generates 40 uppercase hexadecimal characters of SHA1 checksum
+func SHA1U(s string) string {
 	return Hash(s, "SHA1", true)
 }
 
-// Hash_sha224 generates 56 lowercase hexadecimal characters of SHA224 checksum
-func Hash_sha224(s string) string {
+// SHA224U generates 56 lowercase hexadecimal characters of SHA224 checksum
+func SHA224L(s string) string {
 	return Hash(s, "sha224", false)
 }
 
-// Hash_SHA224 generates 56 uppercase hexadecimal characters of SHA224 checksum
-func Hash_SHA224(s string) string {
+// SHA224U generates 56 uppercase hexadecimal characters of SHA224 checksum
+func SHA224U(s string) string {
 	return Hash(s, "SHA224", true)
 }
 
-// Hash_sha256 generates 64 lowercase hexadecimal characters of SHA256 checksum
-func Hash_sha256(s string) string {
+// SHA256L generates 64 lowercase hexadecimal characters of SHA256 checksum
+func SHA256L(s string) string {
 	return Hash(s, "sha256", false)
 }
 
-// Hash_SHA256 generates 64 uppercase hexadecimal characters of SHA256 checksum
-func Hash_SHA256(s string) string {
+// SHA256U generates 64 uppercase hexadecimal characters of SHA256 checksum
+func SHA256U(s string) string {
 	return Hash(s, "SHA256", true)
 }
 
-// Hash_sha384 generates 96 lowercase hexadecimal characters of SHA384 checksum
-func Hash_sha384(s string) string {
+// SHA384L generates 96 lowercase hexadecimal characters of SHA384 checksum
+func SHA384L(s string) string {
 	return Hash(s, "sha384", false)
 }
 
-// Hash_SHA384 generates 96 uppercase hexadecimal characters of SHA384 checksum
-func Hash_SHA384(s string) string {
+// SHA384U generates 96 uppercase hexadecimal characters of SHA384 checksum
+func SHA384U(s string) string {
 	return Hash(s, "SHA384", true)
 }
 
-// Hash_sha512 generates 128 lowercase hexadecimal characters of SHA512 checksum
-func Hash_sha512(s string) string {
+// SHA512L generates 128 lowercase hexadecimal characters of SHA512 checksum
+func SHA512L(s string) string {
 	return Hash(s, "sha512", false)
 }
 
-// Hash_SHA512 generates 128 uppercase hexadecimal characters of SHA512 checksum
-func Hash_SHA512(s string) string {
+// SHA512U generates 128 uppercase hexadecimal characters of SHA512 checksum
+func SHA512U(s string) string {
 	return Hash(s, "SHA512", true)
 }
 
@@ -111,63 +111,63 @@ func Hash(s string, hashName string, capital bool) string {
 // part 1: Hash-based Message Authentication Code functions
 //
 
-// HMAC_md5 generates 32 lowercase hexadecimal characters authentication code based on MD5
-func HMAC_md5(str, key string) string {
+// HMACMD5L generates 32 lowercase hexadecimal characters authentication code based on MD5
+func HMACMD5L(str, key string) string {
 	return HMAC(str, key, "md5", false)
 }
 
-// HMAC_MD5 generates 32 uppercase hexadecimal characters authentication code based on MD5
-func HMAC_MD5(str, key string) string {
+// HMACMD5U generates 32 uppercase hexadecimal characters authentication code based on MD5
+func HMACMD5U(str, key string) string {
 	return HMAC(str, key, "MD5", true)
 }
 
-// HMAC_sha1 generates 40 lowercase hexadecimal characters authentication code based on SHA1
-func HMAC_sha1(str, key string) string {
+// HMACSHA1L generates 40 lowercase hexadecimal characters authentication code based on SHA1
+func HMACSHA1L(str, key string) string {
 	return HMAC(str, key, "sha1", false)
 }
 
-// HMAC_SHA1 generates 40 uppercase hexadecimal characters authentication code based on SHA1
-func HMAC_SHA1(str, key string) string {
+// HMACSHA1U generates 40 uppercase hexadecimal characters authentication code based on SHA1
+func HMACSHA1U(str, key string) string {
 	return HMAC(str, key, "SHA1", true)
 }
 
-// HMAC_sha224 generates 56 lowercase hexadecimal characters authentication code based on SHA224
-func HMAC_sha224(str, key string) string {
+// HMACSHA224L generates 56 lowercase hexadecimal characters authentication code based on SHA224
+func HMACSHA224L(str, key string) string {
 	return HMAC(str, key, "sha224", false)
 }
 
-// HMAC_SHA224 generates 56 uppercase hexadecimal characters authentication code based on SHA224
-func HMAC_SHA224(str, key string) string {
+// HMACSHA224U generates 56 uppercase hexadecimal characters authentication code based on SHA224
+func HMACSHA224U(str, key string) string {
 	return HMAC(str, key, "SHA224", true)
 }
 
-// HMAC_SHA256Small generates 64 lowercase hexadecimal characters authentication code based on SHA256
-func HMAC_sha256(str, key string) string {
+// HMACSHA256L generates 64 lowercase hexadecimal characters authentication code based on SHA256
+func HMACSHA256L(str, key string) string {
 	return HMAC(str, key, "sha256", false)
 }
 
-// HMAC_SHA256 generates 64 uppercase hexadecimal characters authentication code based on SHA256
-func HMAC_SHA256(str, key string) string {
+// HMACSHA256U generates 64 uppercase hexadecimal characters authentication code based on SHA256
+func HMACSHA256U(str, key string) string {
 	return HMAC(str, key, "SHA256", true)
 }
 
-// HMAC_sha384 generates 96 lowercase hexadecimal characters authentication code based on SHA384
-func HMAC_sha384(str, key string) string {
+// HMACSHA384L generates 96 lowercase hexadecimal characters authentication code based on SHA384
+func HMACSHA384L(str, key string) string {
 	return HMAC(str, key, "sha384", false)
 }
 
-// HMAC_SHA384 generates 96 uppercase hexadecimal characters authentication code based on SHA384
-func HMAC_SHA384(str, key string) string {
+// HMACSHA384U generates 96 uppercase hexadecimal characters authentication code based on SHA384
+func HMACSHA384U(str, key string) string {
 	return HMAC(str, key, "SHA384", true)
 }
 
-// HMAC_sha512 generates 128 lowercase hexadecimal characters authentication code based on SHA512
-func HMAC_sha512(str, key string) string {
+// HMACSHA512L generates 128 lowercase hexadecimal characters authentication code based on SHA512
+func HMACSHA512L(str, key string) string {
 	return HMAC(str, key, "sha512", false)
 }
 
-// HMAC_SHA512 generates 128 uppercase hexadecimal characters authentication code based on SHA512
-func HMAC_SHA512(str, key string) string {
+// HMACSHA512U generates 128 uppercase hexadecimal characters authentication code based on SHA512
+func HMACSHA512U(str, key string) string {
 	return HMAC(str, key, "SHA512", true)
 }
 

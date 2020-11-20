@@ -1,7 +1,7 @@
 # Synopsis
 Go common and huge utility functions help you to create your go program quickly and easily.
 
-# encode_util
+# encode
 Some useful functions can be used to handle conversion of different character encoding, such as gbk to utf8.
 
 Example:
@@ -18,7 +18,7 @@ gbkStrRes, _ := huge.Utf8ToGbk(utf8Str)
 fmt.Println(gbkStrRes) // [196 227 186 195]
 ```
 
-# net_util
+# net
 Some useful functions can be used to handle network. For example you can use `IPv4StrToU32()` transform ipv4 string to uint32 value.
 
 Example:
@@ -35,7 +35,7 @@ huge.GetNativeEndian()              // LittleEndian
 huge.IPv4StrToU32("127.0.0.1")      // 2130706433
 huge.U32ToIPv4Str(2130706433)       // "127.0.0.1"
 ```
-# slice_util
+# slice
 Some useful functions can be used to handle slice.
 
 Example:
@@ -76,7 +76,7 @@ r := huge.UpdateIntSliceE(fib, 5, 88)		// [1 1 2 3 5 88]
 r := huge.GetEleIndexesSlice(fib, 1)		// [0 1]
 ```
 
-# sql_util
+# sql
 Some useful functions can be used to handle sql statement.
 
 Example:
@@ -89,7 +89,7 @@ var sql = `select * from t where field1="{name}"`
 huge.FormatSql(sql, map[string]string{"name": "dablelv"}, false)    // select * from t where field1="dablelv"
 ```
 
-# string_util
+# string
 Some useful functions can be used to handle string.
 
 Example:
@@ -111,7 +111,7 @@ huge.JoinStrNoSkipEmpty(",", "a", "", "b")  // a,,b
 huge.ReverseStr("abc")                      // cba
 ```
 
-# struct_util
+# struct
 Some useful functions can be used to handle string.
 
 Example:
@@ -129,7 +129,7 @@ huge.Struct2Map(st)         // map[I:1 S:a]
 huge.Struct2MapString(st)   // map[I:1 S:a]
 ```
 
-# time_util
+# time
 Some useful functions can be used to handle date and time.
 
 Example:
@@ -156,7 +156,7 @@ huge.GetDayBeginMoment(time.Now())  // 2020-05-16 00:00:00 +0800 CST
 huge.GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
 ```
 
-# typeconv_util
+# typeconv
 Some useful functions can be used to type conversion. The most functions are from github.com/spf13/cast and some new functions is added by myself. 
 
 Example ToString:
@@ -205,7 +205,7 @@ huge.ToInt(eight)              // 8
 huge.ToInt(nil)                // 0
 ```
 
-# url_util
+# url
 Some useful functions can be used to handle url.
 
 Example:
@@ -227,7 +227,7 @@ huge.RawURLDelParam(rawUrl, "page")             // http://www.aspxfans.com:8080/
 huge.RawURLSetParam(rawUrl, "boardID", "521")   // http://www.aspxfans.com:8080/news/index.asp?boardID=521&page=1&page=2#name
 ```
 
-# crypto_util
+# crypto
 Some useful functions can be used to create Hash, HMAC and crypt data.
 ```
 import (
@@ -287,7 +287,7 @@ c, _ := Base64TripleDESCBCEncrypt(p, key24) // dau0DzmDGQbHasZaOvxxwg==
 p, _ := Base64TripleDESCBCDecrypt(c, key24) // plaintext
 ```
 
-# rand_util
+# rand
 Some functions to create a real non-negative random int number, specified length random string, and so on.
 ```
 huge.GetRandInt()               // 2040723487295132865
@@ -299,7 +299,7 @@ huge.GetRandLowerStr(3)         // lts
 huge.GetRandUpperStr(3)         // YUT
 ```
 
-# other_util
+# other
 Some useful functions now unclassified. Of course, it may be classified and moved to a new go file in the future.
 ```
 huge.IsLittleEndian()   // true

@@ -8,8 +8,8 @@ import (
 	"golang.org/x/text/transform"
 )
 
-// GbkToUtf8 transform gbk to utf8
-func GbkToUtf8(s []byte) ([]byte, error) {
+// GBK2UTF8 transform gbk to utf8
+func GBK2UTF8(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewDecoder())
 	d, err := ioutil.ReadAll(reader)
 	if err != nil {
@@ -18,16 +18,16 @@ func GbkToUtf8(s []byte) ([]byte, error) {
 	return d, nil
 }
 
-// GbkToUtf8String transform gbk to utf8 string
-func GbkToUtf8String(s string) string {
-	if dst, err := GbkToUtf8([]byte(s)); err == nil {
+// GBK2UTF8Str transform gbk to utf8 string
+func GBK2UTF8Str(s string) string {
+	if dst, err := GBK2UTF8([]byte(s)); err == nil {
 		return string(dst)
 	}
 	return ""
 }
 
-// Utf8ToGbk transform utf8 to gbk
-func Utf8ToGbk(s []byte) ([]byte, error) {
+// UTF82GBK transform utf8 to gbk
+func UTF82GBK(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewEncoder())
 	d, err := ioutil.ReadAll(reader)
 	if err != nil {
@@ -36,9 +36,9 @@ func Utf8ToGbk(s []byte) ([]byte, error) {
 	return d, nil
 }
 
-// Utf8ToGbkString transform utf8 to gbk string
-func Utf8ToGbkString(s string) string {
-	if dst, err := Utf8ToGbk([]byte(s)); err == nil {
+// UTF82GBKStr transform utf8 to gbk string
+func UTF82GBKStr(s string) string {
+	if dst, err := UTF82GBK([]byte(s)); err == nil {
 		return string(dst)
 	}
 	return ""
