@@ -321,9 +321,9 @@ func Base64DESCBCDecrypt(c string, key []byte) ([]byte, error) {
 	return p, nil
 }
 
-// TripleDESCBCEncrypt encrypts data with 3DES algorithm in CBC mode
+// TriDESCBCEncrypt encrypts data with 3DES algorithm in CBC mode
 // Note that key length must be 24 bytes
-func TripleDESCBCEncrypt(src, key []byte) ([]byte, error) {
+func TriDESCBCEncrypt(src, key []byte) ([]byte, error) {
 	block, err := des.NewTripleDESCipher(key)
 	if err != nil {
 		return nil, err
@@ -335,9 +335,9 @@ func TripleDESCBCEncrypt(src, key []byte) ([]byte, error) {
 	return dst, nil
 }
 
-// TripleDESCBCDecrypt decrypts cipher text with 3DES algorithm in CBC mode
+// TriDESCBCDecrypt decrypts cipher text with 3DES algorithm in CBC mode
 // Note that key length must be 24 bytes
-func TripleDESCBCDecrypt(src, key []byte) ([]byte, error) {
+func TriDESCBCDecrypt(src, key []byte) ([]byte, error) {
 	block, err := des.NewTripleDESCipher(key)
 	if err != nil {
 		return nil, err
@@ -349,22 +349,22 @@ func TripleDESCBCDecrypt(src, key []byte) ([]byte, error) {
 	return dst, err
 }
 
-// Base64TripleDESCBCEncrypt encrypts data with 3DES algorithm in CBC mode and encoded by base64
-func Base64TripleDESCBCEncrypt(p, key []byte) (string, error) {
-	c, err := TripleDESCBCEncrypt(p, key)
+// Base64TriDESCBCEncrypt encrypts data with 3DES algorithm in CBC mode and encoded by base64
+func Base64TriDESCBCEncrypt(p, key []byte) (string, error) {
+	c, err := TriDESCBCEncrypt(p, key)
 	if err != nil {
 		return "", err
 	}
 	return base64.StdEncoding.EncodeToString(c), nil
 }
 
-// Base64TripleDESCBCDecrypt decrypts cipher text encoded by base64 with 3DES algorithm in CBC mode
-func Base64TripleDESCBCDecrypt(c string, key []byte) ([]byte, error) {
+// Base64TriDESCBCDecrypt decrypts cipher text encoded by base64 with 3DES algorithm in CBC mode
+func Base64TriDESCBCDecrypt(c string, key []byte) ([]byte, error) {
 	oriCipher, err := base64.StdEncoding.DecodeString(c)
 	if err != nil {
 		return nil, err
 	}
-	p, err := TripleDESCBCDecrypt(oriCipher, key)
+	p, err := TriDESCBCDecrypt(oriCipher, key)
 	if err != nil {
 		return nil, err
 	}
