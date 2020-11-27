@@ -140,7 +140,7 @@ func (t *TimeCounter) Set() {
 }
 
 // GetS return the time interval from the beginning to now in second
-func (t *TimeCounter) Get() int64 {
+func (t *TimeCounter) GetS() int64 {
 	return (time.Now().UnixNano() - t.int64) / int64(time.Second)
 }
 
