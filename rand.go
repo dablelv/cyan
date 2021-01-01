@@ -10,62 +10,72 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-// GetRandInt gets a real non-negative random int number
-func GetRandInt() int {
+// RandInt returns a real non-negative random int number
+func RandInt() int {
 	return rand.Int()
 }
 
-// GetRandIntn gets a real non-negative random int number in [0,n)
-func GetRandIntn(n int) int {
+// RandIntn returns a real non-negative random int number in [0,n)
+func RandIntn(n int) int {
 	if n <= 0 {
 		return 0
 	}
 	return rand.Intn(n)
 }
 
-// GetRandIntRange gets a real non-negative random int number in [min, max)
-func GetRandIntRange(min, max int) int {
+// RandIntRange returns a real non-negative random int number in [min, max)
+func RandIntRange(min, max int) int {
 	if min < 0 || max <= min {
 		return 0
 	}
-	return GetRandIntn(max-min) + min
+	return RandIntn(max-min) + min
 }
 
-// GetRandByteSlice gets a real random byte slice of the specified length, with the value range of 0x00-0xff for each byte
-func GetRandByteSlice(length uint32) []byte {
-	b := make([]byte, length)
-	for i := range b {
-		b[i] = byte(GetRandInt() % 256)
+// RandIntSlice returns a real non-negative random int slice of the specified length with the value range in [0,max)
+func RandIntSlice(l int, max int) []int {
+	slice := make([]int, l)
+	for i := 0; i < l; i++ {
+		slice[i] = RandIntn(max)
 	}
-	return b
+	return slice
+}
+
+// RandByteSlice gets a real random byte slice of the specified length with the value range in [0x00,0xff]
+func RandByteSlice(length uint32) []byte {
+	slice := make([]byte, length)
+	for i := range slice {
+		slice[i] = byte(RandInt() % 256)
+	}
+	return slice
 }
 
 const (
-	englishAlphabet           = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	englishAlphabetLen        = len(englishAlphabet)
-	lowercaseEnglishLetter    = "abcdefghijklmnopqrstuvwxyz"
-	lowercaseEnglishLetterLen = len(lowercaseEnglishLetter)
+	enAlphabet       = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	enAlphabetLen    = len(enAlphabet)
+	lowerEnLetter    = "abcdefghijklmnopqrstuvwxyz"
+	lowerEnLetterLen = len(lowerEnLetter)
 )
 
-// GetRandStr Gets a real random string of a specified length and the contents of which are composed of upper and lower case letters
-func GetRandStr(length uint32) string {
+// RandStr returns a real random string of the specified length and the contents of which are composed of upper and
+// lower case letters
+func RandStr(length uint64) string {
 	b := make([]byte, length)
 	for i := range b {
-		b[i] = englishAlphabet[GetRandIntn(englishAlphabetLen)]
+		b[i] = enAlphabet[RandIntn(enAlphabetLen)]
 	}
 	return string(b)
 }
 
-// GetRandLowerAlphaStr gets a real random lowercase string of a specified length
-func GetRandLowerStr(length uint32) string {
+// RandLowerAlphaStr returns a real random lowercase string of a specified length
+func RandLowerStr(length uint32) string {
 	b := make([]byte, length)
 	for i := range b {
-		b[i] = lowercaseEnglishLetter[GetRandIntn(lowercaseEnglishLetterLen)]
+		b[i] = lowerEnLetter[RandIntn(lowerEnLetterLen)]
 	}
 	return string(b)
 }
 
-// GetRandLowerAlphaStr gets a real random uppercase string of a specified length
-func GetRandUpperStr(length uint32) string {
-	return strings.ToUpper(GetRandLowerStr(length))
+// RandLowerAlphaStr returns a real random uppercase string of a specified length
+func RandUpperStr(length uint32) string {
+	return strings.ToUpper(RandLowerStr(length))
 }

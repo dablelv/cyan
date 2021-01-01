@@ -11,6 +11,8 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+
+	"github.com/spf13/cast"
 )
 
 // VerGTVer determines whether version0 greater than version1
@@ -52,11 +54,11 @@ func VerGTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 
 	var i64Ver0, i64Ver1 int64
 	for i := 0; i < num; i++ {
-		v0, err0 := ToInt64E(slVer0[i])
+		v0, err0 := cast.ToInt64E(slVer0[i])
 		if err0 != nil {
 			return false, errors.New("the first version number is ill")
 		}
-		v1, err1 := ToInt64E(slVer1[i])
+		v1, err1 := cast.ToInt64E(slVer1[i])
 		if err1 != nil {
 			return false, errors.New("the second version number is ill")
 		}
@@ -83,11 +85,11 @@ func VerLTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 
 	var i64Ver0, i64Ver1 int64
 	for i := 0; i < num; i++ {
-		v0, err0 := ToInt64E(slVer0[i])
+		v0, err0 := cast.ToInt64E(slVer0[i])
 		if err0 != nil {
 			return false, errors.New("the first version number is ill")
 		}
-		v1, err1 := ToInt64E(slVer1[i])
+		v1, err1 := cast.ToInt64E(slVer1[i])
 		if err1 != nil {
 			return false, errors.New("the second version number is ill")
 		}

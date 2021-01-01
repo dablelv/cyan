@@ -3,6 +3,8 @@ package util
 import (
 	"errors"
 	"reflect"
+
+	"github.com/spf13/cast"
 )
 
 //
@@ -10,99 +12,117 @@ import (
 //
 func UniqueIntSlice(src []int) []int {
 	tmp, _ := UniqueSliceE(src)
-	dst := []int{}
+	var dst []int
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToInt(v))
+		dst = append(dst, cast.ToInt(v))
 	}
 	return dst
 }
 
 func UniqueInt8Slice(src []int8) []int8 {
 	tmp, _ := UniqueSliceE(src)
-	dst := []int8{}
+	var dst []int8
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToInt8(v))
+		dst = append(dst, cast.ToInt8(v))
 	}
 	return dst
 }
 
 func UniqueInt16Slice(src []int16) []int16 {
 	tmp, _ := UniqueSliceE(src)
-	dst := []int16{}
+	var dst []int16
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToInt16(v))
+		dst = append(dst, cast.ToInt16(v))
 	}
 	return dst
 }
 
 func UniqueInt32Slice(src []int32) []int32 {
 	tmp, _ := UniqueSliceE(src)
-	dst := []int32{}
+	var dst []int32
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToInt32(v))
+		dst = append(dst, cast.ToInt32(v))
 	}
 	return dst
 }
 
 func UniqueInt64Slice(src []int64) []int64 {
 	tmp, _ := UniqueSliceE(src)
-	dst := []int64{}
+	var dst []int64
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToInt64(v))
+		dst = append(dst, cast.ToInt64(v))
 	}
 	return dst
 }
 
 func UniqueUintSlice(src []uint) []uint {
 	tmp, _ := UniqueSliceE(src)
-	dst := []uint{}
+	var dst []uint
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToUint(v))
+		dst = append(dst, cast.ToUint(v))
 	}
 	return dst
 }
 
 func UniqueUint8Slice(src []uint8) []uint8 {
 	tmp, _ := UniqueSliceE(src)
-	dst := []uint8{}
+	var dst []uint8
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToUint8(v))
+		dst = append(dst, cast.ToUint8(v))
 	}
 	return dst
 }
 
 func UniqueUint16Slice(src []uint16) []uint16 {
 	tmp, _ := UniqueSliceE(src)
-	dst := []uint16{}
+	var dst []uint16
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToUint16(v))
+		dst = append(dst, cast.ToUint16(v))
 	}
 	return dst
 }
 
 func UniqueUint32Slice(src []uint32) []uint32 {
 	tmp, _ := UniqueSliceE(src)
-	dst := []uint32{}
+	var dst []uint32
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToUint32(v))
+		dst = append(dst, cast.ToUint32(v))
 	}
 	return dst
 }
 
 func UniqueUint64Slice(src []uint64) []uint64 {
 	tmp, _ := UniqueSliceE(src)
-	dst := []uint64{}
+	var dst []uint64
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToUint64(v))
+		dst = append(dst, cast.ToUint64(v))
+	}
+	return dst
+}
+
+func UniqueFloat32Slice(src []uint32) []float32 {
+	tmp, _ := UniqueSliceE(src)
+	var dst []float32
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, cast.ToFloat32(v))
+	}
+	return dst
+}
+
+func UniqueFloat64Slice(src []uint64) []float64 {
+	tmp, _ := UniqueSliceE(src)
+	var dst []float64
+	for _, v := range tmp.([]interface{}) {
+		dst = append(dst, cast.ToFloat64(v))
 	}
 	return dst
 }
 
 func UniqueStrSlice(src []string) []string {
 	tmp, _ := UniqueSliceE(src)
-	dst := []string{}
+	var dst []string
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToString(v))
+		dst = append(dst, cast.ToString(v))
 	}
 	return dst
 }
@@ -114,7 +134,7 @@ func ReverseIntSlice(src []int) []int {
 	tmp, _ := ReverseSliceE(src)
 	dst := []int{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToInt(v))
+		dst = append(dst, cast.ToInt(v))
 	}
 	return dst
 }
@@ -123,7 +143,7 @@ func ReverseInt8Slice(src []int8) []int8 {
 	tmp, _ := ReverseSliceE(src)
 	dst := []int8{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToInt8(v))
+		dst = append(dst, cast.ToInt8(v))
 	}
 	return dst
 }
@@ -132,7 +152,7 @@ func ReverseInt16Slice(src []int16) []int16 {
 	tmp, _ := ReverseSliceE(src)
 	dst := []int16{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToInt16(v))
+		dst = append(dst, cast.ToInt16(v))
 	}
 	return dst
 }
@@ -141,7 +161,7 @@ func ReverseInt32Slice(src []int32) []int32 {
 	tmp, _ := ReverseSliceE(src)
 	dst := []int32{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToInt32(v))
+		dst = append(dst, cast.ToInt32(v))
 	}
 	return dst
 }
@@ -150,7 +170,7 @@ func ReverseInt64Slice(src []int64) []int64 {
 	tmp, _ := ReverseSliceE(src)
 	dst := []int64{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToInt64(v))
+		dst = append(dst, cast.ToInt64(v))
 	}
 	return dst
 }
@@ -159,7 +179,7 @@ func ReverseUintSlice(src []uint) []uint {
 	tmp, _ := ReverseSliceE(src)
 	dst := []uint{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToUint(v))
+		dst = append(dst, cast.ToUint(v))
 	}
 	return dst
 }
@@ -168,7 +188,7 @@ func ReverseUint8Slice(src []uint8) []uint8 {
 	tmp, _ := ReverseSliceE(src)
 	dst := []uint8{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToUint8(v))
+		dst = append(dst, cast.ToUint8(v))
 	}
 	return dst
 }
@@ -177,7 +197,7 @@ func ReverseUint16Slice(src []uint16) []uint16 {
 	tmp, _ := ReverseSliceE(src)
 	dst := []uint16{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToUint16(v))
+		dst = append(dst, cast.ToUint16(v))
 	}
 	return dst
 }
@@ -186,7 +206,7 @@ func ReverseUint32Slice(src []uint32) []uint32 {
 	tmp, _ := ReverseSliceE(src)
 	dst := []uint32{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToUint32(v))
+		dst = append(dst, cast.ToUint32(v))
 	}
 	return dst
 }
@@ -195,7 +215,7 @@ func ReverseUint64Slice(src []uint64) []uint64 {
 	tmp, _ := ReverseSliceE(src)
 	dst := []uint64{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToUint64(v))
+		dst = append(dst, cast.ToUint64(v))
 	}
 	return dst
 }
@@ -204,7 +224,7 @@ func ReverseStrSlice(src []string) []string {
 	tmp, _ := ReverseSliceE(src)
 	dst := []string{}
 	for _, v := range tmp.([]interface{}) {
-		dst = append(dst, ToString(v))
+		dst = append(dst, cast.ToString(v))
 	}
 	return dst
 }
@@ -456,6 +476,130 @@ func GetEleIndexesSlice(slice interface{}, value interface{}) []int {
 }
 
 //
+// part 6: get the min or max element of a slice
+//
+
+func MinIntSl(sl []int) int {
+	min, _ := MinSliceE(sl)
+	return cast.ToInt(min)
+}
+
+func MinInt8Sl(sl []int8) int8 {
+	min, _ := MinSliceE(sl)
+	return cast.ToInt8(min)
+}
+
+func MinInt16Sl(sl []int16) int16 {
+	min, _ := MinSliceE(sl)
+	return cast.ToInt16(min)
+}
+
+func MinInt32Sl(sl []int32) int32 {
+	min, _ := MinSliceE(sl)
+	return cast.ToInt32(min)
+}
+
+func MinInt64Sl(sl []int64) int64 {
+	min, _ := MinSliceE(sl)
+	return cast.ToInt64(min)
+}
+
+func MinUintSl(sl []uint) uint {
+	min, _ := MinSliceE(sl)
+	return cast.ToUint(min)
+}
+
+func MinUint8Sl(sl []uint8) uint8 {
+	min, _ := MinSliceE(sl)
+	return cast.ToUint8(min)
+}
+
+func MinUint16Sl(sl []uint16) uint16 {
+	min, _ := MinSliceE(sl)
+	return cast.ToUint16(min)
+}
+
+func MinUint32Sl(sl []uint32) uint32 {
+	min, _ := MinSliceE(sl)
+	return cast.ToUint32(min)
+}
+
+func MinUint64Sl(sl []uint64) uint64 {
+	min, _ := MinSliceE(sl)
+	return cast.ToUint64(min)
+}
+
+func MinFloat32Sl(sl []float32) float32 {
+	min, _ := MinSliceE(sl)
+	return cast.ToFloat32(min)
+}
+
+func MinFloat64Sl(sl []float64) float64 {
+	min, _ := MinSliceE(sl)
+	return cast.ToFloat64(min)
+}
+
+func MaxIntSl(sl []int) int {
+	max, _ := MaxSliceE(sl)
+	return cast.ToInt(max)
+}
+
+func MaxInt8Sl(sl []int8) int8 {
+	max, _ := MaxSliceE(sl)
+	return cast.ToInt8(max)
+}
+
+func MaxInt16Sl(sl []int16) int16 {
+	min, _ := MaxSliceE(sl)
+	return cast.ToInt16(min)
+}
+
+func MaxInt32Sl(sl []int32) int32 {
+	max, _ := MaxSliceE(sl)
+	return cast.ToInt32(max)
+}
+
+func MaxInt64Sl(sl []int64) int64 {
+	max, _ := MaxSliceE(sl)
+	return cast.ToInt64(max)
+}
+
+func MaxUintSl(sl []uint) uint {
+	max, _ := MaxSliceE(sl)
+	return cast.ToUint(max)
+}
+
+func MaxUint8Sl(sl []uint8) uint8 {
+	max, _ := MaxSliceE(sl)
+	return cast.ToUint8(max)
+}
+
+func MaxUint16Sl(sl []uint16) uint16 {
+	max, _ := MaxSliceE(sl)
+	return cast.ToUint16(max)
+}
+
+func MaxUint32Sl(sl []uint32) uint32 {
+	max, _ := MaxSliceE(sl)
+	return cast.ToUint32(max)
+}
+
+func MaxUint64Sl(sl []uint64) uint64 {
+	max, _ := MaxSliceE(sl)
+	return cast.ToUint64(max)
+}
+
+func MaxFloat32Sl(sl []float32) float32 {
+	max, _ := MaxSliceE(sl)
+	return cast.ToFloat32(max)
+}
+
+func MaxFloat64Sl(sl []float64) float64 {
+	max, _ := MaxSliceE(sl)
+	return cast.ToFloat64(max)
+}
+
+//
 // part x: basic operating functions of slice
 //
 
@@ -491,7 +635,7 @@ func ReverseSliceE(slice interface{}) (interface{}, error) {
 	return dst, nil
 }
 
-// SumSliceE calculates the sum of slice elements and return has an error param
+// SumSliceE returns the sum of slice elements and an error if occurred
 func SumSliceE(slice interface{}) (float64, error) {
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
@@ -509,6 +653,8 @@ func SumSliceE(slice interface{}) (float64, error) {
 			sum += float64(v)
 		case int32:
 			sum += float64(v)
+		case int64:
+			sum += float64(v)
 		case uint:
 			sum += float64(v)
 		case uint8:
@@ -516,6 +662,8 @@ func SumSliceE(slice interface{}) (float64, error) {
 		case uint16:
 			sum += float64(v)
 		case uint32:
+			sum += float64(v)
+		case uint64:
 			sum += float64(v)
 		case float32:
 			sum += float64(v)
@@ -526,6 +674,144 @@ func SumSliceE(slice interface{}) (float64, error) {
 		}
 	}
 	return sum, nil
+}
+
+// MinSliceE returns the smallest element of the slice and an error if occurred.
+// If slice length is zero return the zero value of the element type.
+func MinSliceE(slice interface{}) (interface{}, error) {
+	v := reflect.ValueOf(slice)
+	if v.Kind() != reflect.Slice {
+		return nil, errors.New("param isn't a slice")
+	}
+	if v.Len() == 0 {
+		return nil, nil
+	}
+
+	min := v.Index(0).Interface()
+	for i := 1; i < v.Len(); i++ {
+		switch v := v.Index(i).Interface().(type) {
+		case int:
+			if v < min.(int) {
+				min = v
+			}
+		case int8:
+			if v < min.(int8) {
+				min = v
+			}
+		case int16:
+			if v < min.(int16) {
+				min = v
+			}
+		case int32:
+			if v < min.(int32) {
+				min = v
+			}
+		case int64:
+			if v < min.(int64) {
+				min = v
+			}
+		case uint:
+			if v < min.(uint) {
+				min = v
+			}
+		case uint8:
+			if v < min.(uint8) {
+				min = v
+			}
+		case uint16:
+			if v < min.(uint16) {
+				min = v
+			}
+		case uint32:
+			if v < min.(uint32) {
+				min = v
+			}
+		case uint64:
+			if v < min.(uint64) {
+				min = v
+			}
+		case float32:
+			if v < min.(float32) {
+				min = v
+			}
+		case float64:
+			if v < min.(float64) {
+				min = v
+			}
+		default:
+			return nil, errors.New("elements in slice aren't numerical type")
+		}
+	}
+	return min, nil
+}
+
+// MaxSliceE returns the largest element of the slice and an error if occurred.
+// If slice length is zero return the zero value of the element type.
+func MaxSliceE(slice interface{}) (interface{}, error) {
+	v := reflect.ValueOf(slice)
+	if v.Kind() != reflect.Slice {
+		return nil, errors.New("param isn't a slice")
+	}
+	if v.Len() == 0 {
+		return nil, nil
+	}
+
+	max := v.Index(0).Interface()
+	for i := 1; i < v.Len(); i++ {
+		switch v := v.Index(i).Interface().(type) {
+		case int:
+			if v > max.(int) {
+				max = v
+			}
+		case int8:
+			if v > max.(int8) {
+				max = v
+			}
+		case int16:
+			if v > max.(int16) {
+				max = v
+			}
+		case int32:
+			if v > max.(int32) {
+				max = v
+			}
+		case int64:
+			if v > max.(int64) {
+				max = v
+			}
+		case uint:
+			if v > max.(uint) {
+				max = v
+			}
+		case uint8:
+			if v > max.(uint8) {
+				max = v
+			}
+		case uint16:
+			if v > max.(uint16) {
+				max = v
+			}
+		case uint32:
+			if v > max.(uint32) {
+				max = v
+			}
+		case uint64:
+			if v > max.(uint64) {
+				max = v
+			}
+		case float32:
+			if v > max.(float32) {
+				max = v
+			}
+		case float64:
+			if v > max.(float64) {
+				max = v
+			}
+		default:
+			return nil, errors.New("elements in slice aren't numerical type")
+		}
+	}
+	return max, nil
 }
 
 // JoinSliceWithSepE joins all elements in slice with separator and return has an error param
@@ -540,7 +826,7 @@ func JoinSliceWithSepE(slice interface{}, sep string) (string, error) {
 		if len(s) > 0 {
 			s += sep
 		}
-		str, err := ToStringE(v.Index(i).Interface())
+		str, err := cast.ToStringE(v.Index(i).Interface())
 		if err != nil {
 			return "", err
 		}

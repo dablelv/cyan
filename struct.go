@@ -2,6 +2,8 @@ package util
 
 import (
 	"reflect"
+
+	"github.com/spf13/cast"
 )
 
 func Struct2Map(obj interface{}) map[string]interface{} {
@@ -21,7 +23,7 @@ func Struct2MapString(obj interface{}) map[string]string {
 
 	var m = make(map[string]string)
 	for i := 0; i < t.NumField(); i++ {
-		m[t.Field(i).Name] = ToString(v.Field(i).Interface())
+		m[t.Field(i).Name] = cast.ToString(v.Field(i).Interface())
 	}
 	return m
 }

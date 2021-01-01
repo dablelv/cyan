@@ -3,6 +3,8 @@ package util
 import (
 	"bytes"
 	"strings"
+
+	"github.com/spf13/cast"
 )
 
 func StrToMapTrue(v string, sep string) map[string]bool {
@@ -25,7 +27,7 @@ func StrToIntSlice(s string, sep string) []int {
 	arr := Split(s, sep)
 	dst := make([]int, len(arr))
 	for i, v := range arr {
-		dst[i] = ToInt(v)
+		dst[i] = cast.ToInt(v)
 	}
 	return dst
 }
@@ -34,7 +36,7 @@ func StrToInt8Slice(s string, sep string) []int8 {
 	arr := Split(s, sep)
 	dst := make([]int8, len(arr))
 	for i, v := range arr {
-		dst[i] = ToInt8(v)
+		dst[i] = cast.ToInt8(v)
 	}
 	return dst
 }
@@ -43,7 +45,7 @@ func StrToInt16Slice(s string, sep string) []int16 {
 	arr := Split(s, sep)
 	dst := make([]int16, len(arr))
 	for i, v := range arr {
-		dst[i] = ToInt16(v)
+		dst[i] = cast.ToInt16(v)
 	}
 	return dst
 }
@@ -52,7 +54,7 @@ func StrToInt32Slice(s string, sep string) []int32 {
 	arr := Split(s, sep)
 	dst := make([]int32, len(arr))
 	for i, v := range arr {
-		dst[i] = ToInt32(v)
+		dst[i] = cast.ToInt32(v)
 	}
 	return dst
 }
@@ -61,7 +63,7 @@ func StrToInt64Slice(s string, sep string) []int64 {
 	arr := Split(s, sep)
 	dst := make([]int64, len(arr))
 	for i, v := range arr {
-		dst[i] = ToInt64(v)
+		dst[i] = cast.ToInt64(v)
 	}
 	return dst
 }
@@ -70,7 +72,7 @@ func StrToUintSlice(s string, sep string) []uint {
 	arr := Split(s, sep)
 	dst := make([]uint, len(arr))
 	for i, v := range arr {
-		dst[i] = ToUint(v)
+		dst[i] = cast.ToUint(v)
 	}
 	return dst
 }
@@ -79,7 +81,7 @@ func StrToUint8Slice(s string, sep string) []uint8 {
 	arr := Split(s, sep)
 	dst := make([]uint8, len(arr))
 	for i, v := range arr {
-		dst[i] = ToUint8(v)
+		dst[i] = cast.ToUint8(v)
 	}
 	return dst
 }
@@ -88,7 +90,7 @@ func StrToUint16Slice(s string, sep string) []uint16 {
 	arr := Split(s, sep)
 	dst := make([]uint16, len(arr))
 	for i, v := range arr {
-		dst[i] = ToUint16(v)
+		dst[i] = cast.ToUint16(v)
 	}
 	return dst
 }
@@ -97,7 +99,7 @@ func StrToUint32Slice(s string, sep string) []uint32 {
 	arr := Split(s, sep)
 	dst := make([]uint32, len(arr))
 	for i, v := range arr {
-		dst[i] = ToUint32(v)
+		dst[i] = cast.ToUint32(v)
 	}
 	return dst
 }
@@ -106,7 +108,7 @@ func StrToUint64Slice(s string, sep string) []uint64 {
 	arr := Split(s, sep)
 	dst := make([]uint64, len(arr))
 	for i, v := range arr {
-		dst[i] = ToUint64(v)
+		dst[i] = cast.ToUint64(v)
 	}
 	return dst
 }
@@ -115,7 +117,7 @@ func StrToFloat32Slice(s string, sep string) []float32 {
 	arr := Split(s, sep)
 	dst := make([]float32, len(arr))
 	for i, v := range arr {
-		dst[i] = ToFloat32(v)
+		dst[i] = cast.ToFloat32(v)
 	}
 	return dst
 }
@@ -124,7 +126,7 @@ func StrToFloat64Slice(s string, sep string) []float64 {
 	arr := Split(s, sep)
 	dst := make([]float64, len(arr))
 	for i, v := range arr {
-		dst[i] = ToFloat64(v)
+		dst[i] = cast.ToFloat64(v)
 	}
 	return dst
 }

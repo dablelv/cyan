@@ -38,30 +38,10 @@ func TestVerGEVer(t *testing.T) {
 		want    bool
 		wantErr bool
 	}{
-		{
-			name:    "greaterthan",
-			args:    args{"1.0.5", "1.0.4"},
-			want:    true,
-			wantErr: false,
-		},
-		{
-			name:    "equal",
-			args:    args{"1.0.5", "1.0.5"},
-			want:    true,
-			wantErr: false,
-		},
-		{
-			name:    "lessthan",
-			args:    args{"1.0.4", "1.0.5"},
-			want:    false,
-			wantErr: false,
-		},
-		{
-			name:    "argill",
-			args:    args{"1.0.5.5", "2.0.4"},
-			want:    false,
-			wantErr: true,
-		},
+		{"greater than", args{"1.0.5", "1.0.4"}, true, false},
+		{"equal", args{"1.0.5", "1.0.5"}, true, false},
+		{"less than", args{"1.0.4", "1.0.5"}, false, false},
+		{"arg ill", args{"1.0.5.5", "2.0.4"}, false, true},
 	}
 	for _, tt := range tests {
 		got, err := VerGEVer(tt.args.ver0, tt.args.ver1)
@@ -81,30 +61,10 @@ func TestVerLEVer(t *testing.T) {
 		want    bool
 		wantErr bool
 	}{
-		{
-			name:    "lessthan",
-			args:    args{"1.0.4", "1.0.5"},
-			want:    true,
-			wantErr: false,
-		},
-		{
-			name:    "equal",
-			args:    args{"1.0.5", "1.0.5"},
-			want:    true,
-			wantErr: false,
-		},
-		{
-			name:    "greaterthan",
-			args:    args{"1.0.5", "1.0.4"},
-			want:    false,
-			wantErr: false,
-		},
-		{
-			name:    "argill",
-			args:    args{"1.0.5.5", "2.0.4"},
-			want:    false,
-			wantErr: true,
-		},
+		{"less than", args{"1.0.4", "1.0.5"}, true, false},
+		{"equal", args{"1.0.5", "1.0.5"}, true, false},
+		{"greater than", args{"1.0.5", "1.0.4"}, false, false},
+		{"arg ill", args{"1.0.5.5", "2.0.4"}, false, true},
 	}
 	for _, tt := range tests {
 		got, err := VerLEVer(tt.args.ver0, tt.args.ver1)
@@ -126,30 +86,10 @@ func TestVerGEVerMore(t *testing.T) {
 		want    bool
 		wantErr bool
 	}{
-		{
-			name:    "greaterthan",
-			args:    args{"2-1-1-1", "2-1-1-0", "-", 4},
-			want:    true,
-			wantErr: false,
-		},
-		{
-			name:    "equal",
-			args:    args{"2-1-1-1", "2-1-1-1", "-", 4},
-			want:    true,
-			wantErr: false,
-		},
-		{
-			name:    "lessthan",
-			args:    args{"2-1-1-0", "2-1-1-1", "-", 4},
-			want:    false,
-			wantErr: false,
-		},
-		{
-			name:    "argill",
-			args:    args{"2-1-1", "2-1-0", "-", 4},
-			want:    false,
-			wantErr: true,
-		},
+		{"greater than", args{"2-1-1-1", "2-1-1-0", "-", 4}, true, false},
+		{"equal", args{"2-1-1-1", "2-1-1-1", "-", 4}, true, false},
+		{"less than", args{"2-1-1-0", "2-1-1-1", "-", 4}, false, false},
+		{"argill", args{"2-1-1", "2-1-0", "-", 4}, false, true},
 	}
 	for _, tt := range tests {
 		got, err := VerGEVerMore(tt.args.ver0, tt.args.ver1, tt.args.sep, tt.args.num)
@@ -171,30 +111,10 @@ func TestVerLEVerMore(t *testing.T) {
 		want    bool
 		wantErr bool
 	}{
-		{
-			name:    "lessthan",
-			args:    args{"2-1-1-0", "2-1-1-1", "-", 4},
-			want:    true,
-			wantErr: false,
-		},
-		{
-			name:    "equal",
-			args:    args{"2-1-1-1", "2-1-1-1", "-", 4},
-			want:    true,
-			wantErr: false,
-		},
-		{
-			name:    "greaterthan",
-			args:    args{"2-1-1-1", "2-1-1-0", "-", 4},
-			want:    false,
-			wantErr: false,
-		},
-		{
-			name:    "argill",
-			args:    args{"2-1-1", "2-1-0", "-", 4},
-			want:    false,
-			wantErr: true,
-		},
+		{"less than", args{"2-1-1-0", "2-1-1-1", "-", 4}, true, false},
+		{"equal", args{"2-1-1-1", "2-1-1-1", "-", 4}, true, false},
+		{"greater than", args{"2-1-1-1", "2-1-1-0", "-", 4}, false, false},
+		{"argill", args{"2-1-1", "2-1-0", "-", 4}, false, true},
 	}
 	for _, tt := range tests {
 		got, err := VerLEVerMore(tt.args.ver0, tt.args.ver1, tt.args.sep, tt.args.num)
