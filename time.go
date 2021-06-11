@@ -75,9 +75,23 @@ func GetDayBeginMoment(t time.Time) time.Time {
 	return n
 }
 
+// GetDayBeginMoment1 gets the starting moment of one day specified by UNIX time stamp
+func GetDayBeginMoment1(uts int64) time.Time {
+	y, m, d := time.Unix(uts, 0).Date()
+	n := time.Date(y, m, d, 0, 0, 0, 0, time.Local)
+	return n
+}
+
 // GetDayEndMoment gets the ending moment of one day
 func GetDayEndMoment(t time.Time) time.Time {
 	y, m, d := t.Date()
+	n := time.Date(y, m, d, 23, 59, 59, 999999999, time.Local)
+	return n
+}
+
+// GetDayEndMoment1 gets the ending moment of one day specified by UNIX time stamp
+func GetDayEndMoment1(uts int64) time.Time {
+	y, m, d := time.Unix(uts, 0).Date()
 	n := time.Date(y, m, d, 23, 59, 59, 999999999, time.Local)
 	return n
 }
