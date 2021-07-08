@@ -38,11 +38,11 @@ func TestMap2StrSliceE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:"map[string][]string",
-			args:args{map[string][]string{"CN":{"China"}, "HK":{"Hong Kong"},"AU":{"Australia"}}},
-			want:nil,
-			want1:nil,
-			wantErr: true,
+			name:"map[string]string",
+			args:args{map[string]string{"CN":"China", "HK":"Hong Kong","AU":"Australia"}},
+			want:[]string{"CN","HK","AU"},
+			want1:[]string{"China","Hong Kong","Australia"},
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
