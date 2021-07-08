@@ -7,8 +7,8 @@ import (
 	"github.com/spf13/cast"
 )
 
-// map2SliceE converts keys and values of map to slice with error
-func map2SliceE(i interface{})([]interface{}, []interface{}, error) {
+// Map2SliceE converts keys and values of map to slice with error
+func Map2SliceE(i interface{})([]interface{}, []interface{}, error) {
 	kind := reflect.TypeOf(i).Kind()
 	if kind != reflect.Map {
 		return nil, nil, errors.New("the input is not a map")
@@ -26,7 +26,7 @@ func map2SliceE(i interface{})([]interface{}, []interface{}, error) {
 
 // Map2StrSliceE converts keys and values of map to string slice with error
 func Map2StrSliceE(i interface{})([]string, []string, error) {
-	slK, slV, err := map2SliceE(i)
+	slK, slV, err := Map2SliceE(i)
 	if err != nil {
 		return nil, nil, err
 	}
