@@ -286,3 +286,11 @@ func (t *TimeCounter) GetUs() int64 {
 func (t *TimeCounter) GetNs() int64 {
 	return time.Now().UnixNano() - t.int64
 }
+
+// TimeCost 耗时统计
+func TimeCost() func() time.Duration {
+	start := time.Now()
+	return func() time.Duration {
+		return time.Since(start)
+	}
+}
