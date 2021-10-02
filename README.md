@@ -185,7 +185,7 @@ huge.ToString(u32Alias)         // "1"
 
 type StringAlias string
 var sAlias StringAlias = "a"
-huge.ToString(sAlias)         // "a"
+huge.ToString(sAlias)           // "a"
 ```
 
 Example ToInt:
