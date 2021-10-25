@@ -141,3 +141,31 @@ func TestToStrMapSetE(t *testing.T) {
 		})
 	}
 }
+
+func TestToU64MapSet(t *testing.T) {
+	type args struct {
+		i interface{}
+	}
+	tests := []struct {
+		name string
+		args args
+		want map[uint64]struct{}
+	}{
+		{
+			name:"array to map set",
+			args:args{[3]uint64{1,2,3}},
+			want:map[uint64]struct{}{
+				1:struct{}{},
+				2:struct{}{},
+				3:struct{}{},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := ToU64MapSet(tt.args.i); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ToU64MapSet() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
