@@ -3,6 +3,7 @@ package util
 import (
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/spf13/cast"
 )
@@ -338,4 +339,43 @@ func ToMapSetE(i interface{}) (map[interface{}]struct{}, error) {
 		m[v.Index(j).Interface()] = struct{}{}
 	}
 	return m, nil
+}
+
+// ToStrSlice casts an interface to a []string type.
+func ToStrSlice(i interface{}) []string {
+	v, _ := ToStrSliceE(i)
+	return v
+}
+
+// ToStrSliceE casts an interface to a []string type.
+func ToStrSliceE(i interface{}) ([]string, error) {
+	var a []string
+
+	// if i is a slice or array
+	kind := reflect.TypeOf(i).Kind()
+	if kind == reflect.Slice || kind == reflect.Array {
+		sl := reflect.ValueOf(i)
+		for j := 0; j < sl.Len(); j++ {
+			v, err := cast.ToStringE(sl.Index(j).Interface())
+			if err != nil {
+				return nil, err
+			}
+			a = append(a, v)
+		}
+		return a, nil
+	}
+
+	// if i is a single value
+	switch v := i.(type) {
+	case string:
+		return strings.Fields(v), nil
+	case interface{}:
+		str, err := cast.ToStringE(v)
+		if err != nil {
+			return a, fmt.Errorf("unable to cast %#v of type %T to []string", i, i)
+		}
+		return []string{str}, nil
+	default:
+		return a, fmt.Errorf("unable to cast %#v of type %T to []string", i, i)
+	}
 }
