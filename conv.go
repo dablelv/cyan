@@ -9,20 +9,21 @@ import (
 )
 
 // Map2SliceE converts keys and values of map to slice with error
-func Map2SliceE(i interface{})([]interface{}, []interface{}, error) {
+func Map2SliceE(i interface{})(slK []interface{}, slV []interface{}, err error) {
 	kind := reflect.TypeOf(i).Kind()
 	if kind != reflect.Map {
-		return nil, nil, fmt.Errorf("the input %#v of type %T isn't a map", i, i)
+		err = fmt.Errorf("the input %#v of type %T isn't a map", i, i)
+		return
 	}
 	m := reflect.ValueOf(i)
 	keys := m.MapKeys()
-	slK, slV := make([]interface{}, 0, len(keys)), make([]interface{}, 0, len(keys))
+	slK, slV = make([]interface{}, 0, len(keys)), make([]interface{}, 0, len(keys))
 	for _, k := range keys {
 		slK = append(slK, k.Interface())
 		v := m.MapIndex(k)
 		slV = append(slV, v.Interface())
 	}
-	return slK, slV, nil
+	return
 }
 
 // Map2StrSliceE converts keys and values of map to string slice with error
@@ -379,3 +380,5 @@ func ToStrSliceE(i interface{}) ([]string, error) {
 		return a, fmt.Errorf("unable to cast %#v of type %T to []string", i, i)
 	}
 }
+
+// TODO ToUint64Slice

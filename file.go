@@ -115,24 +115,13 @@ func CreateFile(path string) error {
 	return errors.New("file " + path + " already exists.")
 }
 
-
-
-// FileToBytes serialze the file to bytes 
+// FileToBytes serialize the file to bytes
 func FileToBytes(path string) []byte {
-	byteStream, err := ioutil.ReadFile(path)
-	if err != nil {
-		fmt.Println(err)
-		return nil
-	}
-
+	byteStream, _ := ioutil.ReadFile(path)
 	return byteStream
 }
 
 // BytesToFile writes data to a file named by filename
 func BytesToFile(filename string, data []byte) error {
-	err := ioutil.WriteFile(filename, data, 0644)
-	if err != nil {
-		return err
-	}
-	return nil
+	return ioutil.WriteFile(filename, data, 0644)
 }
