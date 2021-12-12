@@ -2,49 +2,9 @@ package util
 
 import (
 	"fmt"
-	"reflect"
-	"strings"
-
 	"github.com/spf13/cast"
+	"reflect"
 )
-
-// Map2SliceE converts keys and values of map to slice with error
-func Map2SliceE(i interface{})(slK []interface{}, slV []interface{}, err error) {
-	kind := reflect.TypeOf(i).Kind()
-	if kind != reflect.Map {
-		err = fmt.Errorf("the input %#v of type %T isn't a map", i, i)
-		return
-	}
-	m := reflect.ValueOf(i)
-	keys := m.MapKeys()
-	slK, slV = make([]interface{}, 0, len(keys)), make([]interface{}, 0, len(keys))
-	for _, k := range keys {
-		slK = append(slK, k.Interface())
-		v := m.MapIndex(k)
-		slV = append(slV, v.Interface())
-	}
-	return
-}
-
-// Map2StrSliceE converts keys and values of map to string slice with error
-func Map2StrSliceE(i interface{})(k []string, v []string, err error) {
-	slK, slV, err := Map2SliceE(i)
-	if err != nil {
-		return
-	}
-	k, err = cast.ToStringSliceE(slK)
-	if err != nil {
-		return
-	}
-	v, err = cast.ToStringSliceE(slV)
-	return
-}
-
-// Map2StrSlice converts keys and values of map to string slice
-func Map2StrSlice(i interface{})([]string, []string) {
-	slK, slV, _ := Map2StrSliceE(i)
-	return slK, slV
-}
 
 // ToBoolMapSet converts a slice or array to map[bool]struct{}
 func ToBoolMapSet(i interface{}) map[bool]struct{}{
@@ -332,7 +292,6 @@ func ToMapSetE(i interface{}) (map[interface{}]struct{}, error) {
 	if kind != reflect.Slice && kind != reflect.Array {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice or array", i, i)
 	}
-
 	// execute the convert
 	v := reflect.ValueOf(i)
 	m := make(map[interface{}]struct{}, v.Len())
@@ -341,44 +300,3 @@ func ToMapSetE(i interface{}) (map[interface{}]struct{}, error) {
 	}
 	return m, nil
 }
-
-// ToStrSlice casts an interface to a []string type.
-func ToStrSlice(i interface{}) []string {
-	v, _ := ToStrSliceE(i)
-	return v
-}
-
-// ToStrSliceE casts an interface to a []string type.
-func ToStrSliceE(i interface{}) ([]string, error) {
-	var a []string
-
-	// if i is a slice or array
-	kind := reflect.TypeOf(i).Kind()
-	if kind == reflect.Slice || kind == reflect.Array {
-		sl := reflect.ValueOf(i)
-		for j := 0; j < sl.Len(); j++ {
-			v, err := cast.ToStringE(sl.Index(j).Interface())
-			if err != nil {
-				return nil, err
-			}
-			a = append(a, v)
-		}
-		return a, nil
-	}
-
-	// if i is a single value
-	switch v := i.(type) {
-	case string:
-		return strings.Fields(v), nil
-	case interface{}:
-		str, err := cast.ToStringE(v)
-		if err != nil {
-			return a, fmt.Errorf("unable to cast %#v of type %T to []string", i, i)
-		}
-		return []string{str}, nil
-	default:
-		return a, fmt.Errorf("unable to cast %#v of type %T to []string", i, i)
-	}
-}
-
-// TODO ToUint64Slice

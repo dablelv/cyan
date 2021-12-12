@@ -1,9 +1,10 @@
 package util
 
 import (
-	"github.com/stretchr/testify/assert"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMap2StrSliceE(t *testing.T) {
@@ -160,12 +161,68 @@ func TestToU64MapSet(t *testing.T) {
 				3:struct{}{},
 			},
 		},
+		{
+			name:"zero length slice to map set",
+			args:args{[]uint64{}},
+			want:map[uint64]struct{}{
+			},
+		},
+		{
+			name:"nil slice to map set",
+			args:args{[]uint64(nil)},
+			want:map[uint64]struct{}{
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := ToU64MapSet(tt.args.i); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("ToU64MapSet() = %v, want %v", got, tt.want)
 			}
+		})
+	}
+}
+
+func TestMap2Slice(t *testing.T) {
+	type args struct {
+		i interface{}
+	}
+	tests := []struct {
+		name  string
+		args  args
+		wantK []interface{}
+		wantV []interface{}
+	}{
+		{
+			name:"map[string]string to slice ",
+			args:args{
+				map[string]string{"1":"1","2":"2","3":"3"},
+			},
+			wantK:[]interface{}{"1","2","3"},
+			wantV:[]interface{}{"1","2","3"},
+		},
+		{
+			name:"map[int]string to slice",
+			args:args{
+				map[int]string{1:"1",2:"2",3:"3"},
+			},
+			wantK:[]interface{}{1,2,3},
+			wantV:[]interface{}{"1","2","3"},
+		},
+		{
+			name:"map[int]int to slice",
+			args:args{
+				map[int]int{1:1,2:2,3:3},
+			},
+			wantK:[]interface{}{1,2,3},
+			wantV:[]interface{}{1,2,3},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotK, gotV := Map2Slice(tt.args.i)
+			assert.Equal(t, len(gotK), len(tt.wantK))
+			assert.Equal(t, len(gotV), len(tt.wantV))
 		})
 	}
 }
