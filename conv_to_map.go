@@ -7,73 +7,73 @@ import (
 )
 
 // ToBoolMapSet converts a slice or array to map[bool]struct{}
-func ToBoolMapSet(i interface{}) map[bool]struct{}{
+func ToBoolMapSet(i interface{}) map[bool]struct{} {
 	m, _ := ToBoolMapSetE(i)
 	return m
 }
 
 // ToIntMapSet converts a slice or array to map[int]struct{}
-func ToIntMapSet(i interface{}) map[int]struct{}{
+func ToIntMapSet(i interface{}) map[int]struct{} {
 	m, _ := ToIntMapSetE(i)
 	return m
 }
 
 // ToI8MapSet converts a slice or array to map[int8]struct{}
-func ToI8MapSet(i interface{}) map[int8]struct{}{
+func ToI8MapSet(i interface{}) map[int8]struct{} {
 	m, _ := ToI8MapSetE(i)
 	return m
 }
 
 // ToI16MapSet converts a slice or array to map[int16]struct{}
-func ToI16MapSet(i interface{}) map[int16]struct{}{
+func ToI16MapSet(i interface{}) map[int16]struct{} {
 	m, _ := ToI16MapSetE(i)
 	return m
 }
 
 // ToI32MapSet converts a slice or array to map[int32]struct{}
-func ToI32MapSet(i interface{}) map[int32]struct{}{
+func ToI32MapSet(i interface{}) map[int32]struct{} {
 	m, _ := ToI32MapSetE(i)
 	return m
 }
 
 // ToI64MapSet converts a slice or array to map[int64]struct{}
-func ToI64MapSet(i interface{}) map[int64]struct{}{
+func ToI64MapSet(i interface{}) map[int64]struct{} {
 	m, _ := ToI64MapSetE(i)
 	return m
 }
 
 // ToUintMapSet converts a slice or array to map[uint]struct{}
-func ToUintMapSet(i interface{}) map[uint]struct{}{
+func ToUintMapSet(i interface{}) map[uint]struct{} {
 	m, _ := ToUintMapSetE(i)
 	return m
 }
 
 // ToU8MapSet converts a slice or array to map[uint8]struct{}
-func ToU8MapSet(i interface{}) map[uint8]struct{}{
+func ToU8MapSet(i interface{}) map[uint8]struct{} {
 	m, _ := ToU8MapSetE(i)
 	return m
 }
 
 // ToU16MapSet converts a slice or array to map[uint16]struct{}
-func ToU16MapSet(i interface{}) map[uint16]struct{}{
+func ToU16MapSet(i interface{}) map[uint16]struct{} {
 	m, _ := ToU16MapSetE(i)
 	return m
 }
 
 // ToU32MapSet converts a slice or array to map[uint32]struct{}
-func ToU32MapSet(i interface{}) map[uint32]struct{}{
+func ToU32MapSet(i interface{}) map[uint32]struct{} {
 	m, _ := ToU32MapSetE(i)
 	return m
 }
 
 // ToU64MapSet converts a slice or array to map[uint64]struct{}
-func ToU64MapSet(i interface{}) map[uint64]struct{}{
+func ToU64MapSet(i interface{}) map[uint64]struct{} {
 	m, _ := ToU64MapSetE(i)
 	return m
 }
 
 // ToStrMapSet converts a slice or array to map[string]struct{}
-func ToStrMapSet(i interface{}) map[string]struct{}{
+func ToStrMapSet(i interface{}) map[string]struct{} {
 	m, _ := ToStrMapSetE(i)
 	return m
 }
