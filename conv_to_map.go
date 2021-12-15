@@ -2,8 +2,9 @@ package util
 
 import (
 	"fmt"
-	"github.com/spf13/cast"
 	"reflect"
+
+	"github.com/spf13/cast"
 )
 
 // ToBoolMapSet converts a slice or array to map[bool]struct{}

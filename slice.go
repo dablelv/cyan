@@ -10,6 +10,7 @@ import (
 //
 // part 0: unique a slice, e.g. input []int32{1, 2, 2, 3} and output is []int32{1, 2, 3}
 //
+
 func UniqueIntSlice(src []int) []int {
 	tmp, _ := UniqueSliceE(src)
 	var dst []int
@@ -130,6 +131,7 @@ func UniqueStrSlice(src []string) []string {
 //
 // part 1: reverse a slice, e.g. input []int32{1, 2, 3} and output is []int32{3, 2, 1}
 //
+
 func ReverseIntSlice(src []int) []int {
 	tmp, _ := ReverseSliceE(src)
 	dst := []int{}
@@ -603,13 +605,12 @@ func MaxFloat64Sl(sl []float64) float64 {
 // part x: basic operating functions of slice
 //
 
-// UniqueSliceE delete repeated elements in a slice
+// UniqueSliceE delete repeated elements in a slice with error
 func UniqueSliceE(slice interface{}) (interface{}, error) {
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return nil, errors.New("param isn't a slice")
+		return nil, errors.New("input isn't a slice")
 	}
-
 	var dst []interface{}
 	m := make(map[interface{}]bool)
 	for i := 0; i < v.Len(); i++ {
@@ -863,17 +864,17 @@ func InsertSliceE(slice interface{}, index int, value interface{}) (interface{},
 }
 
 // DeleteSliceE deletes the specified index element from the slice
-// Note that original slice will not be modified
+// Note that the original slice will not be modified
 func DeleteSliceE(slice interface{}, index int) (interface{}, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return nil, errors.New("target isn't a slice")
+		return nil, errors.New("the input isn't a slice")
 	}
 	if v.Len() == 0 || index < 0 || index > v.Len()-1 {
-		return nil, errors.New("param is invalid")
+		return nil, errors.New("index is invalid")
 	}
-
+	// delete
 	t := reflect.MakeSlice(reflect.TypeOf(slice), 0, 0)
 	t = reflect.AppendSlice(t, v.Slice(0, index))
 	t = reflect.AppendSlice(t, v.Slice(index+1, v.Len()))
@@ -905,7 +906,7 @@ func GetEleIndexesSliceE(slice interface{}, value interface{}) ([]int, error) {
 	if v.Kind() != reflect.Slice {
 		return nil, errors.New("target isn't a slice")
 	}
-
+	// get indexes
 	var indexes []int
 	for i := 0; i < v.Len(); i++ {
 		if v.Index(i).Interface() == value {
@@ -913,4 +914,10 @@ func GetEleIndexesSliceE(slice interface{}, value interface{}) ([]int, error) {
 		}
 	}
 	return indexes, nil
+}
+
+// DeleteSliceElms deletes the specified elements from the slice
+// Note that the original slice will not be modified
+func DeleteSliceElms() {
+
 }
