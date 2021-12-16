@@ -232,7 +232,7 @@ func ReverseStrSlice(src []string) []string {
 }
 
 //
-// part 2: sum a slice, e.g. input []int32{1, 2, 3} and output is 6
+// part 2: sum a slice, e.g. input []int32{1, 2, 3} and output is 6.
 //
 
 // SumSlice calculates the sum of slice elements
@@ -242,12 +242,12 @@ func SumSlice(slice interface{}) float64 {
 }
 
 //
-// part3: determine whether the slice contains an element
+// part3: determine whether the slice contains an element.
 //
 
-// IsContains check slice whether contain target element
+// IsContains check slice whether contain target element.
 // note: if the target element is a numeric literal, please specify its type explicitly, otherwise it defaults to int.
-// You might call IsContains like IsContains([]int32{1,2,3}, int32(1))
+// You might call IsContains like IsContains([]int32{1,2,3}, int32(1)).
 func IsContains(slice interface{}, target interface{}) bool {
 	if reflect.TypeOf(slice).Kind() == reflect.Slice {
 		v := reflect.ValueOf(slice)
@@ -271,7 +271,7 @@ func JoinSliceWithSep(slice interface{}, sep string) string {
 }
 
 //
-// part 5: CRUD(Create Read Update Delete) on slice by index
+// part 5: CRUD(Create Read Update Delete) on slice by index.
 //
 
 func InsertIntSlice(src []int, index, value int) []int {
@@ -478,7 +478,7 @@ func GetEleIndexesSlice(slice interface{}, value interface{}) []int {
 }
 
 //
-// part 6: get the min or max element of a slice
+// part 6: get the min or max element of a slice.
 //
 
 func MinIntSl(sl []int) int {
@@ -636,7 +636,7 @@ func ReverseSliceE(slice interface{}) (interface{}, error) {
 	return dst, nil
 }
 
-// SumSliceE returns the sum of slice elements and an error if occurred
+// SumSliceE returns the sum of slice elements and an error if occurred.
 func SumSliceE(slice interface{}) (float64, error) {
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
@@ -815,7 +815,7 @@ func MaxSliceE(slice interface{}) (interface{}, error) {
 	return max, nil
 }
 
-// JoinSliceWithSepE joins all elements in slice with separator and return has an error param
+// JoinSliceWithSepE joins all elements in slice with separator and return an error if occurred.
 func JoinSliceWithSepE(slice interface{}, sep string) (string, error) {
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
@@ -836,8 +836,8 @@ func JoinSliceWithSepE(slice interface{}, sep string) (string, error) {
 	return s, nil
 }
 
-// InsertSliceE inserts a element to slice in the specified index
-// Note that original slice will not be modified
+// InsertSliceE inserts a element to slice in the specified index.
+// Note that the original slice will not be modified.
 func InsertSliceE(slice interface{}, index int, value interface{}) (interface{}, error) {
 	// check params
 	v := reflect.ValueOf(slice)
@@ -863,8 +863,8 @@ func InsertSliceE(slice interface{}, index int, value interface{}) (interface{},
 	return t.Interface(), nil
 }
 
-// DeleteSliceE deletes the specified index element from the slice
-// Note that the original slice will not be modified
+// DeleteSliceE deletes the specified index element from the slice.
+// Note that the original slice will not be modified.
 func DeleteSliceE(slice interface{}, index int) (interface{}, error) {
 	// check params
 	v := reflect.ValueOf(slice)
@@ -881,8 +881,8 @@ func DeleteSliceE(slice interface{}, index int) (interface{}, error) {
 	return t.Interface(), nil
 }
 
-// UpdateSliceE modifies the specified index element of slice
-// Note that original slice will not be modified
+// UpdateSliceE modifies the specified index element of slice.
+// Note that the original slice will not be modified.
 func UpdateSliceE(slice interface{}, index int, value interface{}) (interface{}, error) {
 	// check params
 	v := reflect.ValueOf(slice)
@@ -899,7 +899,7 @@ func UpdateSliceE(slice interface{}, index int, value interface{}) (interface{},
 	return t.Interface(), nil
 }
 
-// GetEleIndexesSliceE finds all indexes of the specified element in a slice
+// GetEleIndexesSliceE finds all indexes of the specified element in a slice.
 func GetEleIndexesSliceE(slice interface{}, value interface{}) ([]int, error) {
 	// check params
 	v := reflect.ValueOf(slice)
@@ -914,10 +914,4 @@ func GetEleIndexesSliceE(slice interface{}, value interface{}) ([]int, error) {
 		}
 	}
 	return indexes, nil
-}
-
-// DeleteSliceElms deletes the specified elements from the slice
-// Note that the original slice will not be modified
-func DeleteSliceElms() {
-
 }

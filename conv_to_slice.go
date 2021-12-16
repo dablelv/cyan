@@ -53,13 +53,13 @@ func Map2StrSliceE(i interface{}) (k []string, v []string, err error) {
 	return
 }
 
-// ToStrSlice converts an interface to a []string type
+// ToStrSlice converts an interface to a []string type.
 func ToStrSlice(i interface{}) []string {
 	v, _ := ToStrSliceE(i)
 	return v
 }
 
-// ToStrSliceE converts an interface to a []string slice with error
+// ToStrSliceE converts an interface to a []string slice with error.
 func ToStrSliceE(i interface{}) ([]string, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []string", i, i)
