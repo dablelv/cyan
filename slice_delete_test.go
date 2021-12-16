@@ -5,15 +5,15 @@ import (
 	"testing"
 )
 
-func TestDeleteStrSliceElms(t *testing.T) {
+func TestDeleteSliceElms(t *testing.T) {
 	type args struct {
-		i    []string
+		i    interface{}
 		elms []interface{}
 	}
 	tests := []struct {
 		name string
 		args args
-		want []string
+		want interface{}
 	}{
 		{
 			name:"delete success",
@@ -34,8 +34,8 @@ func TestDeleteStrSliceElms(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := DeleteStrSliceElms(tt.args.i, tt.args.elms...); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("DeleteStrSliceElms() = %v, want %v", got, tt.want)
+			if got := DeleteSliceElms(tt.args.i, tt.args.elms...); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("DeleteSliceElms() = %v, want %v", got, tt.want)
 			}
 		})
 	}
