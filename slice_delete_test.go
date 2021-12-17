@@ -24,6 +24,14 @@ func TestDeleteSliceElms(t *testing.T) {
 			want:[]string{"a"},
 		},
 		{
+			name:"delete all",
+			args:args{
+				i:[]string{"a","b","b","c"},
+				elms: []interface{}{"a","b","c"},
+			},
+			want:[]string{},
+		},
+		{
 			name:"delete failed because element type is ill",
 			args:args{
 				i:[]string{"1","2","2","3"},
