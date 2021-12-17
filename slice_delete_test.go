@@ -120,7 +120,7 @@ func TestDeleteStrSlice(t *testing.T) {
 			want:[]string{},
 		},
 		{
-			name:"not delete all",
+			name:"not delete",
 			args:args{
 				src:[]string{"a","b","b","c"},
 				indexes: []int{},
