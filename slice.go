@@ -340,72 +340,6 @@ func InsertStrSlice(src []int, index int, value string) []string {
 	return v
 }
 
-func DeleteIntSlice(src []int, index int) []int {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]int)
-	return v
-}
-
-func DeleteInt8Slice(src []int8, index int) []int8 {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]int8)
-	return v
-}
-
-func DeleteInt16Slice(src []int, index int) []int16 {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]int16)
-	return v
-}
-
-func DeleteInt32Slice(src []int, index int) []int32 {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]int32)
-	return v
-}
-
-func DeleteInt64Slice(src []int, index int) []int64 {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]int64)
-	return v
-}
-
-func DeleteUintSlice(src []int, index int) []uint {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]uint)
-	return v
-}
-
-func DeleteUint8Slice(src []int8, index int) []uint8 {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]uint8)
-	return v
-}
-
-func DeleteUint16Slice(src []int, index int) []uint16 {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]uint16)
-	return v
-}
-
-func DeleteUint32Slice(src []int, index int) []uint32 {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]uint32)
-	return v
-}
-
-func DeleteUint64Slice(src []int, index int) []uint64 {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]uint64)
-	return v
-}
-
-func DeleteStrSlice(src []int, index int) []string {
-	tmp, _ := DeleteSliceE(src, index)
-	v, _ := tmp.([]string)
-	return v
-}
-
 func UpdateIntSlice(src []int, index, value int) []int {
 	tmp, _ := UpdateSliceE(src, index, value)
 	v, _ := tmp.([]int)
@@ -860,24 +794,6 @@ func InsertSliceE(slice interface{}, index int, value interface{}) (interface{},
 	t = reflect.AppendSlice(t, v.Slice(0, index+1))
 	t = reflect.AppendSlice(t, v.Slice(index, v.Len()))
 	t.Index(index).Set(reflect.ValueOf(value))
-	return t.Interface(), nil
-}
-
-// DeleteSliceE deletes the specified index element from the slice.
-// Note that the original slice will not be modified.
-func DeleteSliceE(slice interface{}, index int) (interface{}, error) {
-	// check params
-	v := reflect.ValueOf(slice)
-	if v.Kind() != reflect.Slice {
-		return nil, errors.New("the input isn't a slice")
-	}
-	if v.Len() == 0 || index < 0 || index > v.Len()-1 {
-		return nil, errors.New("index is invalid")
-	}
-	// delete
-	t := reflect.MakeSlice(reflect.TypeOf(slice), 0, 0)
-	t = reflect.AppendSlice(t, v.Slice(0, index))
-	t = reflect.AppendSlice(t, v.Slice(index+1, v.Len()))
 	return t.Interface(), nil
 }
 
