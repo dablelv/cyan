@@ -9,48 +9,29 @@ import (
 	"github.com/spf13/cast"
 )
 
-// Map2Slice converts keys and values of map to slice
-func Map2Slice(i interface{}) (k []interface{}, v []interface{}) {
-	k, v, _ = Map2SliceE(i)
+// Map2Slice converts keys and values of map to slice in unspecified order.
+func Map2Slice(i interface{}) (ks interface{}, vs interface{}) {
+	ks, vs, _ = Map2SliceE(i)
 	return
 }
 
-// Map2SliceE converts keys and values of map to slice with error
-func Map2SliceE(i interface{}) (ks []interface{}, vs []interface{}, err error) {
-	kind := reflect.TypeOf(i).Kind()
-	if kind != reflect.Map {
+// Map2SliceE converts keys and values of map to slice in unspecified order with error.
+func Map2SliceE(i interface{}) (ks interface{}, vs interface{}, err error) {
+	t := reflect.TypeOf(i)
+	if t.Kind() != reflect.Map {
 		err = fmt.Errorf("the input %#v of type %T isn't a map", i, i)
 		return
 	}
 	m := reflect.ValueOf(i)
+	l := m.Len()
 	keys := m.MapKeys()
-	ks, vs = make([]interface{}, 0, len(keys)), make([]interface{}, 0, len(keys))
+	ksT, vsT := reflect.SliceOf(t.Key()), reflect.SliceOf(t.Elem())
+	ksV, vsV := reflect.MakeSlice(ksT, 0, l), reflect.MakeSlice(vsT, 0, l)
 	for _, k := range keys {
-		ks = append(ks, k.Interface())
-		v := m.MapIndex(k)
-		vs = append(vs, v.Interface())
+		ksV = reflect.Append(ksV, k)
+		vsV = reflect.Append(vsV, m.MapIndex(k))
 	}
-	return
-}
-
-// Map2StrSlice converts keys and values of map to string slice
-func Map2StrSlice(i interface{}) (k []string, v []string) {
-	k, v, _ = Map2StrSliceE(i)
-	return
-}
-
-// Map2StrSliceE converts keys and values of map to string slice with error
-func Map2StrSliceE(i interface{}) (k []string, v []string, err error) {
-	slK, slV, err := Map2SliceE(i)
-	if err != nil {
-		return
-	}
-	k, err = ToStrSliceE(slK)
-	if err != nil {
-		return
-	}
-	v, err = ToStrSliceE(slV)
-	return
+	return ksV.Interface(), vsV.Interface(), nil
 }
 
 // ToStrSlice converts an interface to a []string type.
