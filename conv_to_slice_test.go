@@ -165,6 +165,14 @@ func TestMap2Slice(t *testing.T) {
 			wantK: []int{1, 2, 3},
 			wantV: []int{1, 2, 3},
 		},
+		{
+			name: "empty map[int]int to slice",
+			args: args{
+				map[int]int{},
+			},
+			wantK: []int{},
+			wantV: []int{},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
