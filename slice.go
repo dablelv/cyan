@@ -246,7 +246,8 @@ func SumSlice(slice interface{}) float64 {
 //
 
 // IsContains check slice whether contain target element.
-// note: if the target element is a numeric literal, please specify its type explicitly, otherwise it defaults to int.
+// Note that if the target element is a numeric literal, please specify its type explicitly,
+// otherwise it defaults to int.
 // You might call IsContains like IsContains([]int32{1,2,3}, int32(1)).
 func IsContains(slice interface{}, target interface{}) bool {
 	if reflect.TypeOf(slice).Kind() == reflect.Slice {

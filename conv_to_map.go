@@ -2,80 +2,280 @@ package util
 
 import (
 	"fmt"
-	"reflect"
-
 	"github.com/spf13/cast"
+	"reflect"
 )
 
-// ToBoolMapSet converts a slice or array to map[bool]struct{}
+// ToBoolMapSetStrict converts a slice or array to map[bool]struct{} strictly.
+// Note that the element type of input need to be equal to map key type.
+func ToBoolMapSetStrict(i interface{}) map[bool]struct{} {
+	m, _ := ToBoolMapSetStrictE(i)
+	return m
+}
+
+// ToBoolMapSetStrictE converts a slice or array to map[bool]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToBoolMapSetStrictE(i interface{}) (map[bool]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[bool]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[bool]struct{}", m, m)
+}
+
+// ToIntMapSetStrict converts a slice or array to map[int]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToIntMapSetStrict(i interface{}) map[int]struct{} {
+	m, _ := ToIntMapSetStrictE(i)
+	return m
+}
+
+// ToIntMapSetStrictE converts a slice or array to map[int]struct{} with error
+// Note that the element type of input need to be equal to map key type.
+func ToIntMapSetStrictE(i interface{}) (map[int]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[int]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[int]struct{}", m, m)
+}
+
+// ToInt8MapSetStrict converts a slice or array to map[int8]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToInt8MapSetStrict(i interface{}) map[int8]struct{} {
+	m, _ := ToInt8MapSetStrictE(i)
+	return m
+}
+
+// ToInt8MapSetStrictE converts a slice or array to map[int8]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToInt8MapSetStrictE(i interface{}) (map[int8]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[int8]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[int8]struct{}", m, m)
+}
+
+// ToInt16MapSetStrict converts a slice or array to map[int16]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToInt16MapSetStrict(i interface{}) map[int16]struct{} {
+	m, _ := ToInt16MapSetStrictE(i)
+	return m
+}
+
+// ToInt16MapSetStrictE converts a slice or array to map[int16]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToInt16MapSetStrictE(i interface{}) (map[int16]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[int16]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[int16]struct{}", m, m)
+}
+
+// ToInt32MapSetStrict converts a slice or array to map[int32]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToInt32MapSetStrict(i interface{}) map[int32]struct{} {
+	m, _ := ToInt32MapSetStrictE(i)
+	return m
+}
+
+// ToInt32MapSetStrictE converts a slice or array to map[int32]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToInt32MapSetStrictE(i interface{}) (map[int32]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[int32]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[int32]struct{}", m, m)
+}
+
+// ToInt64MapSetStrict converts a slice or array to map[int64]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToInt64MapSetStrict(i interface{}) map[int64]struct{} {
+	m, _ := ToInt64MapSetStrictE(i)
+	return m
+}
+
+// ToInt64MapSetStrictE converts a slice or array to map[int64]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToInt64MapSetStrictE(i interface{}) (map[int64]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[int64]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[int64]struct{}", m, m)
+}
+
+// ToUintMapSetStrict converts a slice or array to map[uint]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToUintMapSetStrict(i interface{}) map[uint]struct{} {
+	m, _ := ToUintMapSetStrictE(i)
+	return m
+}
+
+// ToUintMapSetStrictE converts a slice or array to map[uint]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToUintMapSetStrictE(i interface{}) (map[uint]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[uint]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[uint8]struct{}", m, m)
+}
+
+// ToUint8MapSetStrict converts a slice or array to map[uint8]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToUint8MapSetStrict(i interface{}) map[uint8]struct{} {
+	m, _ := ToUint8MapSetStrictE(i)
+	return m
+}
+
+// ToUint8MapSetStrictE converts a slice or array to map[uint8]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToUint8MapSetStrictE(i interface{}) (map[uint8]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[uint8]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[uint8]struct{}", m, m)
+}
+
+// ToUint16MapSetStrict converts a slice or array to map[uint16]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToUint16MapSetStrict(i interface{}) map[uint16]struct{} {
+	m, _ := ToUint16MapSetStrictE(i)
+	return m
+}
+
+// ToUint16MapSetStrictE converts a slice or array to map[uint16]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToUint16MapSetStrictE(i interface{}) (map[uint16]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[uint16]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[uint16]struct{}", m, m)
+}
+
+// ToUint32MapSetStrict converts a slice or array to map[uint32]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToUint32MapSetStrict(i interface{}) map[uint32]struct{} {
+	m, _ := ToUint32MapSetStrictE(i)
+	return m
+}
+
+// ToUint32MapSetStrictE converts a slice or array to map[uint32]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToUint32MapSetStrictE(i interface{}) (map[uint32]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[uint32]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[uint32]struct{}", m, m)
+}
+
+// ToUint64MapSetStrict converts a slice or array to map[uint64]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToUint64MapSetStrict(i interface{}) map[uint64]struct{} {
+	m, _ := ToUint64MapSetStrictE(i)
+	return m
+}
+
+// ToUint64MapSetStrictE converts a slice or array to map[uint64]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToUint64MapSetStrictE(i interface{}) (map[uint64]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[uint64]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[uint64]struct{}", m, m)
+}
+
+// ToStrMapSetStrict converts a slice or array to map[string]struct{}.
+// Note that the element type of input need to be equal to map key type.
+func ToStrMapSetStrict(i interface{}) map[string]struct{} {
+	m, _ := ToStrMapSetStrictE(i)
+	return m
+}
+
+// ToStrMapSetStrictE converts a slice or array to map[string]struct{} with error.
+// Note that the element type of input need to be equal to map key type.
+func ToStrMapSetStrictE(i interface{}) (map[string]struct{}, error) {
+	m, err := ToMapSetStrictE(i)
+	if err != nil {
+		return nil, err
+	}
+	if v, ok := m.(map[string]struct{}); ok {
+		return v, nil
+	}
+	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[string]struct{}", m, m)
+}
+
+// ToMapSetStrictE converts a slice or array to map set with error strictly.
+// The result of map key type is equal to the element type of input.
+func ToMapSetStrictE(i interface{}) (interface{}, error) {
+	// check param
+	if i == nil {
+		return nil, fmt.Errorf("unable to converts %#v of type %T to map[interface{}]struct{}", i, i)
+	}
+	t := reflect.TypeOf(i)
+	kind := t.Kind()
+	if kind != reflect.Slice && kind != reflect.Array {
+		return nil, fmt.Errorf("the input %#v of type %T isn't a slice or array", i, i)
+	}
+	// execute the convert
+	v := reflect.ValueOf(i)
+	mT := reflect.MapOf(t.Elem(), reflect.TypeOf(struct{}{}))
+	mV := reflect.MakeMapWithSize(mT, v.Len())
+	for j := 0; j < v.Len(); j++ {
+		mV.SetMapIndex(v.Index(j), reflect.ValueOf(struct{}{}))
+	}
+	return mV.Interface(), nil
+}
+
+//
+// If you want any element type of slice or array can be converted to specified type map, you can use the following functions.
+// For example convert []uint64{1, 2, 3} to map[string]struct{}{"1":struct{}, "2":struct{}, "3":struct{}}.
+//
+
+// ToBoolMapSet converts a slice or array to map[bool]struct{}.
 func ToBoolMapSet(i interface{}) map[bool]struct{} {
 	m, _ := ToBoolMapSetE(i)
-	return m
-}
-
-// ToIntMapSet converts a slice or array to map[int]struct{}
-func ToIntMapSet(i interface{}) map[int]struct{} {
-	m, _ := ToIntMapSetE(i)
-	return m
-}
-
-// ToI8MapSet converts a slice or array to map[int8]struct{}
-func ToI8MapSet(i interface{}) map[int8]struct{} {
-	m, _ := ToI8MapSetE(i)
-	return m
-}
-
-// ToI16MapSet converts a slice or array to map[int16]struct{}
-func ToI16MapSet(i interface{}) map[int16]struct{} {
-	m, _ := ToI16MapSetE(i)
-	return m
-}
-
-// ToI32MapSet converts a slice or array to map[int32]struct{}
-func ToI32MapSet(i interface{}) map[int32]struct{} {
-	m, _ := ToI32MapSetE(i)
-	return m
-}
-
-// ToI64MapSet converts a slice or array to map[int64]struct{}
-func ToI64MapSet(i interface{}) map[int64]struct{} {
-	m, _ := ToI64MapSetE(i)
-	return m
-}
-
-// ToUintMapSet converts a slice or array to map[uint]struct{}
-func ToUintMapSet(i interface{}) map[uint]struct{} {
-	m, _ := ToUintMapSetE(i)
-	return m
-}
-
-// ToU8MapSet converts a slice or array to map[uint8]struct{}
-func ToU8MapSet(i interface{}) map[uint8]struct{} {
-	m, _ := ToU8MapSetE(i)
-	return m
-}
-
-// ToU16MapSet converts a slice or array to map[uint16]struct{}
-func ToU16MapSet(i interface{}) map[uint16]struct{} {
-	m, _ := ToU16MapSetE(i)
-	return m
-}
-
-// ToU32MapSet converts a slice or array to map[uint32]struct{}
-func ToU32MapSet(i interface{}) map[uint32]struct{} {
-	m, _ := ToU32MapSetE(i)
-	return m
-}
-
-// ToU64MapSet converts a slice or array to map[uint64]struct{}
-func ToU64MapSet(i interface{}) map[uint64]struct{} {
-	m, _ := ToU64MapSetE(i)
-	return m
-}
-
-// ToStrMapSet converts a slice or array to map[string]struct{}
-func ToStrMapSet(i interface{}) map[string]struct{} {
-	m, _ := ToStrMapSetE(i)
 	return m
 }
 
@@ -96,7 +296,13 @@ func ToBoolMapSetE(i interface{}) (map[bool]struct{}, error) {
 	return mm, nil
 }
 
-// ToIntMapSetE converts a slice or array to map[int]struct{} with error
+// ToIntMapSet converts a slice or array to map[int]struct{}.
+func ToIntMapSet(i interface{}) map[int]struct{} {
+	m, _ := ToIntMapSetE(i)
+	return m
+}
+
+// ToIntMapSetE converts a slice or array to map[int]struct{} with error.
 func ToIntMapSetE(i interface{}) (map[int]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
@@ -113,8 +319,14 @@ func ToIntMapSetE(i interface{}) (map[int]struct{}, error) {
 	return mm, nil
 }
 
-// ToI8MapSetE converts a slice or array to map[int8]struct{} with error
-func ToI8MapSetE(i interface{}) (map[int8]struct{}, error) {
+// ToInt8MapSet converts a slice or array to map[int8]struct{}.
+func ToInt8MapSet(i interface{}) map[int8]struct{} {
+	m, _ := ToInt8MapSetE(i)
+	return m
+}
+
+// ToInt8MapSetE converts a slice or array to map[int8]struct{} with error.
+func ToInt8MapSetE(i interface{}) (map[int8]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
 		return nil, err
@@ -130,8 +342,14 @@ func ToI8MapSetE(i interface{}) (map[int8]struct{}, error) {
 	return mm, nil
 }
 
-// ToI16MapSetE converts a slice or array to map[int16]struct{} with error
-func ToI16MapSetE(i interface{}) (map[int16]struct{}, error) {
+// ToInt16MapSet converts a slice or array to map[int16]struct{}.
+func ToInt16MapSet(i interface{}) map[int16]struct{} {
+	m, _ := ToInt16MapSetE(i)
+	return m
+}
+
+// ToInt16MapSetE converts a slice or array to map[int16]struct{} with error.
+func ToInt16MapSetE(i interface{}) (map[int16]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
 		return nil, err
@@ -147,8 +365,14 @@ func ToI16MapSetE(i interface{}) (map[int16]struct{}, error) {
 	return mm, nil
 }
 
-// ToI32MapSetE converts a slice or array to map[int32]struct{} with error
-func ToI32MapSetE(i interface{}) (map[int32]struct{}, error) {
+// ToInt32MapSet converts a slice or array to map[int32]struct{}.
+func ToInt32MapSet(i interface{}) map[int32]struct{} {
+	m, _ := ToInt32MapSetE(i)
+	return m
+}
+
+// ToInt32MapSetE converts a slice or array to map[int32]struct{} with error.
+func ToInt32MapSetE(i interface{}) (map[int32]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
 		return nil, err
@@ -164,8 +388,14 @@ func ToI32MapSetE(i interface{}) (map[int32]struct{}, error) {
 	return mm, nil
 }
 
-// ToI64MapSetE converts a slice or array to map[int64]struct{} with error
-func ToI64MapSetE(i interface{}) (map[int64]struct{}, error) {
+// ToInt64MapSet converts a slice or array to map[int64]struct{}.
+func ToInt64MapSet(i interface{}) map[int64]struct{} {
+	m, _ := ToInt64MapSetE(i)
+	return m
+}
+
+// ToInt64MapSetE converts a slice or array to map[int64]struct{} with error.
+func ToInt64MapSetE(i interface{}) (map[int64]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
 		return nil, err
@@ -179,6 +409,12 @@ func ToI64MapSetE(i interface{}) (map[int64]struct{}, error) {
 		mm[v] = struct{}{}
 	}
 	return mm, nil
+}
+
+// ToUintMapSet converts a slice or array to map[uint]struct{}.
+func ToUintMapSet(i interface{}) map[uint]struct{} {
+	m, _ := ToUintMapSetE(i)
+	return m
 }
 
 // ToUintMapSetE converts a slice or array to map[uint]struct{} with error
@@ -198,8 +434,14 @@ func ToUintMapSetE(i interface{}) (map[uint]struct{}, error) {
 	return mm, nil
 }
 
-// ToU8MapSetE converts a slice or array to map[uint8]struct{} with error
-func ToU8MapSetE(i interface{}) (map[uint8]struct{}, error) {
+// ToUint8MapSet converts a slice or array to map[uint8]struct{}.
+func ToUint8MapSet(i interface{}) map[uint8]struct{} {
+	m, _ := ToUint8MapSetE(i)
+	return m
+}
+
+// ToUint8MapSetE converts a slice or array to map[uint8]struct{} with error.
+func ToUint8MapSetE(i interface{}) (map[uint8]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
 		return nil, err
@@ -215,8 +457,14 @@ func ToU8MapSetE(i interface{}) (map[uint8]struct{}, error) {
 	return mm, nil
 }
 
-// ToU16MapSetE converts a slice or array to map[uint16]struct{} with error
-func ToU16MapSetE(i interface{}) (map[uint16]struct{}, error) {
+// ToUint16MapSet converts a slice or array to map[uint16]struct{}.
+func ToUint16MapSet(i interface{}) map[uint16]struct{} {
+	m, _ := ToUint16MapSetE(i)
+	return m
+}
+
+// ToUint16MapSetE converts a slice or array to map[uint16]struct{} with error.
+func ToUint16MapSetE(i interface{}) (map[uint16]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
 		return nil, err
@@ -232,8 +480,14 @@ func ToU16MapSetE(i interface{}) (map[uint16]struct{}, error) {
 	return mm, nil
 }
 
-// ToU32MapSetE converts a slice or array to map[uint32]struct{} with error
-func ToU32MapSetE(i interface{}) (map[uint32]struct{}, error) {
+// ToUint32MapSet converts a slice or array to map[uint32]struct{}.
+func ToUint32MapSet(i interface{}) map[uint32]struct{} {
+	m, _ := ToUint32MapSetE(i)
+	return m
+}
+
+// ToUint32MapSetE converts a slice or array to map[uint32]struct{} with error.
+func ToUint32MapSetE(i interface{}) (map[uint32]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
 		return nil, err
@@ -249,8 +503,14 @@ func ToU32MapSetE(i interface{}) (map[uint32]struct{}, error) {
 	return mm, nil
 }
 
-// ToU64MapSetE converts a slice or array to map[uint64]struct{} with error
-func ToU64MapSetE(i interface{}) (map[uint64]struct{}, error) {
+// ToUint64MapSet converts a slice or array to map[uint64]struct{}.
+func ToUint64MapSet(i interface{}) map[uint64]struct{} {
+	m, _ := ToUint64MapSetE(i)
+	return m
+}
+
+// ToUint64MapSetE converts a slice or array to map[uint64]struct{} with error.
+func ToUint64MapSetE(i interface{}) (map[uint64]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
 		return nil, err
@@ -264,6 +524,12 @@ func ToU64MapSetE(i interface{}) (map[uint64]struct{}, error) {
 		mm[v] = struct{}{}
 	}
 	return mm, nil
+}
+
+// ToStrMapSet converts a slice or array to map[string]struct{}.
+func ToStrMapSet(i interface{}) map[string]struct{} {
+	m, _ := ToStrMapSetE(i)
+	return m
 }
 
 // ToStrMapSetE converts a slice or array to map[string]struct{} with error
@@ -283,9 +549,9 @@ func ToStrMapSetE(i interface{}) (map[string]struct{}, error) {
 	return mm, nil
 }
 
-// ToMapSetE converts a slice or array to map[interface{}]struct{} with error
+// ToMapSetE converts a slice or array to map[interface{}]struct{} with error.
 func ToMapSetE(i interface{}) (map[interface{}]struct{}, error) {
-	// judge the validation of the input
+	// check param
 	if i == nil {
 		return nil, fmt.Errorf("unable to converts %#v of type %T to map[interface{}]struct{}", i, i)
 	}

@@ -70,3 +70,47 @@ func TestMaxSliceE(t *testing.T) {
 		assert.Equal(t, tt.want, got, tt.name)
 	}
 }
+
+func TestIsContains(t *testing.T) {
+	type args struct {
+		slice  interface{}
+		target interface{}
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name:"string slice contain",
+			args:args{
+				slice:[]string{"foo","bar","baz"},
+				target:"baz",
+			},
+			want:true,
+		},
+		{
+			name:"int32 slice contain",
+			args:args{
+				slice:[]int32{1,2,3},
+				target:int32(1),
+			},
+			want:true,
+		},
+		{
+			name:"int32 slice not contain because type isn't equal",
+			args:args{
+				slice:[]int32{1,2,3},
+				target:1,
+			},
+			want:false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := IsContains(tt.args.slice, tt.args.target); got != tt.want {
+				t.Errorf("IsContains() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
