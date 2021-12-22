@@ -17,11 +17,17 @@ func Map2Slice(i interface{}) (ks interface{}, vs interface{}) {
 
 // Map2SliceE converts keys and values of map to slice in unspecified order with error.
 func Map2SliceE(i interface{}) (ks interface{}, vs interface{}, err error) {
+	// check params
+	if i == nil {
+		return nil, nil, fmt.Errorf("unable to converts %#v of type %T to map[interface{}]struct{}", i, i)
+	}
 	t := reflect.TypeOf(i)
 	if t.Kind() != reflect.Map {
 		err = fmt.Errorf("the input %#v of type %T isn't a map", i, i)
 		return
 	}
+
+	// convert
 	m := reflect.ValueOf(i)
 	l := m.Len()
 	keys := m.MapKeys()

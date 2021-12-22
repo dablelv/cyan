@@ -49,12 +49,20 @@ func TestMap2Slice(t *testing.T) {
 			wantK: []int{},
 			wantV: []int{},
 		},
+		{
+			name: "nil to slice",
+			args: args{nil},
+			wantK: nil,
+			wantV: nil,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gotK, gotV := Map2Slice(tt.args.i)
-			assert.Equal(t, reflect.ValueOf(gotK).Len(), reflect.ValueOf(tt.wantK).Len())
-			assert.Equal(t, reflect.ValueOf(gotV).Len(), reflect.ValueOf(tt.wantV).Len())
+			if gotK != nil && gotV != nil {
+				assert.Equal(t, reflect.ValueOf(gotK).Len(), reflect.ValueOf(tt.wantK).Len())
+				assert.Equal(t, reflect.ValueOf(gotV).Len(), reflect.ValueOf(tt.wantV).Len())
+			}
 		})
 	}
 }

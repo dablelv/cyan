@@ -2,8 +2,9 @@ package util
 
 import (
 	"fmt"
-	"github.com/spf13/cast"
 	"reflect"
+
+	"github.com/spf13/cast"
 )
 
 // ToBoolMapSetStrict converts a slice or array to map[bool]struct{} strictly.
@@ -249,7 +250,7 @@ func ToStrMapSetStrictE(i interface{}) (map[string]struct{}, error) {
 // ToMapSetStrictE converts a slice or array to map set with error strictly.
 // The result of map key type is equal to the element type of input.
 func ToMapSetStrictE(i interface{}) (interface{}, error) {
-	// check param
+	// check params
 	if i == nil {
 		return nil, fmt.Errorf("unable to converts %#v of type %T to map[interface{}]struct{}", i, i)
 	}
