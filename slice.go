@@ -454,7 +454,7 @@ func MaxFloat64Slice(sl []float64) float64 {
 func UniqueSliceE(slice interface{}) (interface{}, error) {
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return nil, errors.New("input isn't a slice")
+		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
 	dst := reflect.MakeSlice(reflect.TypeOf(slice), 0, v.Len())
 	m := make(map[interface{}]struct{})
@@ -471,7 +471,7 @@ func UniqueSliceE(slice interface{}) (interface{}, error) {
 func ReverseSliceE(slice interface{}) (interface{}, error) {
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return nil, errors.New("input isn't a slice")
+		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
 	dst := reflect.MakeSlice(reflect.TypeOf(slice), 0, v.Len())
 	for i := v.Len() - 1; i >= 0; i-- {
@@ -484,7 +484,7 @@ func ReverseSliceE(slice interface{}) (interface{}, error) {
 func SumSliceE(slice interface{}) (float64, error) {
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return 0.0, errors.New("param isn't a slice")
+		return 0.0, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
 
 	var sum float64
@@ -527,7 +527,7 @@ func MinSliceE(slice interface{}) (interface{}, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return nil, errors.New("input isn't a slice")
+		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
 	t := reflect.TypeOf(slice)
 	if v.Len() == 0 {
@@ -598,7 +598,7 @@ func MaxSliceE(slice interface{}) (interface{}, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return nil, errors.New("param isn't a slice")
+		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
 	t := reflect.TypeOf(slice)
 	if v.Len() == 0 {
@@ -667,7 +667,7 @@ func MaxSliceE(slice interface{}) (interface{}, error) {
 func JoinSliceWithSepE(slice interface{}, sep string) (string, error) {
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
-		return "", fmt.Errorf("input %#v of type %T isn't a slice or array", slice, slice)
+		return "", fmt.Errorf("the input %#v of type %T isn't a slice or array", slice, slice)
 	}
 
 	var s string
@@ -690,7 +690,7 @@ func InsertSliceE(slice interface{}, index int, value interface{}) (interface{},
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return nil, errors.New("target isn't a slice")
+		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
 	if index < 0 || index > v.Len() || reflect.TypeOf(slice).Elem() != reflect.TypeOf(value) {
 		return nil, errors.New("param is invalid")
@@ -717,7 +717,7 @@ func UpdateSliceE(slice interface{}, index int, value interface{}) (interface{},
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return nil, errors.New("target isn't a slice")
+		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
 	if index > v.Len()-1 || reflect.TypeOf(slice).Elem() != reflect.TypeOf(value) {
 		return nil, errors.New("param is invalid")
@@ -734,7 +734,7 @@ func GetEleIndexesSliceE(slice interface{}, value interface{}) ([]int, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return nil, errors.New("target isn't a slice")
+		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
 	// get indexes
 	var indexes []int
