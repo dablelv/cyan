@@ -80,26 +80,32 @@ func TestIsContains(t *testing.T) {
 	}{
 		{
 			name:"string slice contain",
-			args:args{
-				slice:[]string{"foo","bar","baz"},
-				target:"baz",
-			},
+			args:args{slice:[]string{"foo","bar","baz"}, target:"baz"},
 			want:true,
 		},
 		{
-			name:"int32 slice contain",
-			args:args{
-				slice:[]int32{1,2,3},
-				target:int32(1),
-			},
+			name:"string array contain",
+			args:args{slice:[3]string{"foo","bar","baz"}, target:"baz"},
+			want:true,
+		},
+		{
+			name:"string slice not contain",
+			args:args{slice:[]string{"foo","bar","baz"}, target:"qux"},
+			want:true,
+		},
+		{
+			name:"int slice contain",
+			args:args{slice:[]int{1,2,3}, target:1},
 			want:true,
 		},
 		{
 			name:"int32 slice not contain because type isn't equal",
-			args:args{
-				slice:[]int32{1,2,3},
-				target:1,
-			},
+			args:args{slice:[]int32{1,2,3}, target:1},
+			want:false,
+		},
+		{
+			name:"nil not contain",
+			args:args{slice:nil, target:1},
 			want:false,
 		},
 	}

@@ -150,17 +150,21 @@ func SumSlice(slice interface{}) float64 {
 // part 4: determine whether the slice contains an element.
 //
 
-// IsContains check slice whether contain target element.
-// Note that if the target element is a numeric literal, please specify its type explicitly,
-// otherwise it defaults to int.
-// You might call IsContains like IsContains([]int32{1,2,3}, int32(1)).
-func IsContains(slice interface{}, target interface{}) bool {
-	if reflect.TypeOf(slice).Kind() == reflect.Slice {
-		v := reflect.ValueOf(slice)
-		for i := 0; i < v.Len(); i++ {
-			if target == v.Index(i).Interface() {
-				return true
-			}
+// IsContains checks whether slice or array contains the target element.
+// Note that if the target element is a numeric literal, please specify its type explicitly, otherwise it defaults to int.
+// For example you might call like IsContains([]int32{1,2,3}, int32(1)).
+func IsContains(i interface{}, target interface{}) bool {
+	if i == nil {
+		return false
+	}
+	t := reflect.TypeOf(i)
+	if t.Kind() != reflect.Slice && t.Kind() != reflect.Array {
+		return false
+	}
+	v := reflect.ValueOf(i)
+	for i := 0; i < v.Len(); i++ {
+		if target == v.Index(i).Interface() {
+			return true
 		}
 	}
 	return false
