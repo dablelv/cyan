@@ -29,11 +29,11 @@ func TestMinSliceE(t *testing.T) {
 		wantErr bool
 	}{
 		{"err int", args{""}, nil, true},
-		{"zero int", args{[]int{}}, 0, false},
+		{"zero int", args{[]int{}}, nil, false},
 		{"min int", args{[]int{1, 2, 3}}, 1, false},
-		{"zero uint", args{[]uint{}}, uint(0), false},
+		{"zero uint", args{[]uint{}}, nil, false},
 		{"min uint", args{[]uint{1, 2, 3}}, uint(1), false},
-		{"zero float", args{[]float64{}}, 0.0, false},
+		{"zero float", args{[]float64{}}, nil, false},
 		{"min float", args{[]float64{1.0, 2.0, 3.0}}, 1.0, false},
 	}
 	for _, tt := range tests {
@@ -54,11 +54,11 @@ func TestMaxSliceE(t *testing.T) {
 		wantErr bool
 	}{
 		{"err int", args{""}, nil, true},
-		{"zero int", args{[]int{}}, 0, false},
+		{"zero int", args{[]int{}}, nil, false},
 		{"max int", args{[]int{1, 2, 3}}, 3, false},
-		{"zero uint", args{[]uint{}}, uint(0), false},
+		{"zero uint", args{[]uint{}}, nil, false},
 		{"max uint", args{[]uint{1, 2, 3}}, uint(3), false},
-		{"zero float", args{[]float64{}}, 0.0, false},
+		{"zero float", args{[]float64{}}, nil, false},
 		{"max float", args{[]float64{1.0, 2.0, 3.0}}, 3.0, false},
 	}
 	for _, tt := range tests {
@@ -91,7 +91,7 @@ func TestIsContains(t *testing.T) {
 		{
 			name:"string slice not contain",
 			args:args{slice:[]string{"foo","bar","baz"}, target:"qux"},
-			want:true,
+			want:false,
 		},
 		{
 			name:"int slice contain",
@@ -347,6 +347,87 @@ func TestJoinSliceWithSepE(t *testing.T) {
 			}
 			if got != tt.want {
 				t.Errorf("JoinSliceWithSepE() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestInsertSliceE(t *testing.T) {
+	type args struct {
+		slice interface{}
+		index int
+		value interface{}
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    interface{}
+		wantErr bool
+	}{
+		{
+			name:"insert string to the first pos",
+			args:args{[]string{"bar","baz"}, 0,"foo"},
+			want:[]string{"foo", "bar", "baz"},
+			wantErr: false,
+		},
+		{
+			name:"insert string to the last pos",
+			args:args{[]string{"foo","bar"}, 2,"baz"},
+			want:[]string{"foo", "bar", "baz"},
+			wantErr: false,
+		},
+		{
+			name:"insert string failed because pos overflow",
+			args:args{[]string{"foo","bar"}, 3,"baz"},
+			want:nil,
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := InsertSliceE(tt.args.slice, tt.args.index, tt.args.value)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("InsertSliceE() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("InsertSliceE() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestInsertIntSlice(t *testing.T) {
+	type args struct {
+		src   []int
+		index int
+		value int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name:"insert int to the first pos",
+			args:args{[]int{1,2}, 0,0},
+			want:[]int{0, 1, 2},
+		},
+		{
+			name:"insert int to the last pos",
+			args:args{[]int{1,2}, 2,3},
+			want:[]int{1, 2, 3},
+		},
+		{
+			name:"insert int failed becacuse the pos overflow",
+			args:args{[]int{1,2}, 3,3},
+			want:nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := InsertIntSlice(tt.args.src, tt.args.index, tt.args.value); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("InsertIntSlice() = %v, want %v", got, tt.want)
 			}
 		})
 	}

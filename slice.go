@@ -14,67 +14,80 @@ import (
 
 func UniqueIntSlice(src []int) []int {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]int)
+	v, _ := dst.([]int)
+	return v
 }
 
 func UniqueInt8Slice(src []int8) []int8 {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]int8)
+	v, _ := dst.([]int8)
+	return v
 }
 
 func UniqueInt16Slice(src []int16) []int16 {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]int16)
+	v, _ := dst.([]int16)
+	return v
 }
 
 func UniqueInt32Slice(src []int32) []int32 {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]int32)
+	v, _ := dst.([]int32)
+	return v
 }
 
 func UniqueInt64Slice(src []int64) []int64 {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]int64)
+	v, _ := dst.([]int64)
+	return v
 }
 
 func UniqueUintSlice(src []uint) []uint {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]uint)
+	v, _ := dst.([]uint)
+	return v
 }
 
 func UniqueUint8Slice(src []uint8) []uint8 {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]uint8)
+	v, _ := dst.([]uint8)
+	return v
 }
 
 func UniqueUint16Slice(src []uint16) []uint16 {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]uint16)
+	v, _ := dst.([]uint16)
+	return v
 }
 
 func UniqueUint32Slice(src []uint32) []uint32 {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]uint32)
+	v, _ := dst.([]uint32)
+	return v
 }
 
 func UniqueUint64Slice(src []uint64) []uint64 {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]uint64)
+	v, _ := dst.([]uint64)
+	return v
 }
 
 func UniqueFloat32Slice(src []float32) []float32 {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]float32)
+	v, _ := dst.([]float32)
+	return v
 }
 
 func UniqueFloat64Slice(src []float64) []float64 {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]float64)
+	v, _ := dst.([]float64)
+	return v
 }
 
 func UniqueStrSlice(src []string) []string {
 	dst, _ := UniqueSliceE(src)
-	return dst.([]string)
+	v, _ := dst.([]string)
+	return v
 }
 
 //
@@ -83,57 +96,68 @@ func UniqueStrSlice(src []string) []string {
 
 func ReverseIntSlice(src []int) []int {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]int)
+	v, _ := dst.([]int)
+	return v
 }
 
 func ReverseInt8Slice(src []int8) []int8 {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]int8)
+	v, _ := dst.([]int8)
+	return v
 }
 
 func ReverseInt16Slice(src []int16) []int16 {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]int16)
+	v, _ := dst.([]int16)
+	return v
 }
 
 func ReverseInt32Slice(src []int32) []int32 {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]int32)
+	v, _ := dst.([]int32)
+	return v
 }
 
 func ReverseInt64Slice(src []int64) []int64 {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]int64)
+	v, _ := dst.([]int64)
+	return v
 }
 
 func ReverseUintSlice(src []uint) []uint {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]uint)
+	v, _ := dst.([]uint)
+	return v
 }
 
 func ReverseUint8Slice(src []uint8) []uint8 {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]uint8)
+	v, _ := dst.([]uint8)
+	return v
 }
 
 func ReverseUint16Slice(src []uint16) []uint16 {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]uint16)
+	v, _ := dst.([]uint16)
+	return v
 }
 
 func ReverseUint32Slice(src []uint32) []uint32 {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]uint32)
+	v, _ := dst.([]uint32)
+	return v
 }
 
 func ReverseUint64Slice(src []uint64) []uint64 {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]uint64)
+	v, _ := dst.([]uint64)
+	return v
 }
 
 func ReverseStrSlice(src []string) []string {
 	dst, _ := ReverseSliceE(src)
-	return dst.([]string)
+	v, _ := dst.([]string)
+	return v
 }
 
 //
@@ -327,135 +351,161 @@ func GetEleIndexesSlice(slice interface{}, value interface{}) []int {
 
 func MinIntSlice(sl []int) int {
 	min, _ := MinSliceE(sl)
-	return min.(int)
+	v, _ := min.(int)
+	return v
 }
 
 func MinInt8Slice(sl []int8) int8 {
 	min, _ := MinSliceE(sl)
-	return min.(int8)
+	v, _ := min.(int8)
+	return v
 }
 
 func MinInt16Slice(sl []int16) int16 {
 	min, _ := MinSliceE(sl)
-	return min.(int16)
+	v, _ := min.(int16)
+	return v
 }
 
 func MinInt32Slice(sl []int32) int32 {
 	min, _ := MinSliceE(sl)
-	return min.(int32)
+	v, _ := min.(int32)
+	return v
 }
 
 func MinInt64Slice(sl []int64) int64 {
 	min, _ := MinSliceE(sl)
-	return min.(int64)
+	v, _ := min.(int64)
+	return v
 }
 
 func MinUintSlice(sl []uint) uint {
 	min, _ := MinSliceE(sl)
-	return min.(uint)
+	v, _ := min.(uint)
+	return v
 }
 
 func MinUint8Slice(sl []uint8) uint8 {
 	min, _ := MinSliceE(sl)
-	return min.(uint8)
+	v, _ := min.(uint8)
+	return v
 }
 
 func MinUint16Slice(sl []uint16) uint16 {
 	min, _ := MinSliceE(sl)
-	return min.(uint16)
+	v, _ := min.(uint16)
+	return v
 }
 
 func MinUint32Slice(sl []uint32) uint32 {
 	min, _ := MinSliceE(sl)
-	return min.(uint32)
+	v, _ := min.(uint32)
+	return v
 }
 
 func MinUint64Slice(sl []uint64) uint64 {
 	min, _ := MinSliceE(sl)
-	return min.(uint64)
+	v, _ := min.(uint64)
+	return v
 }
 
 func MinFloat32Slice(sl []float32) float32 {
 	min, _ := MinSliceE(sl)
-	return min.(float32)
+	v, _ := min.(float32)
+	return v
 }
 
 func MinFloat64Slice(sl []float64) float64 {
 	min, _ := MinSliceE(sl)
-	return min.(float64)
+	v, _ := min.(float64)
+	return v
 }
 
 func MaxIntSlice(sl []int) int {
 	max, _ := MaxSliceE(sl)
-	return max.(int)
+	v, _ := max.(int)
+	return v
 }
 
 func MaxInt8Slice(sl []int8) int8 {
 	max, _ := MaxSliceE(sl)
-	return max.(int8)
+	v, _ := max.(int8)
+	return v
 }
 
 func MaxInt16Slice(sl []int16) int16 {
 	max, _ := MaxSliceE(sl)
-	return max.(int16)
+	v, _ := max.(int16)
+	return v
 }
 
 func MaxInt32Slice(sl []int32) int32 {
 	max, _ := MaxSliceE(sl)
-	return max.(int32)
+	v, _ := max.(int32)
+	return v
 }
 
 func MaxInt64Slice(sl []int64) int64 {
 	max, _ := MaxSliceE(sl)
-	return max.(int64)
+	v, _ := max.(int64)
+	return v
 }
 
 func MaxUintSl(sl []uint) uint {
 	max, _ := MaxSliceE(sl)
-	return max.(uint)
+	v, _ := max.(uint)
+	return v
 }
 
 func MaxUint8Slice(sl []uint8) uint8 {
 	max, _ := MaxSliceE(sl)
-	return max.(uint8)
+	v, _ := max.(uint8)
+	return v
 }
 
 func MaxUint16Slice(sl []uint16) uint16 {
 	max, _ := MaxSliceE(sl)
-	return max.(uint16)
+	v, _ := max.(uint16)
+	return v
 }
 
 func MaxUint32Slice(sl []uint32) uint32 {
 	max, _ := MaxSliceE(sl)
-	return max.(uint32)
+	v, _ := max.(uint32)
+	return v
 }
 
 func MaxUint64Slice(sl []uint64) uint64 {
 	max, _ := MaxSliceE(sl)
-	return max.(uint64)
+	v, _ := max.(uint64)
+	return v
 }
 
 func MaxFloat32Slice(sl []float32) float32 {
 	max, _ := MaxSliceE(sl)
-	return max.(float32)
+	v, _ := max.(float32)
+	return v
 }
 
 func MaxFloat64Slice(sl []float64) float64 {
 	max, _ := MaxSliceE(sl)
-	return max.(float64)
+	v, _ := max.(float64)
+	return v
 }
 
 //
 // part x: basic operating functions of slice
 //
 
-// UniqueSliceE delete repeated elements in a slice with error.
+// UniqueSliceE deletes repeated elements in a slice with error.
 // Note that the original slice will not be modified.
 func UniqueSliceE(slice interface{}) (interface{}, error) {
+	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
+	// unique the slice
 	dst := reflect.MakeSlice(reflect.TypeOf(slice), 0, v.Len())
 	m := make(map[interface{}]struct{})
 	for i := 0; i < v.Len(); i++ {
@@ -469,10 +519,12 @@ func UniqueSliceE(slice interface{}) (interface{}, error) {
 
 // ReverseSliceE reverses the specified slice without modifying the original slice.
 func ReverseSliceE(slice interface{}) (interface{}, error) {
+	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
+	// reverse the slice
 	dst := reflect.MakeSlice(reflect.TypeOf(slice), 0, v.Len())
 	for i := v.Len() - 1; i >= 0; i-- {
 		dst = reflect.Append(dst, v.Index(i))
@@ -529,11 +581,10 @@ func MinSliceE(slice interface{}) (interface{}, error) {
 	if v.Kind() != reflect.Slice {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
-	t := reflect.TypeOf(slice)
 	if v.Len() == 0 {
-		return reflect.Zero(t.Elem()).Interface(), nil
+		return nil, nil
 	}
-
+	// get the min element
 	min := v.Index(0).Interface()
 	for i := 1; i < v.Len(); i++ {
 		switch v := v.Index(i).Interface().(type) {
@@ -600,11 +651,10 @@ func MaxSliceE(slice interface{}) (interface{}, error) {
 	if v.Kind() != reflect.Slice {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
-	t := reflect.TypeOf(slice)
 	if v.Len() == 0 {
-		return reflect.Zero(t.Elem()).Interface(), nil
+		return nil, nil
 	}
-
+	// get the max element
 	max := v.Index(0).Interface()
 	for i := 1; i < v.Len(); i++ {
 		switch v := v.Index(i).Interface().(type) {
@@ -663,13 +713,14 @@ func MaxSliceE(slice interface{}) (interface{}, error) {
 	return max, nil
 }
 
-// JoinSliceWithSepE joins all elements in slice with separator and return an error if occurred.
+// JoinSliceWithSepE joins all elements in slice or array with separator and return an error if occurred.
 func JoinSliceWithSepE(slice interface{}, sep string) (string, error) {
+	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
 		return "", fmt.Errorf("the input %#v of type %T isn't a slice or array", slice, slice)
 	}
-
+	// join the slice or array
 	var s string
 	for i := 0; i < v.Len(); i++ {
 		if len(s) > 0 {
@@ -692,23 +743,24 @@ func InsertSliceE(slice interface{}, index int, value interface{}) (interface{},
 	if v.Kind() != reflect.Slice {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
-	if index < 0 || index > v.Len() || reflect.TypeOf(slice).Elem() != reflect.TypeOf(value) {
+	t := reflect.TypeOf(slice)
+	if index < 0 || index > v.Len() || t.Elem() != reflect.TypeOf(value) {
 		return nil, errors.New("param is invalid")
 	}
 
-	t := reflect.MakeSlice(reflect.TypeOf(slice), 0, 0)
+	dst := reflect.MakeSlice(t, 0, v.Len()+1)
 
 	// add the element to the end of slice
 	if index == v.Len() {
-		t = reflect.AppendSlice(t, v.Slice(0, v.Len()))
-		t = reflect.Append(t, reflect.ValueOf(value))
-		return t.Interface(), nil
+		dst = reflect.AppendSlice(dst, v)
+		dst = reflect.Append(dst, reflect.ValueOf(value))
+		return dst.Interface(), nil
 	}
 
-	t = reflect.AppendSlice(t, v.Slice(0, index+1))
-	t = reflect.AppendSlice(t, v.Slice(index, v.Len()))
-	t.Index(index).Set(reflect.ValueOf(value))
-	return t.Interface(), nil
+	dst = reflect.AppendSlice(dst, v.Slice(0, index+1))
+	dst = reflect.AppendSlice(dst, v.Slice(index, v.Len()))
+	dst.Index(index).Set(reflect.ValueOf(value))
+	return dst.Interface(), nil
 }
 
 // UpdateSliceE modifies the specified index element of slice.
