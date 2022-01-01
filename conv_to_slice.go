@@ -9,13 +9,13 @@ import (
 	"github.com/spf13/cast"
 )
 
-// Map2Slice converts keys and values of map to slice in unspecified order.
+// Map2Slice converts keys and values of map to slice in random order.
 func Map2Slice(i interface{}) (ks interface{}, vs interface{}) {
 	ks, vs, _ = Map2SliceE(i)
 	return
 }
 
-// Map2SliceE converts keys and values of map to slice in unspecified order with error.
+// Map2SliceE converts keys and values of map to slice in random order with error.
 func Map2SliceE(i interface{}) (ks interface{}, vs interface{}, err error) {
 	// check params
 	if i == nil {
@@ -456,21 +456,21 @@ func ToByteSliceE(i interface{}) ([]byte, error) {
 }
 
 // ToIntSlice converts an interface to []int slice.
-// Please note that ToIntSlice is alias to cast.ToIntSlice.
+// Note that ToIntSlice is alias to cast.ToIntSlice.
 func ToIntSlice(i interface{}) []int {
 	v, _ := cast.ToIntSliceE(i)
 	return v
 }
 
 // ToBoolSlice converts an interface to []bool slice.
-// Please note that ToBoolSlice is alias to cast.ToBoolSlice.
+// Note that ToBoolSlice is alias to cast.ToBoolSlice.
 func ToBoolSlice(i interface{}) []bool {
 	v, _ := cast.ToBoolSliceE(i)
 	return v
 }
 
 // ToDurationSlice converts an interface to []time.Duration slice.
-// Please note that ToDurationSlice is alias to cast.ToDurationSlice.
+// Note that ToDurationSlice is alias to cast.ToDurationSlice.
 func ToDurationSlice(i interface{}) []time.Duration {
 	v, _ := cast.ToDurationSliceE(i)
 	return v

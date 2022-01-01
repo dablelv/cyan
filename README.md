@@ -156,53 +156,61 @@ huge.GetDayBeginMoment(time.Now())  // 2020-05-16 00:00:00 +0800 CST
 huge.GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
 ```
 
-# typeconv
-Some useful functions can be used to type conversion. The most functions are from github.com/spf13/cast and some new functions is added by myself. 
-
-Example ToString:
+# type conversion
+Some useful functions can be used to convert one type to other types, such as to map set or slice.
+## to map set
 ```go
 import (
     huge "github.com/dablelv/go-huge-util"
 )
 
-huge.ToString("mayonegg")         // "mayonegg"
-huge.ToString(8)                  // "8"
-huge.ToString(8.31)               // "8.31"
-huge.ToString([]byte("one time")) // "one time"
-huge.ToString(nil)                // ""
+// convert string slice or array to map set
+sl := []string{"foo", "bar", "baz"}
+mSet, _ := huge.ToStrMapSetStrictE(sl)
+// or
+mSet := huge.ToStrMapSetStrict(sl)
 
-var foo interface{} = "one more time"
-huge.ToString(foo)                // "one more time"
+// convert int slice or array to map set
+sl := []int{1, 2, 3}
+mSet, _ := huge.ToIntMapSetStrictE(sl)
+// or
+mSet := huge.ToIntMapSetStrict(sl)
 
-// support type definition
-type Int32Alias int32
-var i32Alias IntAlias = 1
-huge.ToString(i32Alias)         // "1"
-
-type Uint32Alias uint32
-var u32Alias Uint32Alias = 1
-huge.ToString(u32Alias)         // "1"
-
-type StringAlias string
-var sAlias StringAlias = "a"
-huge.ToString(sAlias)           // "a"
+// convert uint slice or array to map set
+sl := []uint{1, 2, 3}
+mSet, _ := huge.ToUintMapSetStrictE(sl)
+// or
+mSet := huge.ToUintMapSetStrict(sl)
 ```
 
-Example ToInt:
+## to slice
 ```go
 import (
     huge "github.com/dablelv/go-huge-util"
 )
 
-huge.ToInt(8)                  // 8
-huge.ToInt(8.31)               // 8
-huge.ToInt("8")                // 8
-huge.ToInt(true)               // 1
-huge.ToInt(false)              // 0
+// convert string value separated by white space character to string slice
+sl, _ := huge.ToStrSliceE("a b c") // []string{"a","b","c"}
+// or
+sl := huge.ToStrSlice("a b c") // []string{"a","b","c"}
 
-var eight interface{} = 8
-huge.ToInt(eight)              // 8
-huge.ToInt(nil)                // 0
+// convert int slice or array to string slice
+sl, _ := huge.ToStrSliceE([]int{1, 2, 3}) // []string{"1","2","3"}
+// or
+sl := huge.ToStrSlice([]int{1, 2, 3}) // []string{"1","2","3"}
+
+// convert map to slice in random order
+ks, vs, _ := huge.Map2SliceE(map[int]int{1:1, 2:2, 3:3})
+// or
+ks, vs := huge.Map2Slice(map[int]int{1:1, 2:2, 3:3})
+slK, _ : = ks.([]int)
+slV, _ : = vs.([]int)
+
+ks, vs, _ := huge.Map2SliceE(map[string]int{"foo":1, "bar":2, "baz":3})
+// or
+ks, vs := huge.Map2Slice(map[string]int{"foo":1, "bar":2, "baz":3})
+slK, _ : = ks.([]string)
+slV, _ : = vs.([]int)
 ```
 
 # url

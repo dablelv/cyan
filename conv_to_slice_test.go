@@ -148,7 +148,7 @@ func TestToStrSlice(t *testing.T) {
 			[]string{"a"},
 		},
 		{
-			"string value split by white space character to string slice",
+			"string value separated by white space character to string slice",
 			args{"a b c"},
 			[]string{"a", "b", "c"},
 		},
