@@ -157,14 +157,14 @@ func U32ToIPv4(ip uint32) net.IP {
 	return net.IPv4(a, b, c, d)
 }
 
-// IPv4StrToLong convert IPv4 string to uint32 in host byte order
-func IPv4StrToU32(ipstr string) (ip uint32) {
+// IPv4StrToU32 convert IPv4 string to uint32 in host byte order
+func IPv4StrToU32(s string) (ip uint32) {
 	r := `^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})`
 	reg, err := regexp.Compile(r)
 	if err != nil {
 		return
 	}
-	ips := reg.FindStringSubmatch(ipstr)
+	ips := reg.FindStringSubmatch(s)
 	if ips == nil {
 		return
 	}
@@ -182,7 +182,6 @@ func IPv4StrToU32(ipstr string) (ip uint32) {
 	ip += uint32(ip2 * 0x10000)
 	ip += uint32(ip3 * 0x100)
 	ip += uint32(ip4)
-
 	return
 }
 
