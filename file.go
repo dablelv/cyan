@@ -2,13 +2,13 @@ package util
 
 import (
 	"bufio"
-	"errors"
 	"io"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
-// ReadLines reads all lines of the specified file
+// ReadLines reads all lines of the specified file.
 func ReadLines(path string) ([]string, int, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -30,7 +30,7 @@ func ReadLines(path string) ([]string, int, error) {
 	return lines, lineCount, scanner.Err()
 }
 
-// ReadLinesV2 reads all lines of the specified file
+// ReadLinesV2 reads all lines of the specified file.
 func ReadLinesV2(path string) ([]string, int, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -68,15 +68,20 @@ func ListDir(path string) []string {
 	return filenames
 }
 
-// IsFileExist determines whether a path path exists
-func IsFileExist(path string) bool {
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		return false
+// IsPathExist determines whether a file/dir path exists.
+// User os.Stat to get the info of target file or dir to check whether exists.
+// If os.Stat returns nil err, the target exists.
+// If os.Stat returns a os.ErrNotExist err, the target does not exist.
+// If the error returned is another type, the target is uncertain whether exists.
+func IsPathExist(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
 	}
-	if _, err := os.Stat(path); err == nil {
-		return true
+	if os.IsNotExist(err) {
+		return false, nil
 	}
-	return false
+	return false, err
 }
 
 // IsDir determines whether a path is a directory
@@ -87,7 +92,7 @@ func IsDir(path string) bool {
 	return false
 }
 
-// IsFile determines whether a path is a file
+// IsFile determines whether a path is a file.
 func IsFile(path string) bool {
 	if info, err := os.Stat(path); err == nil && info.Mode().IsRegular() {
 		return true
@@ -95,33 +100,42 @@ func IsFile(path string) bool {
 	return false
 }
 
-// RemoveFile removes the named file or empty directory
+// RemoveFile removes the named file or empty directory.
 // https://gist.github.com/novalagung/13c5c8f4d30e0c4bff27
 func RemoveFile(path string) error {
 	err := os.Remove(path)
 	return err
 }
 
-// CreateFile creates a new file with the specified name
-func CreateFile(path string) error {
-	if IsFileExist(path) == false {
-		file, err := os.Create(path)
-		if err != nil {
-			return err
-		}
-		defer file.Close()
+// CreateFile creates a new file with the specified file path.
+func CreateFile(filePath string) error {
+	if exist, _ := IsPathExist(filePath); exist {
 		return nil
 	}
-	return errors.New("file " + path + " already exists.")
+	if err := os.MkdirAll(filepath.Dir(filePath), os.ModePerm); err != nil {
+		return err
+	}
+	file, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	return nil
 }
 
-// FileToBytes serialize the file to bytes
+// FileToBytes serialize the file to bytes.
 func FileToBytes(path string) []byte {
 	byteStream, _ := ioutil.ReadFile(path)
 	return byteStream
 }
 
-// BytesToFile writes data to a file named by filename
-func BytesToFile(filename string, data []byte) error {
-	return ioutil.WriteFile(filename, data, 0644)
+// BytesToFile writes data to a file. If the file does not exist it will be created with permission mode 0644.
+func BytesToFile(filePath string, data []byte) error {
+	exist, _ := IsPathExist(filePath)
+	if !exist {
+		if err := CreateFile(filePath); err != nil {
+			return err
+		}
+	}
+	return ioutil.WriteFile(filePath, data, 0644)
 }

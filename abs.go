@@ -1,6 +1,6 @@
 package util
 
-// AbsInt8 int8 取绝对值
+// AbsInt8 gets absolute value of int8.
 //
 // Example 1 : AbsInt8(-5)
 // -5 的表示
