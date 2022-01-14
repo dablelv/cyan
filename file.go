@@ -107,15 +107,25 @@ func RemoveFile(path string) error {
 	return err
 }
 
-// CreateFile creates a new file with the specified file path.
-func CreateFile(filePath string) error {
-	if exist, _ := IsPathExist(filePath); exist {
-		return nil
+// Create creates or truncates the target file specified by path.
+// If the parent directory does not exist, it will be created with mode os.ModePerm.is cr truncated.
+// If the file does not exist, it is created with mode 0666.
+// If successful, methods on the returned File can be used for I/O; the associated file descriptor has mode O_RDWR.
+func Create(filePath string) (*os.File, error) {
+	if exist, err := IsPathExist(filePath); err != nil {
+		return nil, err
+	} else if exist {
+		return os.Create(filePath)
 	}
 	if err := os.MkdirAll(filepath.Dir(filePath), os.ModePerm); err != nil {
-		return err
+		return nil, err
 	}
-	file, err := os.Create(filePath)
+	return os.Create(filePath)
+}
+
+// CreateFile creates a file specified by path.
+func CreateFile(filePath string) error {
+	file, err := Create(filePath)
 	if err != nil {
 		return err
 	}
