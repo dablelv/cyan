@@ -1,4 +1,14 @@
-package zip
+package util
+
+import (
+	"archive/zip"
+	"io"
+	"io/fs"
+	"os"
+	"path"
+	"path/filepath"
+	"strings"
+)
 
 // Zip compresses the specified files or dirs to zip archive.
 // If a path is a dir don't need to specify the trailing path separator.
@@ -105,11 +115,11 @@ func unzipFile(file *zip.File, dstDir string) error {
 	}
 
 	// open the file
-	rc, err := file.Open()
+	r, err := file.Open()
 	if err != nil {
 		return err
 	}
-	defer rc.Close()
+	defer r.Close()
 
 	// create the file
 	w, err := os.Create(filePath)
@@ -119,6 +129,6 @@ func unzipFile(file *zip.File, dstDir string) error {
 	defer w.Close()
 
 	// save the decompressed file content
-	_, err = io.Copy(w, rc)
+	_, err = io.Copy(w, r)
 	return err
 }

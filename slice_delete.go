@@ -69,7 +69,7 @@ func DeleteSliceElms(i interface{}, elms ...interface{}) interface{} {
 
 // DeleteSliceElmsE deletes the specified elements from the slice.
 // Note that the original slice will not be modified.
-func DeleteSliceElmsE(i interface{}, elms ...interface{})(interface{}, error) {
+func DeleteSliceElmsE(i interface{}, elms ...interface{}) (interface{}, error) {
 	// check params
 	v := reflect.ValueOf(i)
 	if v.Kind() != reflect.Slice {

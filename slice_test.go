@@ -79,34 +79,34 @@ func TestIsContains(t *testing.T) {
 		want bool
 	}{
 		{
-			name:"string slice contain",
-			args:args{slice:[]string{"foo","bar","baz"}, target:"baz"},
-			want:true,
+			name: "string slice contain",
+			args: args{slice: []string{"foo", "bar", "baz"}, target: "baz"},
+			want: true,
 		},
 		{
-			name:"string array contain",
-			args:args{slice:[3]string{"foo","bar","baz"}, target:"baz"},
-			want:true,
+			name: "string array contain",
+			args: args{slice: [3]string{"foo", "bar", "baz"}, target: "baz"},
+			want: true,
 		},
 		{
-			name:"string slice not contain",
-			args:args{slice:[]string{"foo","bar","baz"}, target:"qux"},
-			want:false,
+			name: "string slice not contain",
+			args: args{slice: []string{"foo", "bar", "baz"}, target: "qux"},
+			want: false,
 		},
 		{
-			name:"int slice contain",
-			args:args{slice:[]int{1,2,3}, target:1},
-			want:true,
+			name: "int slice contain",
+			args: args{slice: []int{1, 2, 3}, target: 1},
+			want: true,
 		},
 		{
-			name:"int32 slice not contain because type isn't equal",
-			args:args{slice:[]int32{1,2,3}, target:1},
-			want:false,
+			name: "int32 slice not contain because type isn't equal",
+			args: args{slice: []int32{1, 2, 3}, target: 1},
+			want: false,
 		},
 		{
-			name:"nil not contain",
-			args:args{slice:nil, target:1},
-			want:false,
+			name: "nil not contain",
+			args: args{slice: nil, target: 1},
+			want: false,
 		},
 	}
 	for _, tt := range tests {
@@ -129,34 +129,34 @@ func TestUniqueSliceE(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:"unique string slice",
-			args:args{[]string{"foo","bar","bar","baz"}},
-			want:[]string{"foo","bar","baz"},
-			wantErr:false,
+			name:    "unique string slice",
+			args:    args{[]string{"foo", "bar", "bar", "baz"}},
+			want:    []string{"foo", "bar", "baz"},
+			wantErr: false,
 		},
 		{
-			name:"unique zero length string slice",
-			args:args{[]string{}},
-			want:[]string{},
-			wantErr:false,
+			name:    "unique zero length string slice",
+			args:    args{[]string{}},
+			want:    []string{},
+			wantErr: false,
 		},
 		{
-			name:"unique uint64 slice",
-			args:args{[]uint64{1,2,2,3}},
-			want:[]uint64{1,2,3},
-			wantErr:false,
+			name:    "unique uint64 slice",
+			args:    args{[]uint64{1, 2, 2, 3}},
+			want:    []uint64{1, 2, 3},
+			wantErr: false,
 		},
 		{
-			name:"unique zero length uint64 slice",
-			args:args{[]uint64{}},
-			want:[]uint64{},
-			wantErr:false,
+			name:    "unique zero length uint64 slice",
+			args:    args{[]uint64{}},
+			want:    []uint64{},
+			wantErr: false,
 		},
 		{
-			name:"input isn't a slice",
-			args:args{nil},
-			want:nil,
-			wantErr:true,
+			name:    "input isn't a slice",
+			args:    args{nil},
+			want:    nil,
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -183,19 +183,19 @@ func TestUniqueStrSlice(t *testing.T) {
 		want []string
 	}{
 		{
-			name:"unique string slice",
-			args:args{[]string{"foo", "bar", "bar", "baz"}},
-			want:[]string{"foo","bar","baz"},
+			name: "unique string slice",
+			args: args{[]string{"foo", "bar", "bar", "baz"}},
+			want: []string{"foo", "bar", "baz"},
 		},
 		{
-			name:"unique zero length string slice",
-			args:args{[]string{}},
-			want:[]string{},
+			name: "unique zero length string slice",
+			args: args{[]string{}},
+			want: []string{},
 		},
 		{
-			name:"unique nil string slice",
-			args:args{nil},
-			want:[]string{},
+			name: "unique nil string slice",
+			args: args{nil},
+			want: []string{},
 		},
 	}
 	for _, tt := range tests {
@@ -218,34 +218,34 @@ func TestReverseSliceE(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:"reverse string slice",
-			args:args{[]string{"foo","bar","baz"}},
-			want:[]string{"baz", "bar", "foo"},
-			wantErr:false,
+			name:    "reverse string slice",
+			args:    args{[]string{"foo", "bar", "baz"}},
+			want:    []string{"baz", "bar", "foo"},
+			wantErr: false,
 		},
 		{
-			name:"reverse zero length string slice",
-			args:args{[]string{}},
-			want:[]string{},
-			wantErr:false,
+			name:    "reverse zero length string slice",
+			args:    args{[]string{}},
+			want:    []string{},
+			wantErr: false,
 		},
 		{
-			name:"reverse uint64 slice",
-			args:args{[]uint64{1,2,3}},
-			want:[]uint64{3,2,1},
-			wantErr:false,
+			name:    "reverse uint64 slice",
+			args:    args{[]uint64{1, 2, 3}},
+			want:    []uint64{3, 2, 1},
+			wantErr: false,
 		},
 		{
-			name:"reverse zero length uint64 slice",
-			args:args{[]uint64{}},
-			want:[]uint64{},
-			wantErr:false,
+			name:    "reverse zero length uint64 slice",
+			args:    args{[]uint64{}},
+			want:    []uint64{},
+			wantErr: false,
 		},
 		{
-			name:"input isn't a slice",
-			args:args{nil},
-			want:nil,
-			wantErr:true,
+			name:    "input isn't a slice",
+			args:    args{nil},
+			want:    nil,
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -272,19 +272,19 @@ func TestReverseStrSlice(t *testing.T) {
 		want []string
 	}{
 		{
-			name:"reverse string slice",
-			args:args{[]string{"foo","bar","baz"}},
-			want:[]string{"baz", "bar", "foo"},
+			name: "reverse string slice",
+			args: args{[]string{"foo", "bar", "baz"}},
+			want: []string{"baz", "bar", "foo"},
 		},
 		{
-			name:"reverse zero length string slice",
-			args:args{[]string{}},
-			want:[]string{},
+			name: "reverse zero length string slice",
+			args: args{[]string{}},
+			want: []string{},
 		},
 		{
-			name:"reverse nil string slice",
-			args:args{[]string{}},
-			want:[]string{},
+			name: "reverse nil string slice",
+			args: args{[]string{}},
+			want: []string{},
 		},
 	}
 	for _, tt := range tests {
@@ -308,34 +308,34 @@ func TestJoinSliceWithSepE(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:"join string slice",
-			args:args{[]string{"foo","bar","baz"}, ","},
-			want:"foo,bar,baz",
-			wantErr:false,
+			name:    "join string slice",
+			args:    args{[]string{"foo", "bar", "baz"}, ","},
+			want:    "foo,bar,baz",
+			wantErr: false,
 		},
 		{
-			name:"join string array",
-			args:args{[3]string{"foo","bar","baz"}, ","},
-			want:"foo,bar,baz",
-			wantErr:false,
+			name:    "join string array",
+			args:    args{[3]string{"foo", "bar", "baz"}, ","},
+			want:    "foo,bar,baz",
+			wantErr: false,
 		},
 		{
-			name:"join int slice",
-			args:args{[]int{1,2,3}, ","},
-			want:"1,2,3",
-			wantErr:false,
+			name:    "join int slice",
+			args:    args{[]int{1, 2, 3}, ","},
+			want:    "1,2,3",
+			wantErr: false,
 		},
 		{
-			name:"join int array",
-			args:args{[3]int{1,2,3}, ","},
-			want:"1,2,3",
-			wantErr:false,
+			name:    "join int array",
+			args:    args{[3]int{1, 2, 3}, ","},
+			want:    "1,2,3",
+			wantErr: false,
 		},
 		{
-			name:"join nil",
-			args:args{nil, ","},
-			want:"",
-			wantErr:true,
+			name:    "join nil",
+			args:    args{nil, ","},
+			want:    "",
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -365,21 +365,21 @@ func TestInsertSliceE(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:"insert string to the first pos",
-			args:args{[]string{"bar","baz"}, 0,"foo"},
-			want:[]string{"foo", "bar", "baz"},
+			name:    "insert string to the first pos",
+			args:    args{[]string{"bar", "baz"}, 0, "foo"},
+			want:    []string{"foo", "bar", "baz"},
 			wantErr: false,
 		},
 		{
-			name:"insert string to the last pos",
-			args:args{[]string{"foo","bar"}, 2,"baz"},
-			want:[]string{"foo", "bar", "baz"},
+			name:    "insert string to the last pos",
+			args:    args{[]string{"foo", "bar"}, 2, "baz"},
+			want:    []string{"foo", "bar", "baz"},
 			wantErr: false,
 		},
 		{
-			name:"insert string failed because pos overflow",
-			args:args{[]string{"foo","bar"}, 3,"baz"},
-			want:nil,
+			name:    "insert string failed because pos overflow",
+			args:    args{[]string{"foo", "bar"}, 3, "baz"},
+			want:    nil,
 			wantErr: true,
 		},
 	}
@@ -409,19 +409,19 @@ func TestInsertIntSlice(t *testing.T) {
 		want []int
 	}{
 		{
-			name:"insert int to the first pos",
-			args:args{[]int{1,2}, 0,0},
-			want:[]int{0, 1, 2},
+			name: "insert int to the first pos",
+			args: args{[]int{1, 2}, 0, 0},
+			want: []int{0, 1, 2},
 		},
 		{
-			name:"insert int to the last pos",
-			args:args{[]int{1,2}, 2,3},
-			want:[]int{1, 2, 3},
+			name: "insert int to the last pos",
+			args: args{[]int{1, 2}, 2, 3},
+			want: []int{1, 2, 3},
 		},
 		{
-			name:"insert int failed becacuse the pos overflow",
-			args:args{[]int{1,2}, 3,3},
-			want:nil,
+			name: "insert int failed becacuse the pos overflow",
+			args: args{[]int{1, 2}, 3, 3},
+			want: nil,
 		},
 	}
 	for _, tt := range tests {

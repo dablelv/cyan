@@ -50,8 +50,8 @@ func TestMap2Slice(t *testing.T) {
 			wantV: []int{},
 		},
 		{
-			name: "nil to slice",
-			args: args{nil},
+			name:  "nil to slice",
+			args:  args{nil},
 			wantK: nil,
 			wantV: nil,
 		},

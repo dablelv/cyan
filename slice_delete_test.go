@@ -16,28 +16,28 @@ func TestDeleteSliceElms(t *testing.T) {
 		want interface{}
 	}{
 		{
-			name:"delete success",
-			args:args{
-				i:[]string{"a","b","b","c"},
+			name: "delete success",
+			args: args{
+				i:    []string{"a", "b", "b", "c"},
 				elms: []interface{}{"b", "c"},
 			},
-			want:[]string{"a"},
+			want: []string{"a"},
 		},
 		{
-			name:"delete all",
-			args:args{
-				i:[]string{"a","b","b","c"},
-				elms: []interface{}{"a","b","c"},
+			name: "delete all",
+			args: args{
+				i:    []string{"a", "b", "b", "c"},
+				elms: []interface{}{"a", "b", "c"},
 			},
-			want:[]string{},
+			want: []string{},
 		},
 		{
-			name:"delete failed because element type is ill",
-			args:args{
-				i:[]string{"1","2","2","3"},
+			name: "delete failed because element type is ill",
+			args: args{
+				i:    []string{"1", "2", "2", "3"},
 				elms: []interface{}{2, 3},
 			},
-			want:nil,
+			want: nil,
 		},
 	}
 	for _, tt := range tests {
@@ -60,28 +60,28 @@ func TestDeleteSlice(t *testing.T) {
 		want interface{}
 	}{
 		{
-			name:"delete success",
-			args:args{
-				slice:[]string{"a","b","b","c"},
-				indexes: []int{1,2},
+			name: "delete success",
+			args: args{
+				slice:   []string{"a", "b", "b", "c"},
+				indexes: []int{1, 2},
 			},
-			want:[]string{"a","c"},
+			want: []string{"a", "c"},
 		},
 		{
-			name:"delete all",
-			args:args{
-				slice:[]string{"a","b","b","c"},
-				indexes: []int{0,1,2,3,4,5},
+			name: "delete all",
+			args: args{
+				slice:   []string{"a", "b", "b", "c"},
+				indexes: []int{0, 1, 2, 3, 4, 5},
 			},
-			want:[]string{},
+			want: []string{},
 		},
 		{
-			name:"delete failed because the input isn't slice",
-			args:args{
-				slice:"a",
-				indexes: []int{0,1,2,3,4,5},
+			name: "delete failed because the input isn't slice",
+			args: args{
+				slice:   "a",
+				indexes: []int{0, 1, 2, 3, 4, 5},
 			},
-			want:nil,
+			want: nil,
 		},
 	}
 	for _, tt := range tests {
@@ -104,28 +104,28 @@ func TestDeleteStrSlice(t *testing.T) {
 		want []string
 	}{
 		{
-			name:"delete success",
-			args:args{
-				src:[]string{"a","b","b","c"},
-				indexes: []int{1,2},
+			name: "delete success",
+			args: args{
+				src:     []string{"a", "b", "b", "c"},
+				indexes: []int{1, 2},
 			},
-			want:[]string{"a","c"},
+			want: []string{"a", "c"},
 		},
 		{
-			name:"delete all",
-			args:args{
-				src:[]string{"a","b","b","c"},
-				indexes: []int{0,1,2,3,4,5},
+			name: "delete all",
+			args: args{
+				src:     []string{"a", "b", "b", "c"},
+				indexes: []int{0, 1, 2, 3, 4, 5},
 			},
-			want:[]string{},
+			want: []string{},
 		},
 		{
-			name:"not delete",
-			args:args{
-				src:[]string{"a","b","b","c"},
+			name: "not delete",
+			args: args{
+				src:     []string{"a", "b", "b", "c"},
 				indexes: []int{},
 			},
-			want:[]string{"a","b","b","c"},
+			want: []string{"a", "b", "b", "c"},
 		},
 	}
 	for _, tt := range tests {

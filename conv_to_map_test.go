@@ -16,35 +16,35 @@ func TestToMapSetStrictE(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:"string slice to map set",
-			args:args{[]string{"foo","bar","baz"}},
-			want:map[string]struct{}{
-				"foo":struct{}{},
-				"bar":struct{}{},
-				"baz":struct{}{},
+			name: "string slice to map set",
+			args: args{[]string{"foo", "bar", "baz"}},
+			want: map[string]struct{}{
+				"foo": struct{}{},
+				"bar": struct{}{},
+				"baz": struct{}{},
 			},
 			wantErr: false,
 		},
 		{
-			name:"int slice to map set",
-			args:args{[]int{1,2,3, 3}},
-			want:map[int]struct{}{
-				1:struct{}{},
-				2:struct{}{},
-				3:struct{}{},
+			name: "int slice to map set",
+			args: args{[]int{1, 2, 3, 3}},
+			want: map[int]struct{}{
+				1: struct{}{},
+				2: struct{}{},
+				3: struct{}{},
 			},
 			wantErr: false,
 		},
 		{
-			name:"arg is nil",
-			args:args{nil},
-			want:nil,
+			name:    "arg is nil",
+			args:    args{nil},
+			want:    nil,
 			wantErr: true,
 		},
 		{
-			name:"arg is ill",
-			args:args{"foo"},
-			want:nil,
+			name:    "arg is ill",
+			args:    args{"foo"},
+			want:    nil,
 			wantErr: true,
 		},
 	}
@@ -73,21 +73,21 @@ func TestToMapSetE(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name :"string array to map set",
-			args: args{[3]string{"foo","bar","baz"}},
-			want:map[interface{}]struct{}{
+			name: "string array to map set",
+			args: args{[3]string{"foo", "bar", "baz"}},
+			want: map[interface{}]struct{}{
 				"foo": struct{}{},
-				"bar":struct{}{},
+				"bar": struct{}{},
 				"baz": struct{}{},
 			},
 			wantErr: false,
 		},
 		{
-			name :"string slice to map set",
-			args: args{[]string{"foo","bar","baz"}},
-			want:map[interface{}]struct{}{
+			name: "string slice to map set",
+			args: args{[]string{"foo", "bar", "baz"}},
+			want: map[interface{}]struct{}{
 				"foo": struct{}{},
-				"bar":struct{}{},
+				"bar": struct{}{},
 				"baz": struct{}{},
 			},
 			wantErr: false,
@@ -105,9 +105,9 @@ func TestToMapSetE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name :"param isn't slice or array",
-			args: args{"foo"},
-			want:nil,
+			name:    "param isn't slice or array",
+			args:    args{"foo"},
+			want:    nil,
 			wantErr: true,
 		},
 	}
@@ -230,27 +230,27 @@ func TestToStrMapSetStrict(t *testing.T) {
 		want map[string]struct{}
 	}{
 		{
-			name:"string array to map set",
-			args:args{[3]string{"foo","bar","baz"}},
-			want:map[string]struct{}{
-				"foo":struct{}{},
-				"bar":struct{}{},
-				"baz":struct{}{},
+			name: "string array to map set",
+			args: args{[3]string{"foo", "bar", "baz"}},
+			want: map[string]struct{}{
+				"foo": struct{}{},
+				"bar": struct{}{},
+				"baz": struct{}{},
 			},
 		},
 		{
-			name:"string slice to map set",
-			args:args{[]string{"foo","bar","baz"}},
-			want:map[string]struct{}{
-				"foo":struct{}{},
-				"bar":struct{}{},
-				"baz":struct{}{},
+			name: "string slice to map set",
+			args: args{[]string{"foo", "bar", "baz"}},
+			want: map[string]struct{}{
+				"foo": struct{}{},
+				"bar": struct{}{},
+				"baz": struct{}{},
 			},
 		},
 		{
-			name:"element type isn't string can't convert to map set",
-			args:args{[]uint64{1,2,3}},
-			want:nil,
+			name: "element type isn't string can't convert to map set",
+			args: args{[]uint64{1, 2, 3}},
+			want: nil,
 		},
 	}
 	for _, tt := range tests {
