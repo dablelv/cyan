@@ -98,17 +98,12 @@ import (
     huge "github.com/dablelv/go-huge-util"
 )
 
-huge.StrToMapTrue("a,b,c", ",")     // map[a:true b:true c:true]
-huge.StrToMapFalse("a,b,c", ",")    // map[a:false b:false c:false]
-huge.StrToIntSlice("1,2,3", ",")    // [1 2 3]
-huge.StrToUintSlice("1,2,3", ",")   // [1 2 3]
+huge.Split("a,b,c", ",")                    // []string{"a", "b", "c"}
 
-huge.Split("a,b,c", ",")            // [a b c]
+huge.JoinStr(",", "a", "", "b")             // "a,,b"
+huge.JoinStrSkipEmpty(",", "a", "", "b")    // "a,b"
 
-huge.JoinStrSkipEmpty(",", "a", "", "b")    // a,b
-huge.JoinStrNoSkipEmpty(",", "a", "", "b")  // a,,b
-
-huge.ReverseStr("abc")                      // cba
+huge.ReverseStr("abc")                      // "cba"
 ```
 
 # struct
@@ -157,7 +152,7 @@ huge.GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
 ```
 
 # type conversion
-Some useful functions can be used to convert one type to other types, such as to map set or slice.
+Some useful functions can be used to convert one type to other types, such as to map or slice.
 ## to map set
 ```go
 import (
@@ -181,6 +176,9 @@ sl := []uint{1, 2, 3}
 mSet, _ := huge.ToUintMapSetStrictE(sl)
 // or
 mSet := huge.ToUintMapSetStrict(sl)
+
+// split string to map set
+huge.SplitStrToMapSet("a,b,c", ",")  // map[a:{}, b:{}, c:{}]
 ```
 
 ## to slice
@@ -200,17 +198,24 @@ sl, _ := huge.ToStrSliceE([]int{1, 2, 3}) // []string{"1","2","3"}
 sl := huge.ToStrSlice([]int{1, 2, 3}) // []string{"1","2","3"}
 
 // convert map to slice in random order
-ks, vs, _ := huge.Map2SliceE(map[int]int{1:1, 2:2, 3:3})
-// or
 ks, vs := huge.Map2Slice(map[int]int{1:1, 2:2, 3:3})
+// or
+ks, vs, _ := huge.Map2SliceE(map[int]int{1:1, 2:2, 3:3})
+
 slK, _ : = ks.([]int)
 slV, _ : = vs.([]int)
 
-ks, vs, _ := huge.Map2SliceE(map[string]int{"foo":1, "bar":2, "baz":3})
-// or
 ks, vs := huge.Map2Slice(map[string]int{"foo":1, "bar":2, "baz":3})
+// or
+ks, vs, _ := huge.Map2SliceE(map[string]int{"foo":1, "bar":2, "baz":3})
+
 slK, _ : = ks.([]string)
 slV, _ : = vs.([]int)
+
+// split string to slice
+SplitStrToIntSlice("1,2,3", ",")            // int[1,2,3]
+SplitStrToUintSlice("1,2,3", ",")           // uint[1,2,3]
+SplitStrFloat64Slice("1.1,2.2,3.3", ",")    // float64[1.1,2.2,3.3]
 ```
 
 # url
