@@ -14,7 +14,7 @@ const (
 )
 
 // Compare compare the size relationship between two numeric values or strings.
-// The result is INCMP(incomparable), LT(less than), EQ(equal) or GT(greater than)
+// The result is INCMP(incomparable), LT(less than), EQ(equal) or GT(greater than).
 func Compare(lhs, rhs interface{}) CMPRES {
 	if !isComparable(lhs, rhs) {
 		return INCMP

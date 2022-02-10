@@ -15,32 +15,32 @@ import (
 	"github.com/spf13/cast"
 )
 
-// VerGTVer determines whether version0 greater than version1
-// Version number like MAJOR.MINOR.PATCH, e.g. 2.1.1 > 2.1.0 > 2.0.0 > 1.0.0
+// VerGTVer determines whether version0 greater than version1.
+// Version number like MAJOR.MINOR.PATCH, e.g. 2.1.1 > 2.1.0 > 2.0.0 > 1.0.0.
 func VerGTVer(ver0, ver1 string) (bool, error) {
 	return VerGTVerMore(ver0, ver1, ".", 3)
 }
 
-// VerLTVer determines whether version0 less than version1
-// Version number like MAJOR.MINOR.PATCH, e.g. 1.0.0 < 2.0.0 < 2.1.0 < 2.1.1
+// VerLTVer determines whether version0 less than version1.
+// Version number like MAJOR.MINOR.PATCH, e.g. 1.0.0 < 2.0.0 < 2.1.0 < 2.1.1.
 func VerLTVer(ver0, ver1 string) (bool, error) {
 	return VerLTVerMore(ver0, ver1, ".", 3)
 }
 
-// VerGEVer determines whether version0 greater than or equal to version1
-// Version number like MAJOR.MINOR.PATCH, e.g. 2.1.1 > 2.1.0 > 2.0.0 > 1.0.0
+// VerGEVer determines whether version0 greater than or equal to version1.
+// Version number like MAJOR.MINOR.PATCH, e.g. 2.1.1 > 2.1.0 > 2.0.0 > 1.0.0.
 func VerGEVer(ver0, ver1 string) (bool, error) {
 	return VerGEVerMore(ver0, ver1, ".", 3)
 }
 
-// VerLEVer determines whether version0 less than or equal to version1
-// Version number like MAJOR.MINOR.PATCH, e.g. 1.0.0 < 2.0.0 < 2.1.0 < 2.1.1
+// VerLEVer determines whether version0 less than or equal to version1.
+// Version number like MAJOR.MINOR.PATCH, e.g. 1.0.0 < 2.0.0 < 2.1.0 < 2.1.1.
 func VerLEVer(ver0, ver1 string) (bool, error) {
 	return VerLEVerMore(ver0, ver1, ".", 3)
 }
 
-// VerGTVerMore determines whether version0 greater than version1 with specified version separator and length
-// Version number like Field1.Field2.Field3,Field4..., e.g. 2.1.1.1 > 2.1.0.1 > 2.0.0.0 > 1.0.0.0
+// VerGTVerMore determines whether version0 greater than version1 with specified version separator and length.
+// Version number like Field1.Field2.Field3.Field4..., e.g. 2.1.1.1 > 2.1.0.1 > 2.0.0.0 > 1.0.0.0.
 func VerGTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 	ver0, ver1 = strings.TrimSpace(ver0), strings.TrimSpace(ver1)
 	if ver0 == ver1 {
@@ -70,8 +70,8 @@ func VerGTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 	return i64Ver0 > i64Ver1, nil
 }
 
-// VerGTVerMore determines whether version0 less than version1 with specified version separator and length
-// Version number like Field1.Field2.Field3,Field4..., e.g. 1.0.0.0 < 2.0.0.0 < 2.1.0.0 < 2.1.1.0
+// VerLTVerMore determines whether version0 less than version1 with specified version separator and length.
+// Version number like Field1.Field2.Field3,Field4..., e.g. 1.0.0.0 < 2.0.0.0 < 2.1.0.0 < 2.1.1.0.
 func VerLTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 	ver0, ver1 = strings.TrimSpace(ver0), strings.TrimSpace(ver1)
 	if ver0 == ver1 {
@@ -101,8 +101,9 @@ func VerLTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 	return i64Ver0 < i64Ver1, nil
 }
 
-// VerGEVerMore determines whether version0 greater than or equal to version1 with specified version separator and length
-// Version number like Field1.Field2.Field3,Field4..., e.g. 2.1.1.1 >= 2.1.0.1 >= 2.0.0.0 >= 1.0.0.0
+// VerGEVerMore determines whether version0 greater than or equal to version1 with specified version separator and
+// length.
+// Version number like Field1.Field2.Field3.Field4..., e.g. 2.1.1.1 >= 2.1.0.1 >= 2.0.0.0 >= 1.0.0.0
 func VerGEVerMore(ver0, ver1, sep string, num int) (bool, error) {
 	ver0, ver1 = strings.TrimSpace(ver0), strings.TrimSpace(ver1)
 	if ver0 == ver1 {
@@ -111,8 +112,8 @@ func VerGEVerMore(ver0, ver1, sep string, num int) (bool, error) {
 	return VerGTVerMore(ver0, ver1, sep, num)
 }
 
-// VerLEVer determines whether version0 less than or equal to version1 with specified version separator and length
-// Version number like Field1.Field2.Field3,Field4..., e.g. 1.0.0.0 <= 2.0.0.0 <= 2.1.0.0 <= 2.1.1.0
+// VerLEVerMore determines whether version0 less than or equal to version1 with specified version separator and length.
+// Version number like Field1.Field2.Field3.Field4..., e.g. 1.0.0.0 <= 2.0.0.0 <= 2.1.0.0 <= 2.1.1.0.
 func VerLEVerMore(ver0, ver1, sep string, num int) (bool, error) {
 	ver0, ver1 = strings.TrimSpace(ver0), strings.TrimSpace(ver1)
 	if ver0 == ver1 {

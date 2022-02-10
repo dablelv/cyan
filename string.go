@@ -5,8 +5,8 @@ import (
 	"strings"
 )
 
-// Split replace strings.Split
-// strings.Split has a giant pit because strings.Split ("", ",") will return a slice with an empty string
+// Split replaces strings.Split.
+// strings.Split has a giant pit because strings.Split ("", ",") will return a slice with an empty string.
 func Split(s, sep string) []string {
 	if s == "" {
 		return []string{}
@@ -43,7 +43,7 @@ func JoinStr(sep string, s ...string) string {
 	return buf.String()
 }
 
-// ReverseStr reverses the specified string without modifying the original string
+// ReverseStr reverses the specified string without modifying the original string.
 func ReverseStr(s string) string {
 	rs := []rune(s)
 	var r []rune
