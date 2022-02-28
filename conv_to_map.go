@@ -48,7 +48,7 @@ func ToIntMapSetStrictE(i interface{}) (map[int]struct{}, error) {
 	if v, ok := m.(map[int]struct{}); ok {
 		return v, nil
 	}
-	return nil, fmt.Errorf("convert success but the type %T of result %#v of isn't map[int]struct{}", m, m)
+	return nil, fmt.Errorf("convert success but the type %T of result %#v isn't map[int]struct{}", m, m)
 }
 
 // ToInt8MapSetStrict converts a slice or array to map[int8]struct{}.
@@ -232,18 +232,18 @@ func ToStrMapSetStrictE(i interface{}) (map[string]struct{}, error) {
 }
 
 // ToMapSetStrictE converts a slice or array to map set with error strictly.
-// The result of map key type is equal to the element type of input.
+// The result of map key type is equal to the type input element.
 func ToMapSetStrictE(i interface{}) (interface{}, error) {
-	// check params
+	// check params.
 	if i == nil {
-		return nil, fmt.Errorf("unable to converts %#v of type %T to map[interface{}]struct{}", i, i)
+		return nil, fmt.Errorf("unable to converts nil to map[interface{}]struct{}")
 	}
 	t := reflect.TypeOf(i)
 	kind := t.Kind()
 	if kind != reflect.Slice && kind != reflect.Array {
-		return nil, fmt.Errorf("the input %#v of type %T isn't a slice or array", i, i)
+		return nil, fmt.Errorf("the type %T of input %#v isn't a slice or array", i, i)
 	}
-	// execute the convert
+	// execute the convert.
 	v := reflect.ValueOf(i)
 	mT := reflect.MapOf(t.Elem(), reflect.TypeOf(struct{}{}))
 	mV := reflect.MakeMapWithSize(mT, v.Len())
@@ -266,7 +266,7 @@ func ToBoolMapSet(i interface{}) map[bool]struct{} {
 	return m
 }
 
-// ToBoolMapSetE converts a slice or array to map[bool]struct{} with error
+// ToBoolMapSetE converts a slice or array to map[bool]struct{} with error.
 func ToBoolMapSetE(i interface{}) (map[bool]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
@@ -404,7 +404,7 @@ func ToUintMapSet(i interface{}) map[uint]struct{} {
 	return m
 }
 
-// ToUintMapSetE converts a slice or array to map[uint]struct{} with error
+// ToUintMapSetE converts a slice or array to map[uint]struct{} with error.
 func ToUintMapSetE(i interface{}) (map[uint]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
@@ -519,7 +519,7 @@ func ToStrMapSet(i interface{}) map[string]struct{} {
 	return m
 }
 
-// ToStrMapSetE converts a slice or array to map[string]struct{} with error
+// ToStrMapSetE converts a slice or array to map[string]struct{} with error.
 func ToStrMapSetE(i interface{}) (map[string]struct{}, error) {
 	m, err := ToMapSetE(i)
 	if err != nil {
@@ -557,7 +557,8 @@ func ToMapSetE(i interface{}) (map[interface{}]struct{}, error) {
 
 //
 // Part 3: convert a string to map set after split.
-// For example, string "a,b,c" split by comma to map set is map[string]struct{}{"a":struct{}{}, "b":struct{}, "c":struct{}}
+// For example, string "a,b,c" split by comma to map set is map[string]struct{}{"a":struct{}{}, "b":struct{},
+// "c":struct{}}.
 //
 
 // SplitStrToMapSet convert a string to map set after split
