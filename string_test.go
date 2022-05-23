@@ -96,6 +96,40 @@ func TestGetAlphanumericNumByASCII(t *testing.T) {
 	}
 }
 
+func TestGetAlphanumericNumByASCIIV2(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "包含数字",
+			args: args{"108条梁山好汉"},
+			want: 3,
+		},
+		{
+			name: "包含字母",
+			args: args{"一百条梁山man"},
+			want: 3,
+		},
+		{
+			name: "包含数字与字母",
+			args: args{"108条梁山man"},
+			want: 6,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := GetAlphanumericNumByASCIIV2(tt.args.s); got != tt.want {
+				t.Errorf("GetAlphanumericNumByASCII() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestGetAlphanumericNumByRegExp(t *testing.T) {
 	type args struct {
 		s string
@@ -133,6 +167,12 @@ func TestGetAlphanumericNumByRegExp(t *testing.T) {
 func BenchmarkGetAlphanumericNumByASCII(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		GetAlphanumericNumByASCII("108条梁山man")
+	}
+}
+
+func BenchmarkGetAlphanumericNumByASCIIV2(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		GetAlphanumericNumByASCIIV2("108条梁山man")
 	}
 }
 

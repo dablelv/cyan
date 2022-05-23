@@ -72,6 +72,24 @@ func GetAlphanumericNumByASCII(s string) int {
 	return num
 }
 
+// GetAlphanumericNumByASCIIV2 gets the alphanumeric number based on the ASCII code value.
+// Because range by rune so the performance is worse than GetAlphanumericNumByASCII.
+func GetAlphanumericNumByASCIIV2(s string) int {
+	num := int(0)
+	for _, c := range s {
+		switch {
+		case '0' <= c && c <= '9':
+			fallthrough
+		case 'a' <= c && c <= 'z':
+			fallthrough
+		case 'A' <= c && c <= 'Z':
+			num++
+		default:
+		}
+	}
+	return num
+}
+
 // GetAlphanumericNumByRegExp gets the alphanumeric number based on regular expression.
 // Note that this function has a poor performance when compared to GetAlphanumericNumByASCII,
 // so this GetAlphanumericNumByASCII is recommended.
