@@ -60,11 +60,11 @@ func GetAlphanumericNumByASCII(s string) int {
 	num := int(0)
 	for i := 0; i < len(s); i++ {
 		switch {
-		case 65 <= s[i] && s[i] <= 90: // 大写字母
+		case 48 <= s[i] && s[i] <= 57: 	// digits
 			fallthrough
-		case 97 <= s[i] && s[i] <= 122: // 小写字母
+		case 65 <= s[i] && s[i] <= 90: 	// uppercase letters
 			fallthrough
-		case 48 <= s[i] && s[i] <= 57: // 数字
+		case 97 <= s[i] && s[i] <= 122: // lowercase letters
 			num++
 		default:
 		}
