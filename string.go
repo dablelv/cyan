@@ -2,6 +2,7 @@ package util
 
 import (
 	"bytes"
+	"regexp"
 	"strings"
 )
 
@@ -51,4 +52,31 @@ func ReverseStr(s string) string {
 		r = append(r, rs[i])
 	}
 	return string(r)
+}
+
+// GetAlphanumericNumByASCII gets the alphanumeric number based on the ASCII code value.
+// Note that this function has a better performance than GetAlphanumericNumByRegExp, so this function is recommended.
+func GetAlphanumericNumByASCII(s string) int {
+	num := int(0)
+	for i := 0; i < len(s); i++ {
+		switch {
+		case 65 <= s[i] && s[i] <= 90: // 大写字母
+			fallthrough
+		case 97 <= s[i] && s[i] <= 122: // 小写字母
+			fallthrough
+		case 48 <= s[i] && s[i] <= 57: // 数字
+			num++
+		default:
+		}
+	}
+	return num
+}
+
+// GetAlphanumericNumByRegExp gets the alphanumeric number based on regular expression.
+// Note that this function has a poor performance when compared to GetAlphanumericNumByASCII,
+// so this GetAlphanumericNumByASCII is recommended.
+func GetAlphanumericNumByRegExp(s string) int {
+	rNum := regexp.MustCompile(`\d`)
+	rLetter := regexp.MustCompile("[a-zA-Z]")
+	return len(rNum.FindAllString(s, -1)) + len(rLetter.FindAllString(s, -1))
 }
