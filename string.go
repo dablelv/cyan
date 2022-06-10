@@ -92,7 +92,7 @@ func GetAlphanumericNumByASCIIV2(s string) int {
 
 // GetAlphanumericNumByRegExp gets the alphanumeric number based on regular expression.
 // Note that this function has a poor performance when compared to GetAlphanumericNumByASCII,
-// so this GetAlphanumericNumByASCII is recommended.
+// so the GetAlphanumericNumByASCII is recommended.
 func GetAlphanumericNumByRegExp(s string) int {
 	rNum := regexp.MustCompile(`\d`)
 	rLetter := regexp.MustCompile("[a-zA-Z]")

@@ -654,7 +654,7 @@ func MaxSliceE(slice interface{}) (interface{}, error) {
 	if v.Len() == 0 {
 		return nil, nil
 	}
-	// get the max element
+	// get the max element.
 	max := v.Index(0).Interface()
 	for i := 1; i < v.Len(); i++ {
 		switch v := v.Index(i).Interface().(type) {

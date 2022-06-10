@@ -1,7 +1,7 @@
 # Synopsis
 Go common and huge utility functions help you to create your go program quickly and easily.
 
-# encode
+# Encode
 Some useful functions can be used to handle conversion of different character encoding, such as gbk to utf8.
 
 Example:
@@ -18,7 +18,7 @@ gbkStrRes, _ := huge.Utf8ToGbk(utf8Str)
 fmt.Println(gbkStrRes) // [196 227 186 195]
 ```
 
-# net
+# Net
 Some useful functions can be used to handle network. For example you can use `IPv4StrToU32()` transform ipv4 string to uint32 value.
 
 Example:
@@ -35,7 +35,7 @@ huge.GetNativeEndian()              // LittleEndian
 huge.IPv4StrToU32("127.0.0.1")      // 2130706433
 huge.U32ToIPv4Str(2130706433)       // "127.0.0.1"
 ```
-# slice
+# Slice
 Some useful functions can be used to handle slice.
 
 Example:
@@ -76,7 +76,7 @@ r := huge.UpdateIntSliceE(fib, 5, 88)		// [1 1 2 3 5 88]
 r := huge.GetEleIndexesSlice(fib, 1)		// [0 1]
 ```
 
-# sql
+# SQL
 Some useful functions can be used to handle sql statement.
 
 Example:
@@ -89,7 +89,7 @@ var sql = `select * from t where field1="{name}"`
 huge.FormatSql(sql, map[string]string{"name": "dablelv"}, false)    // select * from t where field1="dablelv"
 ```
 
-# string
+# String
 Some useful functions can be used to handle string.
 
 Example:
@@ -104,9 +104,13 @@ huge.JoinStr(",", "a", "", "b")             // "a,,b"
 huge.JoinStrSkipEmpty(",", "a", "", "b")    // "a,b"
 
 huge.ReverseStr("abc")                      // "cba"
+
+huge.GetAlphanumericNumByASCII("108条梁山man")     // 6
+huge.GetAlphanumericNumByASCIIV2("108条梁山man")   // 6
+huge.GetAlphanumericNumByRegExp("108条梁山man")    // 6
 ```
 
-# struct
+# Struct
 Some useful functions can be used to handle string.
 
 Example:
@@ -124,7 +128,7 @@ huge.Struct2Map(st)         // map[I:1 S:a]
 huge.Struct2MapString(st)   // map[I:1 S:a]
 ```
 
-# time
+# Time
 Some useful functions can be used to handle date and time.
 
 Example:
@@ -151,7 +155,7 @@ huge.GetDayBeginMoment(time.Now())  // 2020-05-16 00:00:00 +0800 CST
 huge.GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
 ```
 
-# type conversion
+# Type Conversion
 Some useful functions can be used to convert one type to other types, such as to map or slice.
 ## to map set
 ```go
@@ -187,7 +191,7 @@ import (
     huge "github.com/dablelv/go-huge-util"
 )
 
-// convert string value separated by white space character to string slice
+// Convert string separated by white space character to string slice.
 sl, _ := huge.ToStrSliceE("a b c") // []string{"a","b","c"}
 // or
 sl := huge.ToStrSlice("a b c") // []string{"a","b","c"}
@@ -218,7 +222,7 @@ SplitStrToUintSlice("1,2,3", ",")           // uint[1,2,3]
 SplitStrFloat64Slice("1.1,2.2,3.3", ",")    // float64[1.1,2.2,3.3]
 ```
 
-# url
+# URL
 Some useful functions can be used to handle url.
 
 Example:
@@ -240,7 +244,7 @@ huge.RawURLDelParam(rawUrl, "page")             // http://www.aspxfans.com:8080/
 huge.RawURLSetParam(rawUrl, "boardID", "521")   // http://www.aspxfans.com:8080/news/index.asp?boardID=521&page=1&page=2#name
 ```
 
-# crypto
+# Crypto
 Some useful functions can be used to create Hash, HMAC and crypt data.
 ```go
 import (
@@ -300,7 +304,7 @@ c, _ := Base64TriDESCBCEncrypt(p, key24) // dau0DzmDGQbHasZaOvxxwg==
 p, _ := Base64TriDESCBCDecrypt(c, key24) // plaintext
 ```
 
-# rand
+# Rand
 Some functions to create a real non-negative random int number, specified length random string, and so on.
 ```go
 huge.GetRandInt()               // 2040723487295132865
@@ -311,7 +315,7 @@ huge.GetRandStr(3)              // dAt
 huge.GetRandLowerStr(3)         // lts
 huge.GetRandUpperStr(3)         // YUT
 ```
-# json
+# JSON
 Some convert function about to json.
 ```go
 student := struct {
@@ -331,7 +335,7 @@ output:
 */
 ```
 
-# other
+# Other
 Some useful functions now unclassified. Of course, it may be classified and moved to a new go file in the future.
 ```go
 huge.IsLittleEndian()   // true
