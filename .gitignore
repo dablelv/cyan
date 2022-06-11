@@ -3,3 +3,5 @@
 .vscode
 release
 vendor
+*.exe
+*.out

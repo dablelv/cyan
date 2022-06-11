@@ -31,9 +31,10 @@ huge.IsReservedIP("0.0.0.256")    // -1 invalid ip
 huge.IsReservedIP("39.156.69.79") // 0 public ip
 huge.IsReservedIP("127.0.0.1")    // 1 reserved ip
 
-huge.GetNativeEndian()              // LittleEndian
 huge.IPv4StrToU32("127.0.0.1")      // 2130706433
 huge.U32ToIPv4Str(2130706433)       // "127.0.0.1"
+huge.GetNativeEndian()              // LittleEndian
+huge.IsLittleEndian()               // true
 ```
 # Slice
 Some useful functions can be used to handle slice.
@@ -338,12 +339,10 @@ output:
 # Other
 Some useful functions now unclassified. Of course, it may be classified and moved to a new go file in the future.
 ```go
-huge.IsLittleEndian()   // true
-
-res0, _ := VerGTVer("1.0.5", "1.0.4")   // true
-res1, _ := VerLTVer("1.0.5", "2.0.4")   // true
-res2, _ := VerGEVer("2.0.4", "2.0.4")   // true
-res3, _ := VerLEVer("1.0.5", "1.0.5")   // true
+b, _ := VerGTVer("1.0.5", "1.0.4")   // true
+b, _ := VerLTVer("1.0.5", "2.0.4")   // true
+b, _ := VerGEVer("2.0.4", "2.0.4")   // true
+b, _ := VerLEVer("1.0.5", "1.0.5")   // true
 ```
 
 # Summary

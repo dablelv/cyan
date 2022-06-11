@@ -48,9 +48,9 @@ func init() {
 	}
 }
 
-// IsReservedIP reports whether ip is private
-// support ipv4/ipv6, refer rfc6890
-// return <0 ip is invalid, =0 ip is public, >0 ip is private
+// IsReservedIP reports whether ip is private.
+// Support ipv4/ipv6, refer rfc6890.
+// Return <0 ip is invalid, =0 ip is public, >0 ip is private.
 func IsReservedIP(ip string) int {
 	addr := net.ParseIP(ip)
 	if addr == nil {
@@ -77,11 +77,6 @@ func IsReservedIP(ip string) int {
 	return 0
 }
 
-// GetNativeEndian gets byteorder for the current system
-func GetNativeEndian() binary.ByteOrder {
-	return nativeEndian
-}
-
 // Swap16 swap a 16 bit value if aren't big endian
 func Swap16(i uint16) uint16 {
 	return (i&0xff00)>>8 | (i&0xff)<<8
@@ -103,7 +98,7 @@ func Htons(i uint16) uint16 {
 	return Swap16(i)
 }
 
-// Htonl convert uint32 from host byte order to network byte order
+// Htonl convert uint32 from host byte order to network byte order.
 func Htonl(i uint32) uint32 {
 	if GetNativeEndian() == binary.BigEndian {
 		return i
@@ -114,7 +109,7 @@ func Htonl(i uint32) uint32 {
 	return Swap32(i)
 }
 
-// Ntohs convert uint16 from network byte order to host byte order
+// Ntohs convert uint16 from network byte order to host byte order.
 func Ntohs(i uint16) uint16 {
 	if GetNativeEndian() == binary.BigEndian {
 		return i
@@ -125,7 +120,7 @@ func Ntohs(i uint16) uint16 {
 	return Swap16(i)
 }
 
-// Ntohl convert uint32 from network byte order to host byte order
+// Ntohl convert uint32 from network byte order to host byte order.
 func Ntohl(i uint32) uint32 {
 	if GetNativeEndian() == binary.BigEndian {
 		return i
@@ -136,7 +131,7 @@ func Ntohl(i uint32) uint32 {
 	return Swap32(i)
 }
 
-// IPv4ToU32 convert ipv4(a.b.c.d) to uint32 in host byte order
+// IPv4ToU32 convert ipv4(a.b.c.d) to uint32 in host byte order.
 func IPv4ToU32(ip net.IP) uint32 {
 	if ip == nil {
 		return 0
@@ -148,7 +143,7 @@ func IPv4ToU32(ip net.IP) uint32 {
 	return uint32(a<<24 | b<<16 | c<<8 | d)
 }
 
-// U32ToIPv4 convert uint32 to ipv4(a.b.c.d) in host byte order
+// U32ToIPv4 convert uint32 to ipv4(a.b.c.d) in host byte order.
 func U32ToIPv4(ip uint32) net.IP {
 	a := byte((ip >> 24) & 0xFF)
 	b := byte((ip >> 16) & 0xFF)
@@ -157,7 +152,7 @@ func U32ToIPv4(ip uint32) net.IP {
 	return net.IPv4(a, b, c, d)
 }
 
-// IPv4StrToU32 convert IPv4 string to uint32 in host byte order
+// IPv4StrToU32 convert IPv4 string to uint32 in host byte order.
 func IPv4StrToU32(s string) (ip uint32) {
 	r := `^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})`
 	reg, err := regexp.Compile(r)
@@ -185,7 +180,18 @@ func IPv4StrToU32(s string) (ip uint32) {
 	return
 }
 
-// U32ToIPv4Str convert uint32 to IPv4 string in host byte order
+// U32ToIPv4Str convert uint32 to IPv4 string in host byte order.
 func U32ToIPv4Str(ip uint32) string {
 	return fmt.Sprintf("%d.%d.%d.%d", ip>>24, ip<<8>>24, ip<<16>>24, ip<<24>>24)
+}
+
+// GetNativeEndian gets byte order for the current system.
+func GetNativeEndian() binary.ByteOrder {
+	return nativeEndian
+}
+
+// IsLittleEndian determines whether the host byte order is little endian.
+func IsLittleEndian() bool {
+	n := 0x1234
+	return *(*byte)(unsafe.Pointer(&n)) == 0x34
 }
