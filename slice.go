@@ -9,7 +9,7 @@ import (
 )
 
 //
-// part 1: unique a slice, e.g. input []int32{1, 2, 2, 3} and output is []int32{1, 2, 3}.
+// Part 1: unique a slice, e.g. input []int32{1, 2, 2, 3} and output is []int32{1, 2, 3}.
 //
 
 func UniqueIntSlice(src []int) []int {
@@ -91,7 +91,7 @@ func UniqueStrSlice(src []string) []string {
 }
 
 //
-// part 2: reverse a slice, e.g. input []int32{1, 2, 3} and output is []int32{3, 2, 1}.
+// Part 2: reverse a slice, e.g. input []int32{1, 2, 3} and output is []int32{3, 2, 1}.
 //
 
 func ReverseIntSlice(src []int) []int {
@@ -161,7 +161,7 @@ func ReverseStrSlice(src []string) []string {
 }
 
 //
-// part 3: sum a slice, e.g. input []int32{1, 2, 3} and output is 6.
+// Part 3: sum a slice, e.g. input []int32{1, 2, 3} and output is 6.
 //
 
 // SumSlice calculates the sum of slice elements
@@ -171,7 +171,7 @@ func SumSlice(slice interface{}) float64 {
 }
 
 //
-// part 4: determine whether the slice contains an element.
+// Part 4: determine whether the slice contains an element.
 //
 
 // IsContains checks whether slice or array contains the target element.
@@ -195,7 +195,7 @@ func IsContains(i interface{}, target interface{}) bool {
 }
 
 //
-// part 5: join slice with a separator. e.g. input []int32{1, 2, 3} and separator "#", output is a string "1#2#3"
+// Part 5: join slice with a separator. e.g. input []int32{1, 2, 3} and separator "#", output is a string "1#2#3"
 //
 
 // JoinSliceWithSep joins all elements in slice with a separator
@@ -205,7 +205,7 @@ func JoinSliceWithSep(slice interface{}, sep string) string {
 }
 
 //
-// part 6: CRUD(Create Read Update Delete) on slice by index.
+// Part 6: CRUD(Create Read Update Delete) on slice by index.
 //
 
 func InsertIntSlice(src []int, index, value int) []int {
@@ -346,7 +346,7 @@ func GetEleIndexesSlice(slice interface{}, value interface{}) []int {
 }
 
 //
-// part 7: get the min or max element of a slice.
+// Part 7: get the min or max element of a slice.
 //
 
 func MinIntSlice(sl []int) int {
@@ -494,7 +494,22 @@ func MaxFloat64Slice(sl []float64) float64 {
 }
 
 //
-// part x: basic operating functions of slice
+// Part 8: get a random element from a slice or array.
+//
+
+// GetRandomSliceElem get a random element from a slice or array.
+// If the length of slice or array is zero it will panic.
+func GetRandomSliceElem(i interface{}) interface{} {
+	v := reflect.ValueOf(i)
+	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
+		return i
+	}
+	idx := RandIntn(v.Len())
+	return v.Index(idx).Interface()
+}
+
+//
+// Part x: basic operating functions of slice.
 //
 
 // UniqueSliceE deletes repeated elements in a slice with error.
