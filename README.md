@@ -316,6 +316,7 @@ huge.GetRandStr(3)              // dAt
 huge.GetRandLowerStr(3)         // lts
 huge.GetRandUpperStr(3)         // YUT
 ```
+
 # JSON
 Some convert function about to json.
 ```go
