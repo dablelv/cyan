@@ -119,29 +119,29 @@ func ZipFollowSymlink(zipPath string, paths ...string) error {
 
 	// Get all the file or directory paths.
 	var allFilePaths []string
-	m := make(map[string]string)
+	pathToRoot := make(map[string]string)
 	for _, srcPath := range paths {
-		// Remove the trailing path separator if path is a directory.
-		srcPath = strings.TrimSuffix(srcPath, string(os.PathSeparator))
-
 		// If the path is a dir or symlink to dir, get all files in it.
 		info, err := os.Stat(srcPath)
 		if err != nil {
 			return err
 		}
 		if info.IsDir() {
+			// Remove the trailing path separator if path is a directory.
+			srcPath = strings.TrimSuffix(srcPath, string(os.PathSeparator))
+
 			filePaths, err := file.GetDirAllFilePaths(srcPath)
 			if err != nil {
 				return err
 			}
 			allFilePaths = append(allFilePaths, filePaths...)
 			for _, p := range filePaths {
-				m[p] = srcPath
+				pathToRoot[p] = srcPath
 			}
 			continue
 		}
 		allFilePaths = append(allFilePaths, srcPath)
-		m[srcPath] = srcPath
+		pathToRoot[srcPath] = srcPath
 	}
 
 	// Traverse all the file or directory.
@@ -161,7 +161,7 @@ func ZipFollowSymlink(zipPath string, paths ...string) error {
 		header.Method = zip.Deflate
 
 		// Set relative path of a file as the header name.
-		header.Name, err = filepath.Rel(filepath.Dir(m[path]), path)
+		header.Name, err = filepath.Rel(filepath.Dir(pathToRoot[path]), path)
 		if err != nil {
 			return err
 		}
