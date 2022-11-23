@@ -1,4 +1,4 @@
-package util
+package file
 
 import (
 	"bufio"
@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // ReadLines reads all lines of the specified file.
@@ -54,7 +55,7 @@ func ReadLinesV2(path string) ([]string, int, error) {
 	}
 }
 
-// ListDir lists all the files in the directory
+// ListDir lists all the files in the directory.
 func ListDir(path string) []string {
 	files, err := ioutil.ReadDir(path)
 	if err != nil {
@@ -68,8 +69,8 @@ func ListDir(path string) []string {
 	return filenames
 }
 
-// IsPathExist determines whether a file/dir path exists.
-// User os.Stat to get the info of target file or dir to check whether exists.
+// IsPathExist checks whether a file/dir exists.
+// Use os.Stat to get the info of the target file or dir to check whether exists.
 // If os.Stat returns nil err, the target exists.
 // If os.Stat returns a os.ErrNotExist err, the target does not exist.
 // If the error returned is another type, the target is uncertain whether exists.
@@ -84,7 +85,8 @@ func IsPathExist(path string) (bool, error) {
 	return false, err
 }
 
-// IsDir determines whether a path is a directory
+// IsDir checks whether a path is a directory.
+// If the path is a symbolic link will follow it.
 func IsDir(path string) bool {
 	if info, err := os.Stat(path); err == nil && info.IsDir() {
 		return true
@@ -92,12 +94,52 @@ func IsDir(path string) bool {
 	return false
 }
 
-// IsFile determines whether a path is a file.
+// IsDirE checks whether a path is a directory with error.
+// If the path is a symbolic link will follow it.
+func IsDirE(path string) (bool, error) {
+	info, err := os.Stat(path)
+	if err == nil && info.IsDir() {
+		return true, nil
+	}
+	return false, err
+}
+
+// IsFile checks whether a path is a file.
+// If the path is a symbolic link will follow it.
 func IsFile(path string) bool {
 	if info, err := os.Stat(path); err == nil && info.Mode().IsRegular() {
 		return true
 	}
 	return false
+}
+
+// IsFileE checks whether a path is a file with error.
+// If the path is a symbolic link will follow it.
+func IsFileE(path string) (bool, error) {
+	info, err := os.Stat(path)
+	if err == nil && info.Mode().IsRegular() {
+		return true, nil
+	}
+	return false, err
+}
+
+// IsSymlink checks a file whether is a symbolic link.
+// Note that this doesn't work for the shortcut file on windows.
+func IsSymlink(path string) bool {
+	if info, err := os.Lstat(path); err == nil && info.Mode()&os.ModeSymlink != 0 {
+		return true
+	}
+	return false
+}
+
+// IsSymlinkE checks a file whether is a symbolic link.
+// Note that this doesn't work for the shortcut file on windows.
+func IsSymlinkE(path string) (bool, error) {
+	info, err := os.Lstat(path)
+	if err == nil && info.Mode()&os.ModeSymlink != 0 {
+		return true, nil
+	}
+	return false, err
 }
 
 // RemoveFile removes the named file or empty directory.
@@ -148,4 +190,39 @@ func BytesToFile(filePath string, data []byte) error {
 		}
 	}
 	return ioutil.WriteFile(filePath, data, 0644)
+}
+
+// GetDirAllFilePaths gets dir's all file paths recusively including it self.
+// If the dir or the sub file is symbolic link will follow it.
+// Note that the symbolic link need to avoid loops.
+func GetDirAllFilePaths(dirPath string) ([]string, error) {
+	result := []string{}
+
+	dirPath = strings.TrimSuffix(dirPath, string(os.PathSeparator))
+	result = append(result, dirPath)
+
+	// Read dir.
+	fis, err := ioutil.ReadDir(dirPath)
+	if err != nil {
+		return result, err
+	}
+
+	// Recursively traverse all sub files.
+	for _, fi := range fis {
+		fullPath := dirPath + string(os.PathSeparator) + fi.Name()
+		info, err := os.Stat(fullPath)
+		if err != nil {
+			return nil, err
+		}
+		if info.IsDir() {
+			tmp, err := GetDirAllFilePaths(fullPath)
+			if err != nil {
+				return nil, err
+			}
+			result = append(result, tmp...)
+		} else {
+			result = append(result, fullPath)
+		}
+	}
+	return result, nil
 }

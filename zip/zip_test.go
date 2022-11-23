@@ -1,4 +1,4 @@
-package util
+package zip
 
 import "testing"
 
