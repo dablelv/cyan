@@ -55,18 +55,18 @@ func ReadLinesV2(path string) ([]string, int, error) {
 	}
 }
 
-// ListDir lists all the files in the directory.
-func ListDir(path string) []string {
-	files, err := ioutil.ReadDir(path)
+// ListDir lists all the file or dir names in the specified directory.
+// Note that ListDir don't traverse recursively.
+func ListDir(dirname string) ([]string, error) {
+	infos, err := ioutil.ReadDir(dirname)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-
-	filenames := make([]string, len(files))
-	for idx, file := range files {
-		filenames[idx] = file.Name()
+	names := make([]string, len(infos))
+	for i, info := range infos {
+		names[i] = info.Name()
 	}
-	return filenames
+	return names, nil
 }
 
 // IsPathExist checks whether a file/dir exists.
@@ -192,37 +192,71 @@ func BytesToFile(filePath string, data []byte) error {
 	return ioutil.WriteFile(filePath, data, 0644)
 }
 
-// GetDirAllFilePaths gets dir's all file paths recusively including it self.
-// If the dir or the sub file is symbolic link will follow it.
-// Note that the symbolic link need to avoid loops.
-func GetDirAllFilePaths(dirPath string) ([]string, error) {
-	result := []string{}
+// GetDirAllEntryPaths gets all the file or dir paths in the specified directory recursively.
+// If the incl is true result will include current dir.
+// Note that GetDirAllEntryPaths won't follow symlink if the subdir is a symbolic link.
+func GetDirAllEntryPaths(dirname string, incl bool) ([]string, error) {
+	// Remove the trailing path separator if dirname has.
+	dirname = strings.TrimSuffix(dirname, string(os.PathSeparator))
 
-	dirPath = strings.TrimSuffix(dirPath, string(os.PathSeparator))
-	result = append(result, dirPath)
-
-	// Read dir.
-	fis, err := ioutil.ReadDir(dirPath)
+	infos, err := ioutil.ReadDir(dirname)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 
-	// Recursively traverse all sub files.
-	for _, fi := range fis {
-		fullPath := dirPath + string(os.PathSeparator) + fi.Name()
-		info, err := os.Stat(fullPath)
-		if err != nil {
-			return nil, err
-		}
+	paths := make([]string, 0, len(infos))
+	// Include current dir.
+	if incl {
+		paths = append(paths, dirname)
+	}
+
+	for _, info := range infos {
+		path := dirname + string(os.PathSeparator) + info.Name()
 		if info.IsDir() {
-			tmp, err := GetDirAllFilePaths(fullPath)
+			tmp, err := GetDirAllEntryPaths(path, incl)
 			if err != nil {
 				return nil, err
 			}
-			result = append(result, tmp...)
-		} else {
-			result = append(result, fullPath)
+			paths = append(paths, tmp...)
+			continue
 		}
+		paths = append(paths, path)
 	}
-	return result, nil
+	return paths, nil
+}
+
+// GetDirAllEntryPathsFollowSymlink gets all the file or dir paths in the specified directory recursively.
+// If the incl is true result will include current dir.
+func GetDirAllEntryPathsFollowSymlink(dirname string, incl bool) ([]string, error) {
+	// Remove the trailing path separator if dirname has.
+	dirname = strings.TrimSuffix(dirname, string(os.PathSeparator))
+
+	infos, err := ioutil.ReadDir(dirname)
+	if err != nil {
+		return nil, err
+	}
+
+	paths := make([]string, 0, len(infos))
+	// Include current dir.
+	if incl {
+		paths = append(paths, dirname)
+	}
+
+	for _, info := range infos {
+		path := dirname + string(os.PathSeparator) + info.Name()
+		realInfo, err := os.Stat(path)
+		if err != nil {
+			return nil, err
+		}
+		if realInfo.IsDir() {
+			tmp, err := GetDirAllEntryPathsFollowSymlink(path, incl)
+			if err != nil {
+				return nil, err
+			}
+			paths = append(paths, tmp...)
+			continue
+		}
+		paths = append(paths, path)
+	}
+	return paths, nil
 }

@@ -120,28 +120,27 @@ func ZipFollowSymlink(zipPath string, paths ...string) error {
 	// Get all the file or directory paths.
 	var allFilePaths []string
 	pathToRoot := make(map[string]string)
-	for _, srcPath := range paths {
+	for _, path := range paths {
 		// If the path is a dir or symlink to dir, get all files in it.
-		info, err := os.Stat(srcPath)
+		info, err := os.Stat(path)
 		if err != nil {
 			return err
 		}
 		if info.IsDir() {
 			// Remove the trailing path separator if path is a directory.
-			srcPath = strings.TrimSuffix(srcPath, string(os.PathSeparator))
-
-			filePaths, err := file.GetDirAllFilePaths(srcPath)
+			path = strings.TrimSuffix(path, string(os.PathSeparator))
+			filePaths, err := file.GetDirAllEntryPathsFollowSymlink(path, true)
 			if err != nil {
 				return err
 			}
 			allFilePaths = append(allFilePaths, filePaths...)
 			for _, p := range filePaths {
-				pathToRoot[p] = srcPath
+				pathToRoot[p] = path
 			}
 			continue
 		}
-		allFilePaths = append(allFilePaths, srcPath)
-		pathToRoot[srcPath] = srcPath
+		allFilePaths = append(allFilePaths, path)
+		pathToRoot[path] = path
 	}
 
 	// Traverse all the file or directory.
