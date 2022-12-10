@@ -20,12 +20,12 @@ type Group struct {
 // WithContext returns a new Group and an associated Context derived from ctx.
 func WithContext(ctx context.Context) (*Group, context.Context) {
 	g, ctx := errgroup.WithContext(ctx)
-	return &Group{g: *g},ctx
+	return &Group{g: *g}, ctx
 }
 
 // Go calls the given function in a new goroutine.
 // If a panic occurred in a given function, it will be captured and error will be returned.
-// The At the same time, the goroutine stack information will be printed to standard output.
+// At the same time, the goroutine stack information will be printed to standard output.
 func (s *Group) Go(f func() error) {
 	s.g.Go(func() (err error) {
 		defer func() {

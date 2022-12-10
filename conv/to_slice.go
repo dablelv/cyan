@@ -1,4 +1,4 @@
-package util
+package conv
 
 import (
 	"fmt"
@@ -15,16 +15,16 @@ import (
 //
 
 // Map2Slice converts map keys and values to slice in random order.
-func Map2Slice(i interface{}) (ks interface{}, vs interface{}) {
+func Map2Slice(i any) (ks any, vs any) {
 	ks, vs, _ = Map2SliceE(i)
 	return
 }
 
 // Map2SliceE converts keys and values of map to slice in random order with error.
-func Map2SliceE(i interface{}) (ks interface{}, vs interface{}, err error) {
-	// check params
+func Map2SliceE(i any) (ks any, vs any, err error) {
+	// Check params.
 	if i == nil {
-		return nil, nil, fmt.Errorf("unable to converts %#v of type %T to map[interface{}]struct{}", i, i)
+		return nil, nil, fmt.Errorf("unable to converts %#v of type %T to map[any]struct{}", i, i)
 	}
 	t := reflect.TypeOf(i)
 	if t.Kind() != reflect.Map {
@@ -32,7 +32,7 @@ func Map2SliceE(i interface{}) (ks interface{}, vs interface{}, err error) {
 		return
 	}
 
-	// convert
+	// Convert.
 	m := reflect.ValueOf(i)
 	l := m.Len()
 	keys := m.MapKeys()
@@ -51,13 +51,13 @@ func Map2SliceE(i interface{}) (ks interface{}, vs interface{}, err error) {
 
 // ToStrSlice converts an interface to a []string.
 // For example, covert []int{1, 2, 3} to []string{"1", "2", "3"}.
-func ToStrSlice(i interface{}) []string {
+func ToStrSlice(i any) []string {
 	v, _ := ToStrSliceE(i)
 	return v
 }
 
 // ToStrSliceE converts an interface to a []string with error.
-func ToStrSliceE(i interface{}) ([]string, error) {
+func ToStrSliceE(i any) ([]string, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []string", i, i)
 	}
@@ -97,26 +97,26 @@ func ToStrSliceE(i interface{}) ([]string, error) {
 
 // ToIntSlice converts an interface to []int.
 // For example, covert []string{"1", "2", "3"} to []int{1, 2, 3}.
-func ToIntSlice(i interface{}) []int {
+func ToIntSlice(i any) []int {
 	v, _ := ToIntSliceE(i)
 	return v
 }
 
 // ToIntSliceE converts an interface to []int slice.
 // Note that ToIntSliceE is alias to cast.ToIntSliceE.
-func ToIntSliceE(i interface{}) ([]int, error) {
+func ToIntSliceE(i any) ([]int, error) {
 	return cast.ToIntSliceE(i)
 }
 
 // ToInt8Slice converts an interface to []int8.
 // For example, covert []string{"1", "2", "3"} to []int8{1, 2, 3}.
-func ToInt8Slice(i interface{}) []int8 {
+func ToInt8Slice(i any) []int8 {
 	v, _ := ToInt8SliceE(i)
 	return v
 }
 
 // ToInt8SliceE converts an interface to []int8 with error.
-func ToInt8SliceE(i interface{}) ([]int8, error) {
+func ToInt8SliceE(i any) ([]int8, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []int8", i, i)
 	}
@@ -151,13 +151,13 @@ func ToInt8SliceE(i interface{}) ([]int8, error) {
 
 // ToInt16Slice converts an interface to []int16.
 // For example, covert []string{"1", "2", "3"} to []int16{1, 2, 3}.
-func ToInt16Slice(i interface{}) []int16 {
+func ToInt16Slice(i any) []int16 {
 	v, _ := ToInt16SliceE(i)
 	return v
 }
 
 // ToInt16SliceE converts an interface to []int16 with error.
-func ToInt16SliceE(i interface{}) ([]int16, error) {
+func ToInt16SliceE(i any) ([]int16, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []int16", i, i)
 	}
@@ -192,13 +192,13 @@ func ToInt16SliceE(i interface{}) ([]int16, error) {
 
 // ToInt32Slice converts an interface to []int32.
 // For example, covert []string{"1", "2", "3"} to []int32{1, 2, 3}.
-func ToInt32Slice(i interface{}) []int32 {
+func ToInt32Slice(i any) []int32 {
 	v, _ := ToInt32SliceE(i)
 	return v
 }
 
 // ToInt32SliceE converts an interface to []int32 with error.
-func ToInt32SliceE(i interface{}) ([]int32, error) {
+func ToInt32SliceE(i any) ([]int32, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []int32", i, i)
 	}
@@ -233,13 +233,13 @@ func ToInt32SliceE(i interface{}) ([]int32, error) {
 
 // ToInt64Slice converts an interface to []int64 slice.
 // For example, covert []string{"1", "2", "3"} to []int64{1, 2, 3}.
-func ToInt64Slice(i interface{}) []int64 {
+func ToInt64Slice(i any) []int64 {
 	v, _ := ToInt64SliceE(i)
 	return v
 }
 
 // ToInt64SliceE converts an interface to []int64 slice with error.
-func ToInt64SliceE(i interface{}) ([]int64, error) {
+func ToInt64SliceE(i any) ([]int64, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []int64", i, i)
 	}
@@ -274,13 +274,13 @@ func ToInt64SliceE(i interface{}) ([]int64, error) {
 
 // ToUintSlice converts an interface to []uint.
 // For example, covert []string{"1", "2", "3"} to []uint{1, 2, 3}.
-func ToUintSlice(i interface{}) []uint {
+func ToUintSlice(i any) []uint {
 	v, _ := ToUintSliceE(i)
 	return v
 }
 
 // ToUintSliceE converts an interface to []uint with error.
-func ToUintSliceE(i interface{}) ([]uint, error) {
+func ToUintSliceE(i any) ([]uint, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []uint", i, i)
 	}
@@ -315,13 +315,13 @@ func ToUintSliceE(i interface{}) ([]uint, error) {
 
 // ToUint8Slice converts an interface to []uint8.
 // For example, covert []string{"1", "2", "3"} to []uint8{1, 2, 3}.
-func ToUint8Slice(i interface{}) []uint8 {
+func ToUint8Slice(i any) []uint8 {
 	v, _ := ToUint8SliceE(i)
 	return v
 }
 
 // ToUint8SliceE converts an interface to []uint8 slice with error.
-func ToUint8SliceE(i interface{}) ([]uint8, error) {
+func ToUint8SliceE(i any) ([]uint8, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []uint8", i, i)
 	}
@@ -356,13 +356,13 @@ func ToUint8SliceE(i interface{}) ([]uint8, error) {
 
 // ToUint16Slice converts an interface to []uint16.
 // For example, covert []string{"1", "2", "3"} to []uint16{1, 2, 3}.
-func ToUint16Slice(i interface{}) []uint16 {
+func ToUint16Slice(i any) []uint16 {
 	v, _ := ToUint16SliceE(i)
 	return v
 }
 
 // ToUint16SliceE converts an interface to []uint16 slice with error.
-func ToUint16SliceE(i interface{}) ([]uint16, error) {
+func ToUint16SliceE(i any) ([]uint16, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []uint16", i, i)
 	}
@@ -397,13 +397,13 @@ func ToUint16SliceE(i interface{}) ([]uint16, error) {
 
 // ToUint32Slice converts an interface to []uint32.
 // For example, covert []string{"1", "2", "3"} to []uint32{1, 2, 3}.
-func ToUint32Slice(i interface{}) []uint32 {
+func ToUint32Slice(i any) []uint32 {
 	v, _ := ToUint32SliceE(i)
 	return v
 }
 
 // ToUint32SliceE converts an interface to []uint32 slice with error.
-func ToUint32SliceE(i interface{}) ([]uint32, error) {
+func ToUint32SliceE(i any) ([]uint32, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []uint32", i, i)
 	}
@@ -438,13 +438,13 @@ func ToUint32SliceE(i interface{}) ([]uint32, error) {
 
 // ToUint64Slice converts an interface to []uint64.
 // For example, covert []string{"1", "2", "3"} to []uint64{1, 2, 3}.
-func ToUint64Slice(i interface{}) []uint64 {
+func ToUint64Slice(i any) []uint64 {
 	v, _ := ToUint64SliceE(i)
 	return v
 }
 
 // ToUint64SliceE converts an interface to []uint64 slice with error.
-func ToUint64SliceE(i interface{}) ([]uint64, error) {
+func ToUint64SliceE(i any) ([]uint64, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []uint64", i, i)
 	}
@@ -479,171 +479,35 @@ func ToUint64SliceE(i interface{}) ([]uint64, error) {
 
 // ToByteSlice converts an interface to []byte.
 // For example, covert []string{"1", "2", "3"} to []byte{1, 2, 3}.
-func ToByteSlice(i interface{}) []byte {
+func ToByteSlice(i any) []byte {
 	return ToUint8Slice(i)
 }
 
 // ToByteSliceE converts an interface to []byte slice with error
-func ToByteSliceE(i interface{}) ([]byte, error) {
+func ToByteSliceE(i any) ([]byte, error) {
 	return ToUint8SliceE(i)
 }
 
 // ToBoolSlice converts an interface to []bool.
 // Note that ToBoolSlice is alias to cast.ToBoolSlice.
-func ToBoolSlice(i interface{}) []bool {
+func ToBoolSlice(i any) []bool {
 	return cast.ToBoolSlice(i)
 }
 
 // ToBoolSliceE converts an interface to []bool.
 // Note that ToBoolSliceE is alias to cast.ToBoolSliceE.
-func ToBoolSliceE(i interface{}) ([]bool, error) {
+func ToBoolSliceE(i any) ([]bool, error) {
 	return cast.ToBoolSliceE(i)
 }
 
 // ToDurationSlice converts an interface to []time.Duration.
 // Note that ToDurationSlice is alias to cast.ToDurationSlice.
-func ToDurationSlice(i interface{}) []time.Duration {
+func ToDurationSlice(i any) []time.Duration {
 	return cast.ToDurationSlice(i)
 }
 
 // ToDurationSliceE converts an interface to []time.Duration with error.
 // Note that ToDurationSliceE is alias to cast.ToDurationSliceE.
-func ToDurationSliceE(i interface{}) ([]time.Duration, error) {
+func ToDurationSliceE(i any) ([]time.Duration, error) {
 	return cast.ToDurationSliceE(i)
-}
-
-//
-// Part 3: split a string to the specified type slice by the specified separator.
-//
-
-// SplitStrToIntSlice splits a string to []int by the specified separator.
-// For example, split "1,2,3" to []int{1,2,3} by comma.
-func SplitStrToIntSlice(s, sep string) []int {
-	arr := Split(s, sep)
-	dst := make([]int, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToInt(v)
-	}
-	return dst
-}
-
-// SplitStrToInt8Slice splits a string to []int8 by the specified separator.
-// For example, split "1,2,3" to []int8{1,2,3} by comma.
-func SplitStrToInt8Slice(s, sep string) []int8 {
-	arr := Split(s, sep)
-	dst := make([]int8, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToInt8(v)
-	}
-	return dst
-}
-
-// SplitStrToInt16Slice splits a string to []int16 by the specified separator.
-// For example, split "1,2,3" to []int16{1,2,3} by comma.
-func SplitStrToInt16Slice(s, sep string) []int16 {
-	arr := Split(s, sep)
-	dst := make([]int16, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToInt16(v)
-	}
-	return dst
-}
-
-// SplitStrToInt32Slice splits a string to []int16 by the specified separator.
-// For example, split "1,2,3" to []int32{1,2,3} by comma.
-func SplitStrToInt32Slice(s, sep string) []int32 {
-	arr := Split(s, sep)
-	dst := make([]int32, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToInt32(v)
-	}
-	return dst
-}
-
-// SplitStrToInt64Slice splits a string to []int64 by the specified separator.
-// For example, split "1,2,3" to []int64{1,2,3} by comma.
-func SplitStrToInt64Slice(s, sep string) []int64 {
-	arr := Split(s, sep)
-	dst := make([]int64, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToInt64(v)
-	}
-	return dst
-}
-
-// SplitStrToUintSlice splits a string to []int64 by the specified separator.
-// For example, split "1,2,3" to []uint{1,2,3} by comma.
-func SplitStrToUintSlice(s, sep string) []uint {
-	arr := Split(s, sep)
-	dst := make([]uint, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToUint(v)
-	}
-	return dst
-}
-
-// SplitStrToUint8Slice splits a string to []uint8 by the specified separator.
-// For example, split "1,2,3" to []uint8{1,2,3} by comma.
-func SplitStrToUint8Slice(s, sep string) []uint8 {
-	arr := Split(s, sep)
-	dst := make([]uint8, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToUint8(v)
-	}
-	return dst
-}
-
-// SplitStrToUint16Slice splits a string to []uint16 by the specified separator.
-// For example, split "1,2,3" to []uint16{1,2,3} by comma.
-func SplitStrToUint16Slice(s, sep string) []uint16 {
-	arr := Split(s, sep)
-	dst := make([]uint16, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToUint16(v)
-	}
-	return dst
-}
-
-// SplitStrToUint32Slice splits a string to []uint32 by the specified separator.
-// For example, split "1,2,3" to []uint32{1,2,3} by comma.
-func SplitStrToUint32Slice(s, sep string) []uint32 {
-	arr := Split(s, sep)
-	dst := make([]uint32, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToUint32(v)
-	}
-	return dst
-}
-
-// SplitStrToUint64Slice splits a string to []uint64 by the specified separator.
-// For example, split "1,2,3" to []uint64{1,2,3} by comma.
-func SplitStrToUint64Slice(s, sep string) []uint64 {
-	arr := Split(s, sep)
-	dst := make([]uint64, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToUint64(v)
-	}
-	return dst
-}
-
-// SplitStrToFloat32Slice splits a string to []float32 by the specified separator.
-// For example, split "1.1,2.2,3.3" to []float32{1.1,2.2,3.3} by comma.
-func SplitStrToFloat32Slice(s string, sep string) []float32 {
-	arr := Split(s, sep)
-	dst := make([]float32, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToFloat32(v)
-	}
-	return dst
-}
-
-// SplitStrToFloat64Slice splits a string to []float32 by the specified separator.
-// For example, split "1.1,2.2,3.3" to []float64{1.1,2.2,3.3} by comma.
-func SplitStrToFloat64Slice(s string, sep string) []float64 {
-	arr := Split(s, sep)
-	dst := make([]float64, len(arr))
-	for i, v := range arr {
-		dst[i] = cast.ToFloat64(v)
-	}
-	return dst
 }

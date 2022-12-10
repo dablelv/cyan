@@ -11,7 +11,7 @@ import (
 )
 
 func TestListDir(t *testing.T) {
-	filenames := ListDir(".")
+	filenames, _ := ListDir(".")
 	haveFile := len(filenames) > 0
 	assert.Equal(t, true, haveFile, "TestListDir")
 }

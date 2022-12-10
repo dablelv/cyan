@@ -158,32 +158,41 @@ huge.GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
 
 # Type Conversion
 Some useful functions can be used to convert one type to other types, such as to map or slice.
-## to map set
+## to set
 ```go
 import (
-    huge "github.com/dablelv/go-huge-util"
+    "github.com/dablelv/go-huge-util/conv"
 )
 
-// convert string slice or array to map set
-sl := []string{"foo", "bar", "baz"}
-mSet, _ := huge.ToStrMapSetStrictE(sl)
-// or
-mSet := huge.ToStrMapSetStrict(sl)
+// Convert bool slice or array to set.
+bools := []boo{true, false, true}
+set := conv.ToBoolSet(bools)
+set, _ := conv.ToBoolSetE(bools)
+set, _ := conv.ToBoolSetStrictE(bools)
+set := conv.ToBoolSetStrict(bools)
+set := conv.ToBoolSetG[bool](bools)
+set, _ := conv.ToBoolSetGE[bool](bools)
 
-// convert int slice or array to map set
-sl := []int{1, 2, 3}
-mSet, _ := huge.ToIntMapSetStrictE(sl)
-// or
-mSet := huge.ToIntMapSetStrict(sl)
+// Convert int slice or array to set.
+ints := []int{1, 2, 3}
+set := conv.ToIntSet(ints)
+set, _ := conv.ToIntSetE(ints)
+set := huge.ToIntSetStrict(ints
+set, _ := huge.ToIntSetStrictE(ints)
+set := conv.ToBoolSetG[int](ints)
+set, _ := conv.ToBoolSetGE[int](ints)
 
-// convert uint slice or array to map set
-sl := []uint{1, 2, 3}
-mSet, _ := huge.ToUintMapSetStrictE(sl)
-// or
-mSet := huge.ToUintMapSetStrict(sl)
+// Convert string slice or array to set.
+strs := []string{"foo", "bar", "baz"}
+set := conv.ToStrSet(strs)
+set, _ := conv.ToStrSetE(strs)
+set := conv.ToStrMapSetStrict(strs)
+set, _ := conv.ToStrSetStrictE(strs)
+set := conv.ToStrSetG[string](strs)
+set, _ := conv.ToStrSetGE[string](strs)
 
-// split string to map set
-huge.SplitStrToMapSet("a,b,c", ",")  // map[a:{}, b:{}, c:{}]
+// Split string to set.
+conv.SplitStrToSet("a,b,c", ",")  // map[a:{}, b:{}, c:{}]
 ```
 
 ## to slice
@@ -345,6 +354,11 @@ b, _ := VerLTVer("1.0.5", "2.0.4")   // true
 b, _ := VerGEVer("2.0.4", "2.0.4")   // true
 b, _ := VerLEVer("1.0.5", "1.0.5")   // true
 ```
+
+# Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=dablelv/go-huge-util&type=Date)](https://star-history.com/#dablelv/go-huge-util&Date)
+
 
 # Summary
 The above example is just the tip of the iceberg. For more usage, please read the source code.
