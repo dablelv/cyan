@@ -157,7 +157,43 @@ huge.GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
 ```
 
 # Type Conversion
-Some useful functions can be used to convert one type to other types, such as to map or slice.
+Some useful functions can be used to convert one type to another types, such as to map or slice.
+
+## to another type
+```go
+// Example to string
+s, err := ToAny[string]("foo") // "foo"
+s, err := ToAny[string](8)     // "8"
+s, err := ToAny[string](8.31)  // "8.31"
+s, err := ToAny[string]([]byte("one time")) // "one time"
+s, err := ToAny[string](nil)                // ""
+
+var foo any = "one more time"
+s, err := ToAny[string](foo)                // "one more time"
+
+// Example to int
+i, err :=  ToAny[int](8)                  // 8
+i, err :=  ToAny[int](8.31)               // 8
+i, err :=  ToAny[int]("8")                // 8
+i, err :=  ToAny[int](true)               // 1
+i, err :=  ToAny[int](false)              // 0
+i, err :=  ToAny[int](nil)                // 0
+
+var eight any = 8
+i, err :=  ToAny[int](eight)              // 8
+
+// Example to bool
+b, err := ToAny[bool]("true")           // true
+b, err := ToAny[bool]("false")          // false
+b, err := ToAny[bool]("True")           // true
+b, err := ToAny[bool]("False")          // false
+b, err := ToAny[bool](1)                // true
+b, err := ToAny[bool](0)                // false
+b, err := ToAny[bool](nil)              // false
+
+var one any = 1
+b, err := ToAny[bool](one)           // true
+```
 ## to set
 ```go
 import (
@@ -196,43 +232,43 @@ import (
 )
 
 // Convert string separated by white space character to string slice.
-sl := huge.ToStrSlice("a b c") // []string{"a","b","c"}
-sl, _ := huge.ToStrSliceE("a b c") // []string{"a","b","c"}
+sl := conv.ToStrSlice("a b c") // []string{"a","b","c"}
+sl, _ := conv.ToStrSliceE("a b c") // []string{"a","b","c"}
 
 // Convert int slice or array to string slice.
-sl := huge.ToStrSlice([]int{1, 2, 3}) // []string{"1","2","3"}
-sl, _ := huge.ToStrSliceE([]int{1, 2, 3}) // []string{"1","2","3"}
+sl := conv.ToStrSlice([]int{1, 2, 3}) // []string{"1","2","3"}
+sl, _ := conv.ToStrSliceE([]int{1, 2, 3}) // []string{"1","2","3"}
 
 // Convert map to slice in random order.
-ks, vs := huge.Map2Slice(map[int]int{1:1, 2:2, 3:3})
-ks, vs, _ := huge.Map2SliceE(map[int]int{1:1, 2:2, 3:3})
+ks, vs := conv.Map2Slice(map[int]int{1:1, 2:2, 3:3})
+ks, vs, _ := conv.Map2SliceE(map[int]int{1:1, 2:2, 3:3})
 
 slK, _ : = ks.([]int)
 slV, _ : = vs.([]int)
 
-ks, vs := huge.Map2Slice(map[string]int{"foo":1, "bar":2, "baz":3})
-ks, vs, _ := huge.Map2SliceE(map[string]int{"foo":1, "bar":2, "baz":3})
+ks, vs := conv.Map2Slice(map[string]int{"foo":1, "bar":2, "baz":3})
+ks, vs, _ := conv.Map2SliceE(map[string]int{"foo":1, "bar":2, "baz":3})
 
 slK, _ : = ks.([]string)
 slV, _ : = vs.([]int)
 
 // Split string to slice.
 // int[1,2,3]
-ints := SplitStrToIntSlice("1,2,3", ",")            
-ints := SplitStrToSlice[int]("1,2,3", ",")
-ints, _ := SplitStrToSliceE[int]("1,2,3", ",")
+ints := conv.SplitStrToIntSlice("1,2,3", ",")
+ints := conv.SplitStrToSlice[int]("1,2,3", ",")
+ints, _ := conv.SplitStrToSliceE[int]("1,2,3", ",")
 // uint[1,2,3]
-uints := SplitStrToUintSlice("1,2,3", ",")           
-uints := SplitStrToSlice[uint]("1,2,3", ",")
-uints, _ := SplitStrToSliceE[uint]("1,2,3", ",")
+uints := conv.SplitStrToUintSlice("1,2,3", ",")           
+uints := conv.SplitStrToSlice[uint]("1,2,3", ",")
+uints, _ := conv.SplitStrToSliceE[uint]("1,2,3", ",")
 // float64[1.1,2.2,3.3]
-f64s := SplitStrToFloat64Slice("1.1,2.2,3.3", ",")
-f64s := SplitStrToSlice[float64]("1.1,2.2,3.3", ",")
-f64s, _ := SplitStrToSliceE[float64]("1.1,2.2,3.3", ",")
+f64s := conv.SplitStrToFloat64Slice("1.1,2.2,3.3", ",")
+f64s := conv.SplitStrToSlice[float64]("1.1,2.2,3.3", ",")
+f64s, _ := conv.SplitStrToSliceE[float64]("1.1,2.2,3.3", ",")
 // bool[true,false,true,false]
-bs := SplitStrToBoolSlice("1,0,true,false", ",")
-bs := SplitStrToSlice[bool]("1,0,true,false", ",")
-bs, _ := SplitStrToSliceE[bool]("1,0,true,false", ",")
+bs := conv.SplitStrToBoolSlice("1,0,true,false", ",")
+bs := conv.SplitStrToSlice[bool]("1,0,true,false", ",")
+bs, _ := conv.SplitStrToSliceE[bool]("1,0,true,false", ",")
 ```
 
 # URL
