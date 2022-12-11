@@ -1,8 +1,6 @@
 package conv
 
 import (
-	"strconv"
-
 	"github.com/spf13/cast"
 
 	huge "github.com/dablelv/go-huge-util"
@@ -11,34 +9,6 @@ import (
 //
 // Desc: split a string to the specified type slice by the specified separator.
 //
-
-// SplitStrToSlice splits a string to a slice by the specified separator.
-func SplitStrToSlice[T any](s, sep string) []T {
-	v, _ := SplitStrToSliceE[T](s, sep)
-	return v
-}
-
-// SplitStrToSliceE splits a string to a slice by the specified separator and returns an error if occurred.
-func SplitStrToSliceE[T any](s, sep string) ([]T, error) {
-	ss := huge.Split(s, sep)
-	dst := make([]T, len(ss))
-	var t T
-	for i, v := range ss {
-		switch any(t).(type) {
-		case string:
-			dst[i] = v
-		case int:
-			v, err := strconv.ParseInt(v, 0, 0)
-			if err != nil {
-				return nil, err
-			}
-			dst[i] = int(v)
-		case int8:
-
-		}
-	}
-	return dst, nil
-}
 
 // SplitStrToIntSlice splits a string to []int by the specified separator.
 // For example, split "1,2,3" to []int{1,2,3} by comma.
@@ -161,13 +131,24 @@ func SplitStrToFloat32Slice(s string, sep string) []float32 {
 	return dst
 }
 
-// SplitStrToFloat64Slice splits a string to []float32 by the specified separator.
+// SplitStrToFloat64Slice splits a string to []float64 by the specified separator.
 // For example, split "1.1,2.2,3.3" to []float64{1.1,2.2,3.3} by comma.
 func SplitStrToFloat64Slice(s string, sep string) []float64 {
 	arr := huge.Split(s, sep)
 	dst := make([]float64, len(arr))
 	for i, v := range arr {
 		dst[i] = cast.ToFloat64(v)
+	}
+	return dst
+}
+
+// SplitStrToBoolSlice splits a string to []bool by the specified separator.
+// For example, split "1,0,true,false" to []bool{true,false,true,false} by comma.
+func SplitStrToBoolSlice(s string, sep string) []bool {
+	arr := huge.Split(s, sep)
+	dst := make([]bool, len(arr))
+	for i, v := range arr {
+		dst[i] = cast.ToBool(v)
 	}
 	return dst
 }

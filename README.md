@@ -168,28 +168,22 @@ import (
 bools := []boo{true, false, true}
 set := conv.ToBoolSet(bools)
 set, _ := conv.ToBoolSetE(bools)
-set, _ := conv.ToBoolSetStrictE(bools)
-set := conv.ToBoolSetStrict(bools)
-set := conv.ToBoolSetG[bool](bools)
-set, _ := conv.ToBoolSetGE[bool](bools)
+set := conv.ToSet[bool](bools)
+set, _ := conv.ToSetE[bool](bools)
 
 // Convert int slice or array to set.
 ints := []int{1, 2, 3}
 set := conv.ToIntSet(ints)
 set, _ := conv.ToIntSetE(ints)
-set := huge.ToIntSetStrict(ints
-set, _ := huge.ToIntSetStrictE(ints)
-set := conv.ToBoolSetG[int](ints)
-set, _ := conv.ToBoolSetGE[int](ints)
+set := conv.ToSetG[int](ints)
+set, _ := conv.ToSetE[int](ints)
 
 // Convert string slice or array to set.
 strs := []string{"foo", "bar", "baz"}
 set := conv.ToStrSet(strs)
 set, _ := conv.ToStrSetE(strs)
-set := conv.ToStrMapSetStrict(strs)
-set, _ := conv.ToStrSetStrictE(strs)
-set := conv.ToStrSetG[string](strs)
-set, _ := conv.ToStrSetGE[string](strs)
+set := conv.ToSet[string](strs)
+set, _ := conv.ToSetE[string](strs)
 
 // Split string to set.
 conv.SplitStrToSet("a,b,c", ",")  // map[a:{}, b:{}, c:{}]
@@ -198,38 +192,47 @@ conv.SplitStrToSet("a,b,c", ",")  // map[a:{}, b:{}, c:{}]
 ## to slice
 ```go
 import (
-    huge "github.com/dablelv/go-huge-util"
+    "github.com/dablelv/go-huge-util/conv"
 )
 
 // Convert string separated by white space character to string slice.
-sl, _ := huge.ToStrSliceE("a b c") // []string{"a","b","c"}
-// or
 sl := huge.ToStrSlice("a b c") // []string{"a","b","c"}
+sl, _ := huge.ToStrSliceE("a b c") // []string{"a","b","c"}
 
-// convert int slice or array to string slice
-sl, _ := huge.ToStrSliceE([]int{1, 2, 3}) // []string{"1","2","3"}
-// or
+// Convert int slice or array to string slice.
 sl := huge.ToStrSlice([]int{1, 2, 3}) // []string{"1","2","3"}
+sl, _ := huge.ToStrSliceE([]int{1, 2, 3}) // []string{"1","2","3"}
 
-// convert map to slice in random order
+// Convert map to slice in random order.
 ks, vs := huge.Map2Slice(map[int]int{1:1, 2:2, 3:3})
-// or
 ks, vs, _ := huge.Map2SliceE(map[int]int{1:1, 2:2, 3:3})
 
 slK, _ : = ks.([]int)
 slV, _ : = vs.([]int)
 
 ks, vs := huge.Map2Slice(map[string]int{"foo":1, "bar":2, "baz":3})
-// or
 ks, vs, _ := huge.Map2SliceE(map[string]int{"foo":1, "bar":2, "baz":3})
 
 slK, _ : = ks.([]string)
 slV, _ : = vs.([]int)
 
-// split string to slice
-SplitStrToIntSlice("1,2,3", ",")            // int[1,2,3]
-SplitStrToUintSlice("1,2,3", ",")           // uint[1,2,3]
-SplitStrFloat64Slice("1.1,2.2,3.3", ",")    // float64[1.1,2.2,3.3]
+// Split string to slice.
+// int[1,2,3]
+ints := SplitStrToIntSlice("1,2,3", ",")            
+ints := SplitStrToSlice[int]("1,2,3", ",")
+ints, _ := SplitStrToSliceE[int]("1,2,3", ",")
+// uint[1,2,3]
+uints := SplitStrToUintSlice("1,2,3", ",")           
+uints := SplitStrToSlice[uint]("1,2,3", ",")
+uints, _ := SplitStrToSliceE[uint]("1,2,3", ",")
+// float64[1.1,2.2,3.3]
+f64s := SplitStrToFloat64Slice("1.1,2.2,3.3", ",")
+f64s := SplitStrToSlice[float64]("1.1,2.2,3.3", ",")
+f64s, _ := SplitStrToSliceE[float64]("1.1,2.2,3.3", ",")
+// bool[true,false,true,false]
+bs := SplitStrToBoolSlice("1,0,true,false", ",")
+bs := SplitStrToSlice[bool]("1,0,true,false", ",")
+bs, _ := SplitStrToSliceE[bool]("1,0,true,false", ",")
 ```
 
 # URL

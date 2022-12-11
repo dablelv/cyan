@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestToSetE(t *testing.T) {
+func TesttoSetE(t *testing.T) {
 	type args struct {
 		i interface{}
 	}
@@ -19,9 +19,9 @@ func TestToSetE(t *testing.T) {
 			name: "string array to map set",
 			args: args{[3]string{"foo", "bar", "baz"}},
 			want: map[interface{}]struct{}{
-				"foo": struct{}{},
-				"bar": struct{}{},
-				"baz": struct{}{},
+				"foo": {},
+				"bar": {},
+				"baz": {},
 			},
 			wantErr: false,
 		},
@@ -29,22 +29,22 @@ func TestToSetE(t *testing.T) {
 			name: "string slice to map set",
 			args: args{[]string{"foo", "bar", "baz"}},
 			want: map[interface{}]struct{}{
-				"foo": struct{}{},
-				"bar": struct{}{},
-				"baz": struct{}{},
+				"foo": {},
+				"bar": {},
+				"baz": {},
 			},
 			wantErr: false,
 		},
 		{
 			name:    "int array to  map set",
 			args:    args{[3]int{86, 852, 61}},
-			want:    map[interface{}]struct{}{86: struct{}{}, 852: struct{}{}, 61: struct{}{}},
+			want:    map[interface{}]struct{}{86: {}, 852: {}, 61: {}},
 			wantErr: false,
 		},
 		{
 			name:    "int slice to map set",
 			args:    args{[]int{86, 852, 61}},
-			want:    map[interface{}]struct{}{86: struct{}{}, 852: struct{}{}, 61: struct{}{}},
+			want:    map[interface{}]struct{}{86: {}, 852: {}, 61: {}},
 			wantErr: false,
 		},
 		{
@@ -56,70 +56,13 @@ func TestToSetE(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ToSetE(tt.args.i)
+			got, err := toSetE(tt.args.i)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("ToSetE() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("toSetE() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToSetE() got = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestToSetStrictE(t *testing.T) {
-	type args struct {
-		i interface{}
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    interface{}
-		wantErr bool
-	}{
-		{
-			name: "string slice to map set",
-			args: args{[]string{"foo", "bar", "baz"}},
-			want: map[string]struct{}{
-				"foo": struct{}{},
-				"bar": struct{}{},
-				"baz": struct{}{},
-			},
-			wantErr: false,
-		},
-		{
-			name: "int slice to map set",
-			args: args{[]int{1, 2, 3, 3}},
-			want: map[int]struct{}{
-				1: struct{}{},
-				2: struct{}{},
-				3: struct{}{},
-			},
-			wantErr: false,
-		},
-		{
-			name:    "arg is nil",
-			args:    args{nil},
-			want:    nil,
-			wantErr: true,
-		},
-		{
-			name:    "arg isn't a slice and array",
-			args:    args{"foo"},
-			want:    nil,
-			wantErr: true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := ToSetStrictE(tt.args.i)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToSetIfcE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToSetIfcE() got = %v, want %v", got, tt.want)
+				t.Errorf("toSetE() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -138,13 +81,13 @@ func TestToStrSetE(t *testing.T) {
 		{
 			name:    "[]string",
 			args:    args{[]string{"CN", "HK", "AU"}},
-			want:    map[string]struct{}{"CN": struct{}{}, "HK": struct{}{}, "AU": struct{}{}},
+			want:    map[string]struct{}{"CN": {}, "HK": {}, "AU": {}},
 			wantErr: false,
 		},
 		{
 			name:    "[3]int",
 			args:    args{[3]int{86, 852, 61}},
-			want:    map[string]struct{}{"86": struct{}{}, "852": struct{}{}, "61": struct{}{}},
+			want:    map[string]struct{}{"86": {}, "852": {}, "61": {}},
 			wantErr: false,
 		},
 		{
@@ -181,18 +124,18 @@ func TestToUint64Set(t *testing.T) {
 			name: "uint64 array to map set",
 			args: args{[3]uint64{1, 2, 3}},
 			want: map[uint64]struct{}{
-				1: struct{}{},
-				2: struct{}{},
-				3: struct{}{},
+				1: {},
+				2: {},
+				3: {},
 			},
 		},
 		{
 			name: "uint64 slice to map set",
 			args: args{[]uint64{1, 2, 3}},
 			want: map[uint64]struct{}{
-				1: struct{}{},
-				2: struct{}{},
-				3: struct{}{},
+				1: {},
+				2: {},
+				3: {},
 			},
 		},
 		{
@@ -215,48 +158,6 @@ func TestToUint64Set(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := ToUint64Set(tt.args.i); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("ToU64Set() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestToStrSetStrict(t *testing.T) {
-	type args struct {
-		i interface{}
-	}
-	tests := []struct {
-		name string
-		args args
-		want map[string]struct{}
-	}{
-		{
-			name: "string array to map set",
-			args: args{[3]string{"foo", "bar", "baz"}},
-			want: map[string]struct{}{
-				"foo": struct{}{},
-				"bar": struct{}{},
-				"baz": struct{}{},
-			},
-		},
-		{
-			name: "string slice to map set",
-			args: args{[]string{"foo", "bar", "baz"}},
-			want: map[string]struct{}{
-				"foo": struct{}{},
-				"bar": struct{}{},
-				"baz": struct{}{},
-			},
-		},
-		{
-			name: "element type isn't string can't convert to map set",
-			args: args{[]uint64{1, 2, 3}},
-			want: nil,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToStrSetStrict(tt.args.i); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToStrSetStrict() = %v, want %v", got, tt.want)
 			}
 		})
 	}

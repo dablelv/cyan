@@ -32,7 +32,7 @@ func Map2SliceE(i any) (ks any, vs any, err error) {
 		return
 	}
 
-	// Convert.
+	// Execute the conversion.
 	m := reflect.ValueOf(i)
 	l := m.Len()
 	keys := m.MapKeys()

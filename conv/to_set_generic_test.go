@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestToBoolSetGE(t *testing.T) {
+func TestToBoolSetE(t *testing.T) {
 	type args struct {
 		i any
 	}
@@ -38,7 +38,7 @@ func TestToBoolSetGE(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ToSetGE[bool](tt.args.i)
+			got, err := ToSetE[bool](tt.args.i)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ToSetGE() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -50,7 +50,7 @@ func TestToBoolSetGE(t *testing.T) {
 	}
 }
 
-func TestToIntSetGE(t *testing.T) {
+func TestToIntSetE(t *testing.T) {
 	type args struct {
 		i any
 	}
@@ -85,7 +85,7 @@ func TestToIntSetGE(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ToSetGE[int](tt.args.i)
+			got, err := ToSetE[int](tt.args.i)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ToSetGE() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -132,7 +132,7 @@ func TestToStrSetGE(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ToSetGE[string](tt.args.i)
+			got, err := ToSetE[string](tt.args.i)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ToSetGE() error = %v, wantErr %v", err, tt.wantErr)
 				return
