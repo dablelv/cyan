@@ -165,7 +165,7 @@ import (
 )
 
 // Convert bool slice or array to set.
-bools := []boo{true, false, true}
+bools := []bool{true, false, true}
 set := conv.ToBoolSet(bools)
 set, _ := conv.ToBoolSetE(bools)
 set := conv.ToSet[bool](bools)
