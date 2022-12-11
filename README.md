@@ -395,9 +395,7 @@ b, _ := VerLEVer("1.0.5", "1.0.5")   // true
 ```
 
 # Star History
-
 [![Star History Chart](https://api.star-history.com/svg?repos=dablelv/go-huge-util&type=Date)](https://star-history.com/#dablelv/go-huge-util&Date)
-
 
 # Summary
 The above example is just the tip of the iceberg. For more usage, please read the source code.
