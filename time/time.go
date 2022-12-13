@@ -185,7 +185,7 @@ func IsLeapYear(year int) bool {
 	return (year%4 == 0 && year%100 != 0) || year%400 == 0
 }
 
-// IsSameYear checks the unix timestamp whether is the same year
+// IsSameYear checks the unix timestamp whether is the same year.
 func IsSameYear(uts1, uts2 int64) bool {
 	t1 := time.Unix(uts1, 0)
 	t2 := time.Unix(uts2, 0)
