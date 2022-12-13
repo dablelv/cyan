@@ -1,8 +1,8 @@
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/dablelv/go-huge-util)
+![Go version](https://img.shields.io/github/go-mod/go-version/dablelv/go-huge-util)
 [![GitHub latest tag](https://img.shields.io/github/tag/dablelv/go-huge-util)](https://github.com/dablelv/go-huge-util)
 [![Go Report Card](https://goreportcard.com/badge/github.com/dablelv/go-huge-util)](https://goreportcard.com/report/github.com/dablelv/go-huge-util)
 [![Unit Test](https://github.com/dablelv/go-huge-util/workflows/Unit-Tests/badge.svg)](https://github.com/dablelv/go-huge-util/actions)
-[![Unit Test Coverage](https://coveralls.io/repos/github/dablelv/go-huge-util/badge.svg?branch=master)](https://coveralls.io/github/dablelv/go-huge-util?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/dablelv/go-huge-util/badge.svg?branch=master)](https://coveralls.io/github/dablelv/go-huge-util?branch=master)
 [![Go Reference](https://pkg.go.dev/badge/github.com/dablelv/go-huge-util.svg)](https://pkg.go.dev/github.com/dablelv/go-huge-util)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dablelv/go-huge-util/blob/main/LICENSE)
 
@@ -14,9 +14,9 @@ Some useful functions can be used to handle conversion of different character en
 
 Example:
 ```go
-gbkStr := []byte{0xC4, 0xE3, 0xBA, 0xC3} // 你好 in gbk
-utf8Str, _ := GbkToUtf8(gbkStr)     // 你好 in utf8
-gbkStrRes, _ := Utf8ToGbk(utf8Str) // [196 227 186 195]
+gbkStr := []byte{0xC4, 0xE3, 0xBA, 0xC3}    // 你好 in gbk
+utf8Str, _ := GbkToUtf8(gbkStr)             // 你好 in utf8
+gbkStrRes, _ := Utf8ToGbk(utf8Str)          // [196 227 186 195]
 ```
 # Net
 Some useful functions can be used to handle network. For example you can use `IPv4StrToU32()` transform ipv4 string to uint32 value.
