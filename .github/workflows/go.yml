@@ -1,7 +1,7 @@
 # This workflow will build a golang project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
 
-name: Go
+name: go-test
 
 on:
   push:
@@ -24,4 +24,9 @@ jobs:
       run: go build -v ./...
 
     - name: Test
-      run: go test ./...
+      run: go test -v -coverprofile="profile.cov" ./...
+
+    - name: Send coverage
+      uses: shogo82148/actions-goveralls@v1
+      with:
+        path-to-profile: profile.cov
