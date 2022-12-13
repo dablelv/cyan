@@ -23,8 +23,5 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-    - name: Print
-      run: date -d @1609430399 +"%F %T"; echo; date -d @1580486399 +"%F %T"; echo; date -d @1577894399 +"%F %T"
-
     - name: Test
       run: go test ./...

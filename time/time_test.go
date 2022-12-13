@@ -1,4 +1,4 @@
-package util
+package time
 
 import (
 	"testing"
@@ -76,7 +76,7 @@ func TestIsSameYear(t *testing.T) {
 		args args
 		want bool
 	}{
-		{"same year", args{1577808000, 1609430399}, true},      // "2020-01-01 00:00:00" & "2020-12-31 23:59:59"
+		{"same year", args{1577808000, 1577808000}, true},      // "2020-01-01T00:00:00Z08:00"
 		{"not same year", args{1577808000, 1609430400}, false}, // "2020-01-01 00:00:00" & "2021-01-01 00:00:00"
 	}
 	for _, tt := range tests {
@@ -95,7 +95,7 @@ func TestIsSameMonth(t *testing.T) {
 		args args
 		want bool
 	}{
-		{"same month", args{1577808000, 1580486399}, true},      // "2020-01-01 00:00:00" & "2020-01-31 23:59:59"
+		{"same month", args{1577808000, 1577808000}, true},      // "2020-01-01T00:00:00Z08:00"
 		{"not same month", args{1577808000, 1580486400}, false}, // "2020-01-01 00:00:00" & "2020-02-01 00:00:00"
 	}
 	for _, tt := range tests {
@@ -114,8 +114,8 @@ func TestIsSameDay(t *testing.T) {
 		args args
 		want bool
 	}{
-		{"same day", args{1577808000, 1577894399}, true},      // "2020-01-01 00:00:00" & "2020-01-01 23:59:59"
-		{"not same day", args{1577808000, 1577894400}, false}, // "2020-01-01 00:00:00" & "2020-01-02 00:00:00"
+		{"same day", args{1577808000, 1577808000}, true},      // "2020-01-01T00:00:00Z08:00"
+		{"not same day", args{1577808000, 1577894400}, false}, // "2020-01-01T00:00:00Z08:00" & "2020-01-02T00:00:00Z08:00"
 	}
 	for _, tt := range tests {
 		got := IsSameDay(tt.args.uts1, tt.args.uts2)

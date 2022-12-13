@@ -132,28 +132,23 @@ huge.Struct2MapString(st)   // map[I:1 S:a]
 # Time
 Some useful functions can be used to handle date and time.
 
-Example:
 ```go
-import (
-    huge "github.com/dablelv/go-huge-util"
-)
-
 tc := huge.NewTimeCounter()
-// ...                          // do your statements
-tc.GetMs()                      // get the time cost in millisecond
+// do your statements
+tc.GetMs()                  // get the time cost in millisecond
 
-huge.GetNowDate()               // just a example, the same below. 2020-05-16
-huge.GetNowTime()               // 00:15:42
-huge.GetNowDateTime()           // 2020-05-16 00:15:42
-huge.GetNowDateTimeZ()          // 2020-05-16 00:15:42 +08:00
+GetNowDate()                // just a example, the same below. 2020-05-16
+GetNowTime()                // 00:15:42
+GetNowDateTime()            // 2020-05-16 00:15:42
+GetNowDateTimeZ()           // 2020-05-16 00:15:42 +08:00
 
-huge.GetNowS()                  // 1589559342
-huge.GetNowMs()                 // 1589559342963
-huge.GetNowUs()                 // 1589559342963062
-huge.GetNowNs()                 // 1589559342964063200
+GetNowS()                   // 1589559342
+GetNowMs()                  // 1589559342963
+GetNowUs()                  // 1589559342963062
+GetNowNs()                  // 1589559342964063200
 
-huge.GetDayBeginMoment(time.Now())  // 2020-05-16 00:00:00 +0800 CST
-huge.GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
+GetDayBeginMoment(time.Now())  // 2020-05-16 00:00:00 +0800 CST
+GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
 ```
 
 # Type Conversion
