@@ -1,4 +1,4 @@
-package util
+package slice
 
 import (
 	"errors"
@@ -60,16 +60,16 @@ func DeleteUint64Slice(src []uint64, indexes ...int) []uint64 {
 	return DeleteSlice(src, indexes...).([]uint64)
 }
 
-// DeleteSliceElms deletes the specified elements from the slice.
+// DeleteSliceElems deletes the specified elements from the slice.
 // Note that the original slice will not be modified.
-func DeleteSliceElms(i interface{}, elms ...interface{}) interface{} {
-	res, _ := DeleteSliceElmsE(i, elms...)
+func DeleteSliceElems(i interface{}, elms ...interface{}) interface{} {
+	res, _ := DeleteSliceElemsE(i, elms...)
 	return res
 }
 
-// DeleteSliceElmsE deletes the specified elements from the slice.
+// DeleteSliceElemsE deletes the specified elements from the slice.
 // Note that the original slice will not be modified.
-func DeleteSliceElmsE(i interface{}, elms ...interface{}) (interface{}, error) {
+func DeleteSliceElemsE(i interface{}, elms ...interface{}) (interface{}, error) {
 	// check params
 	v := reflect.ValueOf(i)
 	if v.Kind() != reflect.Slice {

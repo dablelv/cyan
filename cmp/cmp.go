@@ -1,4 +1,5 @@
-package util
+// Package cmp can compare two numbers of any type.
+package cmp
 
 import (
 	"reflect"
@@ -15,7 +16,7 @@ const (
 
 // Compare compare the size relationship between two numeric values or strings.
 // The result is INCMP(incomparable), LT(less than), EQ(equal) or GT(greater than).
-func Compare(lhs, rhs interface{}) CMPRES {
+func Compare(lhs, rhs any) CMPRES {
 	if !isComparable(lhs, rhs) {
 		return INCMP
 	}
@@ -64,30 +65,30 @@ func Compare(lhs, rhs interface{}) CMPRES {
 	return INCMP
 }
 
-func isComparable(lhs, rhs interface{}) bool {
+func isComparable(lhs, rhs any) bool {
 	lhsVal := reflect.ValueOf(lhs)
 	rhsVal := reflect.ValueOf(rhs)
 	return lhsVal.Kind() == rhsVal.Kind()
 }
 
-func CompareLT(lhs, rhs interface{}) bool {
+func CompareLT(lhs, rhs any) bool {
 	return Compare(lhs, rhs) == LT
 }
 
-func CompareLE(lhs, rhs interface{}) bool {
+func CompareLE(lhs, rhs any) bool {
 	res := Compare(lhs, rhs)
 	return res == LT || res == EQ
 }
 
-func CompareEQ(lhs, rhs interface{}) bool {
+func CompareEQ(lhs, rhs any) bool {
 	return Compare(lhs, rhs) == EQ
 }
 
-func CompareGT(lhs, rhs interface{}) bool {
+func CompareGT(lhs, rhs any) bool {
 	return Compare(lhs, rhs) == GT
 }
 
-func CompareGE(lhs, rhs interface{}) bool {
+func CompareGE(lhs, rhs any) bool {
 	res := Compare(lhs, rhs)
 	return Compare(lhs, rhs) == GT || res == EQ
 }

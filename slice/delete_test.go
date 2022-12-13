@@ -1,11 +1,11 @@
-package util
+package slice
 
 import (
 	"reflect"
 	"testing"
 )
 
-func TestDeleteSliceElms(t *testing.T) {
+func TestDeleteSliceElems(t *testing.T) {
 	type args struct {
 		i    interface{}
 		elms []interface{}
@@ -42,8 +42,8 @@ func TestDeleteSliceElms(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := DeleteSliceElms(tt.args.i, tt.args.elms...); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("DeleteSliceElms() = %v, want %v", got, tt.want)
+			if got := DeleteSliceElems(tt.args.i, tt.args.elms...); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("DeleteSliceElems() = %v, want %v", got, tt.want)
 			}
 		})
 	}

@@ -1,3 +1,6 @@
+// Package conv provides utility functions related to type conversions,
+// such as to int using ToAny[int](any), a slice or array to set type (map[bool]struct{}),
+// map keys and values to slice in random order etc.
 package conv
 
 import (

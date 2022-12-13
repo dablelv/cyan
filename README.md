@@ -1,3 +1,11 @@
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/dablelv/go-huge-util)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/dablelv/go-huge-util)](https://github.com/dablelv/go-huge-util)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dablelv/go-huge-util)](https://goreportcard.com/report/github.com/dablelv/go-huge-util)
+[![Unit-Tests](https://github.com/dablelv/go-huge-util/workflows/Unit-Tests/badge.svg)](https://github.com/dablelv/go-huge-util/actions)
+[![Coverage Status](https://coveralls.io/repos/github/dablelv/go-huge-util/badge.svg?branch=master)](https://coveralls.io/github/dablelv/go-huge-util?branch=master)
+[![Go Reference](https://pkg.go.dev/badge/github.com/dablelv/go-huge-util.svg)](https://pkg.go.dev/github.com/dablelv/go-huge-util)
+[![License](https://img.shields.io/badge/license-APACHE%202.0-blue.svg)](https://github.com/dablelv/go-huge-util/blob/main/LICENSE)
+
 # Synopsis
 Go common and huge utility functions help you to create your go program quickly and easily.
 
@@ -6,18 +14,10 @@ Some useful functions can be used to handle conversion of different character en
 
 Example:
 ```go
-import (
-    huge "github.com/dablelv/go-huge-util"
-)
-
 gbkStr := []byte{0xC4, 0xE3, 0xBA, 0xC3} // 你好 in gbk
-utf8Str, _ := huge.GbkToUtf8(gbkStr)     // 你好 in utf8
-fmt.Println(string(utf8Str))             // 你好
-
-gbkStrRes, _ := huge.Utf8ToGbk(utf8Str)
-fmt.Println(gbkStrRes) // [196 227 186 195]
+utf8Str, _ := GbkToUtf8(gbkStr)     // 你好 in utf8
+gbkStrRes, _ := Utf8ToGbk(utf8Str) // [196 227 186 195]
 ```
-
 # Net
 Some useful functions can be used to handle network. For example you can use `IPv4StrToU32()` transform ipv4 string to uint32 value.
 
@@ -42,39 +42,39 @@ Some useful functions can be used to handle slice.
 Example:
 ```go
 import (
-    huge "github.com/dablelv/go-huge-util"
+    "github.com/dablelv/go-huge-util/slice"
 )
 
-huge.UniqueIntSlice([]int{1, 2, 2, 3})              // [1 2 3]
-huge.UniqueUintSlice([]uint{1, 2, 2, 3})            // [1 2 3]
-huge.UniqueStrSlice([]string{"a", "b", "b", "c"})   // [a b c]
+UniqueIntSlice([]int{1, 2, 2, 3})              // [1 2 3]
+UniqueUintSlice([]uint{1, 2, 2, 3})            // [1 2 3]
+UniqueStrSlice([]string{"a", "b", "b", "c"})   // [a b c]
 
-huge.ReverseIntSlice([]int{1, 2, 3})                // [3 2 1]
-huge.ReverseUintSlice([]uint{1, 2, 3})              // [3 2 1]
-huge.ReverseStrSlice([]string{"a", "b", "c"})       // [c b a]
+ReverseIntSlice([]int{1, 2, 3})                // [3 2 1]
+ReverseUintSlice([]uint{1, 2, 3})              // [3 2 1]
+ReverseStrSlice([]string{"a", "b", "c"})       // [c b a]
 
-huge.SumSlice([]int{1,2,3})                         // 6
-huge.SumSlice([]uint{1,2,3})                        // 6
-huge.SumSlice([]float32{1.1, 2.2, 3.3})             // 6.6
-huge.SumSlice([]float64{1.1, 2.2, 3.3})             // 6.6
+SumSlice([]int{1,2,3})                         // 6
+SumSlice([]uint{1,2,3})                        // 6
+SumSlice([]float32{1.1, 2.2, 3.3})             // 6.6
+SumSlice([]float64{1.1, 2.2, 3.3})             // 6.6
 
-huge.JoinSliceWithSep([]int{1, 2, 3}, ",")              // 1,2,3
-huge.JoinSliceWithSep([]uint{1, 2, 3}, ",")             // 1,2,3
-huge.JoinSliceWithSep([]float64{1.1, 2.2, 3.3}, ",")    // 1.1,2.2,3.3
-huge.JoinSliceWithSep([]string{"a", "b", "c"}, ",")     // a,b,c
+JoinSliceWithSep([]int{1, 2, 3}, ",")              // 1,2,3
+JoinSliceWithSep([]uint{1, 2, 3}, ",")             // 1,2,3
+JoinSliceWithSep([]float64{1.1, 2.2, 3.3}, ",")    // 1.1,2.2,3.3
+JoinSliceWithSep([]string{"a", "b", "c"}, ",")     // a,b,c
 
 // CRUD(Create Read Update Delete) on slice by index
 fib := []int{1, 1, 2, 3, 5, 8}
-r, _ := huge.InsertSliceE(fib, 6, 13)			// [1 1 2 3 5 8 13]
-r, _ := huge.DeleteSliceE(fib, 0)               // [1 2 3 5 8]
-r, _ := huge.UpdateSliceE(fib, 5, 88)			// [1 1 2 3 5 88]
-r, _ := huge.GetEleIndexesSliceE(fib, 1)		// [0 1]
+r, _ := InsertSliceE(fib, 6, 13)    // [1 1 2 3 5 8 13]
+r, _ := DeleteSliceE(fib, 0)        // [1 2 3 5 8]
+r, _ := UpdateSliceE(fib, 5, 88)    // [1 1 2 3 5 88]
+r, _ := GetEleIndexesSliceE(fib, 1) // [0 1]
 
 // or
-r := huge.InsertIntSlice(fib, 5, 13)		// [1 1 2 3 5 8 13]
-r := huge.DeleteIntSliceE(fib, 0)			// [1 2 3 5 8]
-r := huge.UpdateIntSliceE(fib, 5, 88)		// [1 1 2 3 5 88]
-r := huge.GetEleIndexesSlice(fib, 1)		// [0 1]
+r := InsertIntSlice(fib, 5, 13)		// [1 1 2 3 5 8 13]
+r := DeleteIntSliceE(fib, 0)		// [1 2 3 5 8]
+r := UpdateIntSliceE(fib, 5, 88)	// [1 1 2 3 5 88]
+r := GetEleIndexesSlice(fib, 1)		// [0 1]
 ```
 
 # SQL
@@ -297,48 +297,48 @@ huge.RawURLSetParam(rawUrl, "boardID", "521")   // http://www.aspxfans.com:8080/
 Some useful functions can be used to create Hash, HMAC and crypt data.
 ```go
 import (
-    huge "github.com/dablelv/go-huge-util"
+    "github.com/dablelv/go-huge-util/crypto"
 )
 
-// Hash functions
-huge.MD5L("")   // d41d8cd98f00b204e9800998ecf8427e
-huge.MD5U("")   // D41D8CD98F00B204E9800998ECF8427E
+// Hash functions.
+MD5L("")   // d41d8cd98f00b204e9800998ecf8427e
+MD5U("")   // D41D8CD98F00B204E9800998ECF8427E
 
-huge.SHA1L("")  // da39a3ee5e6b4b0d3255bfef95601890afd80709
-huge.SHA1U("")  // DA39A3EE5E6B4B0D3255BFEF95601890AFD80709
+SHA1L("")  // da39a3ee5e6b4b0d3255bfef95601890afd80709
+SHA1U("")  // DA39A3EE5E6B4B0D3255BFEF95601890AFD80709
 
-huge.SHA224L("")    // d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f
-huge.SHA224U("")    // D14A028C2A3A2BC9476102BB288234C415A2B01F828EA62AC5B3E42F
+SHA224L("")    // d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f
+SHA224U("")    // D14A028C2A3A2BC9476102BB288234C415A2B01F828EA62AC5B3E42F
 
-huge.SHA256L("")    // e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-huge.SHA256U("")    // E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855
+SHA256L("")    // e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+SHA256U("")    // E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855
 
-huge.SHA384L("")    // 38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b
-huge.SHA384U("")    // 38B060A751AC96384CD9327EB1B1E36A21FDB71114BE07434C0CC7BF63F6E1DA274EDEBFE76F65FBD51AD2F14898B95B
+SHA384L("")    // 38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b
+SHA384U("")    // 38B060A751AC96384CD9327EB1B1E36A21FDB71114BE07434C0CC7BF63F6E1DA274EDEBFE76F65FBD51AD2F14898B95B
 
-huge.SHA512L("")    // cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e
-huge.SHA512U("")    // CF83E1357EEFB8BDF1542850D66D8007D620E4050B5715DC83F4A921D36CE9CE47D0D13C5D85F2B0FF8318D2877EEC2F63B931BD47417A81A538327AF927DA3E
+SHA512L("")    // cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e
+SHA512U("")    // CF83E1357EEFB8BDF1542850D66D8007D620E4050B5715DC83F4A921D36CE9CE47D0D13C5D85F2B0FF8318D2877EEC2F63B931BD47417A81A538327AF927DA3E
 
-// HMAC functions
-huge.HMACMD5L("", "")   // 74e6f7298a9c2d168935f58c001bad88
-huge.HMACMD5U("", "")   // 74E6F7298A9C2D168935F58C001BAD88
+// HMAC functions.
+HMACMD5L("", "")   // 74e6f7298a9c2d168935f58c001bad88
+HMACMD5U("", "")   // 74E6F7298A9C2D168935F58C001BAD88
 
-huge.HMACSHA1L("", "")  // fbdb1d1b18aa6c08324b7d64b71fb76370690e1d
-huge.HMACSHA1U("", "")  // FBDB1D1B18AA6C08324B7D64B71FB76370690E1D
+HMACSHA1L("", "")  // fbdb1d1b18aa6c08324b7d64b71fb76370690e1d
+HMACSHA1U("", "")  // FBDB1D1B18AA6C08324B7D64B71FB76370690E1D
 
-huge.HMACSHA224L("", "")    // 5ce14f72894662213e2748d2a6ba234b74263910cedde2f5a9271524
-huge.HMACSHA224U("", "")    // 5CE14F72894662213E2748D2A6BA234B74263910CEDDE2F5A9271524
+HMACSHA224L("", "")    // 5ce14f72894662213e2748d2a6ba234b74263910cedde2f5a9271524
+HMACSHA224U("", "")    // 5CE14F72894662213E2748D2A6BA234B74263910CEDDE2F5A9271524
 
-huge.HMACSHA256L("", "")    // b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad
-huge.HMACSHA256U("", "")    // B613679A0814D9EC772F95D778C35FC5FF1697C493715653C6C712144292C5AD
+HMACSHA256L("", "")    // b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad
+HMACSHA256U("", "")    // B613679A0814D9EC772F95D778C35FC5FF1697C493715653C6C712144292C5AD
 
-huge.HMACSHA384L("", "")    // 6c1f2ee938fad2e24bd91298474382ca218c75db3d83e114b3d4367776d14d3551289e75e8209cd4b792302840234adc
-huge.HMACSHA384U("", "")    // 6C1F2EE938FAD2E24BD91298474382CA218C75DB3D83E114B3D4367776D14D3551289E75E8209CD4B792302840234ADC
+HMACSHA384L("", "")    // 6c1f2ee938fad2e24bd91298474382ca218c75db3d83e114b3d4367776d14d3551289e75e8209cd4b792302840234adc
+HMACSHA384U("", "")    // 6C1F2EE938FAD2E24BD91298474382CA218C75DB3D83E114B3D4367776D14D3551289E75E8209CD4B792302840234ADC
 
-huge.HMACSHA512L("", "")    // b936cee86c9f87aa5d3c6f2e84cb5a4239a5fe50480a6ec66b70ab5b1f4ac6730c6c515421b327ec1d69402e53dfb49ad7381eb067b338fd7b0cb22247225d47
-huge.HMACSHA512U("", "")    // B936CEE86C9F87AA5D3C6F2E84CB5A4239A5FE50480A6EC66B70AB5B1F4AC6730C6C515421B327EC1D69402E53DFB49AD7381EB067B338FD7B0CB22247225D47
+HMACSHA512L("", "")    // b936cee86c9f87aa5d3c6f2e84cb5a4239a5fe50480a6ec66b70ab5b1f4ac6730c6c515421b327ec1d69402e53dfb49ad7381eb067b338fd7b0cb22247225d47
+HMACSHA512U("", "")    // B936CEE86C9F87AA5D3C6F2E84CB5A4239A5FE50480A6EC66B70AB5B1F4AC6730C6C515421B327EC1D69402E53DFB49AD7381EB067B338FD7B0CB22247225D47
 
-// Encryption functions
+// Encryption functions.
 p := []byte("plaintext")
 key16 := []byte("12345678abcdefgh")
 c, _ := Base64AESCBCEncrypt(p, key16) // A67NhD3RBiNaMgG6HTm8LQ==
@@ -396,6 +396,14 @@ b, _ := VerLEVer("1.0.5", "1.0.5")   // true
 
 # Star History
 [![Star History Chart](https://api.star-history.com/svg?repos=dablelv/go-huge-util&type=Date)](https://star-history.com/#dablelv/go-huge-util&Date)
+
+# How to Contribute
+We really appreciate any code commits which make lancet lib powerful. Please follow the rules below to create your pull request.
+
+1. Fork the repository.
+2. Add and Commit your changes.
+3. Push to your forked repository.
+4. Create new pull request.
 
 # Summary
 The above example is just the tip of the iceberg. For more usage, please read the source code.
