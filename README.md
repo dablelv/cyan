@@ -5,6 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/dablelv/go-huge-util/badge.svg)](https://coveralls.io/github/dablelv/go-huge-util)
 [![Go Reference](https://pkg.go.dev/badge/github.com/dablelv/go-huge-util.svg)](https://pkg.go.dev/github.com/dablelv/go-huge-util)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dablelv/go-huge-util/blob/main/LICENSE)
+[![Stars](https://img.shields.io/github/stars/dablelv/go-huge-util?style=social)](https://img.shields.io/github/stars/dablelv/go-huge-util?style=social)
 
 # Synopsis
 Go common and huge utility functions help you to create your go program quickly and easily.
