@@ -1,8 +1,8 @@
 ![Go version](https://img.shields.io/github/go-mod/go-version/dablelv/go-huge-util)
 [![GitHub latest tag](https://img.shields.io/github/tag/dablelv/go-huge-util)](https://github.com/dablelv/go-huge-util)
 [![Go Report Card](https://goreportcard.com/badge/github.com/dablelv/go-huge-util)](https://goreportcard.com/report/github.com/dablelv/go-huge-util)
-[![Unit Test](https://github.com/dablelv/go-huge-util/workflows/Unit-Tests/badge.svg)](https://github.com/dablelv/go-huge-util/actions)
-[![Coverage Status](https://coveralls.io/repos/github/dablelv/go-huge-util/badge.svg?branch=master)](https://coveralls.io/github/dablelv/go-huge-util?branch=master)
+[![Unit Test](https://github.com/dablelv/go-huge-util/workflows/go-test/badge.svg)](https://github.com/dablelv/go-huge-util/actions)
+[![Coverage Status](https://coveralls.io/repos/github/dablelv/go-huge-util/badge.svg)](https://coveralls.io/github/dablelv/go-huge-util)
 [![Go Reference](https://pkg.go.dev/badge/github.com/dablelv/go-huge-util.svg)](https://pkg.go.dev/github.com/dablelv/go-huge-util)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dablelv/go-huge-util/blob/main/LICENSE)
 
