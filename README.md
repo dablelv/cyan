@@ -1,3 +1,5 @@
+<div align=center>
+
 ![Go version](https://img.shields.io/github/go-mod/go-version/dablelv/go-huge-util)
 [![GitHub latest tag](https://img.shields.io/github/tag/dablelv/go-huge-util)](https://github.com/dablelv/go-huge-util)
 [![Go Report Card](https://goreportcard.com/badge/github.com/dablelv/go-huge-util)](https://goreportcard.com/report/github.com/dablelv/go-huge-util)
@@ -6,6 +8,8 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/dablelv/go-huge-util.svg)](https://pkg.go.dev/github.com/dablelv/go-huge-util)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dablelv/go-huge-util/blob/main/LICENSE)
 [![Stars](https://img.shields.io/github/stars/dablelv/go-huge-util?style=social)](https://img.shields.io/github/stars/dablelv/go-huge-util?style=social)
+
+</div>
 
 # Synopsis
 Go common and huge utility functions help you to create your go program quickly and easily.
@@ -22,30 +26,20 @@ gbkStrRes, _ := Utf8ToGbk(utf8Str)          // [196 227 186 195]
 # Net
 Some useful functions can be used to handle network. For example you can use `IPv4StrToU32()` transform ipv4 string to uint32 value.
 
-Example:
 ```go
-import (
-    huge "github.com/dablelv/go-huge-util"
-)
+IsReservedIP("0.0.0.256")    // -1 invalid ip
+IsReservedIP("39.156.69.79") // 0 public ip
+IsReservedIP("127.0.0.1")    // 1 reserved ip
 
-huge.IsReservedIP("0.0.0.256")    // -1 invalid ip
-huge.IsReservedIP("39.156.69.79") // 0 public ip
-huge.IsReservedIP("127.0.0.1")    // 1 reserved ip
-
-huge.IPv4StrToU32("127.0.0.1")      // 2130706433
-huge.U32ToIPv4Str(2130706433)       // "127.0.0.1"
-huge.GetNativeEndian()              // LittleEndian
-huge.IsLittleEndian()               // true
+IPv4StrToU32("127.0.0.1")      // 2130706433
+U32ToIPv4Str(2130706433)       // "127.0.0.1"
+GetNativeEndian()              // LittleEndian
+IsLittleEndian()               // true
 ```
 # Slice
 Some useful functions can be used to handle slice.
 
-Example:
 ```go
-import (
-    "github.com/dablelv/go-huge-util/slice"
-)
-
 UniqueIntSlice([]int{1, 2, 2, 3})              // [1 2 3]
 UniqueUintSlice([]uint{1, 2, 2, 3})            // [1 2 3]
 UniqueStrSlice([]string{"a", "b", "b", "c"})   // [a b c]
@@ -81,12 +75,7 @@ r := GetEleIndexesSlice(fib, 1)		// [0 1]
 # SQL
 Some useful functions can be used to handle sql statement.
 
-Example:
 ```go
-import (
-    huge "github.com/dablelv/go-huge-util"
-)
-
 var sql = `select * from t where field1="{name}"`
 huge.FormatSql(sql, map[string]string{"name": "dablelv"}, false)    // select * from t where field1="dablelv"
 ```
@@ -94,22 +83,17 @@ huge.FormatSql(sql, map[string]string{"name": "dablelv"}, false)    // select * 
 # String
 Some useful functions can be used to handle string.
 
-Example:
 ```go
-import (
-    huge "github.com/dablelv/go-huge-util"
-)
+Split("a,b,c", ",")                    // []string{"a", "b", "c"}
 
-huge.Split("a,b,c", ",")                    // []string{"a", "b", "c"}
+JoinStr(",", "a", "", "b")             // "a,,b"
+JoinStrSkipEmpty(",", "a", "", "b")    // "a,b"
 
-huge.JoinStr(",", "a", "", "b")             // "a,,b"
-huge.JoinStrSkipEmpty(",", "a", "", "b")    // "a,b"
+ReverseStr("abc")                      // "cba"
 
-huge.ReverseStr("abc")                      // "cba"
-
-huge.GetAlphanumericNumByASCII("108条梁山man")     // 6
-huge.GetAlphanumericNumByASCIIV2("108条梁山man")   // 6
-huge.GetAlphanumericNumByRegExp("108条梁山man")    // 6
+GetAlphanumericNumByASCII("108条梁山man")     // 6
+GetAlphanumericNumByASCIIV2("108条梁山man")   // 6
+GetAlphanumericNumByRegExp("108条梁山man")    // 6
 ```
 
 # Struct
@@ -117,17 +101,13 @@ Some useful functions can be used to handle string.
 
 Example:
 ```go
-import (
-    huge "github.com/dablelv/go-huge-util"
-)
-
 var st = struct {
     I int
     S string
 }{I: 1, S: "a"}
 
-huge.Struct2Map(st)         // map[I:1 S:a]
-huge.Struct2MapString(st)   // map[I:1 S:a]
+Struct2Map(st)         // map[I:1 S:a]
+Struct2MapString(st)   // map[I:1 S:a]
 ```
 
 # Time
@@ -192,10 +172,6 @@ b, err := ToAny[bool](one)           // true
 ```
 ## to set
 ```go
-import (
-    "github.com/dablelv/go-huge-util/conv"
-)
-
 // Convert bool slice or array to set.
 bools := []bool{true, false, true}
 set := conv.ToBoolSet(bools)
@@ -223,10 +199,6 @@ conv.SplitStrToSet("a,b,c", ",")  // map[a:{}, b:{}, c:{}]
 
 ## to slice
 ```go
-import (
-    "github.com/dablelv/go-huge-util/conv"
-)
-
 // Convert string separated by white space character to string slice.
 sl := conv.ToStrSlice("a b c") // []string{"a","b","c"}
 sl, _ := conv.ToStrSliceE("a b c") // []string{"a","b","c"}
@@ -270,12 +242,7 @@ bs, _ := conv.SplitStrToSliceE[bool]("1,0,true,false", ",")
 # URL
 Some useful functions can be used to handle url.
 
-Example:
 ```go
-import (
-    huge "github.com/dablelv/go-huge-util"
-)
-
 var rawUrl=`http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2#name`
 huge.RawUrlGetDomain(rawUrl)    // "www.aspxfans.com"
 huge.RawUrlGetPort(rawUrl)      // "8080"
@@ -291,11 +258,8 @@ huge.RawURLSetParam(rawUrl, "boardID", "521")   // http://www.aspxfans.com:8080/
 
 # Crypto
 Some useful functions can be used to create Hash, HMAC and crypt data.
-```go
-import (
-    "github.com/dablelv/go-huge-util/crypto"
-)
 
+```go
 // Hash functions.
 MD5L("")   // d41d8cd98f00b204e9800998ecf8427e
 MD5U("")   // D41D8CD98F00B204E9800998ECF8427E
@@ -351,6 +315,7 @@ p, _ := Base64TriDESCBCDecrypt(c, key24) // plaintext
 
 # Rand
 Some functions to create a real non-negative random int number, specified length random string, and so on.
+
 ```go
 huge.GetRandInt()               // 2040723487295132865
 huge.GetRandIntn(100)           // 49
@@ -383,6 +348,7 @@ output:
 
 # Other
 Some useful functions now unclassified. Of course, it may be classified and moved to a new go file in the future.
+
 ```go
 b, _ := VerGTVer("1.0.5", "1.0.4")   // true
 b, _ := VerLTVer("1.0.5", "2.0.4")   // true

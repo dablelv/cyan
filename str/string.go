@@ -1,4 +1,4 @@
-package util
+package str
 
 import (
 	"bytes"
@@ -60,9 +60,9 @@ func GetAlphanumericNumByASCII(s string) int {
 	num := int(0)
 	for i := 0; i < len(s); i++ {
 		switch {
-		case 48 <= s[i] && s[i] <= 57: 	// digits
+		case 48 <= s[i] && s[i] <= 57: // digits
 			fallthrough
-		case 65 <= s[i] && s[i] <= 90: 	// uppercase letters
+		case 65 <= s[i] && s[i] <= 90: // uppercase letters
 			fallthrough
 		case 97 <= s[i] && s[i] <= 122: // lowercase letters
 			num++

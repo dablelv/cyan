@@ -1,4 +1,4 @@
-package util
+package math
 
 // AbsInt8 gets absolute value of int8.
 //

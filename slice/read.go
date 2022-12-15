@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	huge "github.com/dablelv/go-huge-util"
+	"github.com/dablelv/go-huge-util/math"
 )
 
 func GetElemIndexesSlice(slice interface{}, value interface{}) []int {
@@ -36,6 +36,6 @@ func GetRandomSliceElem(i interface{}) interface{} {
 	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
 		return i
 	}
-	idx := huge.RandIntn(v.Len())
+	idx := math.RandIntn(v.Len())
 	return v.Index(idx).Interface()
 }

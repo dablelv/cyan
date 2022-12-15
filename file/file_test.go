@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	huge "github.com/dablelv/go-huge-util"
+	"github.com/dablelv/go-huge-util/math"
 )
 
 func TestListDir(t *testing.T) {
@@ -18,7 +18,7 @@ func TestListDir(t *testing.T) {
 
 func TestReadLines(t *testing.T) {
 	l := 64*1024 + 1
-	veryLongString := huge.RandStr(uint64(l)) // MaxScanTokenSize = 64 * 1024 = 65536 < 70000
+	veryLongString := math.RandStr(uint64(l)) // MaxScanTokenSize = 64 * 1024 = 65536 < 70000
 
 	// if line length greater than bufio.MaxScanTokenSize(64 * 1024) need to create a new longer buffer
 	if l > bufio.MaxScanTokenSize {

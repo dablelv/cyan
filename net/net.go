@@ -180,7 +180,7 @@ func IPv4StrToU32(s string) (ip uint32) {
 	return
 }
 
-// U32ToIPv4Str convert uint32 to IPv4 string in host byte order.
+// U32ToIPv4Str converts uint32 to IPv4 string in host byte order.
 func U32ToIPv4Str(ip uint32) string {
 	return fmt.Sprintf("%d.%d.%d.%d", ip>>24, ip<<8>>24, ip<<16>>24, ip<<24>>24)
 }

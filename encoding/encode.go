@@ -1,4 +1,4 @@
-package util
+package encoding
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 	"golang.org/x/text/transform"
 )
 
-// GBK2UTF8 transform gbk to utf8
+// GBK2UTF8 transform gbk to utf8.
 func GBK2UTF8(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewDecoder())
 	d, err := ioutil.ReadAll(reader)
@@ -18,7 +18,7 @@ func GBK2UTF8(s []byte) ([]byte, error) {
 	return d, nil
 }
 
-// GBK2UTF8Str transform gbk to utf8 string
+// GBK2UTF8Str transform gbk to utf8 string.
 func GBK2UTF8Str(s string) string {
 	if dst, err := GBK2UTF8([]byte(s)); err == nil {
 		return string(dst)
@@ -26,7 +26,7 @@ func GBK2UTF8Str(s string) string {
 	return ""
 }
 
-// UTF82GBK transform utf8 to gbk
+// UTF82GBK transform utf8 to gbk.
 func UTF82GBK(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewEncoder())
 	d, err := ioutil.ReadAll(reader)
@@ -36,7 +36,7 @@ func UTF82GBK(s []byte) ([]byte, error) {
 	return d, nil
 }
 
-// UTF82GBKStr transform utf8 to gbk string
+// UTF82GBKStr transform utf8 to gbk string.
 func UTF82GBKStr(s string) string {
 	if dst, err := UTF82GBK([]byte(s)); err == nil {
 		return string(dst)

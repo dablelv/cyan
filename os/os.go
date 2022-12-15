@@ -6,22 +6,22 @@ import (
 	"strings"
 )
 
-// IsWin determine whether the system is windows
+// IsWin determine whether the system is windows.
 func IsWin() bool {
 	return runtime.GOOS == "windows"
 }
 
-// IsMac determines whether the system is darwin
+// IsMac determines whether the system is darwin.
 func IsMac() bool {
 	return runtime.GOOS == "darwin"
 }
 
-// IsLinux determines whether the system is linux
+// IsLinux determines whether the system is linux.
 func IsLinux() bool {
 	return runtime.GOOS == "linux"
 }
 
-// IsSupportColor check current console whether support color.
+// IsSupportColor checks current console whether supports color.
 // Supported: linux, mac, or windows's ConEmu, Cmder, putty, git-bash.exe
 // Not support: windows cmd.exe, powerShell.exe
 func IsSupportColor() bool {
@@ -41,17 +41,16 @@ func IsSupportColor() bool {
 	if os.Getenv("ANSICON") != "" {
 		return true
 	}
-
 	return false
 }
 
-// IsSupport256Color check current console whether support 256 color.
+// IsSupport256Color checks current console whether supports 256 color.
 func IsSupport256Color() bool {
 	// "TERM=xterm-256color" "TERM=screen-256color"
 	return strings.Contains(os.Getenv("TERM"), "256color")
 }
 
-// IsSupportTrueColor check current console whether support true color
+// IsSupportTrueColor checks current console whether supports true color.
 func IsSupportTrueColor() bool {
 	// "COLORTERM=truecolor"
 	return strings.Contains(os.Getenv("COLORTERM"), "truecolor")

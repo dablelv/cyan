@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	huge "github.com/dablelv/go-huge-util"
+	"github.com/dablelv/go-huge-util/str"
 )
 
 // SplitStrToSlice splits a string to a slice by the specified separator.
@@ -17,7 +17,7 @@ func SplitStrToSlice[T any](s, sep string) []T {
 // Note that this function is implemented through 1.18 generics, so the element type needs to
 // be specified when calling it, e.g. SplitStrToSliceE[int]("1,2,3", ",").
 func SplitStrToSliceE[T any](s, sep string) ([]T, error) {
-	ss := huge.Split(s, sep)
+	ss := str.Split(s, sep)
 	dst := make([]T, len(ss))
 	var t T
 	for i, v := range ss {

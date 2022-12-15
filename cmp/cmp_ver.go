@@ -14,7 +14,7 @@ import (
 
 	"github.com/spf13/cast"
 
-	huge "github.com/dablelv/go-huge-util"
+	"github.com/dablelv/go-huge-util/str"
 )
 
 // VerGTVer determines whether version0 greater than version1.
@@ -49,7 +49,7 @@ func VerGTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 		return false, nil
 	}
 
-	slVer0, slVer1 := huge.Split(ver0, sep), huge.Split(ver1, sep)
+	slVer0, slVer1 := str.Split(ver0, sep), str.Split(ver1, sep)
 	if len(slVer0) != num || len(slVer1) != num {
 		return false, errors.New(fmt.Sprintf("version field num is not equal to %v", num))
 	}
@@ -80,7 +80,7 @@ func VerLTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 		return false, nil
 	}
 
-	slVer0, slVer1 := huge.Split(ver0, sep), huge.Split(ver1, sep)
+	slVer0, slVer1 := str.Split(ver0, sep), str.Split(ver1, sep)
 	if len(slVer0) != num || len(slVer1) != num {
 		return false, errors.New("version field num is too short")
 	}

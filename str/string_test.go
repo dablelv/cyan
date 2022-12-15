@@ -1,4 +1,4 @@
-package util
+package str
 
 import "testing"
 
@@ -14,12 +14,12 @@ func TestJoinStrSkipEmpty(t *testing.T) {
 	}{
 		{
 			"join string",
-			args {",", []string{"foo","bar","baz"}},
+			args{",", []string{"foo", "bar", "baz"}},
 			"foo,bar,baz",
 		},
 		{
 			"join string and skip the empty string",
-			args {",", []string{"","foo","bar","baz"}},
+			args{",", []string{"", "foo", "bar", "baz"}},
 			"foo,bar,baz",
 		},
 	}
@@ -44,12 +44,12 @@ func TestJoinStr(t *testing.T) {
 	}{
 		{
 			"join string",
-			args {",", []string{"foo","bar","baz"}},
+			args{",", []string{"foo", "bar", "baz"}},
 			"foo,bar,baz",
 		},
 		{
 			"join string and don't skip the empty string",
-			args {",", []string{"","foo","bar","baz"}},
+			args{",", []string{"", "foo", "bar", "baz"}},
 			",foo,bar,baz",
 		},
 	}
