@@ -2,6 +2,7 @@ package zip
 
 import (
 	"bytes"
+	"io"
 	"os"
 )
 
@@ -15,12 +16,12 @@ func IsZipFile(filepath string) (bool, error) {
 	defer f.Close()
 
 	buf := make([]byte, 4)
-	n, err := f.Read(buf)
+	_, err = f.Read(buf)
+	if err == io.EOF {
+		return false, nil
+	}
 	if err != nil {
 		return false, err
-	}
-	if n < 4 {
-		return false, nil
 	}
 	return bytes.Equal(buf, []byte("PK\x03\x04")), nil
 }
