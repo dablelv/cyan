@@ -360,7 +360,7 @@ b, _ := VerLEVer("1.0.5", "1.0.5")   // true
 [![Star History Chart](https://api.star-history.com/svg?repos=dablelv/go-huge-util&type=Date)](https://star-history.com/#dablelv/go-huge-util&Date)
 
 # How to Contribute
-We really appreciate any code commits which make lancet lib powerful. Please follow the rules below to create your pull request.
+We really appreciate any code commits which make this lib powerful. Please follow the rules below to create your pull request.
 
 1. Fork the repository.
 2. Add and Commit your changes.
