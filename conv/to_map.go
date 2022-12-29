@@ -47,7 +47,7 @@ func Struct2MapString(obj any) map[string]string {
 }
 
 // ToMapStrStr casts any type to a map[string]string type.
-func ToStringMapString(i interface{}) map[string]string {
+func ToMapStrStr(i any) map[string]string {
 	v, _ := ToMapStrStrE(i)
 	return v
 }
