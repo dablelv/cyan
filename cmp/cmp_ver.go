@@ -10,9 +10,8 @@ package cmp
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
-
-	"github.com/spf13/cast"
 
 	"github.com/dablelv/go-huge-util/str"
 )
@@ -41,7 +40,7 @@ func VerLEVer(ver0, ver1 string) (bool, error) {
 	return VerLEVerMore(ver0, ver1, ".", 3)
 }
 
-// VerGTVerMore determines whether version0 greater than version1 with specified version separator and length.
+// VerGTVerMore reports whether version 0 greater than version 1 with specified version separator and length.
 // Version number like Field1.Field2.Field3.Field4..., e.g. 2.1.1.1 > 2.1.0.1 > 2.0.0.0 > 1.0.0.0.
 func VerGTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 	ver0, ver1 = strings.TrimSpace(ver0), strings.TrimSpace(ver1)
@@ -49,18 +48,18 @@ func VerGTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 		return false, nil
 	}
 
-	slVer0, slVer1 := str.Split(ver0, sep), str.Split(ver1, sep)
-	if len(slVer0) != num || len(slVer1) != num {
+	ver0s, ver1s := str.Split(ver0, sep), str.Split(ver1, sep)
+	if len(ver0s) != num || len(ver1s) != num {
 		return false, errors.New(fmt.Sprintf("version field num is not equal to %v", num))
 	}
 
 	var i64Ver0, i64Ver1 int64
 	for i := 0; i < num; i++ {
-		v0, err0 := cast.ToInt64E(slVer0[i])
+		v0, err0 := strconv.ParseInt(ver0s[i], 10, 64)
 		if err0 != nil {
 			return false, errors.New("the first version number is ill")
 		}
-		v1, err1 := cast.ToInt64E(slVer1[i])
+		v1, err1 := strconv.ParseInt(ver1s[i], 10, 64)
 		if err1 != nil {
 			return false, errors.New("the second version number is ill")
 		}
@@ -72,7 +71,7 @@ func VerGTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 	return i64Ver0 > i64Ver1, nil
 }
 
-// VerLTVerMore determines whether version0 less than version1 with specified version separator and length.
+// VerLTVerMore reports whether version 0 less than version 1 with specified version separator and length.
 // Version number like Field1.Field2.Field3,Field4..., e.g. 1.0.0.0 < 2.0.0.0 < 2.1.0.0 < 2.1.1.0.
 func VerLTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 	ver0, ver1 = strings.TrimSpace(ver0), strings.TrimSpace(ver1)
@@ -80,18 +79,18 @@ func VerLTVerMore(ver0, ver1, sep string, num int) (bool, error) {
 		return false, nil
 	}
 
-	slVer0, slVer1 := str.Split(ver0, sep), str.Split(ver1, sep)
-	if len(slVer0) != num || len(slVer1) != num {
+	ver0s, ver1s := str.Split(ver0, sep), str.Split(ver1, sep)
+	if len(ver0s) != num || len(ver1s) != num {
 		return false, errors.New("version field num is too short")
 	}
 
 	var i64Ver0, i64Ver1 int64
 	for i := 0; i < num; i++ {
-		v0, err0 := cast.ToInt64E(slVer0[i])
+		v0, err0 := strconv.ParseInt(ver0s[i], 10, 64)
 		if err0 != nil {
 			return false, errors.New("the first version number is ill")
 		}
-		v1, err1 := cast.ToInt64E(slVer1[i])
+		v1, err1 := strconv.ParseInt(ver1s[i], 10, 64)
 		if err1 != nil {
 			return false, errors.New("the second version number is ill")
 		}

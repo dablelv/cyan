@@ -138,3 +138,204 @@ func TestToAnyEBool(t *testing.T) {
 		})
 	}
 }
+
+func TestToAnyEInt(t *testing.T) {
+	type args struct {
+		i any
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    int
+		wantErr bool
+	}{
+		{
+			name:    "true",
+			args:    args{i: true},
+			want:    1,
+			wantErr: false,
+		},
+		{
+			name:    "false",
+			args:    args{i: false},
+			want:    0,
+			wantErr: false,
+		},
+		{
+			name:    "1",
+			args:    args{i: 1},
+			want:    1,
+			wantErr: false,
+		},
+		{
+			name:    "0",
+			args:    args{i: 0},
+			want:    0,
+			wantErr: false,
+		},
+		{
+			name:    "1.1",
+			args:    args{i: 1.1},
+			want:    1,
+			wantErr: false,
+		},
+		{
+			name:    "1.00",
+			args:    args{i: 1.1},
+			want:    1,
+			wantErr: false,
+		},
+		{
+			name:    "nil",
+			args:    args{i: nil},
+			want:    0,
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := ToAnyE[int](tt.args.i)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ToAnyE() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ToAnyE() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestToAnyEUint(t *testing.T) {
+	type args struct {
+		i any
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    uint
+		wantErr bool
+	}{
+		{
+			name:    "true",
+			args:    args{i: true},
+			want:    1,
+			wantErr: false,
+		},
+		{
+			name:    "false",
+			args:    args{i: false},
+			want:    0,
+			wantErr: false,
+		},
+		{
+			name:    "1",
+			args:    args{i: 1},
+			want:    1,
+			wantErr: false,
+		},
+		{
+			name:    "0",
+			args:    args{i: 0},
+			want:    0,
+			wantErr: false,
+		},
+		{
+			name:    "1.1",
+			args:    args{i: 1.1},
+			want:    1,
+			wantErr: false,
+		},
+		{
+			name:    "1.00",
+			args:    args{i: 1.1},
+			want:    1,
+			wantErr: false,
+		},
+		{
+			name:    "nil",
+			args:    args{i: nil},
+			want:    0,
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := ToAnyE[uint](tt.args.i)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ToAnyE() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ToAnyE() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestToAnyEFloat64(t *testing.T) {
+	type args struct {
+		i any
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    float64
+		wantErr bool
+	}{
+		{
+			name:    "true",
+			args:    args{i: true},
+			want:    1.0,
+			wantErr: false,
+		},
+		{
+			name:    "false",
+			args:    args{i: false},
+			want:    0.0,
+			wantErr: false,
+		},
+		{
+			name:    "1",
+			args:    args{i: 1},
+			want:    1.0,
+			wantErr: false,
+		},
+		{
+			name:    "0",
+			args:    args{i: 0},
+			want:    0.0,
+			wantErr: false,
+		},
+		{
+			name:    "1.1",
+			args:    args{i: 1.1},
+			want:    1.1,
+			wantErr: false,
+		},
+		{
+			name:    "string 1.00",
+			args:    args{i: "1.00"},
+			want:    1.0,
+			wantErr: false,
+		},
+		{
+			name:    "nil",
+			args:    args{i: nil},
+			want:    0,
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := ToAnyE[float64](tt.args.i)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ToAnyE() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ToAnyE() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

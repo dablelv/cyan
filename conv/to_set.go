@@ -3,12 +3,10 @@ package conv
 import (
 	"fmt"
 	"reflect"
-
-	"github.com/spf13/cast"
 )
 
 //
-// Convert a any element type of slice or array to to specified type map set.
+// Convert an any element type of slice or array to to specified type map set.
 // Note that the the element type of input don't need to be equal to the map key type.
 // For example, []uint64{1, 2, 3} can be converted to map[uint64]struct{}{1:struct{}, 2:struct{},
 // 3:struct{}} and also can be converted to map[string]struct{}{"1":struct{}, "2":struct{}, "3":struct{}}
@@ -32,7 +30,7 @@ func ToBoolSetE(i any) (map[bool]struct{}, error) {
 	}
 	dst := make(map[bool]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToBoolE(k.Interface())
+		v, err := ToBoolE(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -58,7 +56,7 @@ func ToIntSetE(i any) (map[int]struct{}, error) {
 	}
 	dst := make(map[int]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToIntE(k.Interface())
+		v, err := ToIntE(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -84,7 +82,7 @@ func ToInt8SetE(i any) (map[int8]struct{}, error) {
 	}
 	dst := make(map[int8]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToInt8E(k.Interface())
+		v, err := ToInt8E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -110,7 +108,7 @@ func ToInt16SetE(i any) (map[int16]struct{}, error) {
 	}
 	dst := make(map[int16]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToInt16E(k.Interface())
+		v, err := ToInt16E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -136,7 +134,7 @@ func ToInt32SetE(i any) (map[int32]struct{}, error) {
 	}
 	dst := make(map[int32]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToInt32E(k.Interface())
+		v, err := ToInt32E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -162,7 +160,7 @@ func ToInt64SetE(i any) (map[int64]struct{}, error) {
 	}
 	dst := make(map[int64]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToInt64E(k.Interface())
+		v, err := ToInt64E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -188,7 +186,7 @@ func ToUintSetE(i any) (map[uint]struct{}, error) {
 	}
 	dst := make(map[uint]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToUintE(k.Interface())
+		v, err := ToUintE(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -214,7 +212,7 @@ func ToUint8SetE(i any) (map[uint8]struct{}, error) {
 	}
 	dst := make(map[uint8]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToUint8E(k.Interface())
+		v, err := ToUint8E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -240,7 +238,7 @@ func ToUint16SetE(i any) (map[uint16]struct{}, error) {
 	}
 	dst := make(map[uint16]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToUint16E(k.Interface())
+		v, err := ToUint16E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -266,7 +264,7 @@ func ToUint32SetE(i any) (map[uint32]struct{}, error) {
 	}
 	dst := make(map[uint32]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToUint32E(k.Interface())
+		v, err := ToUint32E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -292,7 +290,7 @@ func ToUint64SetE(i any) (map[uint64]struct{}, error) {
 	}
 	dst := make(map[uint64]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToUint64E(k.Interface())
+		v, err := ToUint64E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -318,7 +316,7 @@ func ToFloat32SetE(i any) (map[float32]struct{}, error) {
 	}
 	dst := make(map[float32]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToFloat32E(k.Interface())
+		v, err := ToFloat32E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -344,7 +342,7 @@ func ToFloat64SetE(i any) (map[float64]struct{}, error) {
 	}
 	dst := make(map[float64]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToFloat64E(k.Interface())
+		v, err := ToFloat64E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
@@ -370,7 +368,7 @@ func ToStrSetE(i any) (map[string]struct{}, error) {
 	}
 	dst := make(map[string]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
-		v, err := cast.ToStringE(k.Interface())
+		v, err := ToStringE(k.Interface())
 		if err != nil {
 			return nil, err
 		}

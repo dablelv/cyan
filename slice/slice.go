@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/spf13/cast"
+	"github.com/dablelv/go-huge-util/conv"
 )
 
 // SumSlice calculates the sum of slice elements.
@@ -84,18 +84,18 @@ func JoinSliceWithSep(slice interface{}, sep string) string {
 
 // JoinSliceWithSepE joins all elements in slice or array with separator and return an error if occurred.
 func JoinSliceWithSepE(slice interface{}, sep string) (string, error) {
-	// check params
+	// Check param.
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
 		return "", fmt.Errorf("the input %#v of type %T isn't a slice or array", slice, slice)
 	}
-	// join the slice or array
+	// Join the slice or array.
 	var s string
 	for i := 0; i < v.Len(); i++ {
 		if len(s) > 0 {
 			s += sep
 		}
-		str, err := cast.ToStringE(v.Index(i).Interface())
+		str, err := conv.ToStringE(v.Index(i).Interface())
 		if err != nil {
 			return "", err
 		}

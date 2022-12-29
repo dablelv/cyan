@@ -5,7 +5,8 @@ import (
 	"database/sql"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/spf13/cast"
+
+	"github.com/dablelv/go-huge-util/conv"
 )
 
 type DataRow map[string]interface{}
@@ -18,7 +19,7 @@ func (row DataRow) IsExists(str string) bool {
 func (row DataRow) GetString(str string) string {
 	v, ok := row[str]
 	if ok {
-		return cast.ToString(v)
+		return conv.ToAny[string](v)
 	}
 
 	return ""
@@ -27,7 +28,7 @@ func (row DataRow) GetString(str string) string {
 func (row DataRow) GetStringWithDef(str string, def string) string {
 	v, ok := row[str]
 	if ok {
-		return cast.ToString(v)
+		return conv.ToAny[string](v)
 	}
 
 	return def
@@ -36,7 +37,7 @@ func (row DataRow) GetStringWithDef(str string, def string) string {
 func (row DataRow) GetInt(str string) int {
 	v, ok := row[str]
 	if ok {
-		return cast.ToInt(v)
+		return conv.ToAny[int](v)
 	}
 
 	return 0
@@ -45,106 +46,95 @@ func (row DataRow) GetInt(str string) int {
 func (row DataRow) GetIntWithDef(str string, def int) int {
 	v, ok := row[str]
 	if ok {
-		return cast.ToInt(v)
+		return conv.ToAny[int](v)
 	}
-
 	return def
 }
 
 func (row DataRow) GetUint(str string) uint {
 	v, ok := row[str]
 	if ok {
-		return cast.ToUint(v)
+		return conv.ToAny[uint](v)
 	}
-
 	return 0
 }
 
 func (row DataRow) GetUintWithDef(str string, def uint) uint {
 	v, ok := row[str]
 	if ok {
-		return cast.ToUint(v)
+		return conv.ToAny[uint](v)
 	}
-
 	return def
 }
 
 func (row DataRow) GetInt32(str string) int32 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToInt32(v)
+		return conv.ToAny[int32](v)
 	}
-
 	return 0
 }
 
 func (row DataRow) GetInt32WithDef(str string, def int32) int32 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToInt32(v)
+		return conv.ToAny[int32](v)
 	}
-
 	return def
 }
 
 func (row DataRow) GetUint32(str string) uint32 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToUint32(v)
+		return conv.ToAny[uint32](v)
 	}
-
 	return 0
 }
 
 func (row DataRow) GetUint32WithDef(str string, def uint32) uint32 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToUint32(v)
+		return conv.ToAny[uint32](v)
 	}
-
 	return def
 }
 
 func (row DataRow) GetInt64(str string) int64 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToInt64(v)
+		return conv.ToAny[int64](v)
 	}
-
 	return 0
 }
 
 func (row DataRow) GetInt64WithDef(str string, def int64) int64 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToInt64(v)
+		return conv.ToAny[int64](v)
 	}
-
 	return def
 }
 
 func (row DataRow) GetUint64(str string) uint64 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToUint64(v)
+		return conv.ToAny[uint64](v)
 	}
-
 	return 0
 }
 
 func (row DataRow) GetUint64WithDef(str string, def uint64) uint64 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToUint64(v)
+		return conv.ToAny[uint64](v)
 	}
-
 	return def
 }
 
 func (row DataRow) GetFloat32(str string) float32 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToFloat32(v)
+		return conv.ToAny[float32](v)
 	}
 
 	return 0
@@ -153,27 +143,24 @@ func (row DataRow) GetFloat32(str string) float32 {
 func (row DataRow) GetFloat32WithDef(str string, def float32) float32 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToFloat32(v)
+		return conv.ToAny[float32](v)
 	}
-
 	return def
 }
 
 func (row DataRow) GetFloat64(str string) float64 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToFloat64(v)
+		return conv.ToAny[float64](v)
 	}
-
 	return 0
 }
 
 func (row DataRow) GetFloat64WithDef(str string, def float64) float64 {
 	v, ok := row[str]
 	if ok {
-		return cast.ToFloat64(v)
+		return conv.ToAny[float64](v)
 	}
-
 	return def
 }
 
@@ -240,7 +227,7 @@ func FormatSql(src string, dic interface{}, escape bool) string {
 	var end = len(src)
 	var state = 0
 	var buf bytes.Buffer
-	m := cast.ToStringMapString(dic)
+	m := conv.ToMapStrStr(dic)
 
 	for {
 		if state == 0 {
@@ -314,7 +301,6 @@ func FetchRowBySql(conn *sql.DB, sSql string, dic map[string]interface{}) (DataR
 		}
 		break
 	}
-
 	return record, nil
 }
 

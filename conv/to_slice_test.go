@@ -3,69 +3,7 @@ package conv
 import (
 	"reflect"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
-
-func TestMap2Slice(t *testing.T) {
-	type args struct {
-		i interface{}
-	}
-	tests := []struct {
-		name  string
-		args  args
-		wantK interface{}
-		wantV interface{}
-	}{
-		{
-			name: "map[string]string to slice ",
-			args: args{
-				map[string]string{"1": "1", "2": "2", "3": "3"},
-			},
-			wantK: []string{"1", "2", "3"},
-			wantV: []string{"1", "2", "3"},
-		},
-		{
-			name: "map[int]string to slice",
-			args: args{
-				map[int]string{1: "1", 2: "2", 3: "3"},
-			},
-			wantK: []int{1, 2, 3},
-			wantV: []string{"1", "2", "3"},
-		},
-		{
-			name: "map[int]int to slice",
-			args: args{
-				map[int]int{1: 1, 2: 2, 3: 3},
-			},
-			wantK: []int{1, 2, 3},
-			wantV: []int{1, 2, 3},
-		},
-		{
-			name: "empty map[int]int to slice",
-			args: args{
-				map[int]int{},
-			},
-			wantK: []int{},
-			wantV: []int{},
-		},
-		{
-			name:  "nil to slice",
-			args:  args{nil},
-			wantK: nil,
-			wantV: nil,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			gotK, gotV := Map2Slice(tt.args.i)
-			if gotK != nil && gotV != nil {
-				assert.Equal(t, reflect.ValueOf(gotK).Len(), reflect.ValueOf(tt.wantK).Len())
-				assert.Equal(t, reflect.ValueOf(gotV).Len(), reflect.ValueOf(tt.wantV).Len())
-			}
-		})
-	}
-}
 
 func TestToUint64Slice(t *testing.T) {
 	type args struct {

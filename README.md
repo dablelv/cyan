@@ -222,19 +222,15 @@ slV, _ : = vs.([]int)
 
 // Split string to slice.
 // int[1,2,3]
-ints := conv.SplitStrToIntSlice("1,2,3", ",")
 ints := conv.SplitStrToSlice[int]("1,2,3", ",")
 ints, _ := conv.SplitStrToSliceE[int]("1,2,3", ",")
-// uint[1,2,3]
-uints := conv.SplitStrToUintSlice("1,2,3", ",")           
+// uint[1,2,3]      
 uints := conv.SplitStrToSlice[uint]("1,2,3", ",")
 uints, _ := conv.SplitStrToSliceE[uint]("1,2,3", ",")
 // float64[1.1,2.2,3.3]
-f64s := conv.SplitStrToFloat64Slice("1.1,2.2,3.3", ",")
 f64s := conv.SplitStrToSlice[float64]("1.1,2.2,3.3", ",")
 f64s, _ := conv.SplitStrToSliceE[float64]("1.1,2.2,3.3", ",")
 // bool[true,false,true,false]
-bs := conv.SplitStrToBoolSlice("1,0,true,false", ",")
 bs := conv.SplitStrToSlice[bool]("1,0,true,false", ",")
 bs, _ := conv.SplitStrToSliceE[bool]("1,0,true,false", ",")
 ```
@@ -368,6 +364,6 @@ We really appreciate any code commits which make this lib powerful. Please follo
 4. Create new pull request.
 
 # Summary
-The above example is just the tip of the iceberg. For more usage, please read the source code.
+The above examples are just the tip of the iceberg. For more usage, please read the source code.
 
 Due to the limited personal ability, you are welcome to criticize and correct. Of course, welcome to join in the construction of this library.
