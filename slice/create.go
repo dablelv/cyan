@@ -74,7 +74,7 @@ func InsertStrSlice(src []int, index int, value string) []string {
 
 // InsertSliceE inserts a element to slice in the specified index.
 // Note that the original slice will not be modified.
-func InsertSliceE(slice interface{}, index int, value interface{}) (interface{}, error) {
+func InsertSliceE(slice any, index int, value any) (any, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {

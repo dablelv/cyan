@@ -15,12 +15,12 @@ func TestSumSlice(t *testing.T) {
 
 func TestMinSliceE(t *testing.T) {
 	type args struct {
-		slice interface{}
+		slice any
 	}
 	tests := []struct {
 		name    string
 		args    args
-		want    interface{}
+		want    any
 		wantErr bool
 	}{
 		{"err int", args{""}, nil, true},
@@ -40,12 +40,12 @@ func TestMinSliceE(t *testing.T) {
 
 func TestMaxSliceE(t *testing.T) {
 	type args struct {
-		slice interface{}
+		slice any
 	}
 	tests := []struct {
 		name    string
 		args    args
-		want    interface{}
+		want    any
 		wantErr bool
 	}{
 		{"err int", args{""}, nil, true},
@@ -65,8 +65,8 @@ func TestMaxSliceE(t *testing.T) {
 
 func TestIsContains(t *testing.T) {
 	type args struct {
-		slice  interface{}
-		target interface{}
+		slice  any
+		target any
 	}
 	tests := []struct {
 		name string
@@ -115,7 +115,7 @@ func TestIsContains(t *testing.T) {
 
 func TestJoinSliceWithSepE(t *testing.T) {
 	type args struct {
-		slice interface{}
+		slice any
 		sep   string
 	}
 	tests := []struct {
@@ -171,12 +171,12 @@ func TestJoinSliceWithSepE(t *testing.T) {
 
 func TestGetRandomSliceElem(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
 		args args
-		want interface{}
+		want any
 	}{
 		{
 			name: "Get a random element from a slice of length one",

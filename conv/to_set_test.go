@@ -7,18 +7,18 @@ import (
 
 func TesttoSetE(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name    string
 		args    args
-		want    map[interface{}]struct{}
+		want    map[any]struct{}
 		wantErr bool
 	}{
 		{
 			name: "string array to map set",
 			args: args{[3]string{"foo", "bar", "baz"}},
-			want: map[interface{}]struct{}{
+			want: map[any]struct{}{
 				"foo": {},
 				"bar": {},
 				"baz": {},
@@ -28,7 +28,7 @@ func TesttoSetE(t *testing.T) {
 		{
 			name: "string slice to map set",
 			args: args{[]string{"foo", "bar", "baz"}},
-			want: map[interface{}]struct{}{
+			want: map[any]struct{}{
 				"foo": {},
 				"bar": {},
 				"baz": {},
@@ -38,13 +38,13 @@ func TesttoSetE(t *testing.T) {
 		{
 			name:    "int array to  map set",
 			args:    args{[3]int{86, 852, 61}},
-			want:    map[interface{}]struct{}{86: {}, 852: {}, 61: {}},
+			want:    map[any]struct{}{86: {}, 852: {}, 61: {}},
 			wantErr: false,
 		},
 		{
 			name:    "int slice to map set",
 			args:    args{[]int{86, 852, 61}},
-			want:    map[interface{}]struct{}{86: {}, 852: {}, 61: {}},
+			want:    map[any]struct{}{86: {}, 852: {}, 61: {}},
 			wantErr: false,
 		},
 		{
@@ -70,7 +70,7 @@ func TesttoSetE(t *testing.T) {
 
 func TestToStrSetE(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name    string
@@ -113,7 +113,7 @@ func TestToStrSetE(t *testing.T) {
 
 func TestToUint64Set(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string

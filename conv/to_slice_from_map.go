@@ -7,7 +7,7 @@ import (
 
 //
 // Convert map keys and values to slice in random order.
-// For example, covert map[string]int{"a":1,"b":2, "c":3} to []string{"a", "c", "b"} and []int{1, 3, 2}.
+// E.g. covert map[string]int{"a":1,"b":2, "c":3} to []string{"a", "c", "b"} and []int{1, 3, 2}.
 //
 
 // MapKeys returns a slice of all the keys in m.

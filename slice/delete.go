@@ -62,14 +62,14 @@ func DeleteUint64Slice(src []uint64, indexes ...int) []uint64 {
 
 // DeleteSliceElems deletes the specified elements from the slice.
 // Note that the original slice will not be modified.
-func DeleteSliceElems(i interface{}, elms ...interface{}) interface{} {
+func DeleteSliceElems(i any, elms ...any) any {
 	res, _ := DeleteSliceElemsE(i, elms...)
 	return res
 }
 
 // DeleteSliceElemsE deletes the specified elements from the slice.
 // Note that the original slice will not be modified.
-func DeleteSliceElemsE(i interface{}, elms ...interface{}) (interface{}, error) {
+func DeleteSliceElemsE(i any, elms ...any) (any, error) {
 	// check params
 	v := reflect.ValueOf(i)
 	if v.Kind() != reflect.Slice {
@@ -82,7 +82,7 @@ func DeleteSliceElemsE(i interface{}, elms ...interface{}) (interface{}, error) 
 		return nil, errors.New("element type is ill")
 	}
 	// convert the elements to map set
-	m := make(map[interface{}]struct{})
+	m := make(map[any]struct{})
 	for _, v := range elms {
 		m[v] = struct{}{}
 	}
@@ -98,14 +98,14 @@ func DeleteSliceElemsE(i interface{}, elms ...interface{}) (interface{}, error) 
 
 // DeleteSlice deletes the specified index element from the slice.
 // Note that the original slice will not be modified.
-func DeleteSlice(slice interface{}, indexes ...int) interface{} {
+func DeleteSlice(slice any, indexes ...int) any {
 	res, _ := DeleteSliceE(slice, indexes...)
 	return res
 }
 
 // DeleteSliceE deletes the specified index element from the slice with error.
 // Note that the original slice will not be modified.
-func DeleteSliceE(slice interface{}, indexes ...int) (interface{}, error) {
+func DeleteSliceE(slice any, indexes ...int) (any, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {

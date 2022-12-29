@@ -604,7 +604,7 @@ func ToUint32E(i any) (uint32, error) {
 }
 
 // ToUint64E casts any type to a uint64 type.
-func ToUint64E(i interface{}) (uint64, error) {
+func ToUint64E(i any) (uint64, error) {
 	i = indirect(i)
 
 	intv, ok := toInt(i)
@@ -850,7 +850,7 @@ func ToStringE(i any) (string, error) {
 }
 
 // ToDurationE casts any type to time.Duration type.
-func ToDurationE(i interface{}) (d time.Duration, err error) {
+func ToDurationE(i any) (d time.Duration, err error) {
 	i = indirect(i)
 
 	switch s := i.(type) {

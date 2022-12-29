@@ -155,7 +155,7 @@ func MaxFloat64Slice(sl []float64) float64 {
 
 // MinSliceE returns the smallest element of the slice and an error if occurred.
 // If slice length is zero return the zero value of the element type.
-func MinSliceE(slice interface{}) (interface{}, error) {
+func MinSliceE(slice any) (any, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
@@ -225,7 +225,7 @@ func MinSliceE(slice interface{}) (interface{}, error) {
 
 // MaxSliceE returns the largest element of the slice and an error if occurred.
 // If slice length is zero return the zero value of the element type.
-func MaxSliceE(slice interface{}) (interface{}, error) {
+func MaxSliceE(slice any) (any, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {

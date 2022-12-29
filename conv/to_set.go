@@ -381,7 +381,7 @@ func ToStrSetE(i any) (map[string]struct{}, error) {
 func toSetE(i any) (any, error) {
 	// Check params.
 	if i == nil {
-		return nil, fmt.Errorf("the input i is nil")
+		return nil, fmt.Errorf("the input argument is nil")
 	}
 	t := reflect.TypeOf(i)
 	kind := t.Kind()

@@ -8,8 +8,8 @@ import (
 
 func TestCompare(t *testing.T) {
 	type args struct {
-		lhs interface{}
-		rhs interface{}
+		lhs any
+		rhs any
 	}
 	tests := []struct {
 		name string

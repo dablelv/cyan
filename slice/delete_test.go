@@ -7,19 +7,19 @@ import (
 
 func TestDeleteSliceElems(t *testing.T) {
 	type args struct {
-		i    interface{}
-		elms []interface{}
+		i    any
+		elms []any
 	}
 	tests := []struct {
 		name string
 		args args
-		want interface{}
+		want any
 	}{
 		{
 			name: "delete success",
 			args: args{
 				i:    []string{"a", "b", "b", "c"},
-				elms: []interface{}{"b", "c"},
+				elms: []any{"b", "c"},
 			},
 			want: []string{"a"},
 		},
@@ -27,7 +27,7 @@ func TestDeleteSliceElems(t *testing.T) {
 			name: "delete all",
 			args: args{
 				i:    []string{"a", "b", "b", "c"},
-				elms: []interface{}{"a", "b", "c"},
+				elms: []any{"a", "b", "c"},
 			},
 			want: []string{},
 		},
@@ -35,7 +35,7 @@ func TestDeleteSliceElems(t *testing.T) {
 			name: "delete failed because element type is ill",
 			args: args{
 				i:    []string{"1", "2", "2", "3"},
-				elms: []interface{}{2, 3},
+				elms: []any{2, 3},
 			},
 			want: nil,
 		},
@@ -51,13 +51,13 @@ func TestDeleteSliceElems(t *testing.T) {
 
 func TestDeleteSlice(t *testing.T) {
 	type args struct {
-		slice   interface{}
+		slice   any
 		indexes []int
 	}
 	tests := []struct {
 		name string
 		args args
-		want interface{}
+		want any
 	}{
 		{
 			name: "delete success",

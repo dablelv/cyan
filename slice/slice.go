@@ -9,13 +9,13 @@ import (
 
 // SumSlice calculates the sum of slice elements.
 // E.g. input []int32{1, 2, 3} and output is 6.
-func SumSlice(slice interface{}) float64 {
+func SumSlice(slice any) float64 {
 	v, _ := SumSliceE(slice)
 	return v
 }
 
 // SumSliceE returns the sum of slice elements and an error if occurred.
-func SumSliceE(slice interface{}) (float64, error) {
+func SumSliceE(slice any) (float64, error) {
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
 		return 0.0, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
@@ -58,7 +58,7 @@ func SumSliceE(slice interface{}) (float64, error) {
 // IsContains checks whether slice or array contains the target element.
 // Note that if the target element is a numeric literal, please specify its type explicitly, otherwise it defaults to int.
 // For example you might call like IsContains([]int32{1,2,3}, int32(1)).
-func IsContains(i interface{}, target interface{}) bool {
+func IsContains(i any, target any) bool {
 	if i == nil {
 		return false
 	}
@@ -77,13 +77,13 @@ func IsContains(i interface{}, target interface{}) bool {
 
 // JoinSliceWithSep joins all elements in slice with a separator.
 // E.g. input []int32{1, 2, 3} and separator "#", output is a string "1#2#3".
-func JoinSliceWithSep(slice interface{}, sep string) string {
+func JoinSliceWithSep(slice any, sep string) string {
 	s, _ := JoinSliceWithSepE(slice, sep)
 	return s
 }
 
 // JoinSliceWithSepE joins all elements in slice or array with separator and return an error if occurred.
-func JoinSliceWithSepE(slice interface{}, sep string) (string, error) {
+func JoinSliceWithSepE(slice any, sep string) (string, error) {
 	// Check param.
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {

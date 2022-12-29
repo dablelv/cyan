@@ -6,18 +6,18 @@ import (
 	"reflect"
 )
 
-// Struct2Map converts struct to map[string]interface{}.
+// Struct2Map converts struct to map[string]any.
 // Such as struct{I int, S string}{I: 1, S: "a"} to map[I:1 S:a].
 // Note that unexported fields of struct can't be converted.
-func Struct2Map(obj interface{}) map[string]interface{} {
-	// check params
-	v := reflect.ValueOf(obj)
+func Struct2Map(a any) map[string]any {
+	// Check param.
+	v := reflect.ValueOf(a)
 	if v.Kind() != reflect.Struct {
 		return nil
 	}
 
-	t := reflect.TypeOf(obj)
-	var m = make(map[string]interface{})
+	t := reflect.TypeOf(a)
+	var m = make(map[string]any)
 	for i := 0; i < t.NumField(); i++ {
 		if t.Field(i).IsExported() {
 			m[t.Field(i).Name] = v.Field(i).Interface()
@@ -52,24 +52,24 @@ func ToMapStrStr(i any) map[string]string {
 	return v
 }
 
-// ToMapStrStrE casts an interface to a map[string]string type.
+// ToMapStrStrE casts any type to a map[string]string type.
 func ToMapStrStrE(i any) (map[string]string, error) {
 	var m = map[string]string{}
 
 	switch v := i.(type) {
 	case map[string]string:
 		return v, nil
-	case map[string]interface{}:
+	case map[string]any:
 		for k, val := range v {
 			m[k] = ToAny[string](val)
 		}
 		return m, nil
-	case map[interface{}]string:
+	case map[any]string:
 		for k, val := range v {
 			m[ToAny[string](k)] = val
 		}
 		return m, nil
-	case map[interface{}]interface{}:
+	case map[any]any:
 		for k, val := range v {
 			m[ToAny[string](k)] = ToAny[string](val)
 		}
@@ -84,7 +84,7 @@ func ToMapStrStrE(i any) (map[string]string, error) {
 
 // jsonStringToObject attempts to unmarshall a string as JSON into
 // the object passed as pointer.
-func jsonStringToObject(s string, v interface{}) error {
+func jsonStringToObject(s string, v any) error {
 	data := []byte(s)
 	return json.Unmarshal(data, v)
 }

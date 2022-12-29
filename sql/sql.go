@@ -9,7 +9,7 @@ import (
 	"github.com/dablelv/go-huge-util/conv"
 )
 
-type DataRow map[string]interface{}
+type DataRow map[string]any
 
 func (row DataRow) IsExists(str string) bool {
 	_, ok := row[str]
@@ -217,11 +217,11 @@ func EscapeString(src string) string {
 
 // FormatSql replace the placeholder in sql with the specified string
 // src: original sql string with placeholder
-// dic: placeholder map with type map[string]string or map[string]interface{}
+// dic: placeholder map with type map[string]string or map[string]any
 // escape: whether to escape the string corresponding to the placeholder
 // e.g. if src="select * from t where field1={name}" and dic=map[name:dog], the result
 // sql statement will be "select * from t where field1=dog"
-func FormatSql(src string, dic interface{}, escape bool) string {
+func FormatSql(src string, dic any, escape bool) string {
 	var idx = 0
 	var lastIdx = 0
 	var end = len(src)
@@ -271,7 +271,7 @@ func FormatSql(src string, dic interface{}, escape bool) string {
 	return buf.String()
 }
 
-func FetchRowBySql(conn *sql.DB, sSql string, dic map[string]interface{}) (DataRow, error) {
+func FetchRowBySql(conn *sql.DB, sSql string, dic map[string]any) (DataRow, error) {
 	if dic != nil {
 		sSql = FormatSql(sSql, dic, true)
 	}
@@ -283,8 +283,8 @@ func FetchRowBySql(conn *sql.DB, sSql string, dic map[string]interface{}) (DataR
 	defer rows.Close()
 
 	columns, _ := rows.Columns()
-	scanArgs := make([]interface{}, len(columns))
-	values := make([]interface{}, len(columns))
+	scanArgs := make([]any, len(columns))
+	values := make([]any, len(columns))
 	for j := range values {
 		scanArgs[j] = &values[j]
 	}
@@ -304,7 +304,7 @@ func FetchRowBySql(conn *sql.DB, sSql string, dic map[string]interface{}) (DataR
 	return record, nil
 }
 
-func FetchRowsBySql(conn *sql.DB, sSql string, dic map[string]interface{}) ([]DataRow, error) {
+func FetchRowsBySql(conn *sql.DB, sSql string, dic map[string]any) ([]DataRow, error) {
 	if dic != nil {
 		sSql = FormatSql(sSql, dic, true)
 	}
@@ -316,8 +316,8 @@ func FetchRowsBySql(conn *sql.DB, sSql string, dic map[string]interface{}) ([]Da
 	defer rows.Close()
 
 	columns, _ := rows.Columns()
-	scanArgs := make([]interface{}, len(columns))
-	values := make([]interface{}, len(columns))
+	scanArgs := make([]any, len(columns))
+	values := make([]any, len(columns))
 	for j := range values {
 		scanArgs[j] = &values[j]
 	}

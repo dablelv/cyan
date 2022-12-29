@@ -74,7 +74,7 @@ func UpdateStrSlice(src []int, index int, value string) []string {
 
 // UpdateSliceE modifies the specified index element of slice.
 // Note that the original slice will not be modified.
-func UpdateSliceE(slice interface{}, index int, value interface{}) (interface{}, error) {
+func UpdateSliceE(slice any, index int, value any) (any, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {

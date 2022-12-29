@@ -7,7 +7,7 @@ import (
 
 func TestToUint64Slice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -59,7 +59,7 @@ func TestToUint64Slice(t *testing.T) {
 
 func TestToStrSlice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -116,7 +116,7 @@ func TestToStrSlice(t *testing.T) {
 
 func TestToUint32Slice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -168,7 +168,7 @@ func TestToUint32Slice(t *testing.T) {
 
 func TestToUint16Slice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -220,7 +220,7 @@ func TestToUint16Slice(t *testing.T) {
 
 func TestToUint8Slice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -272,7 +272,7 @@ func TestToUint8Slice(t *testing.T) {
 
 func TestToInt64Slice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -324,7 +324,7 @@ func TestToInt64Slice(t *testing.T) {
 
 func TestToInt32Slice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -376,7 +376,7 @@ func TestToInt32Slice(t *testing.T) {
 
 func TestToInt16Slice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -428,7 +428,7 @@ func TestToInt16Slice(t *testing.T) {
 
 func TestToInt8Slice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -480,7 +480,7 @@ func TestToInt8Slice(t *testing.T) {
 
 func TestToUintSlice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -532,7 +532,7 @@ func TestToUintSlice(t *testing.T) {
 
 func TestToIntSlice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string
@@ -584,7 +584,7 @@ func TestToIntSlice(t *testing.T) {
 
 func TestToBoolSlice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name string

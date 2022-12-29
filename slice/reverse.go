@@ -76,7 +76,7 @@ func ReverseStrSlice(src []string) []string {
 }
 
 // ReverseSliceE reverses the specified slice without modifying the original slice.
-func ReverseSliceE(slice interface{}) (interface{}, error) {
+func ReverseSliceE(slice any) (any, error) {
 	// check params
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {

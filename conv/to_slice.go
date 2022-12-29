@@ -65,7 +65,7 @@ func ToIntSlice(i any) []int {
 }
 
 // ToIntSliceE converts any tpye to []int slice.
-func ToIntSliceE(i interface{}) ([]int, error) {
+func ToIntSliceE(i any) ([]int, error) {
 	if i == nil {
 		return []int{}, nil
 	}
@@ -515,7 +515,7 @@ func ToDurationSlice(i any) []time.Duration {
 }
 
 // ToDurationSliceE converts any type to []time.Duration with error.
-func ToDurationSliceE(i interface{}) ([]time.Duration, error) {
+func ToDurationSliceE(i any) ([]time.Duration, error) {
 	if i == nil {
 		return []time.Duration{}, fmt.Errorf("unable to cast %#v of type %T to []time.Duration", i, i)
 	}

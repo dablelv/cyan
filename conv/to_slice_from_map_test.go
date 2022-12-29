@@ -9,13 +9,13 @@ import (
 
 func TestMap2Slice(t *testing.T) {
 	type args struct {
-		i interface{}
+		i any
 	}
 	tests := []struct {
 		name  string
 		args  args
-		wantK interface{}
-		wantV interface{}
+		wantK any
+		wantV any
 	}{
 		{
 			name: "map[string]string to slice ",

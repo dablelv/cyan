@@ -7,12 +7,12 @@ import (
 
 func TestUniqueSliceE(t *testing.T) {
 	type args struct {
-		slice interface{}
+		slice any
 	}
 	tests := []struct {
 		name    string
 		args    args
-		want    interface{}
+		want    any
 		wantErr bool
 	}{
 		{

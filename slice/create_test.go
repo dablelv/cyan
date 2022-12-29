@@ -7,14 +7,14 @@ import (
 
 func TestInsertSliceE(t *testing.T) {
 	type args struct {
-		slice interface{}
+		slice any
 		index int
-		value interface{}
+		value any
 	}
 	tests := []struct {
 		name    string
 		args    args
-		want    interface{}
+		want    any
 		wantErr bool
 	}{
 		{
