@@ -11,9 +11,10 @@ import (
 //
 
 // MapKeys returns a slice of all the keys in m.
-// The keys are returned in random order.
-func MapKeys[Key comparable, Val any](m map[Key]Val) []Key {
-	s := make([]Key, 0, len(m))
+// The keys returned are in random order.
+// You can also use standard library golang.org/x/exp/maps#Keys.
+func MapKeys[K comparable, V any](m map[K]V) []K {
+	s := make([]K, 0, len(m))
 	for k := range m {
 		s = append(s, k)
 	}
@@ -21,9 +22,10 @@ func MapKeys[Key comparable, Val any](m map[Key]Val) []Key {
 }
 
 // MapVals returns a slice of all the values in m.
-// The values are returned in random order.
-func MapVals[Key comparable, Val any](m map[Key]Val) []Val {
-	s := make([]Val, 0, len(m))
+// The values returned are in random order.
+// You can also use standard library golang.org/x/exp/maps#Values.
+func MapVals[K comparable, V any](m map[K]V) []V {
+	s := make([]V, 0, len(m))
 	for _, v := range m {
 		s = append(s, v)
 	}
@@ -32,8 +34,8 @@ func MapVals[Key comparable, Val any](m map[Key]Val) []Val {
 
 // MapKeyVals returns two slice of all the keys and values in m.
 // The keys and values are returned in random order.
-func MapKeysVals[Key comparable, Val any](m map[Key]Val) ([]Key, []Val) {
-	ks, vs := make([]Key, 0, len(m)), make([]Val, 0, len(m))
+func MapKeysVals[K comparable, V any](m map[K]V) ([]K, []V) {
+	ks, vs := make([]K, 0, len(m)), make([]V, 0, len(m))
 	for k, v := range m {
 		ks = append(ks, k)
 		vs = append(vs, v)
@@ -51,7 +53,7 @@ func Map2Slice(a any) (ks any, vs any) {
 func Map2SliceE(a any) (ks any, vs any, err error) {
 	// Check param.
 	if a == nil {
-		return nil, nil, fmt.Errorf("unable to converts %#v of type %T to map[any]struct{}", a, a)
+		return nil, nil, fmt.Errorf("unable to converts %#v of type %T to slice", a, a)
 	}
 	t := reflect.TypeOf(a)
 	if t.Kind() != reflect.Map {

@@ -16,8 +16,6 @@ Go common and huge utility functions help you to create your go program quickly 
 
 # Encode
 Some useful functions can be used to handle conversion of different character encoding, such as gbk to utf8.
-
-Example:
 ```go
 gbkStr := []byte{0xC4, 0xE3, 0xBA, 0xC3}    // 你好 in gbk
 utf8Str, _ := GbkToUtf8(gbkStr)             // 你好 in utf8
@@ -137,7 +135,7 @@ Some useful functions can be used to convert one type to another types, such as 
 
 ## to another type
 ```go
-// Example to string
+// to string
 s, err := ToAny[string]("foo") // "foo"
 s, err := ToAny[string](8)     // "8"
 s, err := ToAny[string](8.31)  // "8.31"
@@ -147,7 +145,7 @@ s, err := ToAny[string](nil)                // ""
 var foo any = "one more time"
 s, err := ToAny[string](foo)                // "one more time"
 
-// Example to int
+// to int
 i, err :=  ToAny[int](8)                  // 8
 i, err :=  ToAny[int](8.31)               // 8
 i, err :=  ToAny[int]("8")                // 8
@@ -158,7 +156,7 @@ i, err :=  ToAny[int](nil)                // 0
 var eight any = 8
 i, err :=  ToAny[int](eight)              // 8
 
-// Example to bool
+// to bool
 b, err := ToAny[bool]("true")           // true
 b, err := ToAny[bool]("false")          // false
 b, err := ToAny[bool]("True")           // true
