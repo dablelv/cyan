@@ -5,6 +5,40 @@ import (
 	"testing"
 )
 
+func TestUniqueInt(t *testing.T) {
+	type args struct {
+		s []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "unique int slice",
+			args: args{[]int{1, 2, 2, 3}},
+			want: []int{1, 2, 3},
+		},
+		{
+			name: "unique empty int slice",
+			args: args{[]int{}},
+			want: []int{},
+		},
+		{
+			name: "unique nil int slice",
+			args: args{nil},
+			want: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Unique(tt.args.s); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Unique() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestUniqueSliceE(t *testing.T) {
 	type args struct {
 		slice any

@@ -5,6 +5,12 @@ import (
 	"reflect"
 )
 
+//
+// Note that after Go 1.18, this file is deprecated.
+// Please use  the standard lib function https://pkg.go.dev/golang.org/x/exp/slices#Delelte
+// implemented by generics.
+//
+
 // DeleteStrSlice deletes string slice elements by indexes.
 func DeleteStrSlice(src []string, indexes ...int) []string {
 	return DeleteSlice(src, indexes...).([]string)

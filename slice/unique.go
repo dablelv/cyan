@@ -9,6 +9,23 @@ import (
 // Desc: unique a slice, e.g. input []int32{1, 2, 2, 3} and output is []int32{1, 2, 3}.
 //
 
+// Unique deletes repeated elements in a slice.
+// Unique implemented by generics is recommended to be used.
+func Unique[T comparable](s []T) []T {
+	if len(s) == 0 {
+		return s
+	}
+	r := make([]T, 0, len(s))
+	m := make(map[T]struct{})
+	for i := range s {
+		if _, ok := m[s[i]]; !ok {
+			r = append(r, s[i])
+			m[s[i]] = struct{}{}
+		}
+	}
+	return r
+}
+
 func UniqueIntSlice(src []int) []int {
 	dst, _ := UniqueSliceE(src)
 	v, _ := dst.([]int)
@@ -90,19 +107,19 @@ func UniqueStrSlice(src []string) []string {
 // UniqueSliceE deletes repeated elements in a slice with error.
 // Note that the original slice will not be modified.
 func UniqueSliceE(slice any) (any, error) {
-	// Check params.
+	// Check param.
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
-	// Unique the slice.
-	dst := reflect.MakeSlice(reflect.TypeOf(slice), 0, v.Len())
+	// Unique slice.
+	r := reflect.MakeSlice(reflect.TypeOf(slice), 0, v.Len())
 	m := make(map[any]struct{})
 	for i := 0; i < v.Len(); i++ {
 		if _, ok := m[v.Index(i).Interface()]; !ok {
-			dst = reflect.Append(dst, v.Index(i))
+			r = reflect.Append(r, v.Index(i))
 			m[v.Index(i).Interface()] = struct{}{}
 		}
 	}
-	return dst.Interface(), nil
+	return r.Interface(), nil
 }

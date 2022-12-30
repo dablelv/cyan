@@ -102,7 +102,7 @@ func ToAnyE[T any](a any) (T, error) {
 		}
 		t = any(v).(T)
 	default:
-		return t, fmt.Errorf("the type %T is not supported", t)
+		return t, fmt.Errorf("the type %T isn't supported", t)
 	}
 	return t, nil
 }

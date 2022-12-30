@@ -6,6 +6,12 @@ import (
 	"reflect"
 )
 
+//
+// Note that after Go 1.18, this file is deprecated.
+// Please use the standard lib function https://pkg.go.dev/golang.org/x/exp/slices#Replace
+// implemented by generics.
+//
+
 func UpdateIntSlice(src []int, index, value int) []int {
 	tmp, _ := UpdateSliceE(src, index, value)
 	v, _ := tmp.([]int)
@@ -75,7 +81,7 @@ func UpdateStrSlice(src []int, index int, value string) []string {
 // UpdateSliceE modifies the specified index element of slice.
 // Note that the original slice will not be modified.
 func UpdateSliceE(slice any, index int, value any) (any, error) {
-	// check params
+	// Check param.
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
@@ -84,6 +90,7 @@ func UpdateSliceE(slice any, index int, value any) (any, error) {
 		return nil, errors.New("param is invalid")
 	}
 
+	// Update slice.
 	t := reflect.MakeSlice(reflect.TypeOf(slice), 0, 0)
 	t = reflect.AppendSlice(t, v.Slice(0, v.Len()))
 	t.Index(index).Set(reflect.ValueOf(value))

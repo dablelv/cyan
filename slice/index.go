@@ -7,19 +7,27 @@ import (
 	"github.com/dablelv/go-huge-util/math"
 )
 
+//
+// Note that after Go 1.18, please refer to the standard lib function
+// https://pkg.go.dev/golang.org/x/exp/slices#Index and IndexFunc
+// implemented by generics.
+//
+
+// GetElemIndexesSlice finds all indexes for the specified element in a slice.
 func GetElemIndexesSlice(slice any, value any) []int {
 	indexes, _ := GetElemIndexesSliceE(slice, value)
 	return indexes
 }
 
-// GetEleIndexesSliceE finds all indexes of the specified element in a slice.
+// GetEleIndexesSliceE finds all indexes for the specified element in a slice
+// and returns an error if error occurred.
 func GetElemIndexesSliceE(slice any, value any) ([]int, error) {
-	// check params
+	// Check param.
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
-	// get indexes
+	// Get indexes.
 	var indexes []int
 	for i := 0; i < v.Len(); i++ {
 		if v.Index(i).Interface() == value {

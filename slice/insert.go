@@ -6,6 +6,12 @@ import (
 	"reflect"
 )
 
+//
+// Note that after Go 1.18, this file is deprecated.
+// Please use the standard lib function https://pkg.go.dev/golang.org/x/exp/slices#Insert
+// implemented by generics.
+//
+
 func InsertIntSlice(src []int, index, value int) []int {
 	tmp, _ := InsertSliceE(src, index, value)
 	v, _ := tmp.([]int)

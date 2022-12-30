@@ -6,7 +6,7 @@ import (
 )
 
 //
-// Convert an any element type of slice or array to to specified type map set.
+// Converts a slice or array of any element type to the specified type mapping set.
 // Note that the the element type of input don't need to be equal to the map key type.
 // For example, []uint64{1, 2, 3} can be converted to map[uint64]struct{}{1:struct{}, 2:struct{},
 // 3:struct{}} and also can be converted to map[string]struct{}{"1":struct{}, "2":struct{}, "3":struct{}}
@@ -378,23 +378,22 @@ func ToStrSetE(i any) (map[string]struct{}, error) {
 }
 
 // toSetE converts a slice or array to map[any]struct{} and returns an error if occurred.
-func toSetE(i any) (any, error) {
-	// Check params.
-	if i == nil {
+func toSetE(a any) (any, error) {
+	// Check param.
+	if a == nil {
 		return nil, fmt.Errorf("the input argument is nil")
 	}
-	t := reflect.TypeOf(i)
-	kind := t.Kind()
-	if kind != reflect.Slice && kind != reflect.Array {
-		return nil, fmt.Errorf("the input %#v of type %T isn't a slice or array", i, i)
+	t := reflect.TypeOf(a)
+	if t.Kind() != reflect.Slice && t.Kind() != reflect.Array {
+		return nil, fmt.Errorf("the input %#v of type %T isn't a slice or array", a, a)
 	}
 
 	// Execute the conversion.
-	v := reflect.ValueOf(i)
+	v := reflect.ValueOf(a)
 	mT := reflect.MapOf(t.Elem(), reflect.TypeOf(struct{}{}))
 	mV := reflect.MakeMapWithSize(mT, v.Len())
-	for j := 0; j < v.Len(); j++ {
-		mV.SetMapIndex(v.Index(j), reflect.ValueOf(struct{}{}))
+	for i := 0; i < v.Len(); i++ {
+		mV.SetMapIndex(v.Index(i), reflect.ValueOf(struct{}{}))
 	}
 	return mV.Interface(), nil
 }
