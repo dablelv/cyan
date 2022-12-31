@@ -10,7 +10,7 @@ import (
 
 //
 // Desc: get the min or max element of a slice.
-// Other useful functions with slices of any type can refer standard lib
+// Other useful functions for any type slices can refer to the standard lib
 // https://pkg.go.dev/golang.org/x/exp/slices.
 //
 
@@ -60,14 +60,14 @@ func MaxE[T constraints.Ordered](s []T) (T, error) {
 	return t, nil
 }
 
-func MinIntSlice(sl []int) int {
-	min, _ := MinSliceE(sl)
+func MinIntSlice(s []int) int {
+	min, _ := MinSliceE(s)
 	v, _ := min.(int)
 	return v
 }
 
-func MinInt8Slice(sl []int8) int8 {
-	min, _ := MinSliceE(sl)
+func MinInt8Slice(s []int8) int8 {
+	min, _ := MinSliceE(s)
 	v, _ := min.(int8)
 	return v
 }
@@ -162,7 +162,7 @@ func MaxInt64Slice(sl []int64) int64 {
 	return v
 }
 
-func MaxUintSl(sl []uint) uint {
+func MaxUintSlice(sl []uint) uint {
 	max, _ := MaxSliceE(sl)
 	v, _ := max.(uint)
 	return v
@@ -213,7 +213,7 @@ func MinSliceE(slice any) (any, error) {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
 	if v.Len() == 0 {
-		return nil, nil
+		return nil, errors.New("no element")
 	}
 	// Get the min element.
 	min := v.Index(0).Interface()
@@ -283,7 +283,7 @@ func MaxSliceE(slice any) (any, error) {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
 	}
 	if v.Len() == 0 {
-		return nil, nil
+		return nil, errors.New("no element")
 	}
 	// Get the max element.
 	max := v.Index(0).Interface()
