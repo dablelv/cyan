@@ -67,7 +67,7 @@ r, _ := GetEleIndexesSliceE(fib, 1) // [0 1]
 r := InsertIntSlice(fib, 5, 13)		// [1 1 2 3 5 8 13]
 r := DeleteIntSliceE(fib, 0)		// [1 2 3 5 8]
 r := UpdateIntSliceE(fib, 5, 88)	// [1 1 2 3 5 88]
-r := GetEleIndexesSlice(fib, 1)		// [0 1]
+r := GetElemIndexesSlice(fib, 1)	// [0 1]
 ```
 
 # SQL
