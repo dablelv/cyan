@@ -19,7 +19,7 @@ func ToSet[T comparable](i any) map[T]struct{} {
 // Note that this function is implemented through 1.18 generics, so the element type needs to
 // be specified when calling it, e.g. ToSetE[int]([]int{1,2,3}).
 func ToSetE[T comparable](i any) (map[T]struct{}, error) {
-	// Check params.
+	// Check param.
 	if i == nil {
 		return nil, fmt.Errorf("the input i is nil")
 	}
@@ -39,7 +39,7 @@ func ToSetE[T comparable](i any) (map[T]struct{}, error) {
 	if v, ok := mapV.Interface().(map[T]struct{}); ok {
 		return v, nil
 	}
-	// Convert the element to the T.
+	// Convert the element to the type T.
 	set := make(map[T]struct{}, v.Len())
 	for _, k := range mapV.MapKeys() {
 		v, err := ToAnyE[T](k.Interface())

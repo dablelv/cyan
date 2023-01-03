@@ -7,7 +7,7 @@ import (
 
 //
 // Note that after Go 1.18, this file is deprecated.
-// Please use  the standard lib function https://pkg.go.dev/golang.org/x/exp/slices#Delelte
+// Please use  the standard exp lib function https://pkg.go.dev/golang.org/x/exp/slices#Delete
 // implemented by generics.
 //
 
