@@ -94,20 +94,6 @@ GetAlphanumericNumByASCIIV2("108条梁山man")   // 6
 GetAlphanumericNumByRegExp("108条梁山man")    // 6
 ```
 
-# Struct
-Some useful functions can be used to handle string.
-
-Example:
-```go
-var st = struct {
-    I int
-    S string
-}{I: 1, S: "a"}
-
-Struct2Map(st)         // map[I:1 S:a]
-Struct2MapString(st)   // map[I:1 S:a]
-```
-
 # Time
 Some useful functions can be used to handle date and time.
 
@@ -231,6 +217,23 @@ f64s, _ := conv.SplitStrToSliceE[float64]("1.1,2.2,3.3", ",")
 // bool[true,false,true,false]
 bs := conv.SplitStrToSlice[bool]("1,0,true,false", ",")
 bs, _ := conv.SplitStrToSliceE[bool]("1,0,true,false", ",")
+```
+
+## to map
+```go
+var st = struct {
+    I int
+    S string
+}{I: 1, S: "a"}
+
+// to map[string]any
+Struct2Map(st)         // map["I":1 "S":"a"]
+// to map[string]string
+Struct2MapString(st)   // map["I":"1" "S":"a"]
+
+// any type tp map[string]string
+m := ToMapStrStr(`{"foo":"foo","bar":"bar","baz":"baz"}`)       // map["foo":"foo" "bar":"bar" "baz":"baz"]
+m, err := ToMapStrStrE(`{"foo":"foo","bar":"bar","baz":"baz"}`) // map["foo":"foo" "bar":"bar" "baz":"baz"], nil
 ```
 
 # URL

@@ -46,40 +46,55 @@ func Struct2MapString(obj any) map[string]string {
 	return m
 }
 
-// ToMapStrStr casts any type to a map[string]string type.
-func ToMapStrStr(i any) map[string]string {
-	v, _ := ToMapStrStrE(i)
+// ToMapStrStr converts any type to a map[string]string type.
+func ToMapStrStr(a any) map[string]string {
+	v, _ := ToMapStrStrE(a)
 	return v
 }
 
-// ToMapStrStrE casts any type to a map[string]string type.
-func ToMapStrStrE(i any) (map[string]string, error) {
+// ToMapStrStrE converts any type to a map[string]string type.
+func ToMapStrStrE(a any) (map[string]string, error) {
 	var m = map[string]string{}
 
-	switch v := i.(type) {
+	switch v := a.(type) {
 	case map[string]string:
 		return v, nil
 	case map[string]any:
 		for k, val := range v {
-			m[k] = ToAny[string](val)
+			val, err := ToAnyE[string](val)
+			if err != nil {
+				return nil, err
+			}
+			m[k] = val
 		}
-		return m, nil
 	case map[any]string:
 		for k, val := range v {
-			m[ToAny[string](k)] = val
+			k, err := ToAnyE[string](k)
+			if err != nil {
+				return nil, err
+			}
+			m[k] = val
 		}
-		return m, nil
 	case map[any]any:
 		for k, val := range v {
-			m[ToAny[string](k)] = ToAny[string](val)
+			k, err := ToAnyE[string](k)
+			if err != nil {
+				return nil, err
+			}
+			val, err := ToAnyE[string](val)
+			if err != nil {
+				return nil, err
+			}
+			m[k] = val
 		}
-		return m, nil
 	case string:
-		err := jsonStringToObject(v, &m)
-		return m, err
+		if err := jsonStringToObject(v, &m); err != nil {
+			return nil, err
+		}
 	default:
-		return m, fmt.Errorf("unable to cast %#v of type %T to map[string]string", i, i)
+		return nil, fmt.Errorf("unable to convert %#v of type %T to map[string]string", a, a)
 	}
+	return m, nil
 }
 
 // jsonStringToObject attempts to unmarshall a string as JSON into

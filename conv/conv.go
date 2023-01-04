@@ -13,7 +13,7 @@ func ToAny[T any](a any) T {
 	return v
 }
 
-// ToAnyE converts one type to another and returns an error if occurred.
+// ToAnyE converts one type to another and returns an error if error occurred.
 func ToAnyE[T any](a any) (T, error) {
 	var t T
 	switch any(t).(type) {
