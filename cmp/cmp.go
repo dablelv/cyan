@@ -3,6 +3,8 @@ package cmp
 
 import (
 	"reflect"
+
+	"golang.org/x/exp/constraints"
 )
 
 type CMPRSLT int8
@@ -14,8 +16,21 @@ const (
 	GT
 )
 
-// Compare compare the size relationship between two numeric values or strings.
+// Cmp compares two numeric values or strings size.
+func Cmp[T constraints.Ordered](lhs, rhs T) CMPRSLT {
+	switch {
+	case lhs < rhs:
+		return LT
+	case lhs == rhs:
+		return EQ
+	default:
+		return GT
+	}
+}
+
+// Compare compares two numeric values or strings size.
 // The result is INCMP(incomparable), LT(less than), EQ(equal) or GT(greater than).
+// Note that after Go 1.18, this function is deprecated, please use the function Cmp implemented by generics.
 func Compare(lhs, rhs any) CMPRSLT {
 	if !isComparable(lhs, rhs) {
 		return INCMP
@@ -65,30 +80,35 @@ func Compare(lhs, rhs any) CMPRSLT {
 	return INCMP
 }
 
-func isComparable(lhs, rhs any) bool {
-	lhsVal := reflect.ValueOf(lhs)
-	rhsVal := reflect.ValueOf(rhs)
-	return lhsVal.Kind() == rhsVal.Kind()
-}
-
+// CompareLT reports left hand side value whether less than right hand side value.
 func CompareLT(lhs, rhs any) bool {
 	return Compare(lhs, rhs) == LT
 }
 
+// CompareLE reports left hand side value whether less than or equal right hand side value.
 func CompareLE(lhs, rhs any) bool {
-	res := Compare(lhs, rhs)
-	return res == LT || res == EQ
+	r := Compare(lhs, rhs)
+	return r == LT || r == EQ
 }
 
+// CompareEQ reports left hand side value whether equal right hand side value.
 func CompareEQ(lhs, rhs any) bool {
 	return Compare(lhs, rhs) == EQ
 }
 
+// CompareGT reports left hand side value whether greater than right hand side value.
 func CompareGT(lhs, rhs any) bool {
 	return Compare(lhs, rhs) == GT
 }
 
+// CompareGE reports left hand side value whether greater than or equal right hand side value.
 func CompareGE(lhs, rhs any) bool {
-	res := Compare(lhs, rhs)
-	return Compare(lhs, rhs) == GT || res == EQ
+	r := Compare(lhs, rhs)
+	return r == GT || r == EQ
+}
+
+func isComparable(lhs, rhs any) bool {
+	lv := reflect.ValueOf(lhs)
+	rv := reflect.ValueOf(rhs)
+	return lv.Kind() == rv.Kind()
 }

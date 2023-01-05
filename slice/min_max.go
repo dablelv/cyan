@@ -44,7 +44,7 @@ func Max[T constraints.Ordered](s []T) T {
 	return v
 }
 
-// MaxE returns the largest element of the slice and an error if occurred.
+// MaxE returns the largest element of the slice and an error if error occurred.
 // MaxE implemented by generics is recomended to be used.
 func MaxE[T constraints.Ordered](s []T) (T, error) {
 	var t T

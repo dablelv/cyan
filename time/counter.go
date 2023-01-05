@@ -3,7 +3,7 @@ package time
 import "time"
 
 //
-// Desc: A time counter to count time interval.
+// A time counter to count time interval.
 //
 
 // TimeCounter is used to count time interval.

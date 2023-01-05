@@ -347,16 +347,15 @@ output:
 Some useful functions to compare.
 ```go
 // Compare two any type value.
-cmp.Compare(888, "abc")     // INCMP
-cmp.Compare(888, 889)       // LT
-cmp.Compare(888, 888)       // EQ
-cmp.Compare(889, 888)       // GT
-cmp.Compare(88.8, 88.9)     // LT
-cmp.Compare(88.8, 88.8)     // EQ
-cmp.Compare(88.9, 88.8)     // GT
-cmp.Compare("abc", "b")     // LT
-cmp.Compare("abc", "abc")   // EQ
-cmp.Compare("b", "abc")     // GT
+cmp.Cmp(888, 889)       // LT
+cmp.Cmp(888, 888)       // EQ
+cmp.Cmp(889, 888)       // GT
+cmp.Cmp(88.8, 88.9)     // LT
+cmp.Cmp(88.8, 88.8)     // EQ
+cmp.Cmp(88.9, 88.8)     // GT
+cmp.Cmp("abc", "b")     // LT
+cmp.Cmp("abc", "abc")   // EQ
+cmp.Cmp("b", "abc")     // GT
 
 // Compare semantic version. 
 b, _ := cmp.VerGTVer("1.0.5", "1.0.4")   // true
