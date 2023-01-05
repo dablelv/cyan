@@ -314,17 +314,17 @@ p, _ := Base64TriDESCBCDecrypt(c, key24) // plaintext
 Some functions to create a real non-negative random int number, specified length random string, and so on.
 
 ```go
-huge.GetRandInt()               // 2040723487295132865
-huge.GetRandIntn(100)           // 49
-huge.GetRandIntRange(0, 100)    // 44
-huge.GetRandByteSlice(3)        // [241 16 101]
-huge.GetRandStr(3)              // dAt
-huge.GetRandLowerStr(3)         // lts
-huge.GetRandUpperStr(3)         // YUT
+math.GetRandInt()               // 2040723487295132865
+math.GetRandIntn(100)           // 49
+math.GetRandIntRange(0, 100)    // 44
+math.GetRandByteSlice(3)        // [241 16 101]
+math.GetRandStr(3)              // dAt
+math.GetRandLowerStr(3)         // lts
+math.GetRandUpperStr(3)         // YUT
 ```
 
 # JSON
-Some convert function about to json.
+Some converting function to json.
 ```go
 student := struct {
     Hobby   string
@@ -333,7 +333,7 @@ student := struct {
     Hobby: "pingpopng",
     Age:   28,
 }
-huge.ToIndentJSON(&student)
+encoding.ToIndentJSON(&student)
 /*
 output:
 {
@@ -343,14 +343,32 @@ output:
 */
 ```
 
-# Other
-Some useful functions now unclassified. Of course, it may be classified and moved to a new go file in the future.
-
+# Comparison
+Some useful functions to compare.
 ```go
-b, _ := VerGTVer("1.0.5", "1.0.4")   // true
-b, _ := VerLTVer("1.0.5", "2.0.4")   // true
-b, _ := VerGEVer("2.0.4", "2.0.4")   // true
-b, _ := VerLEVer("1.0.5", "1.0.5")   // true
+// Compare two any type value.
+cmp.Compare(888, "abc")     // INCMP
+cmp.Compare(888, 889)       // LT
+cmp.Compare(888, 888)       // EQ
+cmp.Compare(889, 888)       // GT
+cmp.Compare(88.8, 88.9)     // LT
+cmp.Compare(88.8, 88.8)     // EQ
+cmp.Compare(88.9, 88.8)     // GT
+cmp.Compare("abc", "b")     // LT
+cmp.Compare("abc", "abc")   // EQ
+cmp.Compare("b", "abc")     // GT
+
+// Compare semantic version. 
+b, _ := cmp.VerGTVer("1.0.5", "1.0.4")   // true
+b, _ := cmp.VerLTVer("1.0.5", "2.0.4")   // true
+b, _ := cmp.VerGEVer("2.0.4", "2.0.4")   // true
+b, _ := cmp.VerLEVer("1.0.5", "1.0.5")   // true
+```
+
+# Others
+Some useful functions now unclassified. Of course, it may be classified and moved to a new subdirectory in the future.
+```go
+// NO NOW.
 ```
 
 # Star History

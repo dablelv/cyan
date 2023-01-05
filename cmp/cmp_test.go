@@ -14,7 +14,7 @@ func TestCompare(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want CMPRES
+		want CMPRSLT
 	}{
 		{"incomparable", args{888, "abc"}, INCMP},
 		{"int compare", args{888, 889}, LT},

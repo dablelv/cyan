@@ -5,10 +5,10 @@ import (
 	"reflect"
 )
 
-type CMPRES int8
+type CMPRSLT int8
 
 const (
-	INCMP CMPRES = iota - 2
+	INCMP CMPRSLT = iota - 2
 	LT
 	EQ
 	GT
@@ -16,7 +16,7 @@ const (
 
 // Compare compare the size relationship between two numeric values or strings.
 // The result is INCMP(incomparable), LT(less than), EQ(equal) or GT(greater than).
-func Compare(lhs, rhs any) CMPRES {
+func Compare(lhs, rhs any) CMPRSLT {
 	if !isComparable(lhs, rhs) {
 		return INCMP
 	}
