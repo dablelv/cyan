@@ -12,7 +12,7 @@
 </div>
 
 # Synopsis
-Go common and huge utility functions help you to create your go program quickly and easily.
+Go common used utility functions help you to create go program quickly and easily.
 
 # Encode
 Some useful functions can be used to handle conversion of different character encoding, such as gbk to utf8.
@@ -220,6 +220,7 @@ bs, _ := conv.SplitStrToSliceE[bool]("1,0,true,false", ",")
 ```
 
 ## to map
+
 ```go
 var st = struct {
     I int
@@ -237,6 +238,7 @@ m, err := ToMapStrStrE(`{"foo":"foo","bar":"bar","baz":"baz"}`) // map["foo":"fo
 ```
 
 # URL
+
 Some useful functions can be used to handle url.
 
 ```go
@@ -311,6 +313,7 @@ p, _ := Base64TriDESCBCDecrypt(c, key24) // plaintext
 ```
 
 # Rand
+
 Some functions to create a real non-negative random int number, specified length random string, and so on.
 
 ```go
@@ -324,7 +327,9 @@ math.GetRandUpperStr(3)         // YUT
 ```
 
 # JSON
+
 Some converting function to json.
+
 ```go
 student := struct {
     Hobby   string
@@ -344,7 +349,9 @@ output:
 ```
 
 # Comparison
+
 Some useful functions to compare.
+
 ```go
 // Compare two any type value.
 cmp.Cmp(888, 889)       // LT
@@ -365,15 +372,19 @@ b, _ := cmp.VerLEVer("1.0.5", "1.0.5")   // true
 ```
 
 # Others
+
 Some useful functions now unclassified. Of course, it may be classified and moved to a new subdirectory in the future.
+
 ```go
 // NO NOW.
 ```
 
 # Star History
+
 [![Star History Chart](https://api.star-history.com/svg?repos=dablelv/go-huge-util&type=Date)](https://star-history.com/#dablelv/go-huge-util&Date)
 
 # How to Contribute
+
 We really appreciate any code commits which make this lib powerful. Please follow the rules below to create your pull request.
 
 1. Fork the repository.
@@ -382,6 +393,7 @@ We really appreciate any code commits which make this lib powerful. Please follo
 4. Create new pull request.
 
 # Summary
+
 The above examples are just the tip of the iceberg. For more usage, please read the source code.
 
 Due to the limited personal ability, you are welcome to criticize and correct. Of course, welcome to join in the construction of this library.

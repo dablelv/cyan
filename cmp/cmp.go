@@ -108,7 +108,7 @@ func CompareGE(lhs, rhs any) bool {
 }
 
 func isComparable(lhs, rhs any) bool {
-	lv := reflect.ValueOf(lhs)
-	rv := reflect.ValueOf(rhs)
-	return lv.Kind() == rv.Kind()
+	l := reflect.ValueOf(lhs)
+	r := reflect.ValueOf(rhs)
+	return l.Kind() == r.Kind()
 }
