@@ -1,4 +1,5 @@
 // Package cmp can compare two numbers of any type.
+// In addition, you can also compare two version using this package.
 package cmp
 
 import (
