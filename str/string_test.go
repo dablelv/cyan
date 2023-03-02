@@ -1,6 +1,94 @@
 package str
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
+
+func TestSplit(t *testing.T) {
+	type args struct {
+		s   string
+		sep string
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			"case 1",
+			args{"a,b,c", ","},
+			[]string{"a", "b", "c"},
+		},
+		{
+			"case 2",
+			args{" xyz ", ""},
+			[]string{" ", "x", "y", "z", " "},
+		},
+		{
+			"case 3",
+			args{"", ","},
+			nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Split(tt.args.s, tt.args.sep); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Split() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestSplitSeps(t *testing.T) {
+	type args struct {
+		s    string
+		seps []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			"case 1",
+			args{"foo,bar,baz", []string{","}},
+			[]string{"foo", "bar", "baz"},
+		},
+		{
+			"case 2",
+			args{"foo,bar|baz", []string{",", "|"}},
+			[]string{"foo", "bar", "baz"},
+		},
+		{
+			"case 3",
+			args{"foo,bar|baz qux", []string{",", "|", " "}},
+			[]string{"foo", "bar", "baz", "qux"},
+		},
+		{
+			"case 4",
+			args{"foo,bar|bazSEPqux", []string{",", "|", "SEP"}},
+			[]string{"foo", "bar", "baz", "qux"},
+		},
+		{
+			"case 5",
+			args{"foo,bar|baz", []string{}},
+			[]string{"foo,bar|baz"},
+		},
+		{
+			"case 6",
+			args{" xyz", []string{""}},
+			[]string{" ", "x", "y", "z"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := SplitSeps(tt.args.s, tt.args.seps...); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("SplitSeps() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
 
 func TestJoinStrSkipEmpty(t *testing.T) {
 	type args struct {

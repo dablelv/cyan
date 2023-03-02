@@ -84,6 +84,9 @@ Some useful functions can be used to handle string.
 ```go
 Split("a,b,c", ",")                    // []string{"a", "b", "c"}
 
+SplitSeps("a,b|c", ",", "|")           // []string{"a", "b", "c"}
+SplitSeps("a,bSEPc", ",", "SEP")       // []string{"a", "b", "c"}
+
 JoinStr(",", "a", "", "b")             // "a,,b"
 JoinStrSkipEmpty(",", "a", "", "b")    // "a,b"
 

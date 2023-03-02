@@ -10,9 +10,28 @@ import (
 // strings.Split has a giant pit because strings.Split ("", ",") will return a slice with an empty string.
 func Split(s, sep string) []string {
 	if s == "" {
-		return []string{}
+		return nil
 	}
 	return strings.Split(s, sep)
+}
+
+// SplitSeps splits string into substring slice by multiple string separators.
+// If you want to specify multiple string separators by regexp,
+// please refer to `func (*Regexp) Split` in standard library regexp package.
+func SplitSeps(s string, seps ...string) []string {
+	if len(seps) == 0 {
+		return []string{s}
+	}
+
+	result := strings.Split(s, seps[0])
+	for _, sep := range seps[1:] {
+		var temp []string
+		for _, r := range result {
+			temp = append(temp, strings.Split(r, sep)...)
+		}
+		result = temp
+	}
+	return result
 }
 
 // JoinStrSkipEmpty concatenates multiple strings to a single string with the specified separator and skips the empty
