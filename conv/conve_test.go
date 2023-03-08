@@ -108,7 +108,7 @@ func TestToIntE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:    "1.1",
+			name:    "1.1 float64",
 			args:    args{i: 1.1},
 			want:    1,
 			wantErr: false,
@@ -959,6 +959,18 @@ func TestToStringE(t *testing.T) {
 		want    string
 		wantErr bool
 	}{
+		{
+			name:    "true",
+			args:    args{i: true},
+			want:    "true",
+			wantErr: false,
+		},
+		{
+			name:    "false",
+			args:    args{i: false},
+			want:    "false",
+			wantErr: false,
+		},
 		{
 			name:    "foo",
 			args:    args{i: "foo"},
