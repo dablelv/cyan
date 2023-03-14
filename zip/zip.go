@@ -22,7 +22,8 @@ import (
 // dir
 // ├── bar.txt
 // └── foo.txt
-// Note that if a file is a symbolic link it will be skipped.
+// Note that if a file is a symbolic link on Linux it will be skipped.
+// If you want to follow a symbolic link please use the function ZipFollowSymlink.
 func Zip(zipPath string, paths ...string) error {
 	// Create zip file and it's parent dir.
 	if err := os.MkdirAll(filepath.Dir(zipPath), os.ModePerm); err != nil {

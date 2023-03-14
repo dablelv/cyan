@@ -6,6 +6,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 )
 
 // Unzip decompresses a zip file to specified directory.
@@ -26,8 +27,12 @@ func Unzip(zipPath, dstDir string) error {
 }
 
 func unzipFile(file *zip.File, dstDir string) error {
-	// create the directory of file
-	filePath := path.Join(dstDir, file.Name)
+	// Prevent path traversal vulnerability.
+	// Such as if the file name is "../../../path/to/file.txt" which will be cleaned to "path/to/file.txt".
+	name := strings.TrimPrefix(filepath.Join(string(filepath.Separator), file.Name), string(filepath.Separator))
+	filePath := path.Join(dstDir, name)
+
+	// Create the directory of file.
 	if file.FileInfo().IsDir() {
 		if err := os.MkdirAll(filePath, os.ModePerm); err != nil {
 			return err
@@ -38,21 +43,21 @@ func unzipFile(file *zip.File, dstDir string) error {
 		return err
 	}
 
-	// open the file
+	// Open the file.
 	r, err := file.Open()
 	if err != nil {
 		return err
 	}
 	defer r.Close()
 
-	// create the file
+	// Create the file.
 	w, err := os.Create(filePath)
 	if err != nil {
 		return err
 	}
 	defer w.Close()
 
-	// save the decompressed file content
+	// Save the decompressed file content.
 	_, err = io.Copy(w, r)
 	return err
 }

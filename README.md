@@ -21,6 +21,24 @@ gbkStr := []byte{0xC4, 0xE3, 0xBA, 0xC3}    // 你好 in gbk
 utf8Str, _ := GbkToUtf8(gbkStr)             // 你好 in utf8
 gbkStrRes, _ := Utf8ToGbk(utf8Str)          // [196 227 186 195]
 ```
+Some converting function to json.
+```go
+student := struct {
+    Hobby   string
+    Age     int32
+}{
+    Hobby: "pingpopng",
+    Age:   28,
+}
+encoding.ToIndentJSON(&student)
+/*
+output:
+{
+    "Hobby": "pingpopng",
+    "Age": 28
+}
+*/
+```
 # Net
 Some useful functions can be used to handle network. For example you can use `IPv4StrToU32()` transform ipv4 string to uint32 value.
 
@@ -329,26 +347,38 @@ math.GetRandLowerStr(3)         // lts
 math.GetRandUpperStr(3)         // YUT
 ```
 
-# JSON
-
-Some converting function to json.
+# File
 
 ```go
-student := struct {
-    Hobby   string
-    Age     int32
-}{
-    Hobby: "pingpopng",
-    Age:   28,
-}
-encoding.ToIndentJSON(&student)
-/*
-output:
-{
-    "Hobby": "pingpopng",
-    "Age": 28
-}
-*/
+// ListDir lists all the file or directory names in the specified directory.
+ListDir()
+
+// IsExist checks whether a file/dir exists.
+IsExist()
+
+// IsDir checks whether a path is a directory.
+IsDir()
+IsDirE()
+
+// IsFile checks whether a path is a file.
+IsFile()
+IsFileE()
+
+// IsSymlink checks a file whether is a symbolic link file on Linux.
+IsSymlink()
+IsSymlinkE()
+
+// IsShortcut checks a file whether is a shortcut on Windows. 
+IsShortcutFile()
+
+// Create a file.
+Create()
+CreateFile()
+
+// ClearFile clears a file content.
+ClearFile()
+
+// ...
 ```
 
 # Comparison
