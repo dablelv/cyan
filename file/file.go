@@ -6,10 +6,9 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
-// ReadLines reads all lines of the specified file.
+// ReadLines reads all lines of the file.
 func ReadLines(path string) ([]string, int, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -31,7 +30,7 @@ func ReadLines(path string) ([]string, int, error) {
 	return lines, lineCount, scanner.Err()
 }
 
-// ReadLinesV2 reads all lines of the specified file.
+// ReadLinesV2 reads all lines of the file.
 func ReadLinesV2(path string) ([]string, int, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -53,104 +52,6 @@ func ReadLinesV2(path string) ([]string, int, error) {
 			return lines, lineCount, err
 		}
 	}
-}
-
-// ListDir lists all the file or directory names in the specified directory.
-// Note that ListDir don't traverse recursively.
-func ListDir(dirname string) ([]string, error) {
-	infos, err := ioutil.ReadDir(dirname)
-	if err != nil {
-		return nil, err
-	}
-	names := make([]string, len(infos))
-	for i, info := range infos {
-		names[i] = info.Name()
-	}
-	return names, nil
-}
-
-// IsExist checks whether a file/dir exists.
-// Use os.Stat to get the info of the target file or dir to check whether exists.
-// If os.Stat returns nil err, the target exists.
-// If os.Stat returns a os.ErrNotExist err, the target does not exist.
-// If the error returned is another type, the target is uncertain whether exists.
-func IsExist(path string) (bool, error) {
-	_, err := os.Stat(path)
-	if err == nil {
-		return true, nil
-	}
-	if os.IsNotExist(err) {
-		return false, nil
-	}
-	return false, err
-}
-
-// IsDir checks whether a path is a directory.
-// If the path is a symbolic link will follow it.
-func IsDir(path string) bool {
-	if info, err := os.Stat(path); err == nil && info.IsDir() {
-		return true
-	}
-	return false
-}
-
-// IsDirE checks whether a path is a directory with error.
-// If the path is a symbolic link will follow it.
-func IsDirE(path string) (bool, error) {
-	info, err := os.Stat(path)
-	if err == nil && info.IsDir() {
-		return true, nil
-	}
-	return false, err
-}
-
-// IsFile checks whether a path is a file.
-// If the path is a symbolic link will follow it.
-func IsFile(path string) bool {
-	if info, err := os.Stat(path); err == nil && info.Mode().IsRegular() {
-		return true
-	}
-	return false
-}
-
-// IsFileE checks whether a path is a file with error.
-// If the path is a symbolic link will follow it.
-func IsFileE(path string) (bool, error) {
-	info, err := os.Stat(path)
-	if err == nil && info.Mode().IsRegular() {
-		return true, nil
-	}
-	return false, err
-}
-
-// IsSymlink checks a file whether is a symbolic link on Linux.
-// Note that this doesn't work for the shortcut file on windows.
-// If you want to check a file whether is a shortcut file on Windows please use IsShortcut function.
-func IsSymlink(path string) bool {
-	if info, err := os.Lstat(path); err == nil && info.Mode()&os.ModeSymlink != 0 {
-		return true
-	}
-	return false
-}
-
-// IsSymlinkE checks a file whether is a symbolic link on Linux.
-// Note that this doesn't work for the shortcut file on windows.
-// If you want to check a file whether is a shortcut file on Windows please use IsShortcut function.
-func IsSymlinkE(path string) (bool, error) {
-	info, err := os.Lstat(path)
-	if err == nil && info.Mode()&os.ModeSymlink != 0 {
-		return true, nil
-	}
-	return false, err
-}
-
-// IsShortcut checks a file whether is a shortcut on Windows.
-func IsShortcut(path string) bool {
-	ext := filepath.Ext(path)
-	if ext == ".lnk" {
-		return true
-	}
-	return false
 }
 
 // RemoveFile removes the named file or empty directory.
@@ -203,75 +104,6 @@ func BytesToFile(path string, data []byte) error {
 		}
 	}
 	return ioutil.WriteFile(path, data, 0644)
-}
-
-// GetDirAllEntryPaths gets all the file or dir paths in the specified directory recursively.
-// If the incl is true result will include current dir.
-// Note that GetDirAllEntryPaths won't follow symlink if the subdir is a symbolic link.
-func GetDirAllEntryPaths(dirname string, incl bool) ([]string, error) {
-	// Remove the trailing path separator if dirname has.
-	dirname = strings.TrimSuffix(dirname, string(os.PathSeparator))
-
-	infos, err := ioutil.ReadDir(dirname)
-	if err != nil {
-		return nil, err
-	}
-
-	paths := make([]string, 0, len(infos))
-	// Include current dir.
-	if incl {
-		paths = append(paths, dirname)
-	}
-
-	for _, info := range infos {
-		path := dirname + string(os.PathSeparator) + info.Name()
-		if info.IsDir() {
-			tmp, err := GetDirAllEntryPaths(path, incl)
-			if err != nil {
-				return nil, err
-			}
-			paths = append(paths, tmp...)
-			continue
-		}
-		paths = append(paths, path)
-	}
-	return paths, nil
-}
-
-// GetDirAllEntryPathsFollowSymlink gets all the file or dir paths in the specified directory recursively.
-// If the incl is true result will include current dir.
-func GetDirAllEntryPathsFollowSymlink(dirname string, incl bool) ([]string, error) {
-	// Remove the trailing path separator if dirname has.
-	dirname = strings.TrimSuffix(dirname, string(os.PathSeparator))
-
-	infos, err := ioutil.ReadDir(dirname)
-	if err != nil {
-		return nil, err
-	}
-
-	paths := make([]string, 0, len(infos))
-	// Include current dir.
-	if incl {
-		paths = append(paths, dirname)
-	}
-
-	for _, info := range infos {
-		path := dirname + string(os.PathSeparator) + info.Name()
-		realInfo, err := os.Stat(path)
-		if err != nil {
-			return nil, err
-		}
-		if realInfo.IsDir() {
-			tmp, err := GetDirAllEntryPathsFollowSymlink(path, incl)
-			if err != nil {
-				return nil, err
-			}
-			paths = append(paths, tmp...)
-			continue
-		}
-		paths = append(paths, path)
-	}
-	return paths, nil
 }
 
 // ClearFile clears a file content.

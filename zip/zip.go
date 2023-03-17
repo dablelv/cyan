@@ -130,7 +130,7 @@ func ZipFollowSymlink(zipPath string, paths ...string) error {
 		if info.IsDir() {
 			// Remove the trailing path separator if path is a directory.
 			path = strings.TrimSuffix(path, string(os.PathSeparator))
-			filePaths, err := file.GetDirAllEntryPathsFollowSymlink(path, true)
+			filePaths, err := file.ListDirEntryPathsSymlink(path, true)
 			if err != nil {
 				return err
 			}
