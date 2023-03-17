@@ -12,7 +12,7 @@
 </div>
 
 # Synopsis
-Go common used utility functions help you to create go program quickly and easily.
+A modern, comprehensive and efficient utility library of Go.
 
 # Encode
 Some useful functions can be used to handle conversion of different character encoding, such as gbk to utf8.
