@@ -340,41 +340,36 @@ math.GetRandUpperStr(3)         // YUT
 # File
 
 ```go
-// ListDir lists all the file or directory names in the specified directory.
+// List contents of the directory.
 ListDir()
-// ListFileNames lists all file names in the directory.
 ListFileNames()
-// ListDirEntryPaths lists all the file or directory paths in the directory recursively.
 ListDirEntryPaths()
-// ListDirEntryPathsSymlink lists all the file or dir paths in the directory recursively.
-ListDirEntryPathsSymlink
+ListDirEntryPathsSymlink()
 
-// IsExist checks whether a file/dir exists.
+// Check the file or directory.
 IsExist()
-
-// IsDir checks whether a path is a directory.
 IsDir()
 IsDirE()
-
-// IsFile checks whether a path is a file.
 IsFile()
 IsFileE()
-
-// IsSymlink checks a file whether is a symbolic link file on Linux.
 IsSymlink()
 IsSymlinkE()
-
-// IsShortcut checks a file whether is a shortcut on Windows. 
 IsShortcutFile()
 
 // Create a file.
 Create()
 CreateFile()
 
-// ClearFile clears a file content.
+// Clears a file content.
 ClearFile()
 
-// ...
+// Gets file info.
+FileMD5()
+FileMD5Reader()
+FileSize()
+FileSizeFile()
+
+// and so on.
 ```
 
 # Comparison
