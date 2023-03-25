@@ -403,10 +403,6 @@ Some useful functions now unclassified. Of course, it may be classified and move
 // NO NOW.
 ```
 
-# Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=dablelv/go-huge-util&type=Date)](https://star-history.com/#dablelv/go-huge-util&Date)
-
 # How to Contribute
 
 We really appreciate any code commits which make this lib powerful. Please follow the rules below to create your pull request.
@@ -421,3 +417,6 @@ We really appreciate any code commits which make this lib powerful. Please follo
 The above examples are just the tip of the iceberg. For more usage, please read the source code.
 
 Due to the limited personal ability, you are welcome to criticize and correct. Of course, welcome to join in the construction of this library.
+# Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=dablelv/go-huge-util&type=Date)](https://star-history.com/#dablelv/go-huge-util&Date)
