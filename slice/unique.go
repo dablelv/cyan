@@ -6,7 +6,7 @@ import (
 )
 
 //
-// Desc: unique a slice, e.g. input []int32{1, 2, 2, 3} and output is []int32{1, 2, 3}.
+// Unique a slice, e.g. input []int32{1, 2, 2, 3} and output is []int32{1, 2, 3}.
 //
 
 // Unique deletes repeated elements in a slice.

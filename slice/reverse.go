@@ -6,7 +6,7 @@ import (
 )
 
 //
-// Desc: reverse a slice, e.g. input []int32{1, 2, 3} and output is []int32{3, 2, 1}.
+// Reverse a slice, e.g. input []int32{1, 2, 3} and output is []int32{3, 2, 1}.
 //
 
 // Reverse reverses the specified slice without modifying the original slice.

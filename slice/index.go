@@ -8,8 +8,8 @@ import (
 )
 
 //
-// Note that after Go 1.18, please refer to the standard lib function
-// https://pkg.go.dev/golang.org/x/exp/slices#Index and IndexFunc
+// Note that after Go 1.18, this file is deprecated.
+// Please use the standard lib function https://pkg.go.dev/golang.org/x/exp/slices#Index and IndexFunc
 // implemented by generics.
 //
 

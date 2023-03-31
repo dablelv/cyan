@@ -9,7 +9,7 @@ import (
 )
 
 //
-// Desc: get the min or max element of a slice.
+// Get the min or max element of a slice.
 // Other useful functions for any type slices can refer to the standard lib
 // https://pkg.go.dev/golang.org/x/exp/slices.
 //
