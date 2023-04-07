@@ -13,71 +13,71 @@ import (
 // Desc: Hash functions.
 //
 
-// MD5L generates 32 lowercase hexadecimal characters of MD5 checksum
-func MD5L(s string) string {
+// Md5 generates 32 lowercase hexadecimal characters of MD5 value.
+func Md5(s string) string {
 	return Hash(s, "md5", false)
 }
 
-// MD5U generates 32 uppercase hexadecimal characters of MD5 checksum
-func MD5U(s string) string {
+// MD5 generates 32 uppercase hexadecimal characters of MD5 value.
+func MD5(s string) string {
 	return Hash(s, "MD5", true)
 }
 
-// SHA1L generates 40 lowercase hexadecimal characters of SHA1 checksum
-func SHA1L(s string) string {
+// Sha1 generates 40 lowercase hexadecimal characters of SHA1 value.
+func Sha1(s string) string {
 	return Hash(s, "sha1", false)
 }
 
-// SHA1U generates 40 uppercase hexadecimal characters of SHA1 checksum
-func SHA1U(s string) string {
+// SHA1 generates 40 uppercase hexadecimal characters of SHA1 value.
+func SHA1(s string) string {
 	return Hash(s, "SHA1", true)
 }
 
-// SHA224U generates 56 lowercase hexadecimal characters of SHA224 checksum
-func SHA224L(s string) string {
+// Sha224 generates 56 lowercase hexadecimal characters of SHA224 value.
+func Sha224(s string) string {
 	return Hash(s, "sha224", false)
 }
 
-// SHA224U generates 56 uppercase hexadecimal characters of SHA224 checksum
-func SHA224U(s string) string {
+// SHA224 generates 56 uppercase hexadecimal characters of SHA224 value.
+func SHA224(s string) string {
 	return Hash(s, "SHA224", true)
 }
 
-// SHA256L generates 64 lowercase hexadecimal characters of SHA256 checksum
-func SHA256L(s string) string {
+// Sha256 generates 64 lowercase hexadecimal characters of SHA256 value.
+func Sha256(s string) string {
 	return Hash(s, "sha256", false)
 }
 
-// SHA256U generates 64 uppercase hexadecimal characters of SHA256 checksum
-func SHA256U(s string) string {
+// SHA256 generates 64 uppercase hexadecimal characters of SHA256 value.
+func SHA256(s string) string {
 	return Hash(s, "SHA256", true)
 }
 
-// SHA384L generates 96 lowercase hexadecimal characters of SHA384 checksum
-func SHA384L(s string) string {
+// Sha384 generates 96 lowercase hexadecimal characters of SHA384 value.
+func Sha384(s string) string {
 	return Hash(s, "sha384", false)
 }
 
-// SHA384U generates 96 uppercase hexadecimal characters of SHA384 checksum
-func SHA384U(s string) string {
+// SHA384 generates 96 uppercase hexadecimal characters of SHA384 value.
+func SHA384(s string) string {
 	return Hash(s, "SHA384", true)
 }
 
-// SHA512L generates 128 lowercase hexadecimal characters of SHA512 checksum
-func SHA512L(s string) string {
+// Sha512 generates 128 lowercase hexadecimal characters of SHA512 value.
+func Sha512(s string) string {
 	return Hash(s, "sha512", false)
 }
 
-// SHA512U generates 128 uppercase hexadecimal characters of SHA512 checksum
-func SHA512U(s string) string {
+// SHA512 generates 128 uppercase hexadecimal characters of SHA512 value.
+func SHA512(s string) string {
 	return Hash(s, "SHA512", true)
 }
 
-// Hash generates a checksum of the specified hash algorithm
-// e.g. Hash("", "MD5", "false") returns d41d8cd98f00b204e9800998ecf8427e
-func Hash(s string, hashName string, capital bool) string {
+// Hash generates a checksum of the specified hash algorithm.
+// E.g. Hash("", "MD5", false) returns d41d8cd98f00b204e9800998ecf8427e.
+func Hash(s string, name string, capital bool) string {
 	var h hash.Hash
-	switch hashName {
+	switch name {
 	case "md5", "MD5":
 		h = md5.New()
 	case "sha1", "SHA1":
