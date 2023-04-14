@@ -1,8 +1,6 @@
 package slice
 
 import (
-	"reflect"
-
 	"github.com/dablelv/go-huge-util/cond"
 )
 
@@ -22,7 +20,7 @@ func ClearZero[S ~[]E, E comparable](s S) S {
 func ClearZeroRef[S ~[]E, E any](s S) S {
 	r := make([]E, 0, len(s))
 	for i := range s {
-		if !reflect.ValueOf(s[i]).IsZero() {
+		if !cond.IsZeroRef(s[i]) {
 			r = append(r, s[i])
 		}
 	}
