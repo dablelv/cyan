@@ -33,7 +33,7 @@ func TestMakeSlice(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := MakeSlice(tt.args.val, tt.args.size...); !reflect.DeepEqual(got, tt.want) {
+			if got := Make(tt.args.val, tt.args.size...); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("MakeSlice() = %v, want %v", got, tt.want)
 			}
 		})

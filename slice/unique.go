@@ -6,17 +6,19 @@ import (
 )
 
 //
-// Unique a slice, e.g. input []int32{1, 2, 2, 3} and output is []int32{1, 2, 3}.
+// Unique a slice, e.g. input []int32{1, 2, 3, 2} and output is []int32{1, 2, 3}.
 //
 
-// Unique deletes repeated elements in a slice.
+// Unique replaces repeated elements with a single copy and returns a new slice.
+// Unique is like the experimental lib function https://pkg.go.dev/golang.org/x/exp/slices#Compact,
+// but Unique do not modify the original slice and the original slice also doesn't need to be sorted.
 // Unique implemented by generics is recommended to be used.
-func Unique[T comparable](s []T) []T {
+func Unique[S ~[]E, E comparable](s S) S {
 	if len(s) == 0 {
 		return s
 	}
-	r := make([]T, 0, len(s))
-	m := make(map[T]struct{})
+	r := make(S, 0, len(s))
+	m := make(map[E]struct{})
 	for i := range s {
 		if _, ok := m[s[i]]; !ok {
 			r = append(r, s[i])
@@ -104,7 +106,7 @@ func UniqueStrSlice(src []string) []string {
 	return v
 }
 
-// UniqueSliceE deletes repeated elements in a slice with error.
+// UniqueSliceE replaces repeated elements with a single copy and returns a new slice.
 // Note that the original slice will not be modified.
 func UniqueSliceE(slice any) (any, error) {
 	// Check param.

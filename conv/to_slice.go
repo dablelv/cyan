@@ -8,7 +8,7 @@ import (
 )
 
 //
-// Desc: convert an any type value to the specified type slice.
+// This file contains some functions used to convert an any type value to the specified type slice.
 //
 
 // ToStrSlice converts an interface to a []string.

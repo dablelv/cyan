@@ -8,7 +8,7 @@ import (
 )
 
 //
-// Note that after Go 1.18, this file is deprecated.
+// Note that since Go 1.18, this file is deprecated.
 // Please use the standard lib function https://pkg.go.dev/golang.org/x/exp/slices#Index and IndexFunc
 // implemented by generics.
 //
@@ -19,7 +19,7 @@ func GetElemIndexesSlice(slice any, value any) []int {
 	return indexes
 }
 
-// GetEleIndexesSliceE finds all indexes for the specified element in a slice
+// GetEleIndexesSliceE finds all indexes for the specified element in a slice.
 // and returns an error if error occurred.
 func GetElemIndexesSliceE(slice any, value any) ([]int, error) {
 	// Check param.

@@ -16,7 +16,7 @@ func TestUniqueInt(t *testing.T) {
 	}{
 		{
 			name: "unique int slice",
-			args: args{[]int{1, 2, 2, 3}},
+			args: args{[]int{1, 2, 3, 2}},
 			want: []int{1, 2, 3},
 		},
 		{

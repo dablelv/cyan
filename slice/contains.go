@@ -5,7 +5,7 @@ import (
 )
 
 //
-// Note that after Go 1.18, this file is deprecated.
+// Note that since Go 1.18, this file is deprecated.
 // Please use the standard lib function https://pkg.go.dev/golang.org/x/exp/slices#Contains and ContainsFunc
 // implemented by generics.
 //
