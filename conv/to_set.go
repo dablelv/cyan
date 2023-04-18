@@ -6,11 +6,10 @@ import (
 )
 
 //
-// Converts a slice or array of any element type to the specified type mapping set.
+// Converts an any element type slice or array to the specified type mapping set.
 // Note that the the element type of input don't need to be equal to the map key type.
-// For example, []uint64{1, 2, 3} can be converted to map[uint64]struct{}{1:struct{}, 2:struct{},
-// 3:struct{}} and also can be converted to map[string]struct{}{"1":struct{}, "2":struct{}, "3":struct{}}
-// if you want.
+// For example, []uint64{1, 2, 3} can be converted to map[uint64]struct{}{1:{}, 2:{},3:{}}
+// and also can be converted to map[string]struct{}{"1":{}, "2":{}, "3":{}} if you want.
 //
 
 // ToBoolSet converts a slice or array to map[bool]struct{}.
@@ -381,7 +380,7 @@ func ToStrSetE(i any) (map[string]struct{}, error) {
 func toSetE(a any) (any, error) {
 	// Check param.
 	if a == nil {
-		return nil, fmt.Errorf("the input argument is nil")
+		return nil, fmt.Errorf("input argument is nil")
 	}
 	t := reflect.TypeOf(a)
 	if t.Kind() != reflect.Slice && t.Kind() != reflect.Array {

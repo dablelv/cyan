@@ -8,17 +8,17 @@ import (
 )
 
 //
-// This file contains some functions used to convert an any type value to the specified type slice.
+// This file contains some functions for converting an any type value to the specified type slice.
 //
 
-// ToStrSlice converts an interface to a []string.
+// ToStrSlice converts an any type value to a []string.
 // For example, covert []int{1, 2, 3} to []string{"1", "2", "3"}.
 func ToStrSlice(i any) []string {
 	v, _ := ToStrSliceE(i)
 	return v
 }
 
-// ToStrSliceE converts an interface to a []string with error.
+// ToStrSliceE converts an any type value to a []string with error.
 func ToStrSliceE(i any) ([]string, error) {
 	if i == nil {
 		return nil, fmt.Errorf("unable to cast %#v of type %T to []string", i, i)

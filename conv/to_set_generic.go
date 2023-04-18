@@ -13,9 +13,8 @@ func ToSet[T comparable](i any) map[T]struct{} {
 
 // ToSetE converts a slice or array to map[T]struct{} and returns an error if occurred.
 // Note that the the element type of input don't need to be equal to the map key type.
-// For example, []uint64{1, 2, 3} can be converted to map[uint64]struct{}{1:struct{}, 2:struct{},3:struct{}}
-// and also can be converted to map[string]struct{}{"1":struct{}, "2":struct{}, "3":struct{}}
-// if you want.
+// For example, []uint64{1, 2, 3} can be converted to map[uint64]struct{}{1:{},2:{},3:{}}
+// and also can be converted to map[string]struct{}{"1":{},"2":{},"3":{}} if you want.
 // Note that this function is implemented through 1.18 generics, so the element type needs to
 // be specified when calling it, e.g. ToSetE[int]([]int{1,2,3}).
 func ToSetE[T comparable](i any) (map[T]struct{}, error) {
