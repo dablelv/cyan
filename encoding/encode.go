@@ -11,35 +11,23 @@ import (
 // GBK2UTF8 transforms gbk to utf8.
 func GBK2UTF8(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewDecoder())
-	d, err := io.ReadAll(reader)
-	if err != nil {
-		return nil, err
-	}
-	return d, nil
+	return io.ReadAll(reader)
 }
 
 // GBK2UTF8Str transforms gbk to utf8 string.
 func GBK2UTF8Str(s string) string {
-	if dst, err := GBK2UTF8([]byte(s)); err == nil {
-		return string(dst)
-	}
-	return ""
+	dst, _ := GBK2UTF8([]byte(s))
+	return string(dst)
 }
 
 // UTF82GBK transforms utf8 to gbk.
 func UTF82GBK(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewEncoder())
-	d, err := io.ReadAll(reader)
-	if err != nil {
-		return nil, err
-	}
-	return d, nil
+	return io.ReadAll(reader)
 }
 
 // UTF82GBKStr transforms utf8 to gbk string.
 func UTF82GBKStr(s string) string {
-	if dst, err := UTF82GBK([]byte(s)); err == nil {
-		return string(dst)
-	}
-	return ""
+	dst, _ := UTF82GBK([]byte(s))
+	return string(dst)
 }
