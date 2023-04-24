@@ -3,67 +3,88 @@ package file
 import (
 	"bufio"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 )
 
 // ReadLines reads all lines of the file.
-func ReadLines(path string) ([]string, int, error) {
+func ReadLines(path string) ([]string, error) {
 	file, err := os.Open(path)
 	if err != nil {
-		return nil, 0, err
+		return nil, err
 	}
 	defer file.Close()
 
 	var lines []string
-	lineCount := 0
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
-		lineCount++
 	}
-
-	if scanner.Err() == bufio.ErrTooLong {
-		panic(scanner.Err())
-	}
-	return lines, lineCount, scanner.Err()
+	return lines, scanner.Err()
 }
 
 // ReadLinesV2 reads all lines of the file.
-func ReadLinesV2(path string) ([]string, int, error) {
+func ReadLinesV2(path string) ([]string, error) {
 	file, err := os.Open(path)
 	if err != nil {
-		return nil, 0, err
+		return nil, err
 	}
 	defer file.Close()
 
 	var lines []string
-	lineCount := 0
 	reader := bufio.NewReader(file)
 	for {
+		// ReadString reads until the first occurrence of delim in the input,
+		// returning a string containing the data up to and including the delimiter.
 		line, err := reader.ReadString('\n')
-		lines = append(lines, line)
-		lineCount++
-		if err == io.EOF {
-			return lines, lineCount, nil
+		if err != nil && err == io.EOF {
+			lines = append(lines, line)
+			return lines, nil
 		}
 		if err != nil {
-			return lines, lineCount, err
+			return lines, err
 		}
+		lines = append(lines, line[:len(line)-1])
 	}
 }
 
-// RemoveFile removes the named file or empty directory.
+// ReadLinesV3 reads all lines of the file.
+func ReadLinesV3(path string) ([]string, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	var lines []string
+	r := bufio.NewReader(f)
+	for {
+		// ReadLine is a low-level line-reading primitive.
+		// Most callers should use ReadBytes('\n') or ReadString('\n') instead or use a Scanner.
+		bytes, _, err := r.ReadLine()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return lines, err
+		}
+		lines = append(lines, string(bytes))
+	}
+	return lines, nil
+}
+
+// Remove removes the named file or empty directory.
 // If there is an error, it will be of type *PathError.
-func RemoveFile(path string) error {
+func Remove(path string) error {
 	return os.Remove(path)
 }
 
 // Create creates or truncates the target file specified by path.
-// If the parent directory does not exist, it will be created with mode os.ModePerm.
+// If the file already exists, it is truncated.
+// If the parent directory does not exist, it will be created with mode os.ModePerm(0777).
 // If the file does not exist, it is created with mode 0666.
-// If successful, methods on the returned file can be used for I/O; the associated file descriptor has mode O_RDWR.
+// If successfully call Create, the returned file can be used for I/O
+// and the associated file descriptor has mode O_RDWR.
 func Create(path string) (*os.File, error) {
 	exist, err := IsExist(path)
 	if err != nil {
@@ -79,8 +100,10 @@ func Create(path string) (*os.File, error) {
 }
 
 // CreateFile creates a file specified by path.
-func CreateFile(filePath string) error {
-	file, err := Create(filePath)
+// If the file already exists, it is truncated.
+// If the parent directory does not exist, it will be created with mode os.ModePerm(0777).
+func CreateFile(path string) error {
+	file, err := Create(path)
 	if err != nil {
 		return err
 	}
@@ -90,8 +113,8 @@ func CreateFile(filePath string) error {
 
 // FileToBytes serialize the file to bytes.
 func FileToBytes(path string) []byte {
-	byteStream, _ := ioutil.ReadFile(path)
-	return byteStream
+	bytes, _ := os.ReadFile(path)
+	return bytes
 }
 
 // BytesToFile writes data to a file.
@@ -103,7 +126,7 @@ func BytesToFile(path string, data []byte) error {
 			return err
 		}
 	}
-	return ioutil.WriteFile(path, data, 0644)
+	return os.WriteFile(path, data, 0644)
 }
 
 // ClearFile clears a file content.

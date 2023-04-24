@@ -1,44 +1,112 @@
 package file
 
 import (
-	"bufio"
-	"strings"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-
-	"github.com/dablelv/go-huge-util/math"
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestListDir(t *testing.T) {
+	assert := internal.NewAssert(t, "TestListDir")
 	filenames, _ := ListDir(".")
 	haveFile := len(filenames) > 0
-	assert.Equal(t, true, haveFile, "TestListDir")
+	assert.Equal(true, haveFile)
 }
 
 func TestReadLines(t *testing.T) {
-	l := 64*1024 + 1
-	veryLongString := math.RandStr(uint64(l)) // MaxScanTokenSize = 64 * 1024 = 65536 < 70000
+	assert := internal.NewAssert(t, "TestReadLines")
 
-	// if line length greater than bufio.MaxScanTokenSize(64 * 1024) need to create a new longer buffer
-	if l > bufio.MaxScanTokenSize {
-		newScanner := bufio.NewScanner(strings.NewReader(veryLongString))
-		newScanner.Buffer([]byte{}, bufio.MaxScanTokenSize*2)
-		for newScanner.Scan() {
-			t.Log("bufio.Scan() success")
-		}
-	} else {
-		scanner := bufio.NewScanner(strings.NewReader(veryLongString))
-		for scanner.Scan() {
-			t.Log(scanner.Text())
-		}
-		if scanner.Err() == bufio.ErrTooLong {
-			t.Error(bufio.ErrTooLong)
-		}
+	path := "./file_unit_test_tmp.txt"
+	f, _ := Create(path)
+
+	_, err := f.WriteString("hello\nworld")
+	if err != nil {
+		t.Log(err)
+	}
+
+	lines, err := ReadLines(path)
+	assert.IsNil(err)
+	expected := []string{"hello", "world"}
+	assert.Equal(expected, lines)
+
+	f.Close()
+	if err := Remove(path); err != nil {
+		t.Log(err)
 	}
 }
 
 func TestReadLinesV2(t *testing.T) {
-	lines, _, _ := ReadLinesV2("./tmp/name")
-	t.Logf("%v", lines)
+	assert := internal.NewAssert(t, "TestReadLinesV2")
+
+	path := "./file_unit_test_tmp.txt"
+	f, _ := Create(path)
+
+	_, err := f.WriteString("hello\nworld")
+	if err != nil {
+		t.Log(err)
+	}
+
+	lines, err := ReadLinesV2(path)
+	assert.IsNil(err)
+	expected := []string{"hello", "world"}
+	assert.Equal(expected, lines)
+
+	f.Close()
+	if err := Remove(path); err != nil {
+		t.Log(err)
+	}
+}
+
+func TestReadLinesV3(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReadLinesV3")
+
+	path := "./file_unit_test_tmp.txt"
+	f, _ := Create(path)
+
+	_, err := f.WriteString("hello\nworld")
+	if err != nil {
+		t.Log(err)
+	}
+
+	lines, err := ReadLinesV3(path)
+	assert.IsNil(err)
+	expected := []string{"hello", "world"}
+	assert.Equal(expected, lines)
+
+	f.Close()
+	if err := Remove(path); err != nil {
+		t.Log(err)
+	}
+}
+
+func TestCreateFile(t *testing.T) {
+	assert := internal.NewAssert(t, "TestCreateFile")
+
+	path := "./file_unit_test_tmp.txt"
+	err := CreateFile(path)
+	assert.IsNil(err)
+
+	if err := Remove(path); err != nil {
+		t.Log(err)
+	}
+}
+
+func TestBytesToFile(t *testing.T) {
+	assert := internal.NewAssert(t, "BytesToFile and FileToBytes and ClearFile")
+
+	path := "./file_unit_test_tmp.txt"
+	err := BytesToFile(path, []byte("hello world"))
+	assert.IsNil(err)
+
+	bytes := FileToBytes(path)
+	assert.Equal([]byte("hello world"), bytes)
+
+	err = ClearFile(path)
+	assert.IsNil(err)
+	bytes = FileToBytes(path)
+	assert.Equal([]byte(""), bytes)
+
+	if err := Remove(path); err != nil {
+		t.Log(err)
+	}
 }
