@@ -3,10 +3,11 @@ package safegroup
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestGroup_Go(t *testing.T) {
+	assert := internal.NewAssert(t, "TestGroup_Go")
 	var sg Group
 	sg.Go(func() error {
 		return nil
@@ -15,5 +16,5 @@ func TestGroup_Go(t *testing.T) {
 		panic("this is a panic")
 	})
 	err := sg.Wait()
-	assert.NotNil(t, err)
+	assert.IsNotNil(err)
 }

@@ -3,10 +3,11 @@ package time
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestGetDaysBtwTs(t *testing.T) {
+	assert := internal.NewAssert(t, "TestGetDaysBtwTs")
 	type args struct {
 		ts0 int64
 		ts1 int64
@@ -22,11 +23,12 @@ func TestGetDaysBtwTs(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got := GetDaysBtwTs(tt.args.ts0, tt.args.ts1)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.want, got)
 	}
 }
 
 func TestGetHoursBtwTs(t *testing.T) {
+	assert := internal.NewAssert(t, "TestGetHoursBtwTs")
 	type args struct {
 		ts0 int64
 		ts1 int64
@@ -42,11 +44,12 @@ func TestGetHoursBtwTs(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got := GetHoursBtwTs(tt.args.ts0, tt.args.ts1)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.want, got)
 	}
 }
 
 func TestGetMinutesBtwTs(t *testing.T) {
+	assert := internal.NewAssert(t, "TestGetMinutesBtwTs")
 	type args struct {
 		ts0 int64
 		ts1 int64
@@ -62,11 +65,12 @@ func TestGetMinutesBtwTs(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got := GetMinutesBtwTs(tt.args.ts0, tt.args.ts1)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.want, got)
 	}
 }
 
 func TestIsSameYear(t *testing.T) {
+	assert := internal.NewAssert(t, "TestIsSameYear")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -81,11 +85,12 @@ func TestIsSameYear(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got := IsSameYear(tt.args.uts1, tt.args.uts2)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.want, got)
 	}
 }
 
 func TestIsSameMonth(t *testing.T) {
+	assert := internal.NewAssert(t, "TestIsSameMonth")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -100,11 +105,12 @@ func TestIsSameMonth(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got := IsSameMonth(tt.args.uts1, tt.args.uts2)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.want, got)
 	}
 }
 
 func TestIsSameDay(t *testing.T) {
+	assert := internal.NewAssert(t, "TestIsSameDay")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -119,11 +125,12 @@ func TestIsSameDay(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got := IsSameDay(tt.args.uts1, tt.args.uts2)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.want, got)
 	}
 }
 
 func TestIsSameHour(t *testing.T) {
+	assert := internal.NewAssert(t, "TestIsSameHour")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -138,11 +145,12 @@ func TestIsSameHour(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got := IsSameHour(tt.args.uts1, tt.args.uts2)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.want, got)
 	}
 }
 
 func TestIsSameMinute(t *testing.T) {
+	assert := internal.NewAssert(t, "TestIsSameMinute")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -158,11 +166,12 @@ func TestIsSameMinute(t *testing.T) {
 
 	for _, tt := range tests {
 		got := IsSameMinute(tt.args.uts1, tt.args.uts2)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.want, got)
 	}
 }
 
 func TestIsSameWeek(t *testing.T) {
+	assert := internal.NewAssert(t, "TestIsSameWeek")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -177,6 +186,6 @@ func TestIsSameWeek(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got := IsSameWeek(tt.args.uts1, tt.args.uts2)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.want, got)
 	}
 }

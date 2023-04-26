@@ -3,10 +3,11 @@ package math
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestRandIntRange(t *testing.T) {
+	assert := internal.NewAssert(t, "TestRandIntRange")
 	type args struct {
 		min int
 		max int
@@ -22,6 +23,6 @@ func TestRandIntRange(t *testing.T) {
 	for _, tt := range tests {
 		got := RandIntRange(tt.args.min, tt.args.max)
 		valid := got >= tt.args.min && got < tt.args.max
-		assert.Equal(t, true, valid, tt.name)
+		assert.Equal(true, valid)
 	}
 }

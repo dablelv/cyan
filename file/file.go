@@ -32,20 +32,21 @@ func ReadLinesV2(path string) ([]string, error) {
 	defer file.Close()
 
 	var lines []string
-	reader := bufio.NewReader(file)
+	r := bufio.NewReader(file)
 	for {
 		// ReadString reads until the first occurrence of delim in the input,
 		// returning a string containing the data up to and including the delimiter.
-		line, err := reader.ReadString('\n')
-		if err != nil && err == io.EOF {
+		line, err := r.ReadString('\n')
+		if err == io.EOF {
 			lines = append(lines, line)
-			return lines, nil
+			break
 		}
 		if err != nil {
 			return lines, err
 		}
 		lines = append(lines, line[:len(line)-1])
 	}
+	return lines, nil
 }
 
 // ReadLinesV3 reads all lines of the file.
@@ -71,12 +72,6 @@ func ReadLinesV3(path string) ([]string, error) {
 		lines = append(lines, string(bytes))
 	}
 	return lines, nil
-}
-
-// Remove removes the named file or empty directory.
-// If there is an error, it will be of type *PathError.
-func Remove(path string) error {
-	return os.Remove(path)
 }
 
 // Create creates or truncates the target file specified by path.

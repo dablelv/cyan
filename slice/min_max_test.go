@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestMin(t *testing.T) {
@@ -30,6 +30,7 @@ func TestMin(t *testing.T) {
 }
 
 func TestMinE(t *testing.T) {
+	assert := internal.NewAssert(t, "TestMinE")
 	type args struct {
 		slice any
 	}
@@ -45,8 +46,8 @@ func TestMinE(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got, err := MinE(tt.args.slice.([]int))
-		assert.Equal(t, tt.wantErr, err != nil, tt.name)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.wantErr, err != nil)
+		assert.Equal(tt.want, got)
 	}
 }
 
@@ -73,6 +74,8 @@ func TestMax(t *testing.T) {
 }
 
 func TestMaxE(t *testing.T) {
+	assert := internal.NewAssert(t, "TestMaxE")
+
 	type args struct {
 		slice any
 	}
@@ -88,8 +91,8 @@ func TestMaxE(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got, err := MaxE(tt.args.slice.([]int))
-		assert.Equal(t, tt.wantErr, err != nil, tt.name)
-		assert.Equal(t, tt.want, got, tt.name)
+		assert.Equal(tt.wantErr, err != nil)
+		assert.Equal(tt.want, got)
 	}
 }
 

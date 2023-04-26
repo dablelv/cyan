@@ -83,7 +83,6 @@ func (a *Assert) IsNil(v any) {
 	if v == nil || (reflect.ValueOf(v).Kind() == reflect.Ptr && reflect.ValueOf(v).IsNil()) {
 		return
 	}
-
 	makeTestFailed(a.T, a.CaseName, nil, v)
 }
 
@@ -161,7 +160,6 @@ func compare(x, y any) int {
 	}
 
 	return compareNotEqual
-
 }
 
 // logFailedInfo make test failed and log error info.

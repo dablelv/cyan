@@ -23,8 +23,8 @@ func ListDir(dir string) ([]string, error) {
 	return names, nil
 }
 
-// ListFileNames lists all file names in the directory.
-func ListFileNames(dir string) ([]string, error) {
+// ListFilenames lists all filenames in the directory.
+func ListFilenames(dir string) ([]string, error) {
 	entries, err := os.ReadDir(dir)
 	if err != nil {
 		return nil, err
@@ -39,14 +39,13 @@ func ListFileNames(dir string) ([]string, error) {
 	return names, nil
 }
 
-// FileMD5 gets file MD5。
+// FileMD5 gets file MD5.
 func FileMD5(path string) (string, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return "", err
 	}
 	defer file.Close()
-
 	return FileMD5Reader(file)
 }
 
@@ -73,21 +72,21 @@ func FileSize(path string) (int64, error) {
 
 // FileSizeFile gets file size from os.File in bytes.
 func FileSizeFile(file *os.File) (int64, error) {
-	fileInfo, err := file.Stat()
+	info, err := file.Stat()
 	if err != nil {
 		return 0, err
 	}
-	return fileInfo.Size(), nil
+	return info.Size(), nil
 }
 
 // ListDirEntryPaths lists all the file or directory paths in the directory recursively.
 // If the cur is true result will include current directory.
 // Note that GetDirAllEntryPaths won't follow symlink if the subdir is a symbolic link.
-func ListDirEntryPaths(dirname string, cur bool) ([]string, error) {
+func ListDirEntryPaths(dir string, cur bool) ([]string, error) {
 	// Remove the trailing path separator if dirname has.
-	dirname = strings.TrimSuffix(dirname, string(os.PathSeparator))
+	dir = strings.TrimSuffix(dir, string(os.PathSeparator))
 
-	infos, err := ioutil.ReadDir(dirname)
+	infos, err := ioutil.ReadDir(dir)
 	if err != nil {
 		return nil, err
 	}
@@ -96,11 +95,11 @@ func ListDirEntryPaths(dirname string, cur bool) ([]string, error) {
 
 	// Include current directory.
 	if cur {
-		paths = append(paths, dirname)
+		paths = append(paths, dir)
 	}
 
 	for _, info := range infos {
-		path := dirname + string(os.PathSeparator) + info.Name()
+		path := dir + string(os.PathSeparator) + info.Name()
 		if info.IsDir() {
 			tmp, err := ListDirEntryPaths(path, cur)
 			if err != nil {

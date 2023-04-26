@@ -4,10 +4,12 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestMap2Slice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestMap2Slice")
+
 	type args struct {
 		i any
 	}
@@ -60,8 +62,8 @@ func TestMap2Slice(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gotK, gotV := Map2Slice(tt.args.i)
 			if gotK != nil && gotV != nil {
-				assert.Equal(t, reflect.ValueOf(gotK).Len(), reflect.ValueOf(tt.wantK).Len())
-				assert.Equal(t, reflect.ValueOf(gotV).Len(), reflect.ValueOf(tt.wantV).Len())
+				assert.Equal(reflect.ValueOf(gotK).Len(), reflect.ValueOf(tt.wantK).Len())
+				assert.Equal(reflect.ValueOf(gotV).Len(), reflect.ValueOf(tt.wantV).Len())
 			}
 		})
 	}

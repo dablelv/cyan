@@ -3,7 +3,7 @@ package cmp
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestVerGTVer(t *testing.T) {
@@ -37,6 +37,7 @@ func TestVerGTVer(t *testing.T) {
 }
 
 func TestVerGEVer(t *testing.T) {
+	assert := internal.NewAssert(t, "TestVerGEVer")
 	type args struct {
 		ver0 string
 		ver1 string
@@ -54,8 +55,8 @@ func TestVerGEVer(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got, err := VerGEVer(tt.args.ver0, tt.args.ver1)
-		assert.Equal(t, tt.want, got, tt.name)
-		assert.Equal(t, tt.wantErr, err != nil, tt.name)
+		assert.Equal(tt.want, got)
+		assert.Equal(tt.wantErr, err != nil)
 	}
 }
 
@@ -90,6 +91,7 @@ func TestVerLTVer(t *testing.T) {
 }
 
 func TestVerLEVer(t *testing.T) {
+	assert := internal.NewAssert(t, "TestVerLEVer")
 	type args struct {
 		ver0 string
 		ver1 string
@@ -107,7 +109,7 @@ func TestVerLEVer(t *testing.T) {
 	}
 	for _, tt := range tests {
 		got, err := VerLEVer(tt.args.ver0, tt.args.ver1)
-		assert.Equal(t, tt.want, got, tt.name)
-		assert.Equal(t, tt.wantErr, err != nil, tt.name)
+		assert.Equal(tt.want, got)
+		assert.Equal(tt.wantErr, err != nil)
 	}
 }

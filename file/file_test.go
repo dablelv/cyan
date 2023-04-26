@@ -1,28 +1,21 @@
 package file
 
 import (
+	"os"
 	"testing"
 
 	"github.com/dablelv/go-huge-util/internal"
 )
 
-func TestListDir(t *testing.T) {
-	assert := internal.NewAssert(t, "TestListDir")
-	filenames, _ := ListDir(".")
-	haveFile := len(filenames) > 0
-	assert.Equal(true, haveFile)
-}
-
 func TestReadLines(t *testing.T) {
 	assert := internal.NewAssert(t, "TestReadLines")
 
 	path := "./file_unit_test_tmp.txt"
-	f, _ := Create(path)
+	f, err := Create(path)
+	assert.IsNil(err)
 
-	_, err := f.WriteString("hello\nworld")
-	if err != nil {
-		t.Log(err)
-	}
+	_, err = f.WriteString("hello\nworld")
+	assert.IsNil(err)
 
 	lines, err := ReadLines(path)
 	assert.IsNil(err)
@@ -30,9 +23,8 @@ func TestReadLines(t *testing.T) {
 	assert.Equal(expected, lines)
 
 	f.Close()
-	if err := Remove(path); err != nil {
-		t.Log(err)
-	}
+	err = os.Remove(path)
+	assert.IsNil(err)
 }
 
 func TestReadLinesV2(t *testing.T) {
@@ -52,9 +44,8 @@ func TestReadLinesV2(t *testing.T) {
 	assert.Equal(expected, lines)
 
 	f.Close()
-	if err := Remove(path); err != nil {
-		t.Log(err)
-	}
+	err = os.Remove(path)
+	assert.IsNil(err)
 }
 
 func TestReadLinesV3(t *testing.T) {
@@ -74,24 +65,22 @@ func TestReadLinesV3(t *testing.T) {
 	assert.Equal(expected, lines)
 
 	f.Close()
-	if err := Remove(path); err != nil {
-		t.Log(err)
-	}
+	err = os.Remove(path)
+	assert.IsNil(err)
 }
 
 func TestCreateFile(t *testing.T) {
 	assert := internal.NewAssert(t, "TestCreateFile")
 
-	path := "./file_unit_test_tmp.txt"
+	path := "file_unit_test_tmp.txt"
 	err := CreateFile(path)
 	assert.IsNil(err)
 
-	if err := Remove(path); err != nil {
-		t.Log(err)
-	}
+	err = os.Remove(path)
+	assert.IsNil(err)
 }
 
-func TestBytesToFile(t *testing.T) {
+func TestBytesToFile_FileToBytes_ClearFile(t *testing.T) {
 	assert := internal.NewAssert(t, "BytesToFile and FileToBytes and ClearFile")
 
 	path := "./file_unit_test_tmp.txt"
@@ -106,7 +95,6 @@ func TestBytesToFile(t *testing.T) {
 	bytes = FileToBytes(path)
 	assert.Equal([]byte(""), bytes)
 
-	if err := Remove(path); err != nil {
-		t.Log(err)
-	}
+	err = os.Remove(path)
+	assert.IsNil(err)
 }
