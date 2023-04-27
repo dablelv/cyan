@@ -14,6 +14,13 @@
 # Synopsis
 A modern, comprehensive and efficient utility library of Go.
 
+# Features
+
+- Comprehensive, efficient and reusable.
+- Numerous util functions, support string, slice, map, datetime, crypto...
+- Only depend on the go standard library.
+- High unit test coverage for exported functions.
+
 # Encode
 Some useful functions can be used to handle conversion of different character encoding, such as gbk to utf8.
 ```go
@@ -86,14 +93,6 @@ r := InsertIntSlice(fib, 5, 13)		// [1 1 2 3 5 8 13]
 r := DeleteIntSliceE(fib, 0)		// [1 2 3 5 8]
 r := UpdateIntSliceE(fib, 5, 88)	// [1 1 2 3 5 88]
 r := GetElemIndexesSlice(fib, 1)	// [0 1]
-```
-
-# SQL
-Some useful functions can be used to handle sql statement.
-
-```go
-var sql = `select * from t where field1="{name}"`
-huge.FormatSql(sql, map[string]string{"name": "dablelv"}, false)    // select * from t where field1="dablelv"
 ```
 
 # String
