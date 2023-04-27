@@ -1,5 +1,3 @@
-github.com/go-sql-driver/mysql v1.5.0 h1:ozyZYNQW3x3HtqT1jira07DN2PArx2v7/mN66gGcHOs=
-github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 golang.org/x/exp v0.0.0-20221229233502-02c3fc3b3eb4 h1:FJ366zx98Mq6JL8dYkXwSHeGwc2wM9NsxFerYtY70rY=
 golang.org/x/exp v0.0.0-20221229233502-02c3fc3b3eb4/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
 golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4 h1:uVc8UZUe6tr40fFVnUP5Oj+veunVezqYl9z7DYw9xzw=
