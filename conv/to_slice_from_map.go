@@ -6,12 +6,12 @@ import (
 )
 
 //
-// Convert map keys and values to slice in random order.
+// Convert map keys and values to slice in indeterminate order.
 // E.g. covert map[string]int{"a":1,"b":2, "c":3} to []string{"a", "c", "b"} and []int{1, 3, 2}.
 //
 
 // MapKeys returns a slice of all the keys in m.
-// The keys returned are in random order.
+// The keys returned are in indeterminate order.
 // You can also use standard library golang.org/x/exp/maps#Keys.
 func MapKeys[K comparable, V any](m map[K]V) []K {
 	s := make([]K, 0, len(m))
@@ -22,7 +22,7 @@ func MapKeys[K comparable, V any](m map[K]V) []K {
 }
 
 // MapVals returns a slice of all the values in m.
-// The values returned are in random order.
+// The values returned are in indeterminate order.
 // You can also use standard library golang.org/x/exp/maps#Values.
 func MapVals[K comparable, V any](m map[K]V) []V {
 	s := make([]V, 0, len(m))
@@ -33,7 +33,7 @@ func MapVals[K comparable, V any](m map[K]V) []V {
 }
 
 // MapKeyVals returns two slice of all the keys and values in m.
-// The keys and values are returned in random order.
+// The keys and values are returned in an indeterminate order.
 func MapKeysVals[K comparable, V any](m map[K]V) ([]K, []V) {
 	ks, vs := make([]K, 0, len(m)), make([]V, 0, len(m))
 	for k, v := range m {
@@ -43,13 +43,13 @@ func MapKeysVals[K comparable, V any](m map[K]V) ([]K, []V) {
 	return ks, vs
 }
 
-// Map2Slice converts map keys and values to slice in random order.
+// Map2Slice converts map keys and values to slice in indeterminate order.
 func Map2Slice(a any) (ks any, vs any) {
 	ks, vs, _ = Map2SliceE(a)
 	return
 }
 
-// Map2SliceE converts keys and values of map to slice in random order with error.
+// Map2SliceE converts keys and values of map to slice in indeterminate order with error.
 func Map2SliceE(a any) (ks any, vs any, err error) {
 	// Check param.
 	if a == nil {

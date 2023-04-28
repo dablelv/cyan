@@ -27,15 +27,15 @@ func ToBoolSetE(i any) (map[bool]struct{}, error) {
 	if v, ok := m.(map[bool]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[bool]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[bool]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToBoolE(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToIntSet converts a slice or array to map[int]struct{}.
@@ -53,15 +53,15 @@ func ToIntSetE(i any) (map[int]struct{}, error) {
 	if v, ok := m.(map[int]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[int]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[int]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToIntE(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToInt8Set converts a slice or array to map[int8]struct{}.
@@ -79,15 +79,15 @@ func ToInt8SetE(i any) (map[int8]struct{}, error) {
 	if v, ok := m.(map[int8]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[int8]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[int8]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToInt8E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToInt16Set converts a slice or array to map[int16]struct{}.
@@ -105,15 +105,15 @@ func ToInt16SetE(i any) (map[int16]struct{}, error) {
 	if v, ok := m.(map[int16]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[int16]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[int16]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToInt16E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToInt32Set converts a slice or array to map[int32]struct{}.
@@ -131,15 +131,15 @@ func ToInt32SetE(i any) (map[int32]struct{}, error) {
 	if v, ok := m.(map[int32]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[int32]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[int32]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToInt32E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToInt64Set converts a slice or array to map[int64]struct{}.
@@ -157,15 +157,15 @@ func ToInt64SetE(i any) (map[int64]struct{}, error) {
 	if v, ok := m.(map[int64]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[int64]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[int64]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToInt64E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToUintSet converts a slice or array to map[uint]struct{}.
@@ -183,15 +183,15 @@ func ToUintSetE(i any) (map[uint]struct{}, error) {
 	if v, ok := m.(map[uint]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[uint]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[uint]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToUintE(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToUint8Set converts a slice or array to map[uint8]struct{}.
@@ -209,15 +209,15 @@ func ToUint8SetE(i any) (map[uint8]struct{}, error) {
 	if v, ok := m.(map[uint8]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[uint8]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[uint8]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToUint8E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToUint16Set converts a slice or array to map[uint16]struct{}.
@@ -235,15 +235,15 @@ func ToUint16SetE(i any) (map[uint16]struct{}, error) {
 	if v, ok := m.(map[uint16]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[uint16]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[uint16]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToUint16E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToUint32Set converts a slice or array to map[uint32]struct{}.
@@ -261,15 +261,15 @@ func ToUint32SetE(i any) (map[uint32]struct{}, error) {
 	if v, ok := m.(map[uint32]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[uint32]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[uint32]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToUint32E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToUint64Set converts a slice or array to map[uint64]struct{}.
@@ -287,15 +287,15 @@ func ToUint64SetE(i any) (map[uint64]struct{}, error) {
 	if v, ok := m.(map[uint64]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[uint64]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[uint64]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToUint64E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToFloat32Set converts a slice or array to map[float32]struct{}.
@@ -313,15 +313,15 @@ func ToFloat32SetE(i any) (map[float32]struct{}, error) {
 	if v, ok := m.(map[float32]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[float32]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[float32]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToFloat32E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToFloat64Set converts a slice or array to map[float64]struct{}.
@@ -339,15 +339,15 @@ func ToFloat64SetE(i any) (map[float64]struct{}, error) {
 	if v, ok := m.(map[float64]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[float64]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[float64]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToFloat64E(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // ToStrSet converts a slice or array to map[string]struct{}.
@@ -365,15 +365,15 @@ func ToStrSetE(i any) (map[string]struct{}, error) {
 	if v, ok := m.(map[string]struct{}); ok {
 		return v, nil
 	}
-	dst := make(map[string]struct{}, reflect.ValueOf(m).Len())
+	r := make(map[string]struct{}, reflect.ValueOf(m).Len())
 	for _, k := range reflect.ValueOf(m).MapKeys() {
 		v, err := ToStringE(k.Interface())
 		if err != nil {
 			return nil, err
 		}
-		dst[v] = struct{}{}
+		r[v] = struct{}{}
 	}
-	return dst, nil
+	return r, nil
 }
 
 // toSetE converts a slice or array to map[any]struct{} and returns an error if occurred.
