@@ -27,13 +27,15 @@ func ToBoolE(i any) (bool, error) {
 		return b, nil
 	case nil:
 		return false, nil
-	case int:
-		if i.(int) != 0 {
-			return true, nil
-		}
-		return false, nil
+	case int, int64, int32, int16, int8, uint, uint64, uint32, uint16, uint8, float64, float32, uintptr, complex64, complex128:
+		return !reflect.ValueOf(i).IsZero(), nil
 	case string:
 		return strconv.ParseBool(i.(string))
+	case time.Duration:
+		return b != 0, nil
+	case json.Number:
+		v, err := b.Float64()
+		return v != 0, err
 	default:
 		return false, fmt.Errorf("unable to cast %#v of type %T to bool", i, i)
 	}
@@ -49,6 +51,11 @@ func ToIntE(i any) (int, error) {
 	}
 
 	switch s := i.(type) {
+	case bool:
+		if s {
+			return 1, nil
+		}
+		return 0, nil
 	case int64:
 		return int(s), nil
 	case int32:
@@ -78,12 +85,8 @@ func ToIntE(i any) (int, error) {
 		}
 		return 0, fmt.Errorf("unable to cast %#v of type %T to int64", i, i)
 	case json.Number:
-		return ToIntE(string(s))
-	case bool:
-		if s {
-			return 1, nil
-		}
-		return 0, nil
+		v, err := s.Int64()
+		return int(v), err
 	case nil:
 		return 0, nil
 	default:
@@ -101,6 +104,11 @@ func ToInt8E(i any) (int8, error) {
 	}
 
 	switch s := i.(type) {
+	case bool:
+		if s {
+			return 1, nil
+		}
+		return 0, nil
 	case int64:
 		return int8(s), nil
 	case int32:
@@ -130,12 +138,8 @@ func ToInt8E(i any) (int8, error) {
 		}
 		return 0, fmt.Errorf("unable to cast %#v of type %T to int8", i, i)
 	case json.Number:
-		return ToInt8E(string(s))
-	case bool:
-		if s {
-			return 1, nil
-		}
-		return 0, nil
+		v, err := s.Int64()
+		return int8(v), err
 	case nil:
 		return 0, nil
 	default:
@@ -153,6 +157,11 @@ func ToInt16E(i any) (int16, error) {
 	}
 
 	switch s := i.(type) {
+	case bool:
+		if s {
+			return 1, nil
+		}
+		return 0, nil
 	case int64:
 		return int16(s), nil
 	case int32:
@@ -182,12 +191,8 @@ func ToInt16E(i any) (int16, error) {
 		}
 		return 0, fmt.Errorf("unable to cast %#v of type %T to int16", i, i)
 	case json.Number:
-		return ToInt16E(string(s))
-	case bool:
-		if s {
-			return 1, nil
-		}
-		return 0, nil
+		v, err := s.Int64()
+		return int16(v), err
 	case nil:
 		return 0, nil
 	default:
@@ -234,7 +239,8 @@ func ToInt32E(i any) (int32, error) {
 		}
 		return 0, fmt.Errorf("unable to cast %#v of type %T to int32", i, i)
 	case json.Number:
-		return ToInt32E(string(s))
+		v, err := s.Int64()
+		return int32(v), err
 	case bool:
 		if s {
 			return 1, nil
@@ -257,6 +263,11 @@ func ToInt64E(i any) (int64, error) {
 	}
 
 	switch s := i.(type) {
+	case bool:
+		if s {
+			return 1, nil
+		}
+		return 0, nil
 	case int64:
 		return s, nil
 	case int32:
@@ -286,12 +297,7 @@ func ToInt64E(i any) (int64, error) {
 		}
 		return 0, fmt.Errorf("unable to cast %#v of type %T to int64", i, i)
 	case json.Number:
-		return ToInt64E(string(s))
-	case bool:
-		if s {
-			return 1, nil
-		}
-		return 0, nil
+		return s.Int64()
 	case nil:
 		return 0, nil
 	default:
@@ -312,17 +318,11 @@ func ToUintE(i any) (uint, error) {
 	}
 
 	switch s := i.(type) {
-	case string:
-		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
-		if err == nil {
-			if v < 0 {
-				return 0, errNegativeNotAllowed
-			}
-			return uint(v), nil
+	case bool:
+		if s {
+			return 1, nil
 		}
-		return 0, fmt.Errorf("unable to cast %#v of type %T to uint", i, i)
-	case json.Number:
-		return ToUintE(string(s))
+		return 0, nil
 	case int64:
 		if s < 0 {
 			return 0, errNegativeNotAllowed
@@ -363,11 +363,18 @@ func ToUintE(i any) (uint, error) {
 			return 0, errNegativeNotAllowed
 		}
 		return uint(s), nil
-	case bool:
-		if s {
-			return 1, nil
+	case string:
+		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
+		if v < 0 {
+			return 0, errNegativeNotAllowed
 		}
-		return 0, nil
+		return uint(v), err
+	case json.Number:
+		v, err := s.Int64()
+		if v < 0 {
+			return 0, errNegativeNotAllowed
+		}
+		return uint(v), err
 	case nil:
 		return 0, nil
 	default:
@@ -388,17 +395,11 @@ func ToUint8E(i any) (uint8, error) {
 	}
 
 	switch s := i.(type) {
-	case string:
-		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
-		if err == nil {
-			if v < 0 {
-				return 0, errNegativeNotAllowed
-			}
-			return uint8(v), nil
+	case bool:
+		if s {
+			return 1, nil
 		}
-		return 0, fmt.Errorf("unable to cast %#v of type %T to uint8", i, i)
-	case json.Number:
-		return ToUint8E(string(s))
+		return 0, nil
 	case int64:
 		if s < 0 {
 			return 0, errNegativeNotAllowed
@@ -439,11 +440,18 @@ func ToUint8E(i any) (uint8, error) {
 			return 0, errNegativeNotAllowed
 		}
 		return uint8(s), nil
-	case bool:
-		if s {
-			return 1, nil
+	case string:
+		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
+		if v < 0 {
+			return 0, errNegativeNotAllowed
 		}
-		return 0, nil
+		return uint8(v), err
+	case json.Number:
+		v, err := s.Int64()
+		if v < 0 {
+			return 0, errNegativeNotAllowed
+		}
+		return uint8(v), err
 	case nil:
 		return 0, nil
 	default:
@@ -464,17 +472,11 @@ func ToUint16E(i any) (uint16, error) {
 	}
 
 	switch s := i.(type) {
-	case string:
-		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
-		if err == nil {
-			if v < 0 {
-				return 0, errNegativeNotAllowed
-			}
-			return uint16(v), nil
+	case bool:
+		if s {
+			return 1, nil
 		}
-		return 0, fmt.Errorf("unable to cast %#v of type %T to uint16", i, i)
-	case json.Number:
-		return ToUint16E(string(s))
+		return 0, nil
 	case int64:
 		if s < 0 {
 			return 0, errNegativeNotAllowed
@@ -515,11 +517,18 @@ func ToUint16E(i any) (uint16, error) {
 			return 0, errNegativeNotAllowed
 		}
 		return uint16(s), nil
-	case bool:
-		if s {
-			return 1, nil
+	case string:
+		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
+		if v < 0 {
+			return 0, errNegativeNotAllowed
 		}
-		return 0, nil
+		return uint16(v), err
+	case json.Number:
+		v, err := s.Int64()
+		if v < 0 {
+			return 0, errNegativeNotAllowed
+		}
+		return uint16(v), err
 	case nil:
 		return 0, nil
 	default:
@@ -540,17 +549,11 @@ func ToUint32E(i any) (uint32, error) {
 	}
 
 	switch s := i.(type) {
-	case string:
-		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
-		if err == nil {
-			if v < 0 {
-				return 0, errNegativeNotAllowed
-			}
-			return uint32(v), nil
+	case bool:
+		if s {
+			return 1, nil
 		}
-		return 0, fmt.Errorf("unable to cast %#v of type %T to uint32", i, i)
-	case json.Number:
-		return ToUint32E(string(s))
+		return 0, nil
 	case int64:
 		if s < 0 {
 			return 0, errNegativeNotAllowed
@@ -591,11 +594,18 @@ func ToUint32E(i any) (uint32, error) {
 			return 0, errNegativeNotAllowed
 		}
 		return uint32(s), nil
-	case bool:
-		if s {
-			return 1, nil
+	case string:
+		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
+		if v < 0 {
+			return 0, errNegativeNotAllowed
 		}
-		return 0, nil
+		return uint32(v), err
+	case json.Number:
+		v, err := s.Int64()
+		if v < 0 {
+			return 0, errNegativeNotAllowed
+		}
+		return uint32(v), err
 	case nil:
 		return 0, nil
 	default:
@@ -616,17 +626,11 @@ func ToUint64E(i any) (uint64, error) {
 	}
 
 	switch s := i.(type) {
-	case string:
-		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
-		if err == nil {
-			if v < 0 {
-				return 0, errNegativeNotAllowed
-			}
-			return uint64(v), nil
+	case bool:
+		if s {
+			return 1, nil
 		}
-		return 0, fmt.Errorf("unable to cast %#v of type %T to uint64", i, i)
-	case json.Number:
-		return ToUint64E(string(s))
+		return 0, nil
 	case int64:
 		if s < 0 {
 			return 0, errNegativeNotAllowed
@@ -667,11 +671,18 @@ func ToUint64E(i any) (uint64, error) {
 			return 0, errNegativeNotAllowed
 		}
 		return uint64(s), nil
-	case bool:
-		if s {
-			return 1, nil
+	case string:
+		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
+		if v < 0 {
+			return 0, errNegativeNotAllowed
 		}
-		return 0, nil
+		return uint64(v), err
+	case json.Number:
+		v, err := s.Int64()
+		if v < 0 {
+			return 0, errNegativeNotAllowed
+		}
+		return uint64(v), err
 	case nil:
 		return 0, nil
 	default:
@@ -713,16 +724,10 @@ func ToFloat32E(i any) (float32, error) {
 		return float32(s), nil
 	case string:
 		v, err := strconv.ParseFloat(s, 32)
-		if err == nil {
-			return float32(v), nil
-		}
-		return 0, fmt.Errorf("unable to cast %#v of type %T to float32", i, i)
+		return float32(v), err
 	case json.Number:
 		v, err := s.Float64()
-		if err == nil {
-			return float32(v), nil
-		}
-		return 0, fmt.Errorf("unable to cast %#v of type %T to float32", i, i)
+		return float32(v), err
 	case bool:
 		if s {
 			return 1, nil
@@ -768,17 +773,9 @@ func ToFloat64E(i any) (float64, error) {
 	case uint8:
 		return float64(s), nil
 	case string:
-		v, err := strconv.ParseFloat(s, 64)
-		if err == nil {
-			return v, nil
-		}
-		return 0, fmt.Errorf("unable to cast %#v of type %T to float64", i, i)
+		return strconv.ParseFloat(s, 64)
 	case json.Number:
-		v, err := s.Float64()
-		if err == nil {
-			return v, nil
-		}
-		return 0, fmt.Errorf("unable to cast %#v of type %T to float64", i, i)
+		return s.Float64()
 	case bool:
 		if s {
 			return 1, nil
@@ -800,10 +797,6 @@ func ToStringE(i any) (string, error) {
 		return s, nil
 	case bool:
 		return strconv.FormatBool(s), nil
-	case float64:
-		return strconv.FormatFloat(s, 'f', -1, 64), nil
-	case float32:
-		return strconv.FormatFloat(float64(s), 'f', -1, 32), nil
 	case int:
 		return strconv.Itoa(s), nil
 	case int64:
@@ -824,19 +817,27 @@ func ToStringE(i any) (string, error) {
 		return strconv.FormatUint(uint64(s), 10), nil
 	case uint8:
 		return strconv.FormatUint(uint64(s), 10), nil
+	case float64:
+		return strconv.FormatFloat(s, 'f', -1, 64), nil
+	case float32:
+		return strconv.FormatFloat(float64(s), 'f', -1, 32), nil
 	case json.Number:
 		return s.String(), nil
 	case []byte:
 		return string(s), nil
 	case template.HTML:
 		return string(s), nil
+	case template.HTMLAttr:
+		return string(s), nil
 	case template.URL:
 		return string(s), nil
 	case template.JS:
 		return string(s), nil
+	case template.JSStr:
+		return string(s), nil
 	case template.CSS:
 		return string(s), nil
-	case template.HTMLAttr:
+	case template.Srcset:
 		return string(s), nil
 	case nil:
 		return "", nil
@@ -850,38 +851,30 @@ func ToStringE(i any) (string, error) {
 }
 
 // ToDurationE casts any type to time.Duration type.
-func ToDurationE(i any) (d time.Duration, err error) {
+func ToDurationE(i any) (time.Duration, error) {
 	i = indirect(i)
 
 	switch s := i.(type) {
 	case time.Duration:
 		return s, nil
 	case int, int64, int32, int16, int8, uint, uint64, uint32, uint16, uint8:
-		d = time.Duration(ToAny[int64](s))
-		return
+		return time.Duration(ToAny[int64](s)), nil
 	case float32, float64:
-		d = time.Duration(ToAny[float64](s))
-		return
+		return time.Duration(ToAny[float64](s)), nil
 	case string:
 		if strings.ContainsAny(s, "nsuµmh") {
-			d, err = time.ParseDuration(s)
-		} else {
-			d, err = time.ParseDuration(s + "ns")
+			return time.ParseDuration(s)
 		}
-		return
+		return time.ParseDuration(s + "ns")
 	case json.Number:
-		var v float64
-		v, err = s.Float64()
-		d = time.Duration(v)
-		return
+		v, err := s.Float64()
+		return time.Duration(v), err
 	default:
-		err = fmt.Errorf("unable to cast %#v of type %T to Duration", i, i)
-		return
+		return time.Duration(0), fmt.Errorf("unable to cast %#v of type %T to Duration", i, i)
 	}
 }
 
-// toInt returns the int value of v if v or v's underlying type
-// is an int.
+// toInt returns the int value of v if v or v's underlying type is an int.
 // Note that this will return false for int64 etc. types.
 func toInt(v any) (int, bool) {
 	switch v := v.(type) {
