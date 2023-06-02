@@ -250,11 +250,11 @@ var st = struct {
 // to map[string]any
 Struct2Map(st)         // map["I":1 "S":"a"]
 // to map[string]string
-Struct2MapString(st)   // map["I":"1" "S":"a"]
+Struct2MapStr(st)   // map["I":"1" "S":"a"]
 
 // any type tp map[string]string
-m := ToMapStrStr(`{"foo":"foo","bar":"bar","baz":"baz"}`)       // map["foo":"foo" "bar":"bar" "baz":"baz"]
-m, err := ToMapStrStrE(`{"foo":"foo","bar":"bar","baz":"baz"}`) // map["foo":"foo" "bar":"bar" "baz":"baz"], nil
+m := ToMapStr(`{"foo":"foo","bar":"bar","baz":"baz"}`)       // map["foo":"foo" "bar":"bar" "baz":"baz"]
+m, err := ToMapStrE(`{"foo":"foo","bar":"bar","baz":"baz"}`) // map["foo":"foo" "bar":"bar" "baz":"baz"], nil
 ```
 
 # URL

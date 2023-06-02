@@ -72,6 +72,11 @@ type TestCase struct {
 	wantErr bool
 }
 
+var (
+	one    int  = 1
+	ptrOne *int = &one
+)
+
 func genIntegerTests() []TestCase {
 	tests := []TestCase{
 		{"bool true", true, 1, false},
@@ -92,6 +97,9 @@ func genIntegerTests() []TestCase {
 		{"string 1.01 failed", "1.01", 0, true},
 		{"json.Number 1", json.Number("1"), 1, false},
 		{"nil", nil, 0, false},
+		{"time.Month 1", time.Month(1), 1, false},
+		{"time.Weekday 1", time.Weekday(1), 1, false},
+		{"pointer to int 1", ptrOne, 1, false},
 		{"complex64 3-5i failed", complex(3, -5), 0, true},
 	}
 	return tests

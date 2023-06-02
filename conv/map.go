@@ -26,10 +26,10 @@ func Struct2Map(a any) map[string]any {
 	return m
 }
 
-// Struct2MapString converts struct to map[string]string.
+// Struct2MapStr converts struct to map[string]string.
 // Such as struct{I int, S string}{I: 1, S: "a"} to map[I:1 S:a].
 // Note that unexported fields of struct can't be converted.
-func Struct2MapString(obj any) map[string]string {
+func Struct2MapStr(obj any) map[string]string {
 	// Check param.
 	v := reflect.ValueOf(obj)
 	if v.Kind() != reflect.Struct {
@@ -46,14 +46,14 @@ func Struct2MapString(obj any) map[string]string {
 	return m
 }
 
-// ToMapStrStr converts any type to a map[string]string type.
-func ToMapStrStr(a any) map[string]string {
-	v, _ := ToMapStrStrE(a)
+// ToMapStr converts any type to a map[string]string type.
+func ToMapStr(a any) map[string]string {
+	v, _ := ToMapStrE(a)
 	return v
 }
 
-// ToMapStrStrE converts any type to a map[string]string type.
-func ToMapStrStrE(a any) (map[string]string, error) {
+// ToMapStrE converts any type to a map[string]string type.
+func ToMapStrE(a any) (map[string]string, error) {
 	var m = map[string]string{}
 
 	switch v := a.(type) {

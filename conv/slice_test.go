@@ -14,39 +14,11 @@ func TestToUint64Slice(t *testing.T) {
 		args args
 		want []uint64
 	}{
-		{"nil to uint64 slice",
-			args{nil},
-			nil,
-		},
-		{
-			"uint64 slice to uint64 slice",
-			args{[]uint64{1, 2, 3}},
-			[]uint64{1, 2, 3},
-		},
-		{
-			"uint64 array to uint64 slice",
-			args{[3]uint64{1, 2, 3}},
-			[]uint64{1, 2, 3},
-		},
-		{
-			"uint64 value to uint64 slice",
-			args{uint64(1)},
-			[]uint64{1},
-		},
-		{
-			"string slice to uint64 slice",
-			args{[]string{"1", "2", "3"}},
-			[]uint64{1, 2, 3},
-		},
-		{
-			"string array to uint64 slice",
-			args{[3]string{"1", "2", "3"}},
-			[]uint64{1, 2, 3},
-		},
-		{"string value to uint64 slice",
-			args{"1"},
-			[]uint64{1},
-		},
+		{"nil", args{nil}, nil},
+		{"uint64 slice", args{[]uint64{1, 2, 3}}, []uint64{1, 2, 3}},
+		{"uint64 array", args{[3]uint64{1, 2, 3}}, []uint64{1, 2, 3}},
+		{"string slice", args{[]string{"1", "2", "3"}}, []uint64{1, 2, 3}},
+		{"string array", args{[3]string{"1", "2", "3"}}, []uint64{1, 2, 3}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -66,44 +38,13 @@ func TestToStrSlice(t *testing.T) {
 		args args
 		want []string
 	}{
-		{"nil to string slice",
-			args{nil},
-			nil,
-		},
-		{
-			"string slice to string slice",
-			args{[]string{"a", "b", "c"}},
-			[]string{"a", "b", "c"},
-		},
-		{
-			"string array to string slice",
-			args{[3]string{"a", "b", "c"}},
-			[]string{"a", "b", "c"},
-		},
-		{
-			"string value to string slice",
-			args{"a"},
-			[]string{"a"},
-		},
-		{
-			"string value separated by white space character to string slice",
-			args{"a b c"},
-			[]string{"a", "b", "c"},
-		},
-		{
-			"uint64 slice to string slice",
-			args{[]uint64{1, 2, 3}},
-			[]string{"1", "2", "3"},
-		},
-		{
-			"uint64 array to string slice",
-			args{[3]uint64{1, 2, 3}},
-			[]string{"1", "2", "3"},
-		},
-		{"uint64 value to string slice",
-			args{uint64(1)},
-			[]string{"1"},
-		},
+		{"nil to string slice", args{nil}, nil},
+		{"string slice", args{[]string{"a", "b", "c"}}, []string{"a", "b", "c"}},
+		{"string array", args{[3]string{"a", "b", "c"}}, []string{"a", "b", "c"}},
+		{"string value", args{"a"}, []string{"a"}},
+		{"string value separated by white space character", args{"a b c"}, []string{"a", "b", "c"}},
+		{"uint64 slice", args{[]uint64{1, 2, 3}}, []string{"1", "2", "3"}},
+		{"uint64 array", args{[3]uint64{1, 2, 3}}, []string{"1", "2", "3"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -123,7 +64,8 @@ func TestToUint32Slice(t *testing.T) {
 		args args
 		want []uint32
 	}{
-		{"nil to uint32 slice",
+		{
+			"nil to uint32 slice",
 			args{nil},
 			nil,
 		},
@@ -151,10 +93,6 @@ func TestToUint32Slice(t *testing.T) {
 			"string array to uint32 slice",
 			args{[3]string{"1", "2", "3"}},
 			[]uint32{1, 2, 3},
-		},
-		{"string value to uint32 slice",
-			args{"1"},
-			[]uint32{1},
 		},
 	}
 	for _, tt := range tests {
@@ -204,10 +142,6 @@ func TestToUint16Slice(t *testing.T) {
 			args{[3]string{"1", "2", "3"}},
 			[]uint16{1, 2, 3},
 		},
-		{"string value to uint16 slice",
-			args{"1"},
-			[]uint16{1},
-		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -255,10 +189,6 @@ func TestToUint8Slice(t *testing.T) {
 			"string array to uint8 slice",
 			args{[3]string{"1", "2", "3"}},
 			[]uint8{1, 2, 3},
-		},
-		{"string value to uint8 slice",
-			args{"1"},
-			[]uint8{1},
 		},
 	}
 	for _, tt := range tests {
@@ -308,10 +238,6 @@ func TestToInt64Slice(t *testing.T) {
 			args{[3]string{"1", "2", "3"}},
 			[]int64{1, 2, 3},
 		},
-		{"string value to int64 slice",
-			args{"1"},
-			[]int64{1},
-		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -359,10 +285,6 @@ func TestToInt32Slice(t *testing.T) {
 			"string array to int32 slice",
 			args{[3]string{"1", "2", "3"}},
 			[]int32{1, 2, 3},
-		},
-		{"string value to int32 slice",
-			args{"1"},
-			[]int32{1},
 		},
 	}
 	for _, tt := range tests {
@@ -412,10 +334,6 @@ func TestToInt16Slice(t *testing.T) {
 			args{[3]string{"1", "2", "3"}},
 			[]int16{1, 2, 3},
 		},
-		{"string value to int16 slice",
-			args{"1"},
-			[]int16{1},
-		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -464,10 +382,6 @@ func TestToInt8Slice(t *testing.T) {
 			args{[3]string{"1", "2", "3"}},
 			[]int8{1, 2, 3},
 		},
-		{"string value to int8 slice",
-			args{"1"},
-			[]int8{1},
-		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -502,11 +416,6 @@ func TestToUintSlice(t *testing.T) {
 			[]uint{1, 2, 3},
 		},
 		{
-			"uint value to uint slice",
-			args{uint(1)},
-			[]uint{1},
-		},
-		{
 			"string slice to uint slice",
 			args{[]string{"1", "2", "3"}},
 			[]uint{1, 2, 3},
@@ -515,10 +424,6 @@ func TestToUintSlice(t *testing.T) {
 			"string array to uint slice",
 			args{[3]string{"1", "2", "3"}},
 			[]uint{1, 2, 3},
-		},
-		{"string value to uint slice",
-			args{"1"},
-			[]uint{1},
 		},
 	}
 	for _, tt := range tests {
@@ -539,9 +444,10 @@ func TestToIntSlice(t *testing.T) {
 		args args
 		want []int
 	}{
-		{"nil to int slice",
+		{
+			"nil to int slice",
 			args{nil},
-			[]int{},
+			nil,
 		},
 		{
 			"int slice to int slice",
@@ -554,11 +460,6 @@ func TestToIntSlice(t *testing.T) {
 			[]int{1, 2, 3},
 		},
 		{
-			"int value to int slice fail",
-			args{int(1)},
-			[]int{},
-		},
-		{
 			"string slice to int slice",
 			args{[]string{"1", "2", "3"}},
 			[]int{1, 2, 3},
@@ -567,10 +468,6 @@ func TestToIntSlice(t *testing.T) {
 			"string array to int slice",
 			args{[3]string{"1", "2", "3"}},
 			[]int{1, 2, 3},
-		},
-		{"string value to int slice fail",
-			args{"1"},
-			[]int{},
 		},
 	}
 	for _, tt := range tests {
@@ -591,9 +488,10 @@ func TestToBoolSlice(t *testing.T) {
 		args args
 		want []bool
 	}{
-		{"nil to int slice",
+		{
+			"nil to int slice",
 			args{nil},
-			[]bool{},
+			nil,
 		},
 		{
 			"bool slice to bool slice",

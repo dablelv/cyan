@@ -48,7 +48,7 @@ func TestStruct2Map(t *testing.T) {
 	}
 }
 
-func TestStruct2MapString(t *testing.T) {
+func TestStruct2MapStr(t *testing.T) {
 	type args struct {
 		obj any
 	}
@@ -84,14 +84,14 @@ func TestStruct2MapString(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Struct2MapString(tt.args.obj); !reflect.DeepEqual(got, tt.want) {
+			if got := Struct2MapStr(tt.args.obj); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Struct2MapString() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestToMapStrStr(t *testing.T) {
+func TestToMapStr(t *testing.T) {
 	type args struct {
 		a any
 	}
@@ -101,22 +101,47 @@ func TestToMapStrStr(t *testing.T) {
 		want map[string]string
 	}{
 		{
-			name: "map[string]string to map",
+			name: "map[string]string",
 			args: args{map[string]string{"foo": "foo", "bar": "bar", "baz": "baz"}},
 			want: map[string]string{"foo": "foo", "bar": "bar", "baz": "baz"},
 		},
 		{
-			name: "map[string]any to map",
+			name: "map[string]any",
 			args: args{map[string]any{"foo": 1, "bar": 2, "baz": 3}},
 			want: map[string]string{"foo": "1", "bar": "2", "baz": "3"},
 		},
 		{
-			name: "map[any]any to map",
+			name: "map[string]any failed",
+			args: args{map[string]any{"foo": 1, "bar": 2, "baz": []int{}}},
+			want: nil,
+		},
+		{
+			name: "map[any]string",
+			args: args{map[any]string{1: "foo", 2: "bar", 3: "baz"}},
+			want: map[string]string{"1": "foo", "2": "bar", "3": "baz"},
+		},
+		{
+			name: "map[any]string failed",
+			args: args{map[any]string{uintptr(1): "foo", 2: "bar", 3: "baz"}},
+			want: nil,
+		},
+		{
+			name: "map[any]any",
 			args: args{map[any]any{1: 1, 2: 2, 3: 3}},
 			want: map[string]string{"1": "1", "2": "2", "3": "3"},
 		},
 		{
-			name: "string to map",
+			name: "map[any]any key failed",
+			args: args{map[any]any{uintptr(1): 1, 2: 2, 3: 3}},
+			want: nil,
+		},
+		{
+			name: "map[any]any value failed",
+			args: args{map[any]any{1: uintptr(1), 2: 2, 3: 3}},
+			want: nil,
+		},
+		{
+			name: "json",
 			args: args{`{"foo":"foo","bar":"bar","baz":"baz"}`},
 			want: map[string]string{"foo": "foo", "bar": "bar", "baz": "baz"},
 		},
@@ -133,7 +158,7 @@ func TestToMapStrStr(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := ToMapStrStr(tt.args.a); !reflect.DeepEqual(got, tt.want) {
+			if got := ToMapStr(tt.args.a); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("ToMapStrStr() = %v, want %v", got, tt.want)
 			}
 		})

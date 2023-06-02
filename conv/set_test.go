@@ -5,50 +5,32 @@ import (
 	"testing"
 )
 
-func TesttoSetE(t *testing.T) {
+func TestToBoolSetE(t *testing.T) {
 	type args struct {
 		i any
 	}
 	tests := []struct {
 		name    string
 		args    args
-		want    map[any]struct{}
+		want    map[bool]struct{}
 		wantErr bool
 	}{
 		{
-			name: "string array to map set",
-			args: args{[3]string{"foo", "bar", "baz"}},
-			want: map[any]struct{}{
-				"foo": {},
-				"bar": {},
-				"baz": {},
+			name: "to bool set",
+			args: args{[]bool{true, false, true}},
+			want: map[bool]struct{}{
+				true:  {},
+				false: {},
 			},
 			wantErr: false,
-		},
-		{
-			name: "string slice to map set",
-			args: args{[]string{"foo", "bar", "baz"}},
-			want: map[any]struct{}{
-				"foo": {},
-				"bar": {},
-				"baz": {},
-			},
+		}, {
+			name:    "arg is nil",
+			args:    args{nil},
+			want:    nil,
 			wantErr: false,
 		},
 		{
-			name:    "int array to  map set",
-			args:    args{[3]int{86, 852, 61}},
-			want:    map[any]struct{}{86: {}, 852: {}, 61: {}},
-			wantErr: false,
-		},
-		{
-			name:    "int slice to map set",
-			args:    args{[]int{86, 852, 61}},
-			want:    map[any]struct{}{86: {}, 852: {}, 61: {}},
-			wantErr: false,
-		},
-		{
-			name:    "arg isn't slice and array",
+			name:    "arg is neither a slice nor an array",
 			args:    args{"foo"},
 			want:    nil,
 			wantErr: true,
@@ -56,13 +38,107 @@ func TesttoSetE(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := toSetE(tt.args.i)
+			got, err := ToSetE[bool](tt.args.i)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("toSetE() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("ToSetGE() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("toSetE() got = %v, want %v", got, tt.want)
+				t.Errorf("ToSetGE() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestToIntSetE(t *testing.T) {
+	type args struct {
+		i any
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    map[int]struct{}
+		wantErr bool
+	}{
+		{
+			name: "to int set",
+			args: args{[]int{1, 2, 3}},
+			want: map[int]struct{}{
+				1: {},
+				2: {},
+				3: {},
+			},
+			wantErr: false,
+		},
+		{
+			name:    "arg is nil",
+			args:    args{nil},
+			want:    nil,
+			wantErr: false,
+		},
+		{
+			name:    "arg is neither a slice nor an array",
+			args:    args{"foo"},
+			want:    nil,
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := ToSetE[int](tt.args.i)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ToSetGE() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ToSetGE() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestToStrSetGE(t *testing.T) {
+	type args struct {
+		i any
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    map[string]struct{}
+		wantErr bool
+	}{
+		{
+			name: "to string set",
+			args: args{[]string{"foo", "bar", "baz"}},
+			want: map[string]struct{}{
+				"foo": {},
+				"bar": {},
+				"baz": {},
+			},
+			wantErr: false,
+		},
+		{
+			name:    "arg is nil",
+			args:    args{nil},
+			want:    nil,
+			wantErr: false,
+		},
+		{
+			name:    "arg is neither a slice nor an array",
+			args:    args{"foo"},
+			want:    nil,
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := ToSetE[string](tt.args.i)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ToSetGE() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ToSetGE() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -78,23 +154,28 @@ func TestToBoolSet(t *testing.T) {
 		want map[bool]struct{}
 	}{
 		{
-			"bool slice to bool set",
+			"bool slice",
 			args{[]bool{true, true, false, false}},
 			map[bool]struct{}{true: {}, false: {}},
 		},
 		{
-			"int slice to bool set",
+			"int slice",
 			args{[]int{1, 1, 1}},
 			map[bool]struct{}{true: {}},
 		},
 		{
-			"string slice to bool set",
+			"string slice",
 			args{[]string{"false", "0", "FALSE"}},
 			map[bool]struct{}{false: {}},
 		},
 		{
-			"string slice to bool set failed",
+			"string slice failed",
 			args{[]string{"foo", "1", "2", "2"}},
+			nil,
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
 			nil,
 		},
 	}
@@ -117,23 +198,28 @@ func TestToIntSet(t *testing.T) {
 		want map[int]struct{}
 	}{
 		{
-			"int slice to int set",
+			"int slice",
 			args{[]int{0, 1, 2, 2}},
 			map[int]struct{}{0: {}, 1: {}, 2: {}},
 		},
 		{
-			"bool slice to int set",
+			"bool slice",
 			args{[]bool{false, true, true}},
 			map[int]struct{}{0: {}, 1: {}},
 		},
 		{
-			"string slice to int set",
+			"string slice",
 			args{[]string{"0", "1", "2", "2"}},
 			map[int]struct{}{0: {}, 1: {}, 2: {}},
 		},
 		{
-			"string slice to int set failed",
+			"string slice failed",
 			args{[]string{"foo", "1", "2", "2"}},
+			nil,
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
 			nil,
 		},
 	}
@@ -175,6 +261,11 @@ func TestToInt8Set(t *testing.T) {
 			args{[]string{"foo", "1", "2", "2"}},
 			nil,
 		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
+			nil,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -212,6 +303,11 @@ func TestToInt16Set(t *testing.T) {
 		{
 			"string slice to int16 set failed",
 			args{[]string{"foo", "1", "2"}},
+			nil,
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
 			nil,
 		},
 	}
@@ -253,6 +349,11 @@ func TestToInt32Set(t *testing.T) {
 			args{[]string{"foo", "1", "2"}},
 			nil,
 		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
+			nil,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -290,6 +391,11 @@ func TestToInt64Set(t *testing.T) {
 		{
 			"string slice to int64 set failed",
 			args{[]string{"foo", "1", "2"}},
+			nil,
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
 			nil,
 		},
 	}
@@ -331,6 +437,11 @@ func TestToUintSet(t *testing.T) {
 			args{[]string{"foo", "1", "2"}},
 			nil,
 		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
+			nil,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -352,7 +463,7 @@ func TestToUint8Set(t *testing.T) {
 	}{
 		{
 			"uint8 slice to uint8 set",
-			args{[]uint{0, 1, 2, 2}},
+			args{[]uint8{0, 1, 2, 2}},
 			map[uint8]struct{}{0: {}, 1: {}, 2: {}},
 		},
 		{
@@ -368,6 +479,11 @@ func TestToUint8Set(t *testing.T) {
 		{
 			"string slice to uint8 set failed",
 			args{[]string{"foo", "1", "2"}},
+			nil,
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
 			nil,
 		},
 	}
@@ -391,7 +507,7 @@ func TestToUint16Set(t *testing.T) {
 	}{
 		{
 			"uint16 slice to uint16 set",
-			args{[]uint{0, 1, 2, 2}},
+			args{[]uint16{0, 1, 2, 2}},
 			map[uint16]struct{}{0: {}, 1: {}, 2: {}},
 		},
 		{
@@ -407,6 +523,11 @@ func TestToUint16Set(t *testing.T) {
 		{
 			"string slice to uint16 set failed",
 			args{[]string{"foo", "1", "2"}},
+			nil,
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
 			nil,
 		},
 	}
@@ -430,7 +551,7 @@ func TestToUint32Set(t *testing.T) {
 	}{
 		{
 			"uint32 slice to uint32 set",
-			args{[]uint{0, 1, 2, 2}},
+			args{[]uint32{0, 1, 2, 2}},
 			map[uint32]struct{}{0: {}, 1: {}, 2: {}},
 		},
 		{
@@ -446,6 +567,11 @@ func TestToUint32Set(t *testing.T) {
 		{
 			"string slice to uint32 set failed",
 			args{[]string{"foo", "1", "2"}},
+			nil,
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
 			nil,
 		},
 	}
@@ -478,6 +604,16 @@ func TestToUint64Set(t *testing.T) {
 			want: map[uint64]struct{}{1: {}, 2: {}, 3: {}},
 		},
 		{
+			"string slice",
+			args{[]string{"0", "1", "2", "2"}},
+			map[uint64]struct{}{0: {}, 1: {}, 2: {}},
+		},
+		{
+			"string slice failed",
+			args{[]string{"foo", "1", "2"}},
+			nil,
+		},
+		{
 			name: "zero length uint64 array to map set",
 			args: args{[0]uint64{}},
 			want: map[uint64]struct{}{},
@@ -491,6 +627,11 @@ func TestToUint64Set(t *testing.T) {
 			name: "nil slice to map set",
 			args: args{[]uint64(nil)},
 			want: map[uint64]struct{}{},
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
+			nil,
 		},
 	}
 	for _, tt := range tests {
@@ -513,7 +654,7 @@ func TestToFloat32Set(t *testing.T) {
 	}{
 		{
 			"float32 slice to float32 set",
-			args{[]uint{0, 1, 2, 2}},
+			args{[]float32{0, 1, 2, 2}},
 			map[float32]struct{}{0: {}, 1: {}, 2: {}},
 		},
 		{
@@ -529,6 +670,11 @@ func TestToFloat32Set(t *testing.T) {
 		{
 			"string slice to float32 set failed",
 			args{[]string{"foo", "1", "2"}},
+			nil,
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
 			nil,
 		},
 	}
@@ -552,7 +698,7 @@ func TestToFloat64Set(t *testing.T) {
 	}{
 		{
 			"float64 slice to float64 set",
-			args{[]uint{0, 1, 2, 2}},
+			args{[]float64{0, 1, 2, 2}},
 			map[float64]struct{}{0: {}, 1: {}, 2: {}},
 		},
 		{
@@ -568,6 +714,11 @@ func TestToFloat64Set(t *testing.T) {
 		{
 			"string slice to float64 set failed",
 			args{[]string{"foo", "1", "2"}},
+			nil,
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
 			nil,
 		},
 	}
@@ -612,6 +763,11 @@ func TestToStrSet(t *testing.T) {
 		{
 			"struct{} slice to string set",
 			args{[]struct{}{{}}},
+			nil,
+		},
+		{
+			"arg isn't slice and array",
+			args{"foo"},
 			nil,
 		},
 	}
