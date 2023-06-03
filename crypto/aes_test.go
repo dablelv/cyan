@@ -33,6 +33,11 @@ func TestBase64AESCBCEncrypt(t *testing.T) {
 	key := []byte("12345678abcdefgh")
 	c, _ := Base64AESCBCEncrypt(p, key)
 	assert.Equal("A67NhD3RBiNaMgG6HTm8LQ==", c)
+
+	p = []byte("plaintext")
+	key = []byte("12345678abcdefghi")
+	_, err := Base64AESCBCEncrypt(p, key)
+	assert.IsNotNil(err)
 }
 
 func TestBase64AESCBCDecrypt(t *testing.T) {
@@ -42,4 +47,18 @@ func TestBase64AESCBCDecrypt(t *testing.T) {
 	key := []byte("12345678abcdefgh")
 	p, _ := Base64AESCBCDecrypt(c, key)
 	assert.Equal([]byte("plaintext"), p)
+
+	key = []byte("12345678abcdefgi")
+	_, err := Base64AESCBCDecrypt(c, key)
+	assert.IsNotNil(err)
+
+	c = "A67NhD3RBiNaMgG6HTm8LQ=="
+	key = []byte("12345678abcdefghi")
+	_, err = Base64AESCBCDecrypt(c, key)
+	assert.IsNotNil(err)
+
+	c = "A67NhD3RBiNaMgG6HTm8LQ=+="
+	key = []byte("12345678abcdefgh")
+	_, err = Base64AESCBCDecrypt(c, key)
+	assert.IsNotNil(err)
 }
