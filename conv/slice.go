@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// ToSlice converts an any type slice or array to the specified type slice.
+// ToSlice converts any type slice or array to the specified type slice.
 func ToSlice[T any](a any) []T {
 	r, _ := ToSliceE[T](a)
 	return r
@@ -30,6 +30,9 @@ func ToSliceE[T any](a any) ([]T, error) {
 	case reflect.Slice, reflect.Array:
 		// If input is a slice or array.
 		v := reflect.ValueOf(a)
+		if kind == reflect.Slice && v.IsNil() {
+			return nil, nil
+		}
 		s := make([]T, v.Len())
 		for i := 0; i < v.Len(); i++ {
 			val, err := ToAnyE[T](v.Index(i).Interface())
@@ -49,15 +52,14 @@ func ToSliceE[T any](a any) ([]T, error) {
 	}
 }
 
-// ToStrSlice converts any type slice or array to []string.
-// For example, covert []int{1, 2, 3} to []string{"1", "2", "3"}.
-func ToStrSlice(a any) []string {
-	return ToSlice[string](a)
+// ToBoolSlice converts any type to []bool.
+func ToBoolSlice(a any) []bool {
+	return ToSlice[bool](a)
 }
 
-// ToStrSliceE converts any type slice or array to []string with returned error.
-func ToStrSliceE(a any) ([]string, error) {
-	return ToSliceE[string](a)
+// ToBoolSliceE converts any type slice or array to []bool with returned error.
+func ToBoolSliceE(a any) ([]bool, error) {
+	return ToSliceE[bool](a)
 }
 
 // ToIntSlice converts any type slice or array to []int.
@@ -137,6 +139,17 @@ func ToUint8SliceE(a any) ([]uint8, error) {
 	return ToSliceE[uint8](a)
 }
 
+// ToByteSlice converts an type slice or array to []byte.
+// E.g. covert []string{"1", "2", "3"} to []byte{1, 2, 3}.
+func ToByteSlice(a any) []byte {
+	return ToUint8Slice(a)
+}
+
+// ToByteSliceE converts any type slice or array to []byte with returned error.
+func ToByteSliceE(a any) ([]byte, error) {
+	return ToUint8SliceE(a)
+}
+
 // ToUint16Slice converts any type slice or array to []uint16.
 // For example, covert []string{"1", "2", "3"} to []uint16{1, 2, 3}.
 func ToUint16Slice(a any) []uint16 {
@@ -170,27 +183,6 @@ func ToUint64SliceE(a any) ([]uint64, error) {
 	return ToSliceE[uint64](a)
 }
 
-// ToByteSlice converts an type slice or array to []byte.
-// E.g. covert []string{"1", "2", "3"} to []byte{1, 2, 3}.
-func ToByteSlice(a any) []byte {
-	return ToUint8Slice(a)
-}
-
-// ToByteSliceE converts any type slice or array to []byte with returned error.
-func ToByteSliceE(a any) ([]byte, error) {
-	return ToUint8SliceE(a)
-}
-
-// ToBoolSlice converts any type to []bool.
-func ToBoolSlice(a any) []bool {
-	return ToSlice[bool](a)
-}
-
-// ToBoolSliceE converts any type slice or array to []bool with returned error.
-func ToBoolSliceE(a any) ([]bool, error) {
-	return ToSliceE[bool](a)
-}
-
 // ToDurationSlice converts any type slice or array to []time.Duration.
 func ToDurationSlice(a any) []time.Duration {
 	return ToSlice[time.Duration](a)
@@ -199,4 +191,15 @@ func ToDurationSlice(a any) []time.Duration {
 // ToDurationSliceE converts any type to []time.Duration with returned error.
 func ToDurationSliceE(a any) ([]time.Duration, error) {
 	return ToSliceE[time.Duration](a)
+}
+
+// ToStrSlice converts any type slice or array to []string.
+// For example, covert []int{1, 2, 3} to []string{"1", "2", "3"}.
+func ToStrSlice(a any) []string {
+	return ToSlice[string](a)
+}
+
+// ToStrSliceE converts any type slice or array to []string with returned error.
+func ToStrSliceE(a any) ([]string, error) {
+	return ToSliceE[string](a)
 }

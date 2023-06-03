@@ -6,6 +6,7 @@ package conv
 
 import (
 	"fmt"
+	"time"
 )
 
 // ToAny converts one type to another type.
@@ -92,6 +93,12 @@ func ToAnyE[T any](a any) (T, error) {
 		t = any(v).(T)
 	case float64:
 		v, err := ToFloat64E(a)
+		if err != nil {
+			return t, err
+		}
+		t = any(v).(T)
+	case time.Duration:
+		v, err := ToDurationE(a)
 		if err != nil {
 			return t, err
 		}

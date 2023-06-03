@@ -3,6 +3,7 @@ package conv
 import (
 	"reflect"
 	"testing"
+	"time"
 )
 
 func TestToAnyBool(t *testing.T) {
@@ -298,6 +299,28 @@ func TestToAnyFloat64(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := ToAny[float64](tt.args.a); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ToAny() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestToAnyDuration(t *testing.T) {
+	type args struct {
+		a any
+	}
+	tests := []struct {
+		name string
+		args args
+		want time.Duration
+	}{
+		{"string 1", args{"1"}, 1.0},
+		{"string foo failed", args{"foo"}, time.Duration(0)},
+		{"bool failed", args{true}, time.Duration(0)},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := ToAny[time.Duration](tt.args.a); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("ToAny() = %v, want %v", got, tt.want)
 			}
 		})

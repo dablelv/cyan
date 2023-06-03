@@ -7,8 +7,8 @@ import (
 	"github.com/dablelv/go-huge-util/internal"
 )
 
-func TestMap2Slice(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMap2Slice")
+func TestMapToSlice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestMapToSlice")
 
 	type args struct {
 		i any
@@ -57,10 +57,16 @@ func TestMap2Slice(t *testing.T) {
 			wantK: nil,
 			wantV: nil,
 		},
+		{
+			name:  "not map failed",
+			args:  args{1},
+			wantK: nil,
+			wantV: nil,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotK, gotV := Map2Slice(tt.args.i)
+			gotK, gotV := MapToSlice(tt.args.i)
 			if gotK != nil && gotV != nil {
 				assert.Equal(reflect.ValueOf(gotK).Len(), reflect.ValueOf(tt.wantK).Len())
 				assert.Equal(reflect.ValueOf(gotV).Len(), reflect.ValueOf(tt.wantV).Len())
@@ -117,7 +123,7 @@ func TestMapValsInt(t *testing.T) {
 	}
 }
 
-func TestMapKeysValsStr2Int(t *testing.T) {
+func TestMapKeysValsStrInt(t *testing.T) {
 	type args struct {
 		m map[string]int
 	}

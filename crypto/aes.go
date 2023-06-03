@@ -13,6 +13,14 @@ import (
 //
 
 // PKCS7Padding fills plaintext as an integral multiple of the block length.
+// In cryptography, PKCS stands for "Public Key Cryptography Standards".
+// These are a group of public key cryptography standards devised and published by RSA Security LLC, starting in the early 1990s.
+// PKCS#7 is Cryptographic Message Syntax Standard used to sign and/or encrypt messages under a PKI.
+// More information about PKCS#7 please refer to the RFC 2315.
+// The PKCS#7 padding method works by adding bytes that all have the same value as the number
+// of bytes added to the plaintext. For example, if the last block of plaintext is 3 bytes long
+// and the block size is 8 bytes, then 5 bytes of padding are added to make the total length of the plaintext 8 bytes.
+// The value of the 5 bytes will be the hex value 0x05, since 5 bytes were added as padding.
 func PKCS7Padding(p []byte, blockSize int) []byte {
 	pad := blockSize - len(p)%blockSize
 	padtext := bytes.Repeat([]byte{byte(pad)}, pad)
@@ -21,17 +29,16 @@ func PKCS7Padding(p []byte, blockSize int) []byte {
 
 // PKCS7UnPadding removes padding data from the tail of plaintext.
 func PKCS7UnPadding(p []byte) ([]byte, error) {
-	length := len(p)
-	paddLen := int(p[length-1])
-	if paddLen > length {
+	l := len(p)
+	paddLen := int(p[l-1])
+	if paddLen > l {
 		return nil, errors.New("data is not illegal")
 	}
-	return p[:(length - paddLen)], nil
+	return p[:(l - paddLen)], nil
 }
 
-// AESCBCEncrypt encrypts data with AES algorithm in CBC mode
-// Note that key length must be 16, 24 or 32 bytes to select AES-128, AES-192, or AES-256
-// Note that AES block size is 16 bytes.
+// AESCBCEncrypt encrypts data with AES algorithm in CBC mode.
+// Note that key length must be 16, 24 or 32 bytes to select AES-128, AES-192, or AES-256.
 func AESCBCEncrypt(p, key []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
@@ -47,7 +54,6 @@ func AESCBCEncrypt(p, key []byte) ([]byte, error) {
 
 // AESCBCDecrypt decrypts cipher text with AES algorithm in CBC mode.
 // Note that key length must be 16, 24 or 32 bytes to select AES-128, AES-192, or AES-256.
-// Note that AES block size is 16 bytes.
 func AESCBCDecrypt(c, key []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {

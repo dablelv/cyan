@@ -38,6 +38,11 @@ func TestStruct2Map(t *testing.T) {
 			args: args{struct{}{}},
 			want: map[string]any{},
 		},
+		{
+			name: "not struct failed",
+			args: args{1},
+			want: nil,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -80,6 +85,11 @@ func TestStruct2MapStr(t *testing.T) {
 			name: "convert empty struct success",
 			args: args{struct{}{}},
 			want: map[string]string{},
+		},
+		{
+			name: "not struct failed",
+			args: args{1},
+			want: nil,
 		},
 	}
 	for _, tt := range tests {

@@ -19,25 +19,25 @@ var (
 )
 
 // ToBoolE casts any type to a bool type.
-func ToBoolE(i any) (bool, error) {
-	i = indirect(i)
+func ToBoolE(a any) (bool, error) {
+	a = indirect(a)
 
-	switch b := i.(type) {
+	switch b := a.(type) {
 	case bool:
 		return b, nil
 	case nil:
 		return false, nil
 	case int, int64, int32, int16, int8, uint, uint64, uint32, uint16, uint8, float64, float32, uintptr, complex64, complex128:
-		return !reflect.ValueOf(i).IsZero(), nil
+		return !reflect.ValueOf(a).IsZero(), nil
 	case string:
-		return strconv.ParseBool(i.(string))
+		return strconv.ParseBool(a.(string))
 	case time.Duration:
 		return b != 0, nil
 	case json.Number:
 		v, err := b.Float64()
 		return v != 0, err
 	default:
-		return false, fmt.Errorf("unable to cast %#v of type %T to bool", i, i)
+		return false, fmt.Errorf("unable to cast %#v of type %T to bool", a, a)
 	}
 }
 

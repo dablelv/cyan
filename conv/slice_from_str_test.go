@@ -5,6 +5,27 @@ import (
 	"testing"
 )
 
+func TestSplitStrToIntSlice(t *testing.T) {
+	type args struct {
+		s   string
+		sep string
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"success", args{"1,2,3", ","}, []int{1, 2, 3}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := SplitStrToSlice[int](tt.args.s, tt.args.sep); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("SplitStrToSlice() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestSplitStrToIntSliceE(t *testing.T) {
 	type args struct {
 		s   string

@@ -26,17 +26,23 @@ func ToSet[T comparable](i any) map[T]struct{} {
 // Note that this function is implemented through 1.18 generics, so the element type needs to
 // be specified when calling it, e.g. ToSetE[int]([]int{1,2,3}).
 func ToSetE[T comparable](a any) (map[T]struct{}, error) {
+	// Check input.
 	if a == nil {
 		return nil, nil
 	}
+
 	t := reflect.TypeOf(a)
 	kind := t.Kind()
 	if kind != reflect.Slice && kind != reflect.Array {
 		return nil, fmt.Errorf("the type %T of input %#v isn't a slice or array", a, a)
 	}
 
-	// Execute the conversion.
 	v := reflect.ValueOf(a)
+	if kind == reflect.Slice && v.IsNil() {
+		return nil, nil
+	}
+
+	// Execute the conversion.
 	mapT := reflect.MapOf(t.Elem(), reflect.TypeOf(struct{}{}))
 	mapV := reflect.MakeMapWithSize(mapT, v.Len())
 	for i := 0; i < v.Len(); i++ {
