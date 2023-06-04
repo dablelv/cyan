@@ -1,6 +1,7 @@
 package file
 
 import (
+	"bufio"
 	"crypto/md5"
 	"encoding/hex"
 	"io"
@@ -8,6 +9,76 @@ import (
 	"os"
 	"strings"
 )
+
+// ReadLines reads all lines of the file.
+// An error is returned if the specified file does not exist.
+func ReadLines(path string) ([]string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	var lines []string
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines, scanner.Err()
+}
+
+// ReadLinesV2 reads all lines of the file.
+// An error is returned if the specified file does not exist.
+func ReadLinesV2(path string) ([]string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	var lines []string
+	r := bufio.NewReader(file)
+	for {
+		// ReadString reads until the first occurrence of delim in the input,
+		// returning a string containing the data up to and including the delimiter.
+		line, err := r.ReadString('\n')
+		if err == io.EOF {
+			lines = append(lines, line)
+			break
+		}
+		if err != nil {
+			return lines, err
+		}
+		lines = append(lines, line[:len(line)-1])
+	}
+	return lines, nil
+}
+
+// ReadLinesV3 reads all lines of the file.
+// An error is returned if the specified file does not exist.
+func ReadLinesV3(path string) ([]string, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	var lines []string
+	r := bufio.NewReader(f)
+	for {
+		// ReadLine is a low-level line-reading primitive.
+		// Most callers should use ReadBytes('\n') or ReadString('\n') instead or use a Scanner.
+		bytes, _, err := r.ReadLine()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return lines, err
+		}
+		lines = append(lines, string(bytes))
+	}
+	return lines, nil
+}
 
 // ListDir lists all the file or directory names in the specified directory.
 // Note that ListDir don't traverse recursively.
@@ -23,7 +94,7 @@ func ListDir(dir string) ([]string, error) {
 	return names, nil
 }
 
-// ListFilenames lists all filenames in the directory.
+// ListFilenames lists all filenames in the specified directory.
 func ListFilenames(dir string) ([]string, error) {
 	entries, err := os.ReadDir(dir)
 	if err != nil {
@@ -80,7 +151,7 @@ func FileSizeFile(file *os.File) (int64, error) {
 }
 
 // ListDirEntryPaths lists all the file or directory paths in the directory recursively.
-// If the cur is true result will include current directory.
+// If the cur is true, result will include current directory.
 // Note that GetDirAllEntryPaths won't follow symlink if the subdir is a symbolic link.
 func ListDirEntryPaths(dir string, cur bool) ([]string, error) {
 	// Remove the trailing path separator if dirname has.

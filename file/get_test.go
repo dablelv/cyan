@@ -8,41 +8,120 @@ import (
 	"github.com/dablelv/go-huge-util/internal"
 )
 
+func TestReadLines(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReadLines")
+
+	path := filepath.Join(dir, "foo.txt")
+	f, err := Create(path)
+	assert.IsNil(err)
+
+	_, err = f.WriteString("hello\nworld")
+	assert.IsNil(err)
+
+	lines, err := ReadLines(path)
+	assert.IsNil(err)
+	expected := []string{"hello", "world"}
+	assert.Equal(expected, lines)
+
+	f.Close()
+	err = os.RemoveAll(dir)
+	assert.IsNil(err)
+
+	_, err = ReadLines("file_not_exist.txt")
+	assert.IsNotNil(err)
+}
+
+func TestReadLinesV2(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReadLinesV2")
+
+	path := filepath.Join(dir, "foo.txt")
+	f, _ := Create(path)
+
+	_, err := f.WriteString("hello\nworld")
+	if err != nil {
+		t.Log(err)
+	}
+
+	lines, err := ReadLinesV2(path)
+	assert.IsNil(err)
+	expected := []string{"hello", "world"}
+	assert.Equal(expected, lines)
+
+	f.Close()
+	err = os.RemoveAll(dir)
+	assert.IsNil(err)
+
+	_, err = ReadLinesV2("file_not_exist.txt")
+	assert.IsNotNil(err)
+}
+
+func TestReadLinesV3(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReadLinesV3")
+
+	path := filepath.Join(dir, "foo.txt")
+	f, _ := Create(path)
+
+	_, err := f.WriteString("hello\nworld")
+	if err != nil {
+		t.Log(err)
+	}
+
+	lines, err := ReadLinesV3(path)
+	assert.IsNil(err)
+	expected := []string{"hello", "world"}
+	assert.Equal(expected, lines)
+
+	f.Close()
+	err = os.RemoveAll(dir)
+	assert.IsNil(err)
+
+	_, err = ReadLinesV3("file_not_exist")
+	assert.IsNotNil(err)
+}
+
 func TestListDir(t *testing.T) {
 	assert := internal.NewAssert(t, "TestListDir")
 
-	path := "./file_unit_test/tmp.txt"
+	path := filepath.Join(dir, "foo.txt")
 	err := CreateFile(path)
 	assert.IsNil(err)
 
-	names, err := ListDir("./file_unit_test/")
+	names, err := ListDir(dir)
 	assert.IsNil(err)
-	assert.Equal([]string{"tmp.txt"}, names)
+	assert.Equal([]string{"foo.txt"}, names)
 
-	err = os.RemoveAll("./file_unit_test")
+	err = os.RemoveAll(dir)
 	assert.IsNil(err)
+
+	// Dir not exist.
+	_, err = ListDir("not_exist_dir")
+	assert.IsNotNil(err)
 }
 
 func TestListFilenames(t *testing.T) {
 	assert := internal.NewAssert(t, "TestListFilenames")
 
-	err := CreateFile("./file_unit_test/a.txt")
+	err := CreateFile(filepath.Join(dir, "a.txt"))
 	assert.IsNil(err)
-	err = CreateFile("./file_unit_test/b.txt")
+	err = CreateFile(filepath.Join(dir, "b.txt"))
 	assert.IsNil(err)
 
-	names, err := ListFilenames("./file_unit_test/")
+	names, err := ListFilenames(dir)
 	assert.IsNil(err)
 	assert.Equal([]string{"a.txt", "b.txt"}, names)
 
-	err = os.RemoveAll("./file_unit_test")
+	err = os.RemoveAll(dir)
 	assert.IsNil(err)
+
+	// Dir not exist.
+	_, err = ListFilenames("dir_not_exist")
+	assert.IsNotNil(err)
 }
 
 func TestFileMD5(t *testing.T) {
 	assert := internal.NewAssert(t, "TestFileMD5")
 
-	path := "./file_unit_test_tmp.txt"
+	path := filepath.Join(dir, "foo.txt")
 	err := CreateFile(path)
 	assert.IsNil(err)
 
@@ -52,12 +131,16 @@ func TestFileMD5(t *testing.T) {
 
 	err = os.Remove(path)
 	assert.IsNil(err)
+
+	// File not exist.
+	_, err = FileMD5("not_exist_file")
+	assert.IsNotNil(err)
 }
 
 func TestFileMD5Reader(t *testing.T) {
 	assert := internal.NewAssert(t, "TestFileMD5Reader")
 
-	path := "./file_unit_test_tmp.txt"
+	path := filepath.Join(dir, "foo.txt")
 	f, err := Create(path)
 	assert.IsNil(err)
 
@@ -73,7 +156,7 @@ func TestFileMD5Reader(t *testing.T) {
 func TestFileSize(t *testing.T) {
 	assert := internal.NewAssert(t, "TestFileSize")
 
-	path := "./file_unit_test_tmp.txt"
+	path := filepath.Join(dir, "foo.txt")
 	f, err := Create(path)
 	assert.IsNil(err)
 
@@ -87,42 +170,56 @@ func TestFileSize(t *testing.T) {
 	f.Close()
 	err = os.Remove(path)
 	assert.IsNil(err)
+
+	// file not exist.
+	_, err = FileSize("file_not_exist")
+	assert.IsNotNil(err)
 }
 
 func TestListDirEntryPaths(t *testing.T) {
 	assert := internal.NewAssert(t, "TestListDirEntryPaths")
 
-	path1 := filepath.Join("file_unit_test_dir", "a.txt")
+	path1 := filepath.Join(dir, "a.txt")
 	err := CreateFile(path1)
 	assert.IsNil(err)
-	path2 := filepath.Join("file_unit_test_dir", "b.txt")
+	path2 := filepath.Join(dir, "b.txt")
 	err = CreateFile(path2)
 	assert.IsNil(err)
-
-	dir := "file_unit_test_dir"
-	paths, err := ListDirEntryPaths(dir, false)
+	path3 := filepath.Join(dir, "subdir")
+	err = os.MkdirAll(path3, os.ModePerm)
 	assert.IsNil(err)
-	assert.Equal([]string{path1, path2}, paths)
+
+	paths, err := ListDirEntryPaths(dir, true)
+	assert.IsNil(err)
+	assert.Equal([]string{dir, path1, path2, path3}, paths)
 
 	err = os.RemoveAll(dir)
 	assert.IsNil(err)
+
+	_, err = ListDirEntryPaths("dir_not_exist", true)
+	assert.IsNotNil(err)
 }
 
 func TestListDirEntryPathsSymlink(t *testing.T) {
 	assert := internal.NewAssert(t, "TestListDirEntryPathsSymlink")
 
-	path1 := filepath.Join("file_unit_test_dir", "a.txt")
+	path1 := filepath.Join(dir, "a.txt")
 	err := CreateFile(path1)
 	assert.IsNil(err)
-	path2 := filepath.Join("file_unit_test_dir", "b.txt")
+	path2 := filepath.Join(dir, "b.txt")
 	err = CreateFile(path2)
 	assert.IsNil(err)
+	path3 := filepath.Join(dir, "subdir")
+	err = os.MkdirAll(path3, os.ModePerm)
+	assert.IsNil(err)
 
-	dir := "file_unit_test_dir"
 	paths, err := ListDirEntryPathsSymlink(dir, true)
 	assert.IsNil(err)
-	assert.Equal([]string{dir, path1, path2}, paths)
+	assert.Equal([]string{dir, path1, path2, path3}, paths)
 
 	err = os.RemoveAll(dir)
 	assert.IsNil(err)
+
+	_, err = ListDirEntryPathsSymlink("dir_not_exist", true)
+	assert.IsNotNil(err)
 }

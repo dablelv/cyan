@@ -1,84 +1,15 @@
 package file
 
 import (
-	"bufio"
-	"io"
 	"os"
 	"path/filepath"
 )
 
-// ReadLines reads all lines of the file.
-func ReadLines(path string) ([]string, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	var lines []string
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-	return lines, scanner.Err()
-}
-
-// ReadLinesV2 reads all lines of the file.
-func ReadLinesV2(path string) ([]string, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	var lines []string
-	r := bufio.NewReader(file)
-	for {
-		// ReadString reads until the first occurrence of delim in the input,
-		// returning a string containing the data up to and including the delimiter.
-		line, err := r.ReadString('\n')
-		if err == io.EOF {
-			lines = append(lines, line)
-			break
-		}
-		if err != nil {
-			return lines, err
-		}
-		lines = append(lines, line[:len(line)-1])
-	}
-	return lines, nil
-}
-
-// ReadLinesV3 reads all lines of the file.
-func ReadLinesV3(path string) ([]string, error) {
-	f, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	var lines []string
-	r := bufio.NewReader(f)
-	for {
-		// ReadLine is a low-level line-reading primitive.
-		// Most callers should use ReadBytes('\n') or ReadString('\n') instead or use a Scanner.
-		bytes, _, err := r.ReadLine()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return lines, err
-		}
-		lines = append(lines, string(bytes))
-	}
-	return lines, nil
-}
-
-// Create creates or truncates the target file specified by path.
+// Create creates or truncates file specified by path.
 // If the file already exists, it is truncated.
 // If the parent directory does not exist, it will be created with mode os.ModePerm(0777).
 // If the file does not exist, it is created with mode 0666.
-// If successfully call Create, the returned file can be used for I/O
+// If successfully called Create, the returned file can be used for I/O
 // and the associated file descriptor has mode O_RDWR.
 func Create(path string) (*os.File, error) {
 	exist, err := IsExist(path)
