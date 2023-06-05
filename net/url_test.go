@@ -43,6 +43,15 @@ func TestRawURLGetParam(t *testing.T) {
 			want:    "",
 			wantErr: true,
 		},
+		{
+			name: "url invalid",
+			args: args{
+				raw: "\r",
+				key: "foo",
+			},
+			want:    "",
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -96,6 +105,15 @@ func TestRawURLGetParams(t *testing.T) {
 			want:    nil,
 			wantErr: true,
 		},
+		{
+			name: "url invalid",
+			args: args{
+				raw: "http://www.aspxfans.com:8080/news/index.asp?boardID\r=520&page=1&page=2#name",
+				key: "foo",
+			},
+			want:    nil,
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -144,6 +162,14 @@ func TestRawURLGetAllParams(t *testing.T) {
 			},
 			want:    map[string][]string{},
 			wantErr: false,
+		},
+		{
+			name: "url invalid",
+			args: args{
+				raw: "http://www.aspxfans.com:8080/news/index.asp\r#name",
+			},
+			want:    nil,
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -202,6 +228,16 @@ func TestRawURLAddParam(t *testing.T) {
 			want:    "foo?page=1",
 			wantErr: false,
 		},
+		{
+			name: "url invalid",
+			args: args{
+				raw:   "foo\r",
+				key:   "page",
+				value: "1",
+			},
+			want:    "",
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -241,10 +277,19 @@ func TestRawURLAddParams(t *testing.T) {
 			name: "only host url",
 			args: args{
 				raw:    "foo",
-				params: map[string]string{"boardID": "520", "page": "1"},
+				params: map[string]string{"board_id": "520", "page": "1"},
 			},
-			want:    "foo?boardID=520&page=1",
+			want:    "foo?board_id=520&page=1",
 			wantErr: false,
+		},
+		{
+			name: "url invalid",
+			args: args{
+				raw:    "foo\r",
+				params: map[string]string{"board_id": "520", "page": "1"},
+			},
+			want:    "",
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -256,50 +301,6 @@ func TestRawURLAddParams(t *testing.T) {
 			}
 			if got != tt.want {
 				t.Errorf("RawURLAddParams() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestRawURLDelParam(t *testing.T) {
-	type args struct {
-		raw string
-		key string
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    string
-		wantErr bool
-	}{
-		{
-			name: "multiple params",
-			args: args{
-				raw: "http://www.aspxfans.com:8080/news/index.asp?boardID=520&&page=1&page=2#name",
-				key: "page",
-			},
-			want:    "http://www.aspxfans.com:8080/news/index.asp?boardID=520#name",
-			wantErr: false,
-		},
-		{
-			name: "only host url",
-			args: args{
-				raw: "foo",
-				key: "page",
-			},
-			want:    "foo",
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := RawURLDelParam(tt.args.raw, tt.args.key)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("RawURLDelParam() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if got != tt.want {
-				t.Errorf("RawURLDelParam() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -334,10 +335,28 @@ func TestRawURLDelParams(t *testing.T) {
 			want:    "foo?",
 			wantErr: false,
 		},
+		{
+			name: "no keys",
+			args: args{
+				raw:  "foo?",
+				keys: nil,
+			},
+			want:    "foo?",
+			wantErr: false,
+		},
+		{
+			name: "url invalid",
+			args: args{
+				raw:  "foo?\r",
+				keys: []string{"page"},
+			},
+			want:    "",
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := RawURLDelParams(tt.args.raw, tt.args.keys)
+			got, err := RawURLDelParams(tt.args.raw, tt.args.keys...)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("RawURLDelParams() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -380,6 +399,16 @@ func TestRawURLSetParam(t *testing.T) {
 			},
 			want:    "foo?page=1",
 			wantErr: false,
+		},
+		{
+			name: "url invalid",
+			args: args{
+				raw:   "foo\r",
+				key:   "page",
+				value: "1",
+			},
+			want:    "",
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -425,6 +454,15 @@ func TestRawURLSetParams(t *testing.T) {
 			want:    "foo?boardID=1024&page=3",
 			wantErr: false,
 		},
+		{
+			name: "url invalid",
+			args: args{
+				raw:    "foo\r?",
+				params: map[string]string{"board_id": "1024", "page": "3"},
+			},
+			want:    "",
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -440,7 +478,7 @@ func TestRawURLSetParams(t *testing.T) {
 	}
 }
 
-func TestRawUrlGetDomain(t *testing.T) {
+func TestRawURLGetDomain(t *testing.T) {
 	type args struct {
 		raw string
 	}
@@ -466,22 +504,30 @@ func TestRawUrlGetDomain(t *testing.T) {
 			want:    "",
 			wantErr: false,
 		},
+		{
+			name: "url invalid",
+			args: args{
+				raw: "http://foo\r:8080/news/index.asp?boardID=520&page=1&page=2#name",
+			},
+			want:    "",
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := RawUrlGetDomain(tt.args.raw)
+			got, err := RawURLGetDomain(tt.args.raw)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("RawUrlGetDomain() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("RawURLGetDomain() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("RawUrlGetDomain() = %v, want %v", got, tt.want)
+				t.Errorf("RawURLGetDomain() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestRawUrlGetPort(t *testing.T) {
+func TestRawURLGetPort(t *testing.T) {
 	type args struct {
 		raw string
 	}
@@ -507,16 +553,24 @@ func TestRawUrlGetPort(t *testing.T) {
 			want:    "",
 			wantErr: false,
 		},
+		{
+			name: "url invalid",
+			args: args{
+				raw: "http://foo\r:8080/news/index.asp?boardID=520&page=1&page=2#name",
+			},
+			want:    "",
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := RawUrlGetPort(tt.args.raw)
+			got, err := RawURLGetPort(tt.args.raw)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("RawUrlGetPort() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("RawURLGetPort() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("RawUrlGetPort() = %v, want %v", got, tt.want)
+				t.Errorf("RawURLGetPort() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -557,22 +611,28 @@ func TestRawQueryGetParam(t *testing.T) {
 			want:    "",
 			wantErr: true,
 		},
+		{
+			name:    "query invalid",
+			args:    args{"a=dog;&a=cat&b=tiger&c=", "a"},
+			want:    "",
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := RawQueryGetParam(tt.args.rawquery, tt.args.key)
+			got, err := QueryGetParam(tt.args.rawquery, tt.args.key)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("RawQueryGetParam() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("QueryGetParam() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("RawQueryGetParam() = %v, want %v", got, tt.want)
+				t.Errorf("QueryGetParam() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestRawQueryGetParams(t *testing.T) {
+func TestQueryGetParams(t *testing.T) {
 	type args struct {
 		query string
 		key   string
@@ -610,13 +670,13 @@ func TestRawQueryGetParams(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := RawQueryGetParams(tt.args.query, tt.args.key)
+			got, err := QueryGetParams(tt.args.query, tt.args.key)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("RawQueryGetParams() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("QueryGetParams() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("RawQueryGetParams() = %v, want %v", got, tt.want)
+				t.Errorf("QueryGetParams() = %v, want %v", got, tt.want)
 			}
 		})
 	}

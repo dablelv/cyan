@@ -25,4 +25,42 @@ func TestRandIntRange(t *testing.T) {
 		valid := got >= tt.args.min && got < tt.args.max
 		assert.Equal(true, valid)
 	}
+	got := RandIntRange(1, 1)
+	assert.Equal(0, got)
+}
+
+func TestRandIntn(t *testing.T) {
+	assert := internal.NewAssert(t, "TestRandIntn")
+	got := RandIntn(0)
+	assert.Equal(0, got)
+}
+
+func TestRandIntSlice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestRandIntSlice")
+	s := RandIntSlice(3, 1)
+	assert.Equal([]int{0, 0, 0}, s)
+}
+
+func TestRandByteSlice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestRandByteSlice")
+	s := RandByteSlice(8)
+	assert.NotEqual([]int{0, 0, 0, 0, 0, 0, 0, 0}, s)
+}
+
+func TestRandStr(t *testing.T) {
+	assert := internal.NewAssert(t, "TestRandStr")
+	s := RandStr(4)
+	assert.Equal(4, len(s))
+}
+
+func TestRandLowerStr(t *testing.T) {
+	assert := internal.NewAssert(t, "TestRandLowerStr")
+	s := RandLowerStr(4)
+	assert.Equal(4, len(s))
+}
+
+func TestRandUpperStr(t *testing.T) {
+	assert := internal.NewAssert(t, "TestRandUpperStr")
+	s := RandUpperStr(4)
+	assert.Equal(4, len(s))
 }

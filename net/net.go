@@ -87,45 +87,47 @@ func Swap32(i uint32) uint32 {
 	return (i&0xff000000)>>24 | (i&0xff0000)>>8 | (i&0xff00)<<8 | (i&0xff)<<24
 }
 
-// Htons convert uint16 from host byte order to network byte order
+// Htons convert uint16 from host byte order to network byte order.
+// Network byte order is BigEndian.
 func Htons(i uint16) uint16 {
 	if GetNativeEndian() == binary.BigEndian {
 		return i
 	}
-	// 大端模式, 高位放在低地址
+	// In big-endian mode, the high position is set to the low address.
 	// 0x1234
 	// 0x12 0x34
 	return Swap16(i)
 }
 
 // Htonl convert uint32 from host byte order to network byte order.
+// Network byte order is BigEndian.
 func Htonl(i uint32) uint32 {
 	if GetNativeEndian() == binary.BigEndian {
 		return i
 	}
-	// 大端模式, 高位放在低地址
+	// In big-endian mode, the high position is set to the low address.
 	// 0x12345678
 	// 0x12 0x34 0x56 0x78
 	return Swap32(i)
 }
 
-// Ntohs convert uint16 from network byte order to host byte order.
+// Ntohs converts uint16 from network byte order to host byte order.
 func Ntohs(i uint16) uint16 {
 	if GetNativeEndian() == binary.BigEndian {
 		return i
 	}
-	// 小端模式, 低位放在低地址
+	// In small-endian mode, the low position is placed at the low address.
 	// 0x1234
 	// 0x34 0x12
 	return Swap16(i)
 }
 
-// Ntohl convert uint32 from network byte order to host byte order.
+// Ntohl converts uint32 from network byte order to host byte order.
 func Ntohl(i uint32) uint32 {
 	if GetNativeEndian() == binary.BigEndian {
 		return i
 	}
-	// 小端模式, 低位放在低地址
+	// In small-endian mode, the low position is placed at the low address.
 	// 0x12345678
 	// 0x78 0x56 0x34 0x12
 	return Swap32(i)
@@ -143,7 +145,7 @@ func IPv4ToU32(ip net.IP) uint32 {
 	return uint32(a<<24 | b<<16 | c<<8 | d)
 }
 
-// U32ToIPv4 convert uint32 to ipv4(a.b.c.d) in host byte order.
+// U32ToIPv4 converts uint32 to ipv4(a.b.c.d) in host byte order.
 func U32ToIPv4(ip uint32) net.IP {
 	a := byte((ip >> 24) & 0xFF)
 	b := byte((ip >> 16) & 0xFF)
@@ -152,7 +154,7 @@ func U32ToIPv4(ip uint32) net.IP {
 	return net.IPv4(a, b, c, d)
 }
 
-// IPv4StrToU32 convert IPv4 string to uint32 in host byte order.
+// IPv4StrToU32 converts IPv4 string to uint32 in host byte order.
 func IPv4StrToU32(s string) (ip uint32) {
 	r := `^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})`
 	reg, err := regexp.Compile(r)

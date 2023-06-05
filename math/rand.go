@@ -23,7 +23,7 @@ func RandIntn(n int) int {
 	return rand.Intn(n)
 }
 
-// RandIntRange returns a non-negative truly random int number in [min, max).
+// RandIntRange returns a non-negative truly random int number in [min,max).
 func RandIntRange(min, max int) int {
 	if min < 0 || max <= min {
 		return 0
@@ -31,22 +31,22 @@ func RandIntRange(min, max int) int {
 	return RandIntn(max-min) + min
 }
 
-// RandIntSlice returns a non-negative truly random int slice of the specified length with the value range in [0,max).
+// RandIntSlice returns a non-negative truly random int specified length slice with the value range in [0,max).
 func RandIntSlice(l int, max int) []int {
-	slice := make([]int, l)
+	s := make([]int, l)
 	for i := 0; i < l; i++ {
-		slice[i] = RandIntn(max)
+		s[i] = RandIntn(max)
 	}
-	return slice
+	return s
 }
 
 // RandByteSlice gets a truly random byte slice of the specified length with the value range in [0x00,0xff].
 func RandByteSlice(l uint32) []byte {
-	slice := make([]byte, l)
-	for i := range slice {
-		slice[i] = byte(RandInt() % 256)
+	s := make([]byte, l)
+	for i := range s {
+		s[i] = byte(RandIntn(256))
 	}
-	return slice
+	return s
 }
 
 const (
@@ -56,14 +56,14 @@ const (
 	lowerEnLetterLen = len(lowerEnLetter)
 )
 
-// RandStr returns a truly random string of the specified length and the contents of which are composed of upper and
-// lower case letters.
-func RandStr(l uint64) string {
-	b := make([]byte, l)
-	for i := range b {
-		b[i] = enAlphabet[RandIntn(enAlphabetLen)]
+// RandStr returns a truly random string of the specified length and the contents of
+// which are composed of upper and lowercase letters.
+func RandStr(l int) string {
+	s := make([]byte, l)
+	for i := range s {
+		s[i] = enAlphabet[RandIntn(enAlphabetLen)]
 	}
-	return string(b)
+	return string(s)
 }
 
 // RandLowerStr returns a truly random lowercase string of a specified length.
