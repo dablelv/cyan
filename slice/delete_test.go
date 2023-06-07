@@ -3,6 +3,8 @@ package slice
 import (
 	"reflect"
 	"testing"
+
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestDeleteSliceElems(t *testing.T) {
@@ -135,4 +137,74 @@ func TestDeleteStrSlice(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestDeleteIntSlice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDeleteIntSlice")
+
+	s := DeleteIntSlice([]int{1, 2, 3}, 0)
+	assert.Equal([]int{2, 3}, s)
+}
+
+func TestDeleteInt8Slice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDeleteInt8Slice")
+
+	s := DeleteInt8Slice([]int8{1, 2, 3}, 0)
+	assert.Equal([]int8{2, 3}, s)
+}
+
+func TestDeleteInt16Slice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDeleteInt16Slice")
+
+	s := DeleteInt16Slice([]int16{1, 2, 3}, 0)
+	assert.Equal([]int16{2, 3}, s)
+}
+
+func TestDeleteInt32Slice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDeleteInt32Slice")
+
+	s := DeleteInt32Slice([]int32{1, 2, 3}, 0)
+	assert.Equal([]int32{2, 3}, s)
+}
+
+func TestDeleteInt64Slice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDeleteInt64Slice")
+
+	s := DeleteInt64Slice([]int64{1, 2, 3}, 0)
+	assert.Equal([]int64{2, 3}, s)
+}
+
+func TestDeleteUintSlice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDeleteUintSlice")
+
+	s := DeleteUintSlice([]uint{1, 2, 3}, 0)
+	assert.Equal([]uint{2, 3}, s)
+}
+
+func TestDeleteUint8Slice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDeleteUint8Slice")
+
+	s := DeleteUint8Slice([]uint8{1, 2, 3}, 0)
+	assert.Equal([]uint8{2, 3}, s)
+}
+
+func TestDeleteUint16Slice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDeleteUint16Slice")
+
+	s := DeleteUint16Slice([]uint16{1, 2, 3}, 0)
+	assert.Equal([]uint16{2, 3}, s)
+}
+
+func TestDeleteUint32Slice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDeleteUint8Slice")
+
+	s := DeleteUint32Slice([]uint32{1, 2, 3}, 0)
+	assert.Equal([]uint32{2, 3}, s)
+}
+
+func TestDeleteUint64Slice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDeleteUint64Slice")
+
+	s := DeleteUint64Slice([]uint64{1, 2, 3}, 0)
+	assert.Equal([]uint64{2, 3}, s)
 }

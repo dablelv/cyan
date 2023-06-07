@@ -662,6 +662,12 @@ func TestQueryGetParams(t *testing.T) {
 			wantErr: false,
 		},
 		{
+			name:    "query invalid",
+			args:    args{"a=dog;", "d"},
+			want:    nil,
+			wantErr: true,
+		},
+		{
 			name:    "no key",
 			args:    args{"a=dog&a=cat&b=tiger&c=", "d"},
 			want:    nil,

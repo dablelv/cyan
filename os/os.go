@@ -32,12 +32,12 @@ func IsSupportColor() bool {
 		return true
 	}
 
-	// like on ConEmu software, e.g "ConEmuANSI=ON"
+	// Like on ConEmu software, e.g "ConEmuANSI=ON".
 	if os.Getenv("ConEmuANSI") == "ON" {
 		return true
 	}
 
-	// like on ConEmu software, e.g "ANSICON=189x2000 (189x43)"
+	// Like on ConEmu software, e.g "ANSICON=189x2000 (189x43)".
 	if os.Getenv("ANSICON") != "" {
 		return true
 	}
