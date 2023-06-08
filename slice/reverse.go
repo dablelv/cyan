@@ -11,120 +11,119 @@ import (
 
 // Reverse reverses the specified slice without modifying the original slice.
 // Reverse implemented by generics is recommended to be used.
-func Reverse[T any](s []T) []T {
+func Reverse[E any, S ~[]E](s S) S {
 	if s == nil {
 		return s
 	}
-	r := make([]T, 0, len(s))
+	r := make([]E, 0, len(s))
 	for i := len(s) - 1; i >= 0; i-- {
 		r = append(r, s[i])
 	}
 	return r
 }
 
-func ReverseIntSlice(src []int) []int {
+func ReverseInt(src []int) []int {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]int)
 	return v
 }
 
-func ReverseInt8Slice(src []int8) []int8 {
+func ReverseInt8(src []int8) []int8 {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]int8)
 	return v
 }
 
-func ReverseInt16Slice(src []int16) []int16 {
+func ReverseInt16(src []int16) []int16 {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]int16)
 	return v
 }
 
-func ReverseInt32Slice(src []int32) []int32 {
+func ReverseInt32(src []int32) []int32 {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]int32)
 	return v
 }
 
-func ReverseInt64Slice(src []int64) []int64 {
+func ReverseInt64(src []int64) []int64 {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]int64)
 	return v
 }
 
-func ReverseUintSlice(src []uint) []uint {
+func ReverseUint(src []uint) []uint {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]uint)
 	return v
 }
 
-func ReverseUint8Slice(src []uint8) []uint8 {
+func ReverseUint8(src []uint8) []uint8 {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]uint8)
 	return v
 }
 
-func ReverseUint16Slice(src []uint16) []uint16 {
+func ReverseUint16(src []uint16) []uint16 {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]uint16)
 	return v
 }
 
-func ReverseUint32Slice(src []uint32) []uint32 {
+func ReverseUint32(src []uint32) []uint32 {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]uint32)
 	return v
 }
 
-func ReverseUint64Slice(src []uint64) []uint64 {
+func ReverseUint64(src []uint64) []uint64 {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]uint64)
 	return v
 }
 
-func ReverseStrSlice(src []string) []string {
+func ReverseStr(src []string) []string {
 	if src == nil {
 		return nil
 	}
-	dst, _ := ReverseSliceE(src)
+	dst, _ := ReverseE(src)
 	v, _ := dst.([]string)
 	return v
 }
 
-// ReverseSliceRefE implemented by reflect reverses the specified slice
-// without modifying the original slice.
-func ReverseSliceE(slice any) (any, error) {
-	// Check param.
+// ReverseRefE implemented by reflect reverses the specified slice without modifying the original slice.
+func ReverseE(slice any) (any, error) {
+	// Check params.
 	if slice == nil {
 		return slice, nil
 	}

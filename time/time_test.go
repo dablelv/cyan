@@ -69,6 +69,14 @@ func TestGetMinutesBtwTs(t *testing.T) {
 	}
 }
 
+func TestIsLeapYear(t *testing.T) {
+	assert := internal.NewAssert(t, "TestIsLeapYear")
+
+	assert.Equal(true, IsLeapYear(2000))
+	assert.Equal(false, IsLeapYear(2001))
+	assert.Equal(false, IsLeapYear(2100))
+}
+
 func TestIsSameYear(t *testing.T) {
 	assert := internal.NewAssert(t, "TestIsSameYear")
 	type args struct {

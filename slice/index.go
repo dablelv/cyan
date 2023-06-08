@@ -13,19 +13,18 @@ import (
 // implemented by generics.
 //
 
-// GetElemIndexesSlice finds all indexes for the specified element in a slice.
-func GetElemIndexesSlice(slice any, value any) []int {
-	indexes, _ := GetElemIndexesSliceE(slice, value)
+// GetElemIndexes finds all indexes for the specified element in a slice or array.
+func GetElemIndexes(a any, value any) []int {
+	indexes, _ := GetElemIndexesE(a, value)
 	return indexes
 }
 
-// GetEleIndexesSliceE finds all indexes for the specified element in a slice.
-// and returns an error if error occurred.
-func GetElemIndexesSliceE(slice any, value any) ([]int, error) {
-	// Check param.
-	v := reflect.ValueOf(slice)
-	if v.Kind() != reflect.Slice {
-		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
+// GetElemIndexesE finds all indexes for the specified element in a slice with returned error.
+func GetElemIndexesE(a any, value any) ([]int, error) {
+	// Check params.
+	v := reflect.ValueOf(a)
+	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
+		return nil, fmt.Errorf("the input %#v of type %T isn't a slice and array", a, a)
 	}
 	// Get indexes.
 	var indexes []int
@@ -37,9 +36,9 @@ func GetElemIndexesSliceE(slice any, value any) ([]int, error) {
 	return indexes, nil
 }
 
-// GetRandomSliceElem get a random element from a slice or array.
+// GetRandomElem get a random element from a slice or array.
 // If the length of slice or array is zero it will panic.
-func GetRandomSliceElem(i any) any {
+func GetRandomElem(i any) any {
 	v := reflect.ValueOf(i)
 	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
 		return i

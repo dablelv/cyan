@@ -72,9 +72,9 @@ func GetDayBeginMoment(t time.Time) time.Time {
 	return n
 }
 
-// GetDayBeginMoment1 gets the starting moment of one day specified by UNIX time stamp.
-func GetDayBeginMoment1(uts int64) time.Time {
-	y, m, d := time.Unix(uts, 0).Date()
+// GetDayBeginMomentTs gets the starting moment of one day specified by UNIX timestamp.
+func GetDayBeginMomentTs(ts int64) time.Time {
+	y, m, d := time.Unix(ts, 0).Date()
 	n := time.Date(y, m, d, 0, 0, 0, 0, time.Local)
 	return n
 }
@@ -86,8 +86,8 @@ func GetDayEndMoment(t time.Time) time.Time {
 	return n
 }
 
-// GetDayEndMoment1 gets the ending moment of one day specified by UNIX time stamp.
-func GetDayEndMoment1(uts int64) time.Time {
+// GetDayEndMomentTs gets the ending moment of one day specified by UNIX timestamp.
+func GetDayEndMomentTs(uts int64) time.Time {
 	y, m, d := time.Unix(uts, 0).Date()
 	n := time.Date(y, m, d, 23, 59, 59, 999999999, time.Local)
 	return n
@@ -110,7 +110,7 @@ func GetDayElapsedUs(t time.Time) int64 {
 
 // GetDayElapsedNs gets the elapsed nanoseconds since the starting moment of one day.
 func GetDayElapsedNs(t time.Time) int64 {
-	return t.Unix() - GetDayBeginMoment(t).Unix()
+	return t.UnixNano() - GetDayBeginMoment(t).UnixNano()
 }
 
 // GetDaysBtwTs gets the number of days between two timestamps and round down.
@@ -183,43 +183,43 @@ func IsLeapYear(year int) bool {
 }
 
 // IsSameYear checks the unix timestamp whether is the same year.
-func IsSameYear(uts1, uts2 int64) bool {
-	t1 := time.Unix(uts1, 0)
-	t2 := time.Unix(uts2, 0)
+func IsSameYear(ts1, ts2 int64) bool {
+	t1 := time.Unix(ts1, 0)
+	t2 := time.Unix(ts2, 0)
 	return t1.Format(YFormatNum) == t2.Format(YFormatNum)
 }
 
 // IsSameMonth checks the unix timestamp whether is the same month.
-func IsSameMonth(uts1, uts2 int64) bool {
-	t1 := time.Unix(uts1, 0)
-	t2 := time.Unix(uts2, 0)
+func IsSameMonth(ts1, ts2 int64) bool {
+	t1 := time.Unix(ts1, 0)
+	t2 := time.Unix(ts2, 0)
 	return t1.Format(YMFormatNum) == t2.Format(YMFormatNum)
 }
 
 // IsSameDay checks the unix timestamp whether is the same day.
-func IsSameDay(uts1, uts2 int64) bool {
-	t1 := time.Unix(uts1, 0)
-	t2 := time.Unix(uts2, 0)
+func IsSameDay(ts1, ts2 int64) bool {
+	t1 := time.Unix(ts1, 0)
+	t2 := time.Unix(ts2, 0)
 	return t1.Format(DateFormatNum) == t2.Format(DateFormatNum)
 }
 
 // IsSameHour checks the unix timestamp whether is the same hour.
-func IsSameHour(uts1, uts2 int64) bool {
-	t1 := time.Unix(uts1, 0)
-	t2 := time.Unix(uts2, 0)
+func IsSameHour(ts1, ts2 int64) bool {
+	t1 := time.Unix(ts1, 0)
+	t2 := time.Unix(ts2, 0)
 	return t1.Format(DateHFormatNum) == t2.Format(DateHFormatNum)
 }
 
 // IsSameMinute checks the unix timestamp whether is the same minute.
-func IsSameMinute(uts1, uts2 int64) bool {
-	t1 := time.Unix(uts1, 0)
-	t2 := time.Unix(uts2, 0)
+func IsSameMinute(ts1, ts2 int64) bool {
+	t1 := time.Unix(ts1, 0)
+	t2 := time.Unix(ts2, 0)
 	return t1.Format(DateHMFormatNum) == t2.Format(DateHMFormatNum)
 }
 
 // IsSameWeek checks the unix timestamp whether is the same week.
-func IsSameWeek(uts1, uts2 int64) bool {
-	t1 := time.Unix(uts1, 0)
-	t2 := time.Unix(uts2, 0)
+func IsSameWeek(ts1, ts2 int64) bool {
+	t1 := time.Unix(ts1, 0)
+	t2 := time.Unix(ts2, 0)
 	return GetMonDate(t1) == GetMonDate(t2)
 }

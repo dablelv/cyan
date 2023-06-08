@@ -6,76 +6,75 @@ import (
 )
 
 //
-// Note that since Go 1.18, this file is deprecated.
-// Please use the standard exp lib function https://pkg.go.dev/golang.org/x/exp/slices#Delete
-// implemented by generics.
+// Note that since Go 1.18, standard exp lib function https://pkg.go.dev/golang.org/x/exp/slices#Delete
+// implemented by generics should be prefered.
 //
 
 // DeleteStrSlice deletes string slice elements by indexes.
 func DeleteStrSlice(src []string, indexes ...int) []string {
-	return DeleteSlice(src, indexes...).([]string)
+	return Delete(src, indexes...).([]string)
 }
 
 // DeleteIntSlice deletes int slice elements by indexes.
 func DeleteIntSlice(src []int, indexes ...int) []int {
-	return DeleteSlice(src, indexes...).([]int)
+	return Delete(src, indexes...).([]int)
 }
 
 // DeleteInt8Slice deletes int8 slice elements by indexes.
 func DeleteInt8Slice(src []int8, indexes ...int) []int8 {
-	return DeleteSlice(src, indexes...).([]int8)
+	return Delete(src, indexes...).([]int8)
 }
 
 // DeleteInt16Slice deletes int16 slice elements by indexes.
 func DeleteInt16Slice(src []int16, indexes ...int) []int16 {
-	return DeleteSlice(src, indexes...).([]int16)
+	return Delete(src, indexes...).([]int16)
 }
 
 // DeleteInt32Slice deletes int32 slice elements by indexes.
 func DeleteInt32Slice(src []int32, indexes ...int) []int32 {
-	return DeleteSlice(src, indexes...).([]int32)
+	return Delete(src, indexes...).([]int32)
 }
 
 // DeleteInt64Slice deletes int64 slice elements by indexes.
 func DeleteInt64Slice(src []int64, indexes ...int) []int64 {
-	return DeleteSlice(src, indexes...).([]int64)
+	return Delete(src, indexes...).([]int64)
 }
 
 // DeleteUintSlice deletes uint slice elements by indexes.
 func DeleteUintSlice(src []uint, indexes ...int) []uint {
-	return DeleteSlice(src, indexes...).([]uint)
+	return Delete(src, indexes...).([]uint)
 }
 
 // DeleteUint8Slice deletes uint8 slice elements by indexes.
 func DeleteUint8Slice(src []uint8, indexes ...int) []uint8 {
-	return DeleteSlice(src, indexes...).([]uint8)
+	return Delete(src, indexes...).([]uint8)
 }
 
 // DeleteUint16Slice deletes uint16 slice elements by indexes.
 func DeleteUint16Slice(src []uint16, indexes ...int) []uint16 {
-	return DeleteSlice(src, indexes...).([]uint16)
+	return Delete(src, indexes...).([]uint16)
 }
 
 // DeleteUint32Slice deletes uint32 slice elements by indexes.
 func DeleteUint32Slice(src []uint32, indexes ...int) []uint32 {
-	return DeleteSlice(src, indexes...).([]uint32)
+	return Delete(src, indexes...).([]uint32)
 }
 
 // DeleteUint64Slice deletes uint64 slice elements by indexes.
 func DeleteUint64Slice(src []uint64, indexes ...int) []uint64 {
-	return DeleteSlice(src, indexes...).([]uint64)
+	return Delete(src, indexes...).([]uint64)
 }
 
-// DeleteSliceElems deletes the specified elements from the slice.
+// DeleteElems deletes the specified elements from the slice.
 // Note that the original slice will not be modified.
-func DeleteSliceElems(i any, elms ...any) any {
-	r, _ := DeleteSliceElemsE(i, elms...)
+func DeleteElems(i any, elms ...any) any {
+	r, _ := DeleteElemsE(i, elms...)
 	return r
 }
 
-// DeleteSliceElemsE deletes the specified elements from the slice.
+// DeleteElemsE deletes the specified elements from the slice.
 // Note that the original slice will not be modified.
-func DeleteSliceElemsE(i any, elms ...any) (any, error) {
+func DeleteElemsE(i any, elms ...any) (any, error) {
 	// Check params.
 	v := reflect.ValueOf(i)
 	if v.Kind() != reflect.Slice {
@@ -102,16 +101,16 @@ func DeleteSliceElemsE(i any, elms ...any) (any, error) {
 	return t.Interface(), nil
 }
 
-// DeleteSlice deletes the specified index element from the slice.
+// Delete deletes the specified index element from the slice.
 // Note that the original slice will not be modified.
-func DeleteSlice(slice any, indexes ...int) any {
-	res, _ := DeleteSliceE(slice, indexes...)
+func Delete(slice any, indexes ...int) any {
+	res, _ := DeleteE(slice, indexes...)
 	return res
 }
 
-// DeleteSliceE deletes the specified index element from the slice with error.
+// DeleteE deletes the element specified by index from the slice with returned error.
 // Note that the original slice will not be modified.
-func DeleteSliceE(slice any, indexes ...int) (any, error) {
+func DeleteE(slice any, indexes ...int) (any, error) {
 	// Check params.
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {

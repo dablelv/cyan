@@ -7,7 +7,7 @@ import (
 	"github.com/dablelv/go-huge-util/internal"
 )
 
-func TestDeleteSliceElems(t *testing.T) {
+func TestDeleteElems(t *testing.T) {
 	type args struct {
 		i    any
 		elms []any
@@ -44,14 +44,14 @@ func TestDeleteSliceElems(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := DeleteSliceElems(tt.args.i, tt.args.elms...); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("DeleteSliceElems() = %v, want %v", got, tt.want)
+			if got := DeleteElems(tt.args.i, tt.args.elms...); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("DeleteElems() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestDeleteSlice(t *testing.T) {
+func TestDelete(t *testing.T) {
 	type args struct {
 		slice   any
 		indexes []int
@@ -88,8 +88,8 @@ func TestDeleteSlice(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := DeleteSlice(tt.args.slice, tt.args.indexes...); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("DeleteSlice() = %v, want %v", got, tt.want)
+			if got := Delete(tt.args.slice, tt.args.indexes...); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Delete() = %v, want %v", got, tt.want)
 			}
 		})
 	}

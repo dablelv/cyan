@@ -13,7 +13,7 @@ type numerical interface {
 
 // Sum calculates the sum of slice elements.
 // Sum implemented by generics is recommended to be used.
-func Sum[T numerical](s []T) float64 {
+func Sum[E numerical, S ~[]E](s S) float64 {
 	var sum float64
 	for _, v := range s {
 		sum += float64(v)
@@ -21,22 +21,22 @@ func Sum[T numerical](s []T) float64 {
 	return sum
 }
 
-// SumSlice calculates the sum of slice elements.
+// SumSlice sum slice or array elements.
 // E.g. input []int32{1, 2, 3} and output is 6.
-func SumSlice(slice any) float64 {
-	v, _ := SumSliceE(slice)
+func SumSlice(a any) float64 {
+	v, _ := SumSliceE(a)
 	return v
 }
 
-// SumSliceE returns the sum of slice elements and an error if occurred.
-func SumSliceE(slice any) (float64, error) {
-	// Check param.
-	if slice == nil {
+// SumSliceE returns the sum of slice or array elements with retured error.
+func SumSliceE(a any) (float64, error) {
+	// Check params.
+	if a == nil {
 		return 0.0, nil
 	}
-	v := reflect.ValueOf(slice)
-	if v.Kind() != reflect.Slice {
-		return 0.0, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)
+	v := reflect.ValueOf(a)
+	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
+		return 0.0, fmt.Errorf("the input %#v of type %T isn't a slice and array", a, a)
 	}
 
 	var sum float64

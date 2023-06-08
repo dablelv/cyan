@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// Split replaces strings.Split.
+// Split replaces std lib strings.Split.
 // strings.Split has a giant pit because strings.Split ("", ",") will return a slice with an empty string.
 func Split(s, sep string) []string {
 	if s == "" {
@@ -63,12 +63,12 @@ func JoinStr(sep string, s ...string) string {
 	return buf.String()
 }
 
-// ReverseStr reverses the specified string without modifying the original string.
-func ReverseStr(s string) string {
+// Reverse reverses string without modifying the original string.
+func Reverse(s string) string {
 	rs := []rune(s)
-	var r []rune
+	r := make([]rune, len(rs))
 	for i := len(rs) - 1; i >= 0; i-- {
-		r = append(r, rs[i])
+		r[len(rs)-1-i] = rs[i]
 	}
 	return string(r)
 }

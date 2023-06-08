@@ -6,8 +6,8 @@ import "time"
 // Desc: Common conversion about time.
 //
 
-// DateTime2UTS converts datetime in YYYY-MM-DD hh:mm:ss to unix timestamp
-func DateTime2UTS(dt string) int64 {
+// DateTimeToTs converts datetime in YYYY-MM-DD hh:mm:ss to unix timestamp.
+func DateTimeToTs(dt string) int64 {
 	loc, _ := time.LoadLocation("Local")
 	t, err := time.ParseInLocation(DateTimeFormat, dt, loc)
 	if err != nil {
@@ -16,7 +16,7 @@ func DateTime2UTS(dt string) int64 {
 	return t.Unix()
 }
 
-// UTS2DateTime converts unix timestamp to datetime in YYYY-MM-DD hh:mm:ss.
-func UTS2DateTime(uts int64) string {
-	return time.Unix(uts, 0).Format(DateTimeFormat)
+// TsToDateTime converts unix timestamp to local datetime in YYYY-MM-DD hh:mm:ss.
+func TsToDateTime(ts int64) string {
+	return time.Unix(ts, 0).Format(DateTimeFormat)
 }

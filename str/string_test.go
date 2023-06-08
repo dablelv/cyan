@@ -3,6 +3,8 @@ package str
 import (
 	"reflect"
 	"testing"
+
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestSplit(t *testing.T) {
@@ -148,6 +150,12 @@ func TestJoinStr(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestReverse(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReverse")
+	assert.Equal("foo", Reverse("oof"))
+	assert.Equal("123", Reverse("321"))
 }
 
 func TestGetAlphanumericNumByASCII(t *testing.T) {

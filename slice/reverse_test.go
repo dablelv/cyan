@@ -3,6 +3,8 @@ package slice
 import (
 	"reflect"
 	"testing"
+
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestReverseInt(t *testing.T) {
@@ -73,7 +75,7 @@ func TestReverseStr(t *testing.T) {
 	}
 }
 
-func TestReverseIntSlice(t *testing.T) {
+func TestReverseIntRef(t *testing.T) {
 	type args struct {
 		src []int
 	}
@@ -100,45 +102,104 @@ func TestReverseIntSlice(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := ReverseIntSlice(tt.args.src); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ReverseIntSlice() = %v, want %v", got, tt.want)
+			if got := ReverseInt(tt.args.src); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ReverseInt() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-func TestReverseUintSlice(t *testing.T) {
-	type args struct {
-		src []uint
-	}
-	tests := []struct {
-		name string
-		args args
-		want []uint
-	}{
-		{
-			name: "uint slice",
-			args: args{[]uint{1, 2, 3}},
-			want: []uint{3, 2, 1},
-		},
-		{
-			name: "empty uint slice",
-			args: args{[]uint{}},
-			want: []uint{},
-		},
-		{
-			name: "nil uint slice",
-			args: args{nil},
-			want: nil,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ReverseUintSlice(tt.args.src); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ReverseIntSlice() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestReverseInt8(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReverseInt8")
+
+	got := ReverseInt8([]int8{1, 2, 3})
+	assert.Equal([]int8{3, 2, 1}, got)
+
+	got = ReverseInt8(nil)
+	assert.IsNil(got)
+}
+
+func TestReverseInt16(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReverseInt16")
+
+	got := ReverseInt16([]int16{1, 2, 3})
+	assert.Equal([]int16{3, 2, 1}, got)
+
+	got = ReverseInt16(nil)
+	assert.IsNil(got)
+}
+
+func TestReverseInt32(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReverseInt32")
+
+	got := ReverseInt32([]int32{1, 2, 3})
+	assert.Equal([]int32{3, 2, 1}, got)
+
+	got = ReverseInt32(nil)
+	assert.IsNil(got)
+}
+
+func TestReverseInt64(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReverseInt8")
+
+	got := ReverseInt64([]int64{1, 2, 3})
+	assert.Equal([]int64{3, 2, 1}, got)
+
+	got = ReverseInt64(nil)
+	assert.IsNil(got)
+}
+
+func TestReverseUint(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReverseUint")
+
+	got := ReverseUint([]uint{1, 2, 3})
+	assert.Equal([]uint{3, 2, 1}, got)
+
+	got = ReverseUint([]uint{})
+	assert.Equal([]uint{}, got)
+
+	got = ReverseUint(nil)
+	assert.IsNil(got)
+}
+
+func TestReverseUint8(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReverseUint8")
+
+	got := ReverseUint8([]uint8{1, 2, 3})
+	assert.Equal([]uint8{3, 2, 1}, got)
+
+	got = ReverseUint8(nil)
+	assert.IsNil(got)
+}
+
+func TestReverseUint16(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReverseUint16")
+
+	got := ReverseUint16([]uint16{1, 2, 3})
+	assert.Equal([]uint16{3, 2, 1}, got)
+
+	got = ReverseUint16(nil)
+	assert.IsNil(got)
+}
+
+func TestReverseUint32(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReverseUint32")
+
+	got := ReverseUint32([]uint32{1, 2, 3})
+	assert.Equal([]uint32{3, 2, 1}, got)
+
+	got = ReverseUint32(nil)
+	assert.IsNil(got)
+}
+
+func TestReverseUint64(t *testing.T) {
+	assert := internal.NewAssert(t, "TestReverseInt8")
+
+	got := ReverseUint64([]uint64{1, 2, 3})
+	assert.Equal([]uint64{3, 2, 1}, got)
+
+	got = ReverseUint64(nil)
+	assert.IsNil(got)
 }
 
 func TestReverseStrSlice(t *testing.T) {
@@ -168,7 +229,7 @@ func TestReverseStrSlice(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := ReverseStrSlice(tt.args.src); !reflect.DeepEqual(got, tt.want) {
+			if got := ReverseStr(tt.args.src); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("ReverseStrSlice() = %v, want %v", got, tt.want)
 			}
 		})
@@ -210,6 +271,12 @@ func TestReverseSliceRefE(t *testing.T) {
 			wantErr: false,
 		},
 		{
+			name:    "nil",
+			args:    args{nil},
+			want:    nil,
+			wantErr: false,
+		},
+		{
 			name:    "input isn't a slice",
 			args:    args{"string"},
 			want:    nil,
@@ -218,7 +285,7 @@ func TestReverseSliceRefE(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ReverseSliceE(tt.args.slice)
+			got, err := ReverseE(tt.args.slice)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ReverseSliceE() error = %v, wantErr %v", err, tt.wantErr)
 				return

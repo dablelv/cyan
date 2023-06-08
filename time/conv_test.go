@@ -1,24 +1,22 @@
 package time
 
-import "testing"
+import (
+	"testing"
 
-// Note that not suitable for adding unittests, because Local timezone may be different.
-func TestDateTime2UTS(t *testing.T) {
-	type args struct {
-		dt string
-	}
-	tests := []struct {
-		name string
-		args args
-		want int64
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := DateTime2UTS(tt.args.dt); got != tt.want {
-				t.Errorf("DateTime2UTS() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+	"github.com/dablelv/go-huge-util/internal"
+)
+
+// Note that Local timezone may be different so the returned value may be different.
+func TestDateTimeToTs(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDateTimeToTs")
+
+	got := DateTimeToTs("1970-01-01 00:00:01")
+	assert.NotEqual(int64(0), got)
+}
+
+func TestTsToDateTime(t *testing.T) {
+	assert := internal.NewAssert(t, "TestTsToDateTime")
+
+	got := TsToDateTime(0)
+	assert.NotEqual("", got)
 }

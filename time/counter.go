@@ -15,12 +15,12 @@ type TimeCounter struct {
 // NewTimeCounter create a time counter.
 func NewTimeCounter() (t *TimeCounter) {
 	t = new(TimeCounter)
-	t.Set()
-	return t
+	t.Reset()
+	return
 }
 
-// Set start timing.
-func (t *TimeCounter) Set() {
+// Reset set start timing to now.
+func (t *TimeCounter) Reset() {
 	t.Time = time.Now()
 	t.int64 = t.Time.UnixNano()
 }
@@ -50,7 +50,7 @@ func (t *TimeCounter) GetNs() int64 {
 	return time.Now().UnixNano() - t.int64
 }
 
-// TimeCost count time cost.
+// TimeCost counts time cost.
 func TimeCost() func() time.Duration {
 	start := time.Now()
 	return func() time.Duration {

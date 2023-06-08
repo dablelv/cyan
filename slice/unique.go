@@ -6,14 +6,14 @@ import (
 )
 
 //
-// Unique a slice, e.g. input []int32{1, 2, 3, 2} and output is []int32{1, 2, 3}.
+// Unique a slice, e.g. input []int{1, 2, 3, 2} and output is []int{1, 2, 3}.
 //
 
 // Unique replaces repeated elements with a single copy and returns a new slice.
 // Unique is like the experimental lib function https://pkg.go.dev/golang.org/x/exp/slices#Compact,
 // but Unique do not modify the original slice and the original slice also doesn't need to be sorted.
 // Unique implemented by generics is recommended to be used.
-func Unique[S ~[]E, E comparable](s S) S {
+func Unique[E comparable, S ~[]E](s S) S {
 	if len(s) == 0 {
 		return s
 	}
@@ -28,88 +28,88 @@ func Unique[S ~[]E, E comparable](s S) S {
 	return r
 }
 
-func UniqueIntSlice(src []int) []int {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]int)
+func UniqueInt(src []int) []int {
+	r, _ := UniqueE(src)
+	v, _ := r.([]int)
 	return v
 }
 
-func UniqueInt8Slice(src []int8) []int8 {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]int8)
+func UniqueInt8(src []int8) []int8 {
+	r, _ := UniqueE(src)
+	v, _ := r.([]int8)
 	return v
 }
 
-func UniqueInt16Slice(src []int16) []int16 {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]int16)
+func UniqueInt16(src []int16) []int16 {
+	r, _ := UniqueE(src)
+	v, _ := r.([]int16)
 	return v
 }
 
-func UniqueInt32Slice(src []int32) []int32 {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]int32)
+func UniqueInt32(src []int32) []int32 {
+	r, _ := UniqueE(src)
+	v, _ := r.([]int32)
 	return v
 }
 
-func UniqueInt64Slice(src []int64) []int64 {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]int64)
+func UniqueInt64(src []int64) []int64 {
+	r, _ := UniqueE(src)
+	v, _ := r.([]int64)
 	return v
 }
 
-func UniqueUintSlice(src []uint) []uint {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]uint)
+func UniqueUint(src []uint) []uint {
+	r, _ := UniqueE(src)
+	v, _ := r.([]uint)
 	return v
 }
 
-func UniqueUint8Slice(src []uint8) []uint8 {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]uint8)
+func UniqueUint8(src []uint8) []uint8 {
+	r, _ := UniqueE(src)
+	v, _ := r.([]uint8)
 	return v
 }
 
-func UniqueUint16Slice(src []uint16) []uint16 {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]uint16)
+func UniqueUint16(src []uint16) []uint16 {
+	r, _ := UniqueE(src)
+	v, _ := r.([]uint16)
 	return v
 }
 
-func UniqueUint32Slice(src []uint32) []uint32 {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]uint32)
+func UniqueUint32(src []uint32) []uint32 {
+	r, _ := UniqueE(src)
+	v, _ := r.([]uint32)
 	return v
 }
 
-func UniqueUint64Slice(src []uint64) []uint64 {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]uint64)
+func UniqueUint64(src []uint64) []uint64 {
+	r, _ := UniqueE(src)
+	v, _ := r.([]uint64)
 	return v
 }
 
-func UniqueFloat32Slice(src []float32) []float32 {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]float32)
+func UniqueFloat32(src []float32) []float32 {
+	r, _ := UniqueE(src)
+	v, _ := r.([]float32)
 	return v
 }
 
-func UniqueFloat64Slice(src []float64) []float64 {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]float64)
+func UniqueFloat64(src []float64) []float64 {
+	r, _ := UniqueE(src)
+	v, _ := r.([]float64)
 	return v
 }
 
-func UniqueStrSlice(src []string) []string {
-	dst, _ := UniqueSliceE(src)
-	v, _ := dst.([]string)
+func UniqueStr(src []string) []string {
+	r, _ := UniqueE(src)
+	v, _ := r.([]string)
 	return v
 }
 
-// UniqueSliceE replaces repeated elements with a single copy and returns a new slice.
+// UniqueE replaces repeated elements with a single copy and returns a new slice.
 // Note that the original slice will not be modified.
-func UniqueSliceE(slice any) (any, error) {
-	// Check param.
+func UniqueE(slice any) (any, error) {
+	// Check params.
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
 		return nil, fmt.Errorf("the input %#v of type %T isn't a slice", slice, slice)

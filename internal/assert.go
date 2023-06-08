@@ -83,6 +83,9 @@ func (a *Assert) IsNil(v any) {
 	if v == nil || (reflect.ValueOf(v).Kind() == reflect.Ptr && reflect.ValueOf(v).IsNil()) {
 		return
 	}
+	if reflect.ValueOf(v).IsNil() {
+		return
+	}
 	makeTestFailed(a.T, a.CaseName, nil, v)
 }
 
