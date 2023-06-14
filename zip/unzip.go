@@ -27,11 +27,11 @@ func Unzip(zipath, dir string) error {
 	return nil
 }
 
-func unzipFile(file *zip.File, dstDir string) error {
+func unzipFile(file *zip.File, dir string) error {
 	// Prevent path traversal vulnerability.
 	// Such as if the file name is "../../../path/to/file.txt" which will be cleaned to "path/to/file.txt".
 	name := strings.TrimPrefix(filepath.Join(string(filepath.Separator), file.Name), string(filepath.Separator))
-	filePath := path.Join(dstDir, name)
+	filePath := path.Join(dir, name)
 
 	// Create the directory of file.
 	if file.FileInfo().IsDir() {
