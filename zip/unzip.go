@@ -11,15 +11,16 @@ import (
 
 // Unzip decompresses a zip file to specified directory.
 // Note that the destination directory don't need to specify the trailing path separator.
-func Unzip(zipPath, dstDir string) error {
+// If the destination directory doesn't exist, it will be created automatically.
+func Unzip(zipath, dir string) error {
 	// Open zip file.
-	reader, err := zip.OpenReader(zipPath)
+	reader, err := zip.OpenReader(zipath)
 	if err != nil {
 		return err
 	}
 	defer reader.Close()
 	for _, file := range reader.File {
-		if err := unzipFile(file, dstDir); err != nil {
+		if err := unzipFile(file, dir); err != nil {
 			return err
 		}
 	}
