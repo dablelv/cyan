@@ -910,7 +910,7 @@ func indirect(a any) any {
 // Copied from html/template/content.go.
 // indirectToStringerOrError returns the value, after dereferencing as many times
 // as necessary to reach the base type (or nil) or an implementation of fmt.Stringer
-// or error,
+// or error.
 func indirectToStringerOrError(a any) any {
 	if a == nil {
 		return nil

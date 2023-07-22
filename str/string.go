@@ -34,9 +34,9 @@ func SplitSeps(s string, seps ...string) []string {
 	return result
 }
 
-// JoinStrSkipEmpty concatenates multiple strings to a single string with the specified separator and skips the empty
+// JoinSkipEmpty concatenates multiple strings to a single string with the specified separator and skips the empty
 // string.
-func JoinStrSkipEmpty(sep string, s ...string) string {
+func JoinSkipEmpty(sep string, s ...string) string {
 	var buf bytes.Buffer
 	for _, v := range s {
 		if v == "" {
@@ -50,9 +50,9 @@ func JoinStrSkipEmpty(sep string, s ...string) string {
 	return buf.String()
 }
 
-// JoinStr concatenates multiple strings to a single string with the specified separator.
-// Note that JoinStr doesn't skip the empty string.
-func JoinStr(sep string, s ...string) string {
+// Join concatenates multiple strings to a single string with the specified separator.
+// Note that Join doesn't skip the empty string.
+func Join(sep string, s ...string) string {
 	var buf bytes.Buffer
 	for i, v := range s {
 		if i != 0 {

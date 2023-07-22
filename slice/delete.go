@@ -6,16 +6,17 @@ import (
 )
 
 //
-// Note that since Go 1.18, standard exp lib function https://pkg.go.dev/golang.org/x/exp/slices#Delete
-// implemented by generics should be prefered.
+// All of the functions in this file are the supplement to the standard library slices package.
+// You should also know the Delete and DeleteFunc function in the https://pkg.go.dev/golang.org/x/exp/slices package.
+// The standard library functions implemented by generics should be used first.
 //
 
-// DeleteStrSlice deletes string slice elements by indexes.
-func DeleteStrSlice(src []string, indexes ...int) []string {
+// DeleteStrs deletes string slice elements by indexes.
+func DeleteStrs(src []string, indexes ...int) []string {
 	return Delete(src, indexes...).([]string)
 }
 
-// DeleteIntSlice deletes int slice elements by indexes.
+// DeleteInts deletes int slice elements by indexes.
 func DeleteIntSlice(src []int, indexes ...int) []int {
 	return Delete(src, indexes...).([]int)
 }
@@ -114,7 +115,7 @@ func DeleteE(slice any, indexes ...int) (any, error) {
 	// Check params.
 	v := reflect.ValueOf(slice)
 	if v.Kind() != reflect.Slice {
-		return nil, errors.New("the input isn't a slice")
+		return nil, errors.New("The input isn't a slice")
 	}
 	if v.Len() == 0 || len(indexes) == 0 {
 		return slice, nil
