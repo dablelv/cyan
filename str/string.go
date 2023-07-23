@@ -2,8 +2,11 @@ package str
 
 import (
 	"bytes"
+	"reflect"
 	"regexp"
 	"strings"
+
+	"github.com/dablelv/go-huge-util/conv"
 )
 
 // Split replaces std lib strings.Split.
@@ -34,9 +37,9 @@ func SplitSeps(s string, seps ...string) []string {
 	return result
 }
 
-// JoinSkipEmpty concatenates multiple strings to a single string with the specified separator and skips the empty
+// JoinNonEmptyStrs concatenates multiple strings to a single string with the specified separator and skips the empty
 // string.
-func JoinSkipEmpty(sep string, s ...string) string {
+func JoinNonEmptyStrs(sep string, s ...string) string {
 	var buf bytes.Buffer
 	for _, v := range s {
 		if v == "" {
@@ -50,17 +53,33 @@ func JoinSkipEmpty(sep string, s ...string) string {
 	return buf.String()
 }
 
-// Join concatenates multiple strings to a single string with the specified separator.
-// Note that Join doesn't skip the empty string.
-func Join(sep string, s ...string) string {
-	var buf bytes.Buffer
-	for i, v := range s {
-		if i != 0 {
-			buf.WriteString(sep)
-		}
-		buf.WriteString(v)
+// Join concatenates all elements of Array, Slice or String to a single string with a separator.
+func Join(a any, sep string) string {
+	s, _ := JoinE(a, sep)
+	return s
+}
+
+// JoinE concatenates all elements of Array, Slice or String to a single string with a separator
+// and returns an error if an error occurred.
+// E.g. input []int{1, 2, 3} and separator ",", output is a string "1,2,3".
+// It panics if a's Kind is not Array, Slice, or String.
+func JoinE(a any, sep string) (string, error) {
+	v := reflect.ValueOf(a)
+	if v.Kind() == reflect.String {
+		return JoinE(strings.Split(a.(string), ""), sep)
 	}
-	return buf.String()
+	var s string
+	for i := 0; i < v.Len(); i++ {
+		if len(s) > 0 {
+			s += sep
+		}
+		str, err := conv.ToStringE(v.Index(i).Interface())
+		if err != nil {
+			return "", err
+		}
+		s += str
+	}
+	return s, nil
 }
 
 // Reverse reverses string without modifying the original string.

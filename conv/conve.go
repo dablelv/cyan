@@ -846,7 +846,7 @@ func ToStringE(i any) (string, error) {
 	case error:
 		return s.Error(), nil
 	default:
-		return "", fmt.Errorf("unable to cast %#v of type %T to string", i, i)
+		return "", fmt.Errorf("Unable to cast %#v of type %T to string", i, i)
 	}
 }
 

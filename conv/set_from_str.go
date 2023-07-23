@@ -1,6 +1,6 @@
 package conv
 
-import "github.com/dablelv/go-huge-util/str"
+import "strings"
 
 // SplitStrToSet convert a string to map set after split
 func SplitStrToSet(s string, sep string) map[string]struct{} {
@@ -8,7 +8,7 @@ func SplitStrToSet(s string, sep string) map[string]struct{} {
 		return nil
 	}
 	m := make(map[string]struct{})
-	for _, v := range str.Split(s, sep) {
+	for _, v := range strings.Split(s, sep) {
 		m[v] = struct{}{}
 	}
 	return m

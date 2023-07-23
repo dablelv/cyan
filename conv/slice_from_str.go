@@ -1,8 +1,6 @@
 package conv
 
-import (
-	"github.com/dablelv/go-huge-util/str"
-)
+import "strings"
 
 // SplitStrToSlice splits a string to a slice by the specified separator.
 func SplitStrToSlice[T any](s, sep string) []T {
@@ -14,7 +12,7 @@ func SplitStrToSlice[T any](s, sep string) []T {
 // Note that this function is implemented through 1.18 generics, so the element type needs to
 // be specified when calling it, e.g. SplitStrToSliceE[int]("1,2,3", ",").
 func SplitStrToSliceE[T any](s, sep string) ([]T, error) {
-	ss := str.Split(s, sep)
+	ss := strings.Split(s, sep)
 	r := make([]T, len(ss))
 	for i := range ss {
 		v, err := ToAnyE[T](ss[i])

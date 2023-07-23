@@ -43,113 +43,46 @@ func TestSplit(t *testing.T) {
 }
 
 func TestSplitSeps(t *testing.T) {
-	type args struct {
-		s    string
-		seps []string
-	}
-	tests := []struct {
-		name string
-		args args
-		want []string
-	}{
-		{
-			"case 1",
-			args{"foo,bar,baz", []string{","}},
-			[]string{"foo", "bar", "baz"},
-		},
-		{
-			"case 2",
-			args{"foo,bar|baz", []string{",", "|"}},
-			[]string{"foo", "bar", "baz"},
-		},
-		{
-			"case 3",
-			args{"foo,bar|baz qux", []string{",", "|", " "}},
-			[]string{"foo", "bar", "baz", "qux"},
-		},
-		{
-			"case 4",
-			args{"foo,bar|bazSEPqux", []string{",", "|", "SEP"}},
-			[]string{"foo", "bar", "baz", "qux"},
-		},
-		{
-			"case 5",
-			args{"foo,bar|baz", []string{}},
-			[]string{"foo,bar|baz"},
-		},
-		{
-			"case 6",
-			args{" xyz", []string{""}},
-			[]string{" ", "x", "y", "z"},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := SplitSeps(tt.args.s, tt.args.seps...); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("SplitSeps() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+	assert := internal.NewAssert(t, "TestSplitSeps")
+
+	assert.Equal([]string{"foo", "bar", "baz"}, SplitSeps("foo,bar,baz", ","))
+	assert.Equal([]string{"foo", "bar", "baz"}, SplitSeps("foo,bar|baz", ",", "|"))
+	assert.Equal([]string{"foo", "bar", "baz", "qux"}, SplitSeps("foo,bar|baz qux", ",", "|", " "))
+	assert.Equal([]string{"foo", "bar", "baz", "qux"}, SplitSeps("foo,bar|bazSEPqux", ",", "|", "SEP"))
+	assert.Equal([]string{"foo,bar|baz"}, SplitSeps("foo,bar|baz"))
+	assert.Equal([]string{" ", "x", "y", "z"}, SplitSeps(" xyz", ""))
 }
 
-func TestJoinSkipEmpty(t *testing.T) {
-	type args struct {
-		sep string
-		s   []string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"join string",
-			args{",", []string{"foo", "bar", "baz"}},
-			"foo,bar,baz",
-		},
-		{
-			"join string and skip the empty string",
-			args{",", []string{"", "foo", "bar", "baz"}},
-			"foo,bar,baz",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := JoinSkipEmpty(tt.args.sep, tt.args.s...); got != tt.want {
-				t.Errorf("JoinSkipEmpty() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestJoinNonEmptyStrs(t *testing.T) {
+	assert := internal.NewAssert(t, "TestJoinNonEmptyStrs")
+
+	got := JoinNonEmptyStrs(",", []string{"foo", "bar", "baz"}...)
+	assert.Equal("foo,bar,baz", got)
+
+	got = JoinNonEmptyStrs(",", []string{"foo", "bar", "baz"}...)
+	assert.Equal("foo,bar,baz", got)
 }
 
 func TestJoin(t *testing.T) {
-	type args struct {
-		sep string
-		s   []string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"join string",
-			args{",", []string{"foo", "bar", "baz"}},
-			"foo,bar,baz",
-		},
-		{
-			"join string and don't skip the empty string",
-			args{",", []string{"", "foo", "bar", "baz"}},
-			",foo,bar,baz",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Join(tt.args.sep, tt.args.s...); got != tt.want {
-				t.Errorf("Join() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+	assert := internal.NewAssert(t, "TestJoin")
+
+	got := Join([]string{"foo", "bar", "baz"}, ",")
+	assert.Equal("foo,bar,baz", got)
+
+	got = Join([3]string{"foo", "bar", "baz"}, ",")
+	assert.Equal("foo,bar,baz", got)
+
+	got = Join([]int{1, 2, 3}, ",")
+	assert.Equal("1,2,3", got)
+
+	got = Join([3]int{1, 2, 3}, ",")
+	assert.Equal("1,2,3", got)
+
+	got = Join("foo", ",")
+	assert.Equal("f,o,o", got)
+
+	got = Join([]struct{}{{}}, ",")
+	assert.Equal("", got)
 }
 
 func TestReverse(t *testing.T) {
