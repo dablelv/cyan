@@ -99,19 +99,19 @@ func DeleteElems[S ~[]E, E comparable](s S, elms ...E) S {
 func DeleteElemsRef(a any, elms ...any) any {
 	// Convert the elements to map set.
 	m := make(map[any]struct{})
-	for _, v := range elms {
-		m[v] = struct{}{}
+	for i := range elms {
+		m[elms[i]] = struct{}{}
 	}
 
 	// Filter out specified elements.
 	v := reflect.ValueOf(a)
-	t := reflect.MakeSlice(reflect.TypeOf(a), 0, v.Len())
+	r := reflect.MakeSlice(reflect.TypeOf(a), 0, v.Len())
 	for i := 0; i < v.Len(); i++ {
 		if _, ok := m[v.Index(i).Interface()]; !ok {
-			t = reflect.Append(t, v.Index(i))
+			r = reflect.Append(r, v.Index(i))
 		}
 	}
-	return t.Interface()
+	return r.Interface()
 }
 
 // Indexes returns the specified element all indexes.

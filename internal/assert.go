@@ -161,7 +161,6 @@ func compare(x, y any) int {
 		}
 		return compareNotEqual
 	}
-
 	return compareNotEqual
 }
 

@@ -75,7 +75,7 @@ Sum([]uint{1,2,3})                        // 6
 Sum([]float32{1.1, 2.2, 3.3})             // 6.6
 Sum([]float64{1.1, 2.2, 3.3})             // 6.6
 
-// CRUD(Create Read Update Delete) on slice by index
+// CRUD(Create Read Update Delete)
 fib := []int{1, 1, 2, 3, 5, 8}
 r := Insert(fib, 6, 13, 21)     // [1 1 2 3 5 8 13]
 r := Delete(fib, 0)             // [1 2 3 5 8]
