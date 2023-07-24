@@ -122,19 +122,19 @@ func TestIndexesRef(t *testing.T) {
 	assert.IsNil(s)
 }
 
-func TestIndicesFunc(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIndicesFunc")
+func TestIndexessFunc(t *testing.T) {
+	assert := internal.NewAssert(t, "TestIndexessFunc")
 
 	f := func(e int) bool {
 		return e <= 1
 	}
-	s := IndicesFunc([]int{1, 2, 3}, f)
+	s := IndexesFunc([]int{1, 2, 3}, f)
 	assert.Equal([]int{0}, s)
 
-	s = IndicesFunc([]int{1, 1, 2, 3}, f)
+	s = IndexesFunc([]int{1, 1, 2, 3}, f)
 	assert.Equal([]int{0, 1}, s)
 
-	s = IndicesFunc([]int{2, 3, 4}, f)
+	s = IndexesFunc([]int{2, 3, 4}, f)
 	assert.IsNil(s)
 }
 

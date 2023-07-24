@@ -91,122 +91,44 @@ func TestReverse(t *testing.T) {
 	assert.Equal("123", Reverse("321"))
 }
 
-func TestGetAlphanumericNumByASCII(t *testing.T) {
-	type args struct {
-		s string
-	}
-	tests := []struct {
-		name string
-		args args
-		want int
-	}{
-		{
-			name: "包含数字",
-			args: args{"108条梁山好汉"},
-			want: 3,
-		},
-		{
-			name: "包含字母",
-			args: args{"一百条梁山man"},
-			want: 3,
-		},
-		{
-			name: "包含数字与字母",
-			args: args{"108条梁山man"},
-			want: 6,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := GetAlphanumericNumByASCII(tt.args.s); got != tt.want {
-				t.Errorf("GetAlphanumericNumByASCII() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestAlphanumericNum(t *testing.T) {
+	assert := internal.NewAssert(t, "TestAlphanumericNum")
+
+	assert.Equal(3, AlphanumericNum("108条梁山好汉"))
+	assert.Equal(3, AlphanumericNum("一百条梁山man"))
+	assert.Equal(6, AlphanumericNum("108条梁山man"))
 }
 
-func TestGetAlphanumericNumByASCIIV2(t *testing.T) {
-	type args struct {
-		s string
-	}
-	tests := []struct {
-		name string
-		args args
-		want int
-	}{
-		{
-			name: "包含数字",
-			args: args{"108条梁山好汉"},
-			want: 3,
-		},
-		{
-			name: "包含字母",
-			args: args{"一百条梁山man"},
-			want: 3,
-		},
-		{
-			name: "包含数字与字母",
-			args: args{"108条梁山man"},
-			want: 6,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := GetAlphanumericNumByASCIIV2(tt.args.s); got != tt.want {
-				t.Errorf("GetAlphanumericNumByASCII() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestAlphanumericNumV2(t *testing.T) {
+	assert := internal.NewAssert(t, "TestAlphanumericNumV2")
+
+	assert.Equal(3, AlphanumericNumV2("108条梁山好汉"))
+	assert.Equal(3, AlphanumericNumV2("一百条梁山man"))
+	assert.Equal(6, AlphanumericNumV2("108条梁山man"))
 }
 
-func TestGetAlphanumericNumByRegExp(t *testing.T) {
-	type args struct {
-		s string
-	}
-	tests := []struct {
-		name string
-		args args
-		want int
-	}{
-		{
-			name: "包含数字",
-			args: args{"108条梁山好汉"},
-			want: 3,
-		},
-		{
-			name: "包含字母",
-			args: args{"一百条梁山man"},
-			want: 3,
-		},
-		{
-			name: "包含数字与字母",
-			args: args{"108条梁山man"},
-			want: 6,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := GetAlphanumericNumByRegExp(tt.args.s); got != tt.want {
-				t.Errorf("GetAlphanumericNumByRegExp() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestAlphanumericNumRegExp(t *testing.T) {
+	assert := internal.NewAssert(t, "TestAlphanumericNumRegExp")
+
+	assert.Equal(3, AlphanumericNumRegExp("108条梁山好汉"))
+	assert.Equal(3, AlphanumericNumRegExp("一百条梁山man"))
+	assert.Equal(6, AlphanumericNumRegExp("108条梁山man"))
 }
 
-func BenchmarkGetAlphanumericNumByASCII(b *testing.B) {
+func BenchmarkAlphanumericNum(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		GetAlphanumericNumByASCII("108条梁山man")
+		AlphanumericNum("108条梁山man")
 	}
 }
 
-func BenchmarkGetAlphanumericNumByASCIIV2(b *testing.B) {
+func BenchmarkAlphanumericNumV2(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		GetAlphanumericNumByASCIIV2("108条梁山man")
+		AlphanumericNumV2("108条梁山man")
 	}
 }
 
 func BenchmarkGetAlphanumericNumByRegExp(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		GetAlphanumericNumByRegExp("108条梁山man")
+		AlphanumericNumRegExp("108条梁山man")
 	}
 }

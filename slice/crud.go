@@ -118,17 +118,17 @@ func DeleteElemsRef(a any, elms ...any) any {
 // Indexes implemented by generics has a better performance than Indexes implemented by generics
 // and be recommended to use.
 func Indexes[E comparable](s []E, v E) []int {
-	var indices []int
+	var indexes []int
 	for i := range s {
 		if v == s[i] {
-			indices = append(indices, i)
+			indexes = append(indexes, i)
 		}
 	}
-	return indices
+	return indexes
 }
 
-// IndiexesFunc returns the specified element all indexes satisfying f(s[i]).
-func IndicesFunc[E any](s []E, f func(E) bool) []int {
+// IndexesFunc returns the specified element all indexes satisfying f(s[i]).
+func IndexesFunc[E any](s []E, f func(E) bool) []int {
 	var indices []int
 	for i := range s {
 		if f(s[i]) {

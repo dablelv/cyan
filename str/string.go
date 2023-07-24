@@ -92,10 +92,10 @@ func Reverse(s string) string {
 	return string(r)
 }
 
-// GetAlphanumericNumByASCII gets the alphanumeric number based on the ASCII code value.
-// Note that this function has a better performance than GetAlphanumericNumByRegExp, so this function is recommended.
-func GetAlphanumericNumByASCII(s string) int {
-	num := int(0)
+// AlphanumericNum returns the alphanumeric number based on the ASCII code value.
+// AlphanumericNum should be used first because it has a better performance than AlphanumericNumV2 and AlphanumericNumRegExp.
+func AlphanumericNum(s string) int {
+	var num int
 	for i := 0; i < len(s); i++ {
 		switch {
 		case 48 <= s[i] && s[i] <= 57: // digits
@@ -110,10 +110,10 @@ func GetAlphanumericNumByASCII(s string) int {
 	return num
 }
 
-// GetAlphanumericNumByASCIIV2 gets the alphanumeric number based on the ASCII code value.
-// Because range by rune so the performance is worse than GetAlphanumericNumByASCII.
-func GetAlphanumericNumByASCIIV2(s string) int {
-	num := int(0)
+// AlphanumericNumV2 returns the alphanumeric number based on the ASCII code value.
+// Because range by rune so the performance is worse than AlphanumericNum.
+func AlphanumericNumV2(s string) int {
+	var num int
 	for _, c := range s {
 		switch {
 		case '0' <= c && c <= '9':
@@ -128,10 +128,10 @@ func GetAlphanumericNumByASCIIV2(s string) int {
 	return num
 }
 
-// GetAlphanumericNumByRegExp gets the alphanumeric number based on regular expression.
-// Note that this function has a poor performance when compared to GetAlphanumericNumByASCII,
-// so the GetAlphanumericNumByASCII is recommended.
-func GetAlphanumericNumByRegExp(s string) int {
+// AlphanumericNumRegExp returns the alphanumeric number based on regular expression.
+// Note that this function has a poor performance when compared to AlphanumericNum,
+// so the AlphanumericNum is recommended.
+func AlphanumericNumRegExp(s string) int {
 	rNum := regexp.MustCompile(`\d`)
 	rLetter := regexp.MustCompile("[a-zA-Z]")
 	return len(rNum.FindAllString(s, -1)) + len(rLetter.FindAllString(s, -1))

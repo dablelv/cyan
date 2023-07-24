@@ -21,13 +21,14 @@ A modern, comprehensive and efficient utility library of Go.
 - Only depend on the go standard library.
 - High unit test coverage for exported functions.
 
-# Encode
-Some useful functions can be used to handle conversion of different character encoding, such as gbk to utf8.
+# Encoding
+Some utility functions can be used to handle conversion of different character encoding, such as gbk to utf8.
 ```go
-gbkStr := []byte{0xC4, 0xE3, 0xBA, 0xC3}    // 你好 in gbk
-utf8Str, _ := GbkToUtf8(gbkStr)             // 你好 in utf8
-gbkStrRes, _ := Utf8ToGbk(utf8Str)          // [196 227 186 195]
+gbk := []byte{0xC4, 0xE3, 0xBA, 0xC3}   // 你好 in gbk
+utf8, _ := GBKToUTF8(gbk)               // 你好 in utf8
+gbk, _ := UTF8ToGBK(utf8)               // [196 227 186 195]
 ```
+
 Some converting function to json.
 ```go
 student := struct {
@@ -47,8 +48,7 @@ output:
 */
 ```
 # Net
-Some useful functions can be used to handle network. For example you can use `IPv4StrToU32()` transform ipv4 string to uint32 value.
-
+Some utility functions can be used to handle network. For example you can use `IPv4StrToU32()` transform ipv4 string to uint32 value.
 ```go
 IsReservedIP("0.0.0.256")    // -1 invalid ip
 IsReservedIP("39.156.69.79") // 0 public ip
@@ -60,63 +60,50 @@ GetNativeEndian()              // LittleEndian
 IsLittleEndian()               // true
 ```
 # Slice
-Some useful functions can be used to handle slice.
-
+Some useful utility functions can be used to handle slice.
 ```go
-UniqueIntSlice([]int{1, 2, 2, 3})              // [1 2 3]
-UniqueUintSlice([]uint{1, 2, 2, 3})            // [1 2 3]
-UniqueStrSlice([]string{"a", "b", "b", "c"})   // [a b c]
+Unique([]int{1, 2, 2, 3})              // [1 2 3]
+Unique([]uint{1, 2, 2, 3})            // [1 2 3]
+Unique([]string{"a", "b", "b", "c"})   // [a b c]
 
-ReverseIntSlice([]int{1, 2, 3})                // [3 2 1]
-ReverseUintSlice([]uint{1, 2, 3})              // [3 2 1]
-ReverseStrSlice([]string{"a", "b", "c"})       // [c b a]
+Reverse([]int{1, 2, 3})                // [3 2 1]
+Reverse([]uint{1, 2, 3})              // [3 2 1]
+Reverse([]string{"a", "b", "c"})       // [c b a]
 
-SumSlice([]int{1,2,3})                         // 6
-SumSlice([]uint{1,2,3})                        // 6
-SumSlice([]float32{1.1, 2.2, 3.3})             // 6.6
-SumSlice([]float64{1.1, 2.2, 3.3})             // 6.6
-
-JoinSliceWithSep([]int{1, 2, 3}, ",")              // 1,2,3
-JoinSliceWithSep([]uint{1, 2, 3}, ",")             // 1,2,3
-JoinSliceWithSep([]float64{1.1, 2.2, 3.3}, ",")    // 1.1,2.2,3.3
-JoinSliceWithSep([]string{"a", "b", "c"}, ",")     // a,b,c
+Sum([]int{1,2,3})                         // 6
+Sum([]uint{1,2,3})                        // 6
+Sum([]float32{1.1, 2.2, 3.3})             // 6.6
+Sum([]float64{1.1, 2.2, 3.3})             // 6.6
 
 // CRUD(Create Read Update Delete) on slice by index
 fib := []int{1, 1, 2, 3, 5, 8}
-r, _ := InsertSliceE(fib, 6, 13)    // [1 1 2 3 5 8 13]
-r, _ := DeleteSliceE(fib, 0)        // [1 2 3 5 8]
-r, _ := UpdateSliceE(fib, 5, 88)    // [1 1 2 3 5 88]
-r, _ := GetEleIndexesSliceE(fib, 1) // [0 1]
-
-// or
-r := InsertIntSlice(fib, 5, 13)		// [1 1 2 3 5 8 13]
-r := DeleteIntSliceE(fib, 0)		// [1 2 3 5 8]
-r := UpdateIntSliceE(fib, 5, 88)	// [1 1 2 3 5 88]
-r := GetElemIndexesSlice(fib, 1)	// [0 1]
+r := Insert(fib, 6, 13, 21)     // [1 1 2 3 5 8 13]
+r := Delete(fib, 0)             // [1 2 3 5 8]
+r := Replace(fib, 5, 6, 88)     // [1 1 2 3 5 88]
+r := Indexes(fib, 1)            // [0 1]
 ```
 
 # String
-Some useful functions can be used to handle string.
-
+Some utility functions can be used to handle string.
 ```go
 Split("a,b,c", ",")                    // []string{"a", "b", "c"}
 
 SplitSeps("a,b|c", ",", "|")           // []string{"a", "b", "c"}
 SplitSeps("a,bSEPc", ",", "SEP")       // []string{"a", "b", "c"}
 
-JoinStr(",", "a", "", "b")             // "a,,b"
-JoinStrSkipEmpty(",", "a", "", "b")    // "a,b"
+Join([]int{1, 2, 3}, ",")              // "1,2,3"
+Join([]string{"a", "", "b"}, ",")      // "a,,b"
+JoinNonEmptyStrs(",", "a", "", "b")    // "a,b"
 
-ReverseStr("abc")                      // "cba"
+Reverse("abc")                      // "cba"
 
-GetAlphanumericNumByASCII("108条梁山man")     // 6
-GetAlphanumericNumByASCIIV2("108条梁山man")   // 6
-GetAlphanumericNumByRegExp("108条梁山man")    // 6
+AlphanumericNum("108条梁山man")         // 6
+AlphanumericNumV2("108条梁山man")       // 6
+AlphanumericNumRegExp("108条梁山man")   // 6
 ```
 
 # Time
-Some useful functions can be used to handle date and time.
-
+Some utility functions can be used to handle date and time.
 ```go
 tc := NewTimeCounter()
 // do your statements
@@ -137,7 +124,7 @@ GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
 ```
 
 # Type Conversion
-Some useful functions can be used to convert one type to another types, such as to map or slice.
+Some utility functions can be used to convert one type to another type.
 
 ## to basic types
 ```go
@@ -252,15 +239,13 @@ Struct2Map(st)         // map["I":1 "S":"a"]
 // to map[string]string
 Struct2MapStr(st)   // map["I":"1" "S":"a"]
 
-// any type tp map[string]string
+// any type to map[string]string
 m := ToMapStr(`{"foo":"foo","bar":"bar","baz":"baz"}`)       // map["foo":"foo" "bar":"bar" "baz":"baz"]
 m, err := ToMapStrE(`{"foo":"foo","bar":"bar","baz":"baz"}`) // map["foo":"foo" "bar":"bar" "baz":"baz"], nil
 ```
 
 # URL
-
-Some useful functions can be used to handle url.
-
+Some utility functions can be used to handle url.
 ```go
 var rawUrl=`http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2#name`
 RawUrlGetDomain(rawUrl)    // "www.aspxfans.com"
@@ -276,8 +261,7 @@ RawURLSetParam(rawUrl, "boardID", "521")   // http://www.aspxfans.com:8080/news/
 ```
 
 # Crypto
-Some useful functions can be used to create Hash, HMAC and crypt data.
-
+Some utility functions can be used to create Hash, HMAC and crypt data.
 ```go
 // Hash functions.
 Md5("")    // d41d8cd98f00b204e9800998ecf8427e
@@ -324,7 +308,7 @@ p, _ := Base64TriDESCBCDecrypt(c, key24) // plaintext
 
 # Rand
 
-Some functions to create a real non-negative random int number, specified length random string, and so on.
+Some utility functions to create a real non-negative random int number, specified length random string and so on.
 
 ```go
 GetRandInt()               // 2040723487295132865
@@ -337,7 +321,7 @@ GetRandUpperStr(3)         // YUT
 ```
 
 # File
-
+Some utility functions to operate on the file.
 ```go
 // List contents of the directory.
 ListDir()
@@ -372,9 +356,7 @@ FileSizeFile()
 ```
 
 # Comparison
-
-Some useful functions to compare.
-
+Some utility functions to handle comparison.
 ```go
 // Compare two any type value.
 Cmp(888, 889)       // LT
@@ -395,9 +377,7 @@ b, _ := VerLEVer("1.0.5", "1.0.5")   // true
 ```
 
 # Others
-
-Some useful functions now unclassified. Of course, it may be classified and moved to a new subdirectory in the future.
-
+Some utility functions now unclassified. Of course, it may be classified and moved to a new subdirectory in the future.
 ```go
 // NO NOW.
 ```

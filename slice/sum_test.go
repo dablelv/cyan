@@ -2,30 +2,15 @@ package slice
 
 import (
 	"testing"
+
+	"github.com/dablelv/go-huge-util/internal"
 )
 
 func TestSumInt(t *testing.T) {
-	type args struct {
-		s []int
-	}
-	tests := []struct {
-		name string
-		args args
-		want float64
-	}{
-		{
-			name: "1",
-			args: args{[]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}},
-			want: 55,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Sum(tt.args.s); got != tt.want {
-				t.Errorf("Sum() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+	assert := internal.NewAssert(t, "TestSum")
+
+	assert.Equal(float64(55), Sum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}))
+	assert.Equal(float64(55), Sum([]float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}))
 }
 
 func TestSumSlice(t *testing.T) {
@@ -103,11 +88,6 @@ func TestSumSlice(t *testing.T) {
 			want: 0.0,
 		},
 		{
-			name: "nil",
-			args: args{nil},
-			want: 0.0,
-		},
-		{
 			name: "",
 			args: args{""},
 			want: 0.0,
@@ -115,7 +95,7 @@ func TestSumSlice(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SumSlice(tt.args.s); got != tt.want {
+			if got := SumRef(tt.args.s); got != tt.want {
 				t.Errorf("Sum() = %v, want %v", got, tt.want)
 			}
 		})
