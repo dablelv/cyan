@@ -62,32 +62,39 @@ IsLittleEndian()               // true
 # Slice
 Some useful utility functions can be used to handle slice.
 ```go
-Unique([]int{1, 2, 2, 3})              // [1 2 3]
-Unique([]uint{1, 2, 2, 3})            // [1 2 3]
-Unique([]string{"a", "b", "b", "c"})   // [a b c]
-
-Reverse([]int{1, 2, 3})                // [3 2 1]
-Reverse([]uint{1, 2, 3})              // [3 2 1]
-Reverse([]string{"a", "b", "c"})       // [c b a]
-
-Sum([]int{1,2,3})                         // 6
-Sum([]uint{1,2,3})                        // 6
-Sum([]float32{1.1, 2.2, 3.3})             // 6.6
-Sum([]float64{1.1, 2.2, 3.3})             // 6.6
-
 // CRUD(Create Read Update Delete)
 fib := []int{1, 1, 2, 3, 5, 8}
 r := Insert(fib, 6, 13, 21)     // [1 1 2 3 5 8 13]
 r := Delete(fib, 0)             // [1 2 3 5 8]
 r := Replace(fib, 5, 6, 88)     // [1 1 2 3 5 88]
 r := Indexes(fib, 1)            // [0 1]
+
+Min([]int{1,2,3})                         // 1
+Max([]int{1,2,3})                         // 3
+
+Sum([]int{1,2,3})                         // 6
+Sum([]uint{1,2,3})                        // 6
+Sum([]float32{1.1, 2.2, 3.3})             // 6.6
+Sum([]float64{1.1, 2.2, 3.3})             // 6.6
+
+Unique([]int{1, 2, 2, 3})               // [1 2 3]
+Unique([]uint{1, 2, 2, 3})              // [1 2 3]
+Unique([]string{"a", "b", "b", "c"})    // [a b c]
+
+Reverse([]int{1, 2, 3})                 // [3 2 1]
+Reverse([]uint{1, 2, 3})                // [3 2 1]
+Reverse([]string{"a", "b", "c"})        // [c b a]
+
+ClearZero([]int{1, 2, 0, 3})                    // [1 2 3]
+ClearZero([]string{"foo", "bar", "", "baz"})    // ["foo", "bar", "baz"]
+
+// and so on.
 ```
 
 # String
 Some utility functions can be used to handle string.
 ```go
 Split("a,b,c", ",")                    // []string{"a", "b", "c"}
-
 SplitSeps("a,b|c", ",", "|")           // []string{"a", "b", "c"}
 SplitSeps("a,bSEPc", ",", "SEP")       // []string{"a", "b", "c"}
 
@@ -95,7 +102,7 @@ Join([]int{1, 2, 3}, ",")              // "1,2,3"
 Join([]string{"a", "", "b"}, ",")      // "a,,b"
 JoinNonEmptyStrs(",", "a", "", "b")    // "a,b"
 
-Reverse("abc")                      // "cba"
+Reverse("abc")                         // "cba"
 
 AlphanumericNum("108条梁山man")         // 6
 AlphanumericNumV2("108条梁山man")       // 6
@@ -174,7 +181,7 @@ set, _ := ToSetE[bool](bools)
 ints := []int{1, 2, 3}
 set := ToIntSet(ints)
 set, _ := ToIntSetE(ints)
-set := ToSetG[int](ints)
+set := ToSet[int](ints)
 set, _ := ToSetE[int](ints)
 
 // Convert string slice or array to set.
@@ -190,13 +197,10 @@ SplitStrToSet("a,b,c", ",")  // map[a:{}, b:{}, c:{}]
 
 ## to slice
 ```go
-// Convert string separated by white space character to string slice.
-sl := ToStrSlice("a b c") // []string{"a","b","c"}
-sl, _ := ToStrSliceE("a b c") // []string{"a","b","c"}
-
-// Convert int slice or array to string slice.
-sl := ToStrSlice([]int{1, 2, 3}) // []string{"1","2","3"}
-sl, _ := ToStrSliceE([]int{1, 2, 3}) // []string{"1","2","3"}
+ToStrSlice("a b c")         // ["a","b","c"]
+ToStrSliceE("a b c")        // ["a","b","c"]
+ToStrSlice([]int{1, 2, 3})  // ["1","2","3"]
+ToStrSliceE([]int{1, 2, 3}) // ["1","2","3"],nil
 
 // Convert map to slice in random order.
 ks, vs := Map2Slice(map[int]int{1:1, 2:2, 3:3})
@@ -212,22 +216,19 @@ slK, _ : = ks.([]string)
 slV, _ : = vs.([]int)
 
 // Split string to slice.
-// int[1,2,3]
-ints := SplitStrToSlice[int]("1,2,3", ",")
-ints, _ := SplitStrToSliceE[int]("1,2,3", ",")
-// uint[1,2,3]      
-uints := SplitStrToSlice[uint]("1,2,3", ",")
-uints, _ := SplitStrToSliceE[uint]("1,2,3", ",")
-// float64[1.1,2.2,3.3]
-f64s := SplitStrToSlice[float64]("1.1,2.2,3.3", ",")
-f64s, _ := SplitStrToSliceE[float64]("1.1,2.2,3.3", ",")
-// bool[true,false,true,false]
-bs := SplitStrToSlice[bool]("1,0,true,false", ",")
-bs, _ := SplitStrToSliceE[bool]("1,0,true,false", ",")
+SplitStrToSlice[int]("1,2,3", ",")              // [1,2,3]
+SplitStrToSliceE[int]("1,2,3", ",")             // [1,2,3], nil   
+SplitStrToSlice[uint]("1,2,3", ",")             // [1,2,3]
+SplitStrToSliceE[uint]("1,2,3", ",")            // [1,2,3], nil
+SplitStrToSlice[float64]("1.1,2.2,3.3", ",")    // [1.1,2.2,3.3]
+SplitStrToSliceE[float64]("1.1,2.2,3.3", ",")   // [1.1,2.2,3.3], nil
+SplitStrToSlice[bool]("1,0,true,false", ",")    // [true,false,true,false]
+SplitStrToSliceE[bool]("1,0,true,false", ",")   // [true,false,true,false], nil
+
+// and so on.
 ```
 
 ## to map
-
 ```go
 var st = struct {
     I int
@@ -240,24 +241,25 @@ Struct2Map(st)         // map["I":1 "S":"a"]
 Struct2MapStr(st)   // map["I":"1" "S":"a"]
 
 // any type to map[string]string
-m := ToMapStr(`{"foo":"foo","bar":"bar","baz":"baz"}`)       // map["foo":"foo" "bar":"bar" "baz":"baz"]
-m, err := ToMapStrE(`{"foo":"foo","bar":"bar","baz":"baz"}`) // map["foo":"foo" "bar":"bar" "baz":"baz"], nil
+ToMapStr(`{"foo":"foo","bar":"bar","baz":"baz"}`)  // map["foo":"foo" "bar":"bar" "baz":"baz"]
+ToMapStrE(`{"foo":"foo","bar":"bar","baz":"baz"}`) // map["foo":"foo" "bar":"bar" "baz":"baz"], nil
 ```
 
 # URL
-Some utility functions can be used to handle url.
+Some utility functions can be used to handle URL.
 ```go
-var rawUrl=`http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2#name`
-RawUrlGetDomain(rawUrl)    // "www.aspxfans.com"
-RawUrlGetPort(rawUrl)      // "8080"
+var rawURL=`http://www.aspxfans.com:8080/news/index.asp?boardID=520&page=1&page=2#name`
 
-RawURLGetParam(rawUrl, "page")         // 1 <nil>
-RawURLGetParams(rawUrl, "page")        // [1 2] <nil>
-RawURLGetAllParams(rawUrl)             // map[boardID:[520] page:[1 2]] <nil>
+RawUrlGetDomain(rawURL)    // "www.aspxfans.com"
+RawUrlGetPort(rawURL)      // "8080"
 
-RawURLAddParam(rawUrl, "keyword", "dog")   // http://www.aspxfans.com:8080/news/index.asp?boardID=520&keyword=dog&page=1&page=2#name
-RawURLDelParam(rawUrl, "page")             // http://www.aspxfans.com:8080/news/index.asp?boardID=520#name
-RawURLSetParam(rawUrl, "boardID", "521")   // http://www.aspxfans.com:8080/news/index.asp?boardID=521&page=1&page=2#name
+RawURLGetParam(rawURL, "page")         // 1 <nil>
+RawURLGetParams(rawURL, "page")        // [1 2] <nil>
+RawURLGetAllParams(rawURL)             // map[boardID:[520] page:[1 2]] <nil>
+
+RawURLAddParam(rawURL, "keyword", "dog")   // http://www.aspxfans.com:8080/news/index.asp?boardID=520&keyword=dog&page=1&page=2#name
+RawURLDelParam(rawURL, "page")             // http://www.aspxfans.com:8080/news/index.asp?boardID=520#name
+RawURLSetParam(rawURL, "boardID", "521")   // http://www.aspxfans.com:8080/news/index.asp?boardID=521&page=1&page=2#name
 ```
 
 # Crypto
@@ -307,9 +309,7 @@ p, _ := Base64TriDESCBCDecrypt(c, key24) // plaintext
 ```
 
 # Rand
-
 Some utility functions to create a real non-negative random int number, specified length random string and so on.
-
 ```go
 GetRandInt()               // 2040723487295132865
 GetRandIntn(100)           // 49
@@ -383,7 +383,6 @@ Some utility functions now unclassified. Of course, it may be classified and mov
 ```
 
 # How to Contribute
-
 We really appreciate any code commits which make this lib powerful. Please follow the rules below to create your pull request.
 
 1. Fork the repository.
@@ -392,10 +391,8 @@ We really appreciate any code commits which make this lib powerful. Please follo
 4. Create new pull request.
 
 # Summary
-
 The above examples are just the tip of the iceberg. For more usage, please read the source code.
 
 Due to the limited personal ability, you are welcome to criticize and correct. Of course, welcome to join in the construction of this library.
 # Star History
-
 [![Star History Chart](https://api.star-history.com/svg?repos=dablelv/go-huge-util&type=Date)](https://star-history.com/#dablelv/go-huge-util&Date)
