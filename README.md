@@ -172,24 +172,18 @@ b, err := ToAny[bool](one)           // true
 ```go
 // Convert bool slice or array to set.
 bools := []bool{true, false, true}
-set := ToBoolSet(bools)
-set, _ := ToBoolSetE(bools)
-set := ToSet[bool](bools)
-set, _ := ToSetE[bool](bools)
+ToSet[bool](bools)
+ToSetE[bool](bools)
 
 // Convert int slice or array to set.
 ints := []int{1, 2, 3}
-set := ToIntSet(ints)
-set, _ := ToIntSetE(ints)
-set := ToSet[int](ints)
-set, _ := ToSetE[int](ints)
+ToSet[int](ints)
+ToSetE[int](ints)
 
 // Convert string slice or array to set.
 strs := []string{"foo", "bar", "baz"}
-set := ToStrSet(strs)
-set, _ := ToStrSetE(strs)
-set := ToSet[string](strs)
-set, _ := ToSetE[string](strs)
+ToSet[string](strs)
+ToSetE[string](strs)
 
 // Split string to set.
 SplitStrToSet("a,b,c", ",")  // map[a:{}, b:{}, c:{}]

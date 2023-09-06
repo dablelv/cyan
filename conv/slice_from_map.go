@@ -51,10 +51,6 @@ func MapToSlice(a any) (ks any, vs any) {
 
 // MapToSliceE converts keys and values of map to slice in indeterminate order with error.
 func MapToSliceE(a any) (ks any, vs any, err error) {
-	// Check param.
-	if a == nil {
-		return nil, nil, nil
-	}
 	t := reflect.TypeOf(a)
 	if t.Kind() != reflect.Map {
 		err = fmt.Errorf("the input %#v of type %T isn't a map", a, a)
