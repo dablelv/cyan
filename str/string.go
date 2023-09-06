@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/dablelv/go-huge-util/conv"
+	"github.com/dablelv/cyan/conv"
 )
 
 // Split replaces std lib strings.Split.

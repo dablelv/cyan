@@ -3,7 +3,7 @@ package slice
 import (
 	"reflect"
 
-	"github.com/dablelv/go-huge-util/cond"
+	"github.com/dablelv/cyan/cond"
 )
 
 //

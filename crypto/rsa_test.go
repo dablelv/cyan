@@ -4,7 +4,7 @@ import (
 	"crypto"
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestRsaEncryptDecrypt(t *testing.T) {

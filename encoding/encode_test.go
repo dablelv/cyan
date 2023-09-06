@@ -3,7 +3,7 @@ package encoding
 import (
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestGBKToUTF8Str(t *testing.T) {

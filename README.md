@@ -1,13 +1,13 @@
 <div align=center>
 
-![Go version](https://img.shields.io/github/go-mod/go-version/dablelv/go-huge-util)
-[![GitHub latest tag](https://img.shields.io/github/tag/dablelv/go-huge-util)](https://github.com/dablelv/go-huge-util)
-[![Go Report Card](https://goreportcard.com/badge/github.com/dablelv/go-huge-util)](https://goreportcard.com/report/github.com/dablelv/go-huge-util)
-[![Unit Test](https://github.com/dablelv/go-huge-util/workflows/go-test/badge.svg)](https://github.com/dablelv/go-huge-util/actions)
-[![Coverage Status](https://coveralls.io/repos/github/dablelv/go-huge-util/badge.svg?branch=master)](https://coveralls.io/github/dablelv/go-huge-util?branch=master)
-[![Go Reference](https://pkg.go.dev/badge/github.com/dablelv/go-huge-util.svg)](https://pkg.go.dev/github.com/dablelv/go-huge-util)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dablelv/go-huge-util/blob/main/LICENSE)
-[![Stars](https://img.shields.io/github/stars/dablelv/go-huge-util?style=social)](https://img.shields.io/github/stars/dablelv/go-huge-util?style=social)
+![Go version](https://img.shields.io/github/go-mod/go-version/dablelv/cyan)
+[![GitHub latest tag](https://img.shields.io/github/tag/dablelv/cyan)](https://github.com/dablelv/cyan)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dablelv/cyan)](https://goreportcard.com/report/github.com/dablelv/cyan)
+[![Unit Test](https://github.com/dablelv/cyan/workflows/go-test/badge.svg)](https://github.com/dablelv/cyan/actions)
+[![Coverage Status](https://coveralls.io/repos/github/dablelv/cyan/badge.svg?branch=master)](https://coveralls.io/github/dablelv/cyan?branch=master)
+[![Go Reference](https://pkg.go.dev/badge/github.com/dablelv/cyan.svg)](https://pkg.go.dev/github.com/dablelv/cyan)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/dablelv/cyan/blob/main/LICENSE)
+[![Stars](https://img.shields.io/github/stars/dablelv/cyan?style=social)](https://img.shields.io/github/stars/dablelv/cyan?style=social)
 
 </div>
 
@@ -402,4 +402,4 @@ The above examples are just the tip of the iceberg. For more usage, please read 
 
 Due to the limited personal ability, you are welcome to criticize and correct. Of course, welcome to join in the construction of this library.
 # Star History
-[![Star History Chart](https://api.star-history.com/svg?repos=dablelv/go-huge-util&type=Date)](https://star-history.com/#dablelv/go-huge-util&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=dablelv/cyan&type=Date)](https://star-history.com/#dablelv/cyan&Date)

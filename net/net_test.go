@@ -5,7 +5,7 @@ import (
 	"net"
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestIsReservedIP(t *testing.T) {

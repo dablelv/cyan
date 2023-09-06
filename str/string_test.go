@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestSplit(t *testing.T) {

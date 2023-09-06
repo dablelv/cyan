@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/dablelv/go-huge-util/math"
+	"github.com/dablelv/cyan/math"
 	"golang.org/x/exp/constraints"
 )
 

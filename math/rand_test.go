@@ -3,7 +3,7 @@ package math
 import (
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestRandIntRange(t *testing.T) {

@@ -3,7 +3,7 @@ package time
 import (
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 // Note that Local timezone may be different so the returned value may be different.

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestIsWin(t *testing.T) {

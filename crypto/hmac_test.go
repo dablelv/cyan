@@ -3,7 +3,7 @@ package crypto
 import (
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestHMACMd5(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestTimeCounter(t *testing.T) {

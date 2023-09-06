@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/dablelv/go-huge-util/file"
+	"github.com/dablelv/cyan/file"
 )
 
 //

@@ -3,7 +3,7 @@ package conv
 import (
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestToSet(t *testing.T) {

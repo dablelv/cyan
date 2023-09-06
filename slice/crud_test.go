@@ -3,7 +3,7 @@ package slice
 import (
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestInsert(t *testing.T) {

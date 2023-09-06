@@ -3,7 +3,7 @@ package safegroup
 import (
 	"testing"
 
-	"github.com/dablelv/go-huge-util/internal"
+	"github.com/dablelv/cyan/internal"
 )
 
 func TestGroup_Go(t *testing.T) {
