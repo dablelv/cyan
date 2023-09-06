@@ -1,4 +1,4 @@
-module github.com/dablelv/go-huge-util
+module github.com/dablelv/cyan
 
 go 1.19
 

@@ -18,7 +18,7 @@ A modern, comprehensive and efficient utility library of Go.
 
 - Comprehensive, efficient and reusable.
 - Numerous util functions, support string, slice, map, datetime, crypto...
-- Only depend on the go standard library.
+- Only depend on the go standard and golang.org/x library.
 - High unit test coverage for exported functions.
 
 # Encoding
@@ -295,17 +295,24 @@ HMACSHA512("", "") // B936CEE86C9F87AA5D3C6F2E84CB5A4239A5FE50480A6EC66B70AB5B1F
 
 // Encryption functions.
 p := []byte("plaintext")
-key16 := []byte("12345678abcdefgh")
-c, _ := Base64AESCBCEncrypt(p, key16) // A67NhD3RBiNaMgG6HTm8LQ==
-p, _ = Base64AESCBCDecrypt(c, key16)  // plaintext
-
 key8 := []byte("12345678")
-c, _ := Base64DESCBCEncrypt(p, key8) // UZS/y4By6ksePYMBbvZdig==
-p, _ := Base64DESCBCDecrypt(c, key8) // plaintext
+Base64DESCBCEncrypt(p, key8) // UZS/y4By6ksePYMBbvZdig==
+Base64DESCBCDecrypt(c, key8) // plaintext
 
 key24 := []byte("12345678abcdefgh12345678")
-c, _ := Base64TriDESCBCEncrypt(p, key24) // dau0DzmDGQbHasZaOvxxwg==
-p, _ := Base64TriDESCBCDecrypt(c, key24) // plaintext
+Base64TriDESCBCEncrypt(p, key24) // dau0DzmDGQbHasZaOvxxwg==
+Base64TriDESCBCDecrypt(c, key24) // plaintext
+
+key16 := []byte("12345678abcdefgh")
+Base64AESCBCEncrypt(p, key16) // A67NhD3RBiNaMgG6HTm8LQ==
+Base64AESCBCDecrypt(c, key16)  // plaintext
+
+// RSA encryption, decryption, sign and verify signature.
+GenRsaKey(bits int) (prvkey, pubkey []byte, err error)
+RsaEncrypt(pubkey, data []byte) ([]byte, error)
+RsaDecrypt(prvkey, cipher []byte) ([]byte, error)
+RsaSign(prvkey []byte, hash crypto.Hash, data []byte) ([]byte, error)
+RsaVerifySign(pubkey []byte, hash crypto.Hash, data, sig []byte) error
 ```
 
 # Rand
