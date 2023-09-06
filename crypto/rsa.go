@@ -96,6 +96,7 @@ func RsaSign(prvkey []byte, hash crypto.Hash, data []byte) ([]byte, error) {
 }
 
 // RsaVerifySign verifies signature using public key in PEM format.
+// A valid signature is indicated by returning a nil error.
 func RsaVerifySign(pubkey []byte, hash crypto.Hash, data, sig []byte) error {
 	block, _ := pem.Decode(pubkey)
 	if block == nil {
