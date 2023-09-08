@@ -25,8 +25,8 @@ A modern, comprehensive and efficient utility library of Go.
 Some utility functions can be used to handle conversion of different character encoding, such as gbk to utf8.
 ```go
 gbk := []byte{0xC4, 0xE3, 0xBA, 0xC3}   // 你好 in gbk
-utf8, _ := GBKToUTF8(gbk)               // 你好 in utf8
-gbk, _ := UTF8ToGBK(utf8)               // [196 227 186 195]
+GBKToUTF8(gbk)                          // 你好 in utf8
+UTF8ToGBK(utf8)                         // [196 227 186 195]
 ```
 
 Some converting function to json.
@@ -64,10 +64,10 @@ Some useful utility functions can be used to handle slice.
 ```go
 // CRUD(Create Read Update Delete)
 fib := []int{1, 1, 2, 3, 5, 8}
-r := Insert(fib, 6, 13, 21)     // [1 1 2 3 5 8 13]
-r := Delete(fib, 0)             // [1 2 3 5 8]
-r := Replace(fib, 5, 6, 88)     // [1 1 2 3 5 88]
-r := Indexes(fib, 1)            // [0 1]
+Insert(fib, 6, 13, 21)     // [1 1 2 3 5 8 13]
+Delete(fib, 0)             // [1 2 3 5 8]
+Replace(fib, 5, 6, 88)     // [1 1 2 3 5 88]
+Indexes(fib, 1)            // [0 1]
 
 Min([]int{1,2,3})                         // 1
 Max([]int{1,2,3})                         // 3

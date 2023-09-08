@@ -11,7 +11,7 @@ import (
 //
 
 // Insert inserts the values v... into s at index i and returns the result slice.
-// Unlike the standard library function Insert, the original slice will not be modified.
+// Unlike the standard library function Insert, Insert won't modify the original slice.
 func Insert[S ~[]E, E any](s S, i int, v ...E) S {
 	r := make(S, len(s)+len(v))
 	copy(r, s[:i])
@@ -37,7 +37,7 @@ func InsertRef(a any, i int, v ...any) any {
 }
 
 // Delete removes the specified indexes elements from the slice.
-// Unlike the standard library function Delete, the original slice will not be modified.
+// Unlike the standard library function Delete, Delete won't modify the original slice.
 func Delete[S ~[]E, E any](s S, indexes ...int) S {
 	// Convert the indexes to map set.
 	m := make(map[int]struct{})
@@ -115,8 +115,8 @@ func DeleteElemsRef(a any, elms ...any) any {
 }
 
 // Indexes returns the specified element all indexes.
-// Indexes implemented by generics has a better performance than Indexes implemented by generics
-// and be recommended to use.
+// Indexes implemented by generics has a better performance than IndexesRef implemented by reflect,
+// so Indexes is recommended to be used while not IndexesRef.
 func Indexes[E comparable](s []E, v E) []int {
 	var indexes []int
 	for i := range s {
