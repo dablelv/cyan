@@ -12,40 +12,40 @@ type TimeCounter struct {
 	int64
 }
 
-// NewTimeCounter create a time counter.
+// NewTimeCounter creates a time counter.
 func NewTimeCounter() (t *TimeCounter) {
 	t = new(TimeCounter)
 	t.Reset()
 	return
 }
 
-// Reset set start timing to now.
+// Reset sets start time to now.
 func (t *TimeCounter) Reset() {
 	t.Time = time.Now()
 	t.int64 = t.Time.UnixNano()
 }
 
-// GetD return the time interval from the beginning to now in time.Duration.
+// GetD returns the time interval from the beginning to now in time.Duration.
 func (t *TimeCounter) GetD() time.Duration {
 	return time.Since(t.Time)
 }
 
-// GetS return the time interval from the beginning to now in second.
+// GetS returns the time interval from the beginning to now in second.
 func (t *TimeCounter) GetS() int64 {
 	return (time.Now().UnixNano() - t.int64) / int64(time.Second)
 }
 
-// GetMs return the time interval from the beginning to now in millisecond.
+// GetMs returns the time interval from the beginning to now in millisecond.
 func (t *TimeCounter) GetMs() int64 {
 	return (time.Now().UnixNano() - t.int64) / int64(time.Millisecond)
 }
 
-// GetUs return the time interval from the beginning to now in microsecond.
+// GetUs returns the time interval from the beginning to now in microsecond.
 func (t *TimeCounter) GetUs() int64 {
 	return (time.Now().UnixNano() - t.int64) / int64(time.Microsecond)
 }
 
-// GetNs return the time interval from the beginning to now in nanosecond.
+// GetNs returns the time interval from the beginning to now in nanosecond.
 func (t *TimeCounter) GetNs() int64 {
 	return time.Now().UnixNano() - t.int64
 }
