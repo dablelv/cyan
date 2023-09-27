@@ -113,7 +113,7 @@ AlphanumericNumRegExp("108条梁山man")   // 6
 Some utility functions can be used to handle date and time.
 ```go
 tc := NewTimeCounter()
-// do your statements
+// your statements
 tc.GetMs()                  // get the time cost in millisecond
 
 GetNowDate()                // just a example, the same below. 2020-05-16
@@ -132,41 +132,34 @@ GetDayEndMoment(time.Now())    // 2020-05-16 23:59:59.999999999 +0800 CST
 
 # Type Conversion
 Some utility functions can be used to convert one type to another type.
-
 ## to basic types
 ```go
 // to string
-s, err := ToAny[string]("foo") // "foo"
-s, err := ToAny[string](8)     // "8"
-s, err := ToAny[string](8.31)  // "8.31"
-s, err := ToAny[string]([]byte("one time")) // "one time"
-s, err := ToAny[string](nil)                // ""
-
-var foo any = "one more time"
-s, err := ToAny[string](foo)                // "one more time"
+ToAny[string]("foo")            // "foo"
+ToAny[string](8)                // "8"
+ToAny[string](8.31)             // "8.31"
+ToAny[string]([]byte("foo"))    // "foo"
+ToAny[string](nil)              // ""
+ToAny[string](any("foo"))       // "foo"
 
 // to int
-i, err :=  ToAny[int](8)                  // 8
-i, err :=  ToAny[int](8.31)               // 8
-i, err :=  ToAny[int]("8")                // 8
-i, err :=  ToAny[int](true)               // 1
-i, err :=  ToAny[int](false)              // 0
-i, err :=  ToAny[int](nil)                // 0
-
-var eight any = 8
-i, err :=  ToAny[int](eight)              // 8
+ToAny[int](8)                  // 8
+ToAny[int](8.31)               // 8
+ToAny[int]("8")                // 8
+ToAny[int](true)               // 1
+ToAny[int](false)              // 0
+ToAny[int](nil)                // 0
+ToAny[int](any(8))             // 8
 
 // to bool
-b, err := ToAny[bool]("true")           // true
-b, err := ToAny[bool]("false")          // false
-b, err := ToAny[bool]("True")           // true
-b, err := ToAny[bool]("False")          // false
-b, err := ToAny[bool](1)                // true
-b, err := ToAny[bool](0)                // false
-b, err := ToAny[bool](nil)              // false
-
-var one any = 1
-b, err := ToAny[bool](one)           // true
+ToAny[bool]("true")           // true
+ToAny[bool]("false")          // false
+ToAny[bool]("True")           // true
+ToAny[bool]("False")          // false
+ToAny[bool](1)                // true
+ToAny[bool](0)                // false
+ToAny[bool](nil)              // false
+ToAny[bool](any(1))           // true
 ```
 ## to set
 ```go
@@ -188,7 +181,6 @@ ToSetE[string](strs)
 // Split string to set.
 SplitStrToSet("a,b,c", ",")  // map[a:{}, b:{}, c:{}]
 ```
-
 ## to slice
 ```go
 ToStrSlice("a b c")         // ["a","b","c"]
