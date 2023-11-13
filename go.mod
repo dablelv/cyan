@@ -1,6 +1,6 @@
 module github.com/dablelv/cyan
 
-go 1.19
+go 1.21
 
 require (
 	golang.org/x/exp v0.0.0-20221229233502-02c3fc3b3eb4

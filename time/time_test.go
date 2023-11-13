@@ -2,6 +2,7 @@ package time
 
 import (
 	"testing"
+	"time"
 
 	"github.com/dablelv/cyan/internal"
 )
@@ -196,4 +197,15 @@ func TestIsSameWeek(t *testing.T) {
 		got := IsSameWeek(tt.args.uts1, tt.args.uts2)
 		assert.Equal(tt.want, got)
 	}
+}
+
+func TestGetBeijingTime(t *testing.T) {
+	assert := internal.NewAssert(t, "TestGetBeijingTime")
+
+	got, err := GetBeijingTime(time.DateTime, "2022-11-04 08:30:00")
+	assert.IsNil(err)
+	assert.Equal("2022-11-04 08:30:00", got.Format(time.DateTime))
+
+	_, err = GetBeijingTime(time.RFC3339, "2022-11-04 08:30:00")
+	assert.IsNotNil(err)
 }

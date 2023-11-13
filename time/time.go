@@ -223,3 +223,14 @@ func IsSameWeek(ts1, ts2 int64) bool {
 	t2 := time.Unix(ts2, 0)
 	return GetMonDate(t1) == GetMonDate(t2)
 }
+
+// GetBeijingTime gets Beijing Time from time string and layout.
+// The location name Asia/Shanghai from IANA Time Zone Database standards for Beijing Time.
+func GetBeijingTime(layout, value string) (t time.Time, err error) {
+	location, err := time.LoadLocation("Asia/Shanghai")
+	if err != nil {
+		return
+	}
+	t, err = time.ParseInLocation(layout, value, location)
+	return
+}
