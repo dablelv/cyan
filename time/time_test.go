@@ -204,7 +204,7 @@ func TestGetBeijingTime(t *testing.T) {
 
 	got, err := GetBeijingTime(time.DateTime, "2022-11-04 08:30:00")
 	assert.IsNil(err)
-	assert.Equal("2022-11-04 08:30:00", got.Format(time.DateTime))
+	assert.Equal("2022-11-04T08:30:00+08:00", got.Format(time.RFC3339))
 
 	_, err = GetBeijingTime(time.RFC3339, "2022-11-04 08:30:00")
 	assert.IsNotNil(err)
