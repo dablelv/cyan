@@ -179,7 +179,7 @@ func IndexOfDiff(s1, s2 string) int {
 // An empty string ("") will return -1 (INDEX_NOT_FOUND).
 // A negative start position is treated as zero.
 // A start position greater than the string length returns -1.
-func IndexOffset(s string, sub string, start int) int {
+func IndexOffset(s, sub string, start int) int {
 	if start < 0 {
 		start = 0
 	}
