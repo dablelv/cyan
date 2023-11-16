@@ -183,20 +183,15 @@ SplitStrToSet("a,b,c", ",")  // map[a:{}, b:{}, c:{}]
 ```
 ## to slice
 ```go
-ToStrSlice("a b c")         // ["a","b","c"]
-ToStrSliceE("a b c")        // ["a","b","c"]
-ToStrSlice([]int{1, 2, 3})  // ["1","2","3"]
-ToStrSliceE([]int{1, 2, 3}) // ["1","2","3"],nil
+// slice or array to any type slice.
+ToSlice[string]("a b c")         // ["a","b","c"]
+ToSliceE[string]("a b c")        // ["a","b","c"], nil
+ToSlice[string]([]int{1, 2, 3})  // ["1","2","3"]
+ToSliceE[string]([]int{1, 2, 3}) // ["1","2","3"],nil
 
-// Convert map to slice in random order.
-ks, vs := Map2Slice(map[int]int{1:1, 2:2, 3:3})
-ks, vs, _ := Map2SliceE(map[int]int{1:1, 2:2, 3:3})
-
-slK, _ : = ks.([]int)
-slV, _ : = vs.([]int)
-
-ks, vs := Map2Slice(map[string]int{"foo":1, "bar":2, "baz":3})
-ks, vs, _ := Map2SliceE(map[string]int{"foo":1, "bar":2, "baz":3})
+// map keys or values to slice in random order.
+ks, vs := MapToSlice(map[string]int{"foo":1, "bar":2, "baz":3})
+ks, vs, _ := MapToSliceE(map[string]int{"foo":1, "bar":2, "baz":3})
 
 slK, _ : = ks.([]string)
 slV, _ : = vs.([]int)
@@ -222,11 +217,10 @@ var st = struct {
 }{I: 1, S: "a"}
 
 // to map[string]any
-Struct2Map(st)         // map["I":1 "S":"a"]
-// to map[string]string
-Struct2MapStr(st)   // map["I":"1" "S":"a"]
+StructToMap(st)         // map["I":1 "S":"a"]
+StructToMapStr(st)      // map["I":"1" "S":"a"]
 
-// any type to map[string]string
+// json or other type to map[string]string
 ToMapStr(`{"foo":"foo","bar":"bar","baz":"baz"}`)  // map["foo":"foo" "bar":"bar" "baz":"baz"]
 ToMapStrE(`{"foo":"foo","bar":"bar","baz":"baz"}`) // map["foo":"foo" "bar":"bar" "baz":"baz"], nil
 ```

@@ -5,9 +5,12 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
+	"unicode"
 
 	"github.com/dablelv/cyan/conv"
 )
+
+const INDEX_NOT_FOUND = -1
 
 // Split replaces std lib strings.Split.
 // strings.Split has a giant pit because strings.Split ("", ",") will return a slice with an empty string.
@@ -60,7 +63,7 @@ func Join(a any, sep string) string {
 }
 
 // JoinE concatenates all elements of Array, Slice or String to a single string with a separator
-// and returns an error if an error occurred.
+// and returns an error if error occurred.
 // E.g. input []int{1, 2, 3} and separator ",", output is a string "1,2,3".
 // It panics if a's Kind is not Array, Slice, or String.
 func JoinE(a any, sep string) (string, error) {
@@ -135,4 +138,97 @@ func AlphanumericNumRegExp(s string) int {
 	rNum := regexp.MustCompile(`\d`)
 	rLetter := regexp.MustCompile("[a-zA-Z]")
 	return len(rNum.FindAllString(s, -1)) + len(rLetter.FindAllString(s, -1))
+}
+
+// ClearWhiteSpace deletes all whitespaces from a string as defined by unicode.IsSpace(rune).
+// It returns the string without whitespaces.
+func ClearWhiteSpace(s string) string {
+	var buf bytes.Buffer
+	runes := []rune(s)
+	for _, c := range runes {
+		if !unicode.IsSpace(c) {
+			buf.WriteRune(c)
+		}
+	}
+	return buf.String()
+}
+
+// IndexOfDiff compares two strings and returns the index at which the strings begin to differ.
+// -1 is returned if two strings are equal.
+func IndexOfDiff(s1, s2 string) int {
+	if s1 == s2 {
+		return INDEX_NOT_FOUND
+	}
+	if s1 == "" || s2 == "" {
+		return 0
+	}
+	var i int
+	for i = 0; i < len(s1) && i < len(s2); i++ {
+		if s1[i] != s2[i] {
+			break
+		}
+	}
+	if i < len(s1) || i < len(s2) {
+		return i
+	}
+	return INDEX_NOT_FOUND
+}
+
+// IndexOffset returns the index of the first instance of sub in str, with the search beginning from the
+// index start point specified. -1 is returned if sub is not present in str.
+// An empty string ("") will return -1 (INDEX_NOT_FOUND).
+// A negative start position is treated as zero.
+// A start position greater than the string length returns -1.
+func IndexOffset(s string, sub string, start int) int {
+	if start < 0 {
+		start = 0
+	}
+
+	if start >= len(s) {
+		return INDEX_NOT_FOUND
+	}
+
+	if IsEmpty(s) || IsEmpty(sub) {
+		return INDEX_NOT_FOUND
+	}
+
+	partialIndex := strings.Index(s[start:], sub)
+	if partialIndex == -1 {
+		return INDEX_NOT_FOUND
+	}
+	return partialIndex + start
+}
+
+// IsEmpty checks if a string is empty ("").
+func IsEmpty(s string) bool {
+	return s == ""
+}
+
+// IsBlank checks if a string is whitespace or empty ("").
+func IsBlank(s string) bool {
+	if s == "" {
+		return true
+	}
+	for _, v := range []rune(s) {
+		if !unicode.IsSpace(v) {
+			return false
+		}
+	}
+	return true
+}
+
+// Default returns either the passed in string, or if the string is empty, the value of default string.
+func Default(s, d string) string {
+	if IsEmpty(s) {
+		return d
+	}
+	return s
+}
+
+// DefaultIfBlank returns either the passed in string, or if the string is whitespace, empty (""), the value of default string.
+func DefaultIfBlank(s, d string) string {
+	if IsBlank(s) {
+		return d
+	}
+	return s
 }

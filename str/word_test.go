@@ -14,15 +14,11 @@ func TestCapitalize(t *testing.T) {
 
 	// Test 2: Checks if function works with 1 parameter, and default whitespace delimiter.
 	in := "test is going.well.thank.you.for inquiring"
-	out := "Test Is Going.well.thank.you.for Inquiring"
-
-	assert.Equal(out, Capitalize(in))
+	assert.Equal("Test Is Going.well.thank.you.for Inquiring", Capitalize(in))
 
 	// Test 3: Checks if function works with both parameters, with param 2 containing whitespace and '.'
-	out = "Test Is Going.Well.Thank.You.For Inquiring"
 	delimiters := []rune{' ', '.'}
-
-	assert.Equal(out, Capitalize(in, delimiters...))
+	assert.Equal("Test Is Going.Well.Thank.You.For Inquiring", Capitalize(in, delimiters...))
 }
 
 func TestCapitalizeFully(t *testing.T) {

@@ -1,9 +1,10 @@
 package conv
 
 import (
+	"encoding/json"
+	"fmt"
 	"reflect"
 	"strings"
-	"time"
 )
 
 // ToSlice converts any type slice or array to the specified type slice.
@@ -52,154 +53,104 @@ func ToSliceE[T any](a any) ([]T, error) {
 	}
 }
 
-// ToBoolSlice converts any type to []bool.
-func ToBoolSlice(a any) []bool {
-	return ToSlice[bool](a)
+// JsonToSlice converts the JSON-encoded data to any type slice with no error returned.
+func JsonToSlice[S ~[]E, E any](data []byte) S {
+	s, _ := JsonToSliceE[S](data)
+	return s
 }
 
-// ToBoolSliceE converts any type slice or array to []bool with returned error.
-func ToBoolSliceE(a any) ([]bool, error) {
-	return ToSliceE[bool](a)
+// JsonToSliceE converts the JSON-encoded data to any type slice.
+// E.g. a JSON value ["foo", "bar", "baz"] can be converted to []string{"foo", "bar", "baz"}
+// when calling JsonToSliceE[[]string](`["foo", "bar", "baz"]`).
+func JsonToSliceE[S ~[]E, E any](data []byte) (s S, err error) {
+	err = json.Unmarshal(data, &s)
+	return
 }
 
-// ToIntSlice converts any type slice or array to []int.
-// E.g. covert []string{"1", "2", "3"} to []int{1, 2, 3}.
-func ToIntSlice(a any) []int {
-	return ToSlice[int](a)
+//
+// Convert map keys and values to slice in indeterminate order.
+// E.g. covert map[string]int{"a":1,"b":2, "c":3} to []string{"a", "c", "b"} and []int{1, 3, 2}.
+//
+
+// MapKeys returns a slice of all the keys in m.
+// The keys returned are in indeterminate order.
+// Deprecated: As of Go 1.18, please use standard library golang.org/x/exp/maps#Keys.
+func MapKeys[K comparable, V any, M ~map[K]V](m M) []K {
+	s := make([]K, 0, len(m))
+	for k := range m {
+		s = append(s, k)
+	}
+	return s
 }
 
-// ToIntSliceE converts any type slice or array to []int with returned error..
-func ToIntSliceE(a any) ([]int, error) {
-	return ToSliceE[int](a)
+// MapVals returns a slice of all the values in m.
+// The values returned are in indeterminate order.
+// Deprecated: As of Go 1.18, please use standard library golang.org/x/exp/maps#Values.
+func MapVals[K comparable, V any, M ~map[K]V](m M) []V {
+	s := make([]V, 0, len(m))
+	for _, v := range m {
+		s = append(s, v)
+	}
+	return s
 }
 
-// ToInt8Slice converts any type slice or array to []int8.
-// E.g. covert []string{"1", "2", "3"} to []int8{1, 2, 3}.
-func ToInt8Slice(a any) []int8 {
-	return ToSlice[int8](a)
+// MapKeyVals returns two slice of all the keys and values in m.
+// The keys and values are returned in an indeterminate order.
+func MapKeyVals[K comparable, V any, M ~map[K]V](m M) ([]K, []V) {
+	ks, vs := make([]K, 0, len(m)), make([]V, 0, len(m))
+	for k, v := range m {
+		ks = append(ks, k)
+		vs = append(vs, v)
+	}
+	return ks, vs
 }
 
-// ToInt8SliceE converts any type slice or array to []int8 with returned error.
-func ToInt8SliceE(a any) ([]int8, error) {
-	return ToSliceE[int8](a)
+// MapToSlice converts map keys and values to slice in indeterminate order.
+// Deprecated: As of Go 1.18, please use standard library golang.org/x/exp/maps#Keys and Values.
+func MapToSlice(a any) (ks, vs any) {
+	ks, vs, _ = MapToSliceE(a)
+	return
 }
 
-// ToInt16Slice converts any type slice or array to []int16.
-// For example, covert []string{"1", "2", "3"} to []int16{1, 2, 3}.
-func ToInt16Slice(a any) []int16 {
-	return ToSlice[int16](a)
+// MapToSliceE converts keys and values of map to slice in indeterminate order with error.
+// Deprecated: As of Go 1.18, please use standard library golang.org/x/exp/maps#Keys and Values.
+func MapToSliceE(a any) (ks, vs any, err error) {
+	t := reflect.TypeOf(a)
+	if t.Kind() != reflect.Map {
+		err = fmt.Errorf("the input %#v of type %T isn't a map", a, a)
+		return
+	}
+
+	// Convert.
+	m := reflect.ValueOf(a)
+	keys := m.MapKeys()
+	ksT, vsT := reflect.SliceOf(t.Key()), reflect.SliceOf(t.Elem())
+	ksV, vsV := reflect.MakeSlice(ksT, 0, m.Len()), reflect.MakeSlice(vsT, 0, m.Len())
+	for _, k := range keys {
+		ksV = reflect.Append(ksV, k)
+		vsV = reflect.Append(vsV, m.MapIndex(k))
+	}
+	return ksV.Interface(), vsV.Interface(), nil
 }
 
-// ToInt16SliceE converts any type slice or array to []int16 with returned error.
-func ToInt16SliceE(a any) ([]int16, error) {
-	return ToSliceE[int16](a)
+// SplitStrToSlice splits a string to a slice by the specified separator.
+func SplitStrToSlice[T any](s, sep string) []T {
+	v, _ := SplitStrToSliceE[T](s, sep)
+	return v
 }
 
-// ToInt32Slice converts any type slice or array to []int32.
-// For example, covert []string{"1", "2", "3"} to []int32{1, 2, 3}.
-func ToInt32Slice(a any) []int32 {
-	return ToSlice[int32](a)
-}
-
-// ToInt32SliceE converts any type slice or array []int32 with returned error.
-func ToInt32SliceE(a any) ([]int32, error) {
-	return ToSliceE[int32](a)
-}
-
-// ToInt64Slice converts any type slice or array to []int64 slice.
-// For example, covert []string{"1", "2", "3"} to []int64{1, 2, 3}.
-func ToInt64Slice(a any) []int64 {
-	return ToSlice[int64](a)
-}
-
-// ToInt64SliceE converts any type slice or array to []int64 slice with returned error.
-func ToInt64SliceE(a any) ([]int64, error) {
-	return ToSliceE[int64](a)
-}
-
-// ToUintSlice converts any type slice or array to []uint.
-// For example, covert []string{"1", "2", "3"} to []uint{1, 2, 3}.
-func ToUintSlice(a any) []uint {
-	return ToSlice[uint](a)
-}
-
-// ToUintSliceE converts any type slice or array to []uint with returned error.
-func ToUintSliceE(a any) ([]uint, error) {
-	return ToSliceE[uint](a)
-}
-
-// ToUint8Slice converts any type slice or array to []uint8.
-// E.g. covert []string{"1", "2", "3"} to []uint8{1, 2, 3}.
-func ToUint8Slice(a any) []uint8 {
-	return ToSlice[uint8](a)
-}
-
-// ToUint8SliceE converts any type slice or array to []uint8 slice with returned error.
-func ToUint8SliceE(a any) ([]uint8, error) {
-	return ToSliceE[uint8](a)
-}
-
-// ToByteSlice converts an type slice or array to []byte.
-// E.g. covert []string{"1", "2", "3"} to []byte{1, 2, 3}.
-func ToByteSlice(a any) []byte {
-	return ToUint8Slice(a)
-}
-
-// ToByteSliceE converts any type slice or array to []byte with returned error.
-func ToByteSliceE(a any) ([]byte, error) {
-	return ToUint8SliceE(a)
-}
-
-// ToUint16Slice converts any type slice or array to []uint16.
-// For example, covert []string{"1", "2", "3"} to []uint16{1, 2, 3}.
-func ToUint16Slice(a any) []uint16 {
-	return ToSlice[uint16](a)
-}
-
-// ToUint16SliceE converts any type slice or array to []uint16 slice with returned error.
-func ToUint16SliceE(a any) ([]uint16, error) {
-	return ToSliceE[uint16](a)
-}
-
-// ToUint32Slice converts any type slice or array to []uint32.
-// For example, covert []string{"1", "2", "3"} to []uint32{1, 2, 3}.
-func ToUint32Slice(a any) []uint32 {
-	return ToSlice[uint32](a)
-}
-
-// ToUint32SliceE converts any type slice or array to []uint32 slice with returned error.
-func ToUint32SliceE(a any) ([]uint32, error) {
-	return ToSliceE[uint32](a)
-}
-
-// ToUint64Slice converts any type slice or array to []uint64.
-// For example, covert []string{"1", "2", "3"} to []uint64{1, 2, 3}.
-func ToUint64Slice(a any) []uint64 {
-	return ToSlice[uint64](a)
-}
-
-// ToUint64SliceE converts any type slice or array to []uint64 with returned error.
-func ToUint64SliceE(a any) ([]uint64, error) {
-	return ToSliceE[uint64](a)
-}
-
-// ToDurationSlice converts any type slice or array to []time.Duration.
-func ToDurationSlice(a any) []time.Duration {
-	return ToSlice[time.Duration](a)
-}
-
-// ToDurationSliceE converts any type to []time.Duration with returned error.
-func ToDurationSliceE(a any) ([]time.Duration, error) {
-	return ToSliceE[time.Duration](a)
-}
-
-// ToStrSlice converts any type slice or array to []string.
-// For example, covert []int{1, 2, 3} to []string{"1", "2", "3"}.
-func ToStrSlice(a any) []string {
-	return ToSlice[string](a)
-}
-
-// ToStrSliceE converts any type slice or array to []string with returned error.
-func ToStrSliceE(a any) ([]string, error) {
-	return ToSliceE[string](a)
+// SplitStrToSliceE splits a string to a slice by the specified separator and returns an error if occurred.
+// Note that this function is implemented through 1.18 generics, so the element type needs to
+// be specified when calling it, e.g. SplitStrToSliceE[int]("1,2,3", ",").
+func SplitStrToSliceE[T any](s, sep string) ([]T, error) {
+	ss := strings.Split(s, sep)
+	r := make([]T, len(ss))
+	for i := range ss {
+		v, err := ToAnyE[T](ss[i])
+		if err != nil {
+			return nil, err
+		}
+		r[i] = v
+	}
+	return r, nil
 }

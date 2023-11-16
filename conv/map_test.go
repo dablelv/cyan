@@ -46,7 +46,7 @@ func TestStruct2Map(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Struct2Map(tt.args.obj); !reflect.DeepEqual(got, tt.want) {
+			if got := StructToMap(tt.args.obj); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Struct2Map() = %v, want %v", got, tt.want)
 			}
 		})
@@ -94,7 +94,7 @@ func TestStruct2MapStr(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Struct2MapStr(tt.args.obj); !reflect.DeepEqual(got, tt.want) {
+			if got := StructToMapStr(tt.args.obj); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Struct2MapString() = %v, want %v", got, tt.want)
 			}
 		})

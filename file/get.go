@@ -110,18 +110,18 @@ func ListFilenames(dir string) ([]string, error) {
 	return names, nil
 }
 
-// FileMD5 gets file MD5.
-func FileMD5(path string) (string, error) {
+// FileMd5 gets file MD5.
+func FileMd5(path string) (string, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return "", err
 	}
 	defer file.Close()
-	return FileMD5Reader(file)
+	return FileMd5Reader(file)
 }
 
-// FileMD5Reader gets file MD5 from io.Reader.
-func FileMD5Reader(r io.Reader) (string, error) {
+// FileMd5Reader gets file MD5 from io.Reader.
+func FileMd5Reader(r io.Reader) (string, error) {
 	hash := md5.New()
 	_, err := io.Copy(hash, r)
 	if err != nil {

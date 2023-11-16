@@ -132,3 +132,45 @@ func BenchmarkGetAlphanumericNumByRegExp(b *testing.B) {
 		AlphanumericNumRegExp("108条梁山man")
 	}
 }
+
+func TestClearWhiteSpace(t *testing.T) {
+	assert := internal.NewAssert(t, "TestClearWhiteSpace")
+
+	assert.Equal("abc", ClearWhiteSpace("a b c"))
+	assert.Equal("", ClearWhiteSpace("   "))
+	assert.Equal("abcd", ClearWhiteSpace("a\rb\nc\td"))
+}
+
+func TestIndexOfDiff(t *testing.T) {
+	assert := internal.NewAssert(t, "TestIndexOfDiff")
+
+	assert.Equal(-1, IndexOfDiff("abc", "abc"))
+	assert.Equal(0, IndexOfDiff("abc", "d"))
+	assert.Equal(1, IndexOfDiff("abc", "a_c"))
+}
+
+func TestIndexOffset(t *testing.T) {
+	assert := internal.NewAssert(t, "TestIndexOffset")
+
+	assert.Equal(3, IndexOffset("abcde", "d", 2))
+	assert.Equal(-1, IndexOffset("abcde", "d", 5))
+	assert.Equal(3, IndexOffset("abcde", "d", -1))
+	assert.Equal(-1, IndexOffset("abcde", "", 0))
+	assert.Equal(-1, IndexOffset("abcde", "f", 0))
+}
+
+func TestDefault(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDefault")
+
+	assert.Equal("abc", Default("abc", "d"))
+	assert.Equal("d", Default("", "d"))
+}
+
+func TestDefaultIfBlank(t *testing.T) {
+	assert := internal.NewAssert(t, "TestDefaultIfBlank")
+
+	assert.Equal("abc", DefaultIfBlank("abc", "d"))
+	assert.Equal("d", DefaultIfBlank("", "d"))
+	assert.Equal("d", DefaultIfBlank(" ", "d"))
+	assert.Equal("d", DefaultIfBlank("\r\n\t", "d"))
+}

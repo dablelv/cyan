@@ -6,11 +6,10 @@ import (
 	"reflect"
 )
 
-// Struct2Map converts struct to map[string]any.
-// Such as struct{I int, S string}{I: 1, S: "a"} to map[I:1 S:a].
+// StructToMap converts struct to map[string]any.
+// Such as struct{I int, S string}{I: 1, S: "a"} to map["I":1 "S":"a"].
 // Note that unexported fields of struct can't be converted.
-func Struct2Map(a any) map[string]any {
-	// Check param.
+func StructToMap(a any) map[string]any {
 	v := reflect.ValueOf(a)
 	if v.Kind() != reflect.Struct {
 		return nil
@@ -26,17 +25,16 @@ func Struct2Map(a any) map[string]any {
 	return m
 }
 
-// Struct2MapStr converts struct to map[string]string.
-// Such as struct{I int, S string}{I: 1, S: "a"} to map[I:1 S:a].
+// StructToMapStr converts struct to map[string]string.
+// Such as struct{I int, S string}{I: 1, S: "a"} to map["I":"1" "S":"a"].
 // Note that unexported fields of struct can't be converted.
-func Struct2MapStr(obj any) map[string]string {
-	// Check param.
-	v := reflect.ValueOf(obj)
+func StructToMapStr(a any) map[string]string {
+	v := reflect.ValueOf(a)
 	if v.Kind() != reflect.Struct {
 		return nil
 	}
 
-	t := reflect.TypeOf(obj)
+	t := reflect.TypeOf(a)
 	var m = make(map[string]string)
 	for i := 0; i < t.NumField(); i++ {
 		if t.Field(i).IsExported() {

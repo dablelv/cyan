@@ -125,7 +125,7 @@ func TestFileMD5(t *testing.T) {
 	err := CreateFile(path)
 	assert.IsNil(err)
 
-	md5, err := FileMD5(path)
+	md5, err := FileMd5(path)
 	assert.IsNil(err)
 	assert.Equal("d41d8cd98f00b204e9800998ecf8427e", md5)
 
@@ -133,7 +133,7 @@ func TestFileMD5(t *testing.T) {
 	assert.IsNil(err)
 
 	// File not exist.
-	_, err = FileMD5("not_exist_file")
+	_, err = FileMd5("not_exist_file")
 	assert.IsNotNil(err)
 }
 
@@ -144,7 +144,7 @@ func TestFileMD5Reader(t *testing.T) {
 	f, err := Create(path)
 	assert.IsNil(err)
 
-	md5, err := FileMD5Reader(f)
+	md5, err := FileMd5Reader(f)
 	assert.IsNil(err)
 	assert.Equal("d41d8cd98f00b204e9800998ecf8427e", md5)
 

@@ -1,770 +1,173 @@
 package conv
 
 import (
-	"reflect"
 	"testing"
 	"time"
+
+	"github.com/dablelv/cyan/internal"
 )
 
-func TestToBoolSliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []bool
-		wantErr bool
-	}{
-		{
-			"bool slice",
-			args{[]bool{true, false, true}},
-			[]bool{true, false, true},
-			false,
-		},
-		{
-			"bool array",
-			args{[3]bool{true, false, true}},
-			[]bool{true, false, true},
-			false,
-		},
-		{
-			"string slice",
-			args{[]string{"true", "false", "true"}},
-			[]bool{true, false, true},
-			false,
-		},
-		{
-			"string array",
-			args{[3]string{"true", "false", "true"}},
-			[]bool{true, false, true},
-			false,
-		},
-		{
-			"nil string slice",
-			args{[]string(nil)},
-			nil,
-			false,
-		},
-		{
-			"int slice",
-			args{[]int{1, 0, 1}},
-			[]bool{true, false, true},
-			false,
-		},
-		{
-			"int array",
-			args{[3]int{1, 0, 1}},
-			[]bool{true, false, true},
-			false,
-		},
-		{
-			"nil",
-			args{nil},
-			nil,
-			false,
-		},
-		{
-			"string slice failed",
-			args{[]string{"foo"}},
-			nil,
-			true,
-		},
-		{
-			"string failed",
-			args{"a"},
-			nil,
-			true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToBoolSlice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToBoolSlice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToBoolSliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToBoolSliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToBoolSliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestToSlice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestToSlice")
+
+	// to bool slice
+	assert.Equal([]bool{true, false, true}, ToSlice[bool]([]bool{true, false, true}))
+	assert.Equal([]bool{true, false, true}, ToSlice[bool]([3]bool{true, false, true}))
+	assert.Equal([]bool{true, false, true}, ToSlice[bool]([]int{1, 0, 1}))
+	assert.Equal([]bool{true, false, true}, ToSlice[bool]([3]int{1, 0, 1}))
+	assert.Equal([]bool{true, false, true}, ToSlice[bool]([]string{"true", "false", "true"}))
+	assert.Equal([]bool{true, false, true}, ToSlice[bool]([3]string{"true", "false", "true"}))
+	assert.Equal([]bool(nil), ToSlice[bool]([]string(nil)))
+	assert.Equal([]bool(nil), ToSlice[bool](nil))
+
+	bs, err := ToSliceE[bool]([]string{"foo"})
+	assert.IsNotNil(err)
+	assert.IsNil(bs)
+	bs, err = ToSliceE[bool]("foo")
+	assert.IsNotNil(err)
+	assert.IsNil(bs)
+
+	// to int slice
+	assert.Equal([]int{1, 2, 3}, ToSlice[int]([]int{1, 2, 3}))
+	assert.Equal([]int{1, 2, 3}, ToSlice[int]([3]int{1, 2, 3}))
+	assert.Equal([]int{1}, ToSlice[int](1))
+	assert.Equal([]int{1, 2, 3}, ToSlice[int]([]string{"1", "2", "3"}))
+	assert.Equal([]int{1, 2, 3}, ToSlice[int]([3]string{"1", "2", "3"}))
+	assert.Equal([]int(nil), ToSlice[int]([]string(nil)))
+	assert.Equal([]int(nil), ToSlice[int](nil))
+
+	ints, err := ToSliceE[int](complex(3, -5))
+	assert.IsNotNil(err)
+	assert.IsNil(ints)
+
+	// to uint slice
+	assert.Equal([]uint{1, 2, 3}, ToSlice[uint]([]int{1, 2, 3}))
+	assert.Equal([]uint{1, 2, 3}, ToSlice[uint]([3]int{1, 2, 3}))
+	assert.Equal([]uint{1}, ToSlice[uint](1))
+	assert.Equal([]uint{1, 2, 3}, ToSlice[uint]([]string{"1", "2", "3"}))
+	assert.Equal([]uint{1, 2, 3}, ToSlice[uint]([3]string{"1", "2", "3"}))
+	assert.Equal([]uint(nil), ToSlice[uint]([]string(nil)))
+	assert.Equal([]uint(nil), ToSlice[uint](nil))
+
+	uints, err := ToSliceE[uint]("foo")
+	assert.IsNotNil(err)
+	assert.IsNil(uints)
+
+	// to float64 slice
+	assert.Equal([]float64{1, 2, 3}, ToSlice[float64]([]int{1, 2, 3}))
+	assert.Equal([]float64{1, 2, 3}, ToSlice[float64]([3]int{1, 2, 3}))
+	assert.Equal([]float64{1}, ToSlice[float64](1))
+	assert.Equal([]float64{1, 2, 3}, ToSlice[float64]([]string{"1", "2", "3"}))
+	assert.Equal([]float64{1, 2, 3}, ToSlice[float64]([3]string{"1", "2", "3"}))
+	assert.Equal([]float64(nil), ToSlice[float64]([]string(nil)))
+	assert.Equal([]float64(nil), ToSlice[float64](nil))
+
+	f64s, err := ToSliceE[float64]("foo")
+	assert.IsNotNil(err)
+	assert.IsNil(f64s)
+
+	// to duration slice
+	assert.Equal([]time.Duration{1, 2, 3}, ToSlice[time.Duration]([]int{1, 2, 3}))
+	assert.Equal([]time.Duration{1, 2, 3}, ToSlice[time.Duration]([3]int{1, 2, 3}))
+	assert.Equal([]time.Duration{1}, ToSlice[time.Duration](1))
+	assert.Equal([]time.Duration{1, 2, 3}, ToSlice[time.Duration]([]string{"1", "2", "3"}))
+	assert.Equal([]time.Duration{1, 2, 3}, ToSlice[time.Duration]([3]string{"1", "2", "3"}))
+	assert.Equal([]time.Duration(nil), ToSlice[time.Duration]([]string(nil)))
+	assert.Equal([]time.Duration(nil), ToSlice[time.Duration](nil))
+
+	ds, err := ToSliceE[time.Duration]("foo")
+	assert.IsNotNil(err)
+	assert.IsNil(ds)
+
+	// to string slice
+	assert.Equal([]string{"a", "b", "c"}, ToSlice[string]([]string{"a", "b", "c"}))
+	assert.Equal([]string{"a", "b", "c"}, ToSlice[string]([3]string{"a", "b", "c"}))
+	assert.Equal([]string{"a", "b", "c"}, ToSlice[string]("a b c"))
+	assert.Equal([]string{"a"}, ToSlice[string]("a"))
+	assert.Equal([]string{"1", "2", "3"}, ToSlice[string]([]int{1, 2, 3}))
+	assert.Equal([]string{"1.1", "2.2", "3.3"}, ToSlice[string]([]float64{1.1, 2.2, 3.3}))
+	assert.Equal([]string(nil), ToSlice[string]([]string(nil)))
+	assert.Equal([]string(nil), ToSlice[string](nil))
+
+	ss, err := ToSliceE[string](complex(3, -5))
+	assert.IsNotNil(err)
+	assert.IsNil(ss)
 }
 
-func TestToIntSliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []int
-		wantErr bool
-	}{
-		{
-			"int slice",
-			args{[]int{1, 2, 3}},
-			[]int{1, 2, 3},
-			false,
-		},
-		{
-			"int array",
-			args{[3]int{1, 2, 3}},
-			[]int{1, 2, 3},
-			false,
-		},
-		{
-			"int",
-			args{1},
-			[]int{1},
-			false,
-		},
-		{
-			"string slice",
-			args{[]string{"1", "2", "3"}},
-			[]int{1, 2, 3},
-			false,
-		},
-		{
-			"string array",
-			args{[3]string{"1", "2", "3"}},
-			[]int{1, 2, 3},
-			false,
-		},
-		{
-			"nil",
-			args{nil},
-			nil,
-			false,
-		},
-		{
-			"complex64 3-5i failed",
-			args{complex(3, -5)},
-			nil,
-			true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToIntSlice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToIntSlice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToIntSliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToIntSliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToIntSliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestJsonToSlice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestJsonToSlice")
+
+	assert.Equal([]int{1, 2, 3}, JsonToSlice[[]int]([]byte("[1,2,3]")))
+	assert.Equal([]float64{1.1, 2.2, 3.3}, JsonToSlice[[]float64]([]byte("[1.1,2.2,3.3]")))
+	assert.Equal([]string{"foo", "bar", "baz"}, JsonToSlice[[]string]([]byte(`["foo","bar","baz"]`)))
 }
 
-func TestToInt8SliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []int8
-		wantErr bool
-	}{
-		{
-			"nil",
-			args{nil},
-			nil,
-			false,
-		},
-		{
-			"int8 slice",
-			args{[]int8{1, 2, 3}},
-			[]int8{1, 2, 3},
-			false,
-		},
-		{
-			"int8 array",
-			args{[3]int8{1, 2, 3}},
-			[]int8{1, 2, 3},
-			false,
-		},
-		{
-			"int8 value",
-			args{int8(1)},
-			[]int8{1},
-			false,
-		},
-		{
-			"string slice",
-			args{[]string{"1", "2", "3"}},
-			[]int8{1, 2, 3},
-			false,
-		},
-		{
-			"string array",
-			args{[3]string{"1", "2", "3"}},
-			[]int8{1, 2, 3},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToInt8Slice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToInt8Slice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToInt8SliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToInt8SliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToInt8SliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestMapKeys(t *testing.T) {
+	assert := internal.NewAssert(t, "TestMapKeys")
+
+	// to ints
+	ks := MapKeys(map[int]int{1: 1, 2: 2, 3: 3})
+	assert.Equal(3, len(ks))
 }
 
-func TestToInt16SliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []int16
-		wantErr bool
-	}{
-		{
-			"nil",
-			args{nil},
-			nil,
-			false,
-		},
-		{
-			"int16 slice",
-			args{[]int16{1, 2, 3}},
-			[]int16{1, 2, 3},
-			false,
-		},
-		{
-			"int16 array",
-			args{[3]int16{1, 2, 3}},
-			[]int16{1, 2, 3},
-			false,
-		},
-		{
-			"int16 value",
-			args{int16(1)},
-			[]int16{1},
-			false,
-		},
-		{
-			"string slice",
-			args{[]string{"1", "2", "3"}},
-			[]int16{1, 2, 3},
-			false,
-		},
-		{
-			"string array",
-			args{[3]string{"1", "2", "3"}},
-			[]int16{1, 2, 3},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToInt16Slice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToInt16Slice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToInt16SliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToInt16SliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToInt16SliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestMapVals(t *testing.T) {
+	assert := internal.NewAssert(t, "TestMapVals")
+
+	// to ints
+	vs := MapVals(map[int]int{1: 1, 2: 2, 3: 3})
+	assert.Equal(3, len(vs))
 }
 
-func TestToInt32SliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []int32
-		wantErr bool
-	}{
-		{
-			"int32 slice to int32 slice",
-			args{[]int32{1, 2, 3}},
-			[]int32{1, 2, 3},
-			false,
-		},
-		{
-			"int32 array to int32 slice",
-			args{[3]int32{1, 2, 3}},
-			[]int32{1, 2, 3},
-			false,
-		},
-		{
-			"int32 value to int32 slice",
-			args{int32(1)},
-			[]int32{1},
-			false,
-		},
-		{
-			"string slice to int32 slice",
-			args{[]string{"1", "2", "3"}},
-			[]int32{1, 2, 3},
-			false,
-		},
-		{
-			"string array to int32 slice",
-			args{[3]string{"1", "2", "3"}},
-			[]int32{1, 2, 3},
-			false,
-		},
-		{
-			"nil",
-			args{nil},
-			nil,
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToInt32Slice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToInt32Slice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToInt32SliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToInt32SliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToInt32SliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestMapKeyVals(t *testing.T) {
+	assert := internal.NewAssert(t, "TestMapKeyVals")
+
+	ks, vs := MapKeyVals(map[string]int{"foo": 1, "bar": 2, "baz": 3})
+	assert.Equal(3, len(ks))
+	assert.Equal(3, len(vs))
 }
 
-func TestToInt64SliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []int64
-		wantErr bool
-	}{
-		{
-			"int64 slice",
-			args{[]int64{1, 2, 3}},
-			[]int64{1, 2, 3},
-			false,
-		},
-		{
-			"int64 array",
-			args{[3]int64{1, 2, 3}},
-			[]int64{1, 2, 3},
-			false,
-		},
-		{
-			"int64 value",
-			args{int64(1)},
-			[]int64{1},
-			false,
-		},
-		{
-			"string slice",
-			args{[]string{"1", "2", "3"}},
-			[]int64{1, 2, 3},
-			false,
-		},
-		{
-			"string array",
-			args{[3]string{"1", "2", "3"}},
-			[]int64{1, 2, 3},
-			false,
-		},
-		{
-			"nil",
-			args{nil},
-			nil,
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToInt64Slice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToInt64Slice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToInt64SliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToInt64SliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToInt64SliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+func TestMapToSlice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestMapToSlice")
+
+	ks, vs := MapToSlice(map[string]string{"1": "1", "2": "2", "3": "3"})
+	assert.Equal(3, len(ks.([]string)))
+	assert.Equal(3, len(vs.([]string)))
+
+	ks, vs = MapToSlice(map[int]int{1: 1, 2: 2, 3: 3})
+	assert.Equal(3, len(ks.([]int)))
+	assert.Equal(3, len(vs.([]int)))
+
+	// empty map[int]int to slice
+	ks, vs = MapToSlice(map[int]int{})
+	assert.Equal(0, len(ks.([]int)))
+	assert.Equal(0, len(vs.([]int)))
+
+	// not map failed
+	_, _, err := MapToSliceE(1)
+	assert.IsNotNil(err)
 }
 
-func TestToUintSliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []uint
-		wantErr bool
-	}{
-		{
-			"uint slice",
-			args{[]uint{1, 2, 3}},
-			[]uint{1, 2, 3},
-			false,
-		},
-		{
-			"uint array",
-			args{[3]uint{1, 2, 3}},
-			[]uint{1, 2, 3},
-			false,
-		},
-		{
-			"string slice",
-			args{[]string{"1", "2", "3"}},
-			[]uint{1, 2, 3},
-			false,
-		},
-		{
-			"string array",
-			args{[3]string{"1", "2", "3"}},
-			[]uint{1, 2, 3},
-			false,
-		},
-		{
-			"nil",
-			args{nil},
-			nil,
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToUintSlice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToUintSlice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToUintSliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToUintSliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToUintSliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+func TestSplitStrToSlice(t *testing.T) {
+	assert := internal.NewAssert(t, "TestSplitStrToSlice")
 
-func TestToByteSliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []uint8
-		wantErr bool
-	}{
-		{
-			"nil",
-			args{nil},
-			nil,
-			false,
-		},
-		{
-			"uint8 slice",
-			args{[]uint8{1, 2, 3}},
-			[]uint8{1, 2, 3},
-			false,
-		},
-		{
-			"uint8 array",
-			args{[3]uint8{1, 2, 3}},
-			[]uint8{1, 2, 3},
-			false,
-		},
-		{
-			"uint8 value",
-			args{uint8(1)},
-			[]uint8{1},
-			false,
-		},
-		{
-			"string slice",
-			args{[]string{"1", "2", "3"}},
-			[]uint8{1, 2, 3},
-			false,
-		},
-		{
-			"string array",
-			args{[3]string{"1", "2", "3"}},
-			[]uint8{1, 2, 3},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToByteSlice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToByteSlice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToByteSliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToByteSliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToByteSliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	// to int slice
+	assert.Equal([]int{1, 2, 3}, SplitStrToSlice[int]("1,2,3", ","))
+	_, err := SplitStrToSliceE[int]("1,2,foo", ",")
+	assert.IsNotNil(err)
 
-func TestToUint16SliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []uint16
-		wantErr bool
-	}{
-		{
-			"uint16 slice",
-			args{[]uint16{1, 2, 3}},
-			[]uint16{1, 2, 3},
-			false,
-		},
-		{
-			"uint16 array",
-			args{[3]uint16{1, 2, 3}},
-			[]uint16{1, 2, 3},
-			false,
-		},
-		{
-			"uint16 value",
-			args{uint16(1)},
-			[]uint16{1},
-			false,
-		},
-		{
-			"string slice",
-			args{[]string{"1", "2", "3"}},
-			[]uint16{1, 2, 3},
-			false,
-		},
-		{
-			"string array",
-			args{[3]string{"1", "2", "3"}},
-			[]uint16{1, 2, 3},
-			false,
-		},
-		{
-			"nil",
-			args{nil},
-			nil,
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToUint16Slice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToUint16Slice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToUint16SliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToUint16SliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToUint16SliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	// to uint slice
+	assert.Equal([]uint{1, 2, 3}, SplitStrToSlice[uint]("1,2,3", ","))
+	_, err = SplitStrToSliceE[int]("1,2,foo", ",")
+	assert.IsNotNil(err)
 
-func TestToUint32SliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []uint32
-		wantErr bool
-	}{
-		{
-			"uint32 slice",
-			args{[]uint32{1, 2, 3}},
-			[]uint32{1, 2, 3},
-			false,
-		},
-		{
-			"uint32 array",
-			args{[3]uint32{1, 2, 3}},
-			[]uint32{1, 2, 3},
-			false,
-		},
-		{
-			"uint32 value",
-			args{uint32(1)},
-			[]uint32{1},
-			false,
-		},
-		{
-			"string slice",
-			args{[]string{"1", "2", "3"}},
-			[]uint32{1, 2, 3},
-			false,
-		},
-		{
-			"string array",
-			args{[3]string{"1", "2", "3"}},
-			[]uint32{1, 2, 3},
-			false,
-		},
-		{
-			"nil",
-			args{nil},
-			nil,
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToUint32Slice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToUint32Slice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToUint32SliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToUint32SliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToUint32SliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	// to float64 slice
+	assert.Equal([]float64{1, 2, 3}, SplitStrToSlice[float64]("1,2,3", ","))
+	_, err = SplitStrToSliceE[float64]("1,2,foo", ",")
+	assert.IsNotNil(err)
 
-func TestToUint64SliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []uint64
-		wantErr bool
-	}{
-		{"nil", args{nil}, nil, false},
-		{"uint64 slice", args{[]uint64{1, 2, 3}}, []uint64{1, 2, 3}, false},
-		{"uint64 array", args{[3]uint64{1, 2, 3}}, []uint64{1, 2, 3}, false},
-		{"string slice", args{[]string{"1", "2", "3"}}, []uint64{1, 2, 3}, false},
-		{"string array", args{[3]string{"1", "2", "3"}}, []uint64{1, 2, 3}, false},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToUint64Slice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToUint64Slice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToUint64SliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToUint64SliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToUint64SliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestToDurationSliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []time.Duration
-		wantErr bool
-	}{
-		{"nil", args{nil}, nil, false},
-		{"string slice", args{[]string{"1", "2", "3"}}, []time.Duration{1, 2, 3}, false},
-		{"string array", args{[3]string{"1", "2", "3"}}, []time.Duration{1, 2, 3}, false},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToDurationSlice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToDurationSlice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToDurationSliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToDurationSliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToDurationSliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestToStrSliceE(t *testing.T) {
-	type args struct {
-		a any
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []string
-		wantErr bool
-	}{
-		{"nil", args{nil}, nil, false},
-		{"string slice", args{[]string{"a", "b", "c"}}, []string{"a", "b", "c"}, false},
-		{"string array", args{[3]string{"a", "b", "c"}}, []string{"a", "b", "c"}, false},
-		{"string value", args{"a"}, []string{"a"}, false},
-		{"string value separated by white space character", args{"a b c"}, []string{"a", "b", "c"}, false},
-		{"uint64 slice", args{[]uint64{1, 2, 3}}, []string{"1", "2", "3"}, false},
-		{"uint64 array", args{[3]uint64{1, 2, 3}}, []string{"1", "2", "3"}, false},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ToStrSlice(tt.args.a); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToStrSlice() = %v, want %v", got, tt.want)
-			}
-			got, err := ToStrSliceE(tt.args.a)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ToStrSliceE() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ToStrSliceE() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+	// to bool slice
+	assert.Equal([]bool{true, false, true}, SplitStrToSlice[bool]("1,0,1", ","))
+	assert.Equal([]bool{true, false, true}, SplitStrToSlice[bool]("true,false,true", ","))
+	_, err = SplitStrToSliceE[bool]("1,0,2", ",")
+	assert.IsNotNil(err)
 }
