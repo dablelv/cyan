@@ -12,10 +12,9 @@
 </div>
 
 # Synopsis
-A modern, comprehensive and efficient utility library of Go.
+A modern, comprehensive and efficient utility library of Golang.
 
 # Features
-
 - Comprehensive, efficient and reusable.
 - Numerous util functions, support string, slice, map, datetime, crypto...
 - Only depend on the go standard and golang.org/x library.
@@ -25,8 +24,8 @@ A modern, comprehensive and efficient utility library of Go.
 Some utility functions can be used to handle conversion of different character encoding, such as gbk to utf8.
 ```go
 gbk := []byte{0xC4, 0xE3, 0xBA, 0xC3}   // 你好 in gbk
-GBKToUTF8(gbk)                          // 你好 in utf8
-UTF8ToGBK(utf8)                         // [196 227 186 195]
+GbkToUtf8(gbk)                          // 你好 in utf8
+Utf8ToGbk(utf8)                         // [196 227 186 195]
 ```
 
 Some converting function to json.
@@ -334,8 +333,8 @@ CreateFile()
 ClearFile()
 
 // Gets file info.
-FileMD5()
-FileMD5Reader()
+FileMd5()
+FileMd5Reader()
 FileSize()
 FileSizeFile()
 
