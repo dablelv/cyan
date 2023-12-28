@@ -16,10 +16,11 @@ const (
 	HFormatNum        = "15"
 	HMFormatNum       = "1504"
 	TimeFormatNum     = "150405"
-	// Deprecated: please use standard library time.Dateonly
+	// Deprecated: please use standard library time.DateOnly
 	DateFormat = "2006-01-02"
 	// Deprecated: please use standard library time.TimeOnly
-	TimeFormat          = "15:04:05"
+	TimeFormat = "15:04:05"
+	// Deprecated: please use standard library time.DateTime
 	DateTimeFormat      = "2006-01-02 15:04:05"
 	DateTimeFormatMilli = "2006-01-02 15:04:05.000"
 	DateTimeFormatMicro = "2006-01-02 15:04:05.000000"
