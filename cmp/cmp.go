@@ -3,6 +3,7 @@
 package cmp
 
 import (
+	"cmp"
 	"reflect"
 
 	"golang.org/x/exp/constraints"
@@ -112,4 +113,20 @@ func isComparable(lhs, rhs any) bool {
 	l := reflect.ValueOf(lhs)
 	r := reflect.ValueOf(rhs)
 	return l.Kind() == r.Kind()
+}
+
+// Min compare two values and return smaller value.
+func Min[T cmp.Ordered](x, y T) T {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+// Max compare two values and return larger value.
+func Max[T cmp.Ordered](x, y T) T {
+	if x > y {
+		return x
+	}
+	return y
 }

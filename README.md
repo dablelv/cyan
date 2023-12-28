@@ -16,7 +16,7 @@ A modern, comprehensive and efficient utility library of Golang.
 
 # Features
 - Comprehensive, efficient and reusable.
-- Numerous util functions, support string, slice, map, datetime, crypto...
+- Numerous utility functions, support string, slice, map, datetime, crypto...
 - Only depend on the go standard and golang.org/x library.
 - High unit test coverage for exported functions.
 

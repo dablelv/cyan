@@ -7,11 +7,11 @@ import (
 //
 // All of the functions in this file are the supplement to the standard library slices package.
 // The standard library functions Insert, Delete, DeleteFunc, Replace, Index, IndexFunc
-// implemented by generics in the https://pkg.go.dev/golang.org/x/exp/slices package should be used first.
+// implemented by generics in the https://pkg.go.dev/slices package should be used first.
 //
 
 // Insert inserts the values v... into s at index i and returns the result slice.
-// Unlike the standard library function Insert, Insert won't modify the original slice.
+// Unlike the standard library, Insert won't modify the original slice.
 func Insert[S ~[]E, E any](s S, i int, v ...E) S {
 	r := make(S, len(s)+len(v))
 	copy(r, s[:i])

@@ -7,16 +7,18 @@ import (
 )
 
 const (
-	YFormatNum          = "2006"
-	YMFormatNum         = "200601"
-	DateFormatNum       = "20060102"
-	DateHFormatNum      = "2006010215"
-	DateHMFormatNum     = "200601021504"
-	DateTimeFormatNum   = "20060102150405"
-	HFormatNum          = "15"
-	HMFormatNum         = "1504"
-	TimeFormatNum       = "150405"
-	DateFormat          = "2006-01-02"
+	YFormatNum        = "2006"
+	YMFormatNum       = "200601"
+	DateFormatNum     = "20060102"
+	DateHFormatNum    = "2006010215"
+	DateHMFormatNum   = "200601021504"
+	DateTimeFormatNum = "20060102150405"
+	HFormatNum        = "15"
+	HMFormatNum       = "1504"
+	TimeFormatNum     = "150405"
+	// Deprecated: please use standard library time.Dateonly
+	DateFormat = "2006-01-02"
+	// Deprecated: please use standard library time.TimeOnly
 	TimeFormat          = "15:04:05"
 	DateTimeFormat      = "2006-01-02 15:04:05"
 	DateTimeFormatMilli = "2006-01-02 15:04:05.000"
