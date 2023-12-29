@@ -29,3 +29,9 @@ func TestRandAlphanumeric(t *testing.T) {
 	s := RandAlphanumeric(4)
 	assert.Equal(4, len(s))
 }
+
+func TestRandLowerAlphanumeric(t *testing.T) {
+	assert := internal.NewAssert(t, "TestRandLowerAlphanumeric")
+	s := RandLowerAlphanumeric(4)
+	assert.Equal(4, len(s))
+}
