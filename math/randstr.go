@@ -52,7 +52,7 @@ func RandAlphanumeric(l int) string {
 func RandLowerAlphanumeric(l int) string {
 	s := make([]byte, l)
 	for i := range s {
-		s[i] = alphanumeric[RandIntn(lowerAlphanumericLen)]
+		s[i] = lowerAlphanumeric[RandIntn(lowerAlphanumericLen)]
 	}
 	return string(s)
 }
