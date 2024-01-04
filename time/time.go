@@ -16,11 +16,11 @@ const (
 	HFormatNum        = "15"
 	HMFormatNum       = "1504"
 	TimeFormatNum     = "150405"
-	// Deprecated: please use standard library time.DateOnly
+	// Deprecated: please use standard library time.DateOnly as of go 1.20
 	DateFormat = "2006-01-02"
-	// Deprecated: please use standard library time.TimeOnly
+	// Deprecated: please use standard library time.TimeOnly as of go 1.20
 	TimeFormat = "15:04:05"
-	// Deprecated: please use standard library time.DateTime
+	// Deprecated: please use standard library time.DateTime as of go 1.20
 	DateTimeFormat      = "2006-01-02 15:04:05"
 	DateTimeFormatMilli = "2006-01-02 15:04:05.000"
 	DateTimeFormatMicro = "2006-01-02 15:04:05.000000"
@@ -225,6 +225,11 @@ func IsSameWeek(ts1, ts2 int64) bool {
 	t1 := time.Unix(ts1, 0)
 	t2 := time.Unix(ts2, 0)
 	return GetMonDate(t1) == GetMonDate(t2)
+}
+
+// GetNowUtc returns now UTC time.
+func GetNowUtc() time.Time {
+	return time.Now().UTC()
 }
 
 // GetBeijingTime gets Beijing Time from time layout and value string.

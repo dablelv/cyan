@@ -199,6 +199,13 @@ func TestIsSameWeek(t *testing.T) {
 	}
 }
 
+func TestGetNowUtc(t *testing.T) {
+	assert := internal.NewAssert(t, "TestGetNowUtc")
+	name, offset := GetNowUtc().Zone()
+	assert.Equal("UTC", name)
+	assert.Equal(0, offset)
+}
+
 func TestGetBeijingTime(t *testing.T) {
 	assert := internal.NewAssert(t, "TestGetBeijingTime")
 
