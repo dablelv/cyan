@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"reflect"
 	"runtime"
+	"strings"
 	"testing"
 )
 
@@ -18,7 +19,7 @@ const (
 	compareGreater
 )
 
-// Assert is a simple implementation of assertion, only for internal usage
+// Assert is a simple implementation of assertion, only for internal usage.
 type Assert struct {
 	T        *testing.T
 	CaseName string
@@ -93,6 +94,12 @@ func (a *Assert) IsNil(v any) {
 func (a *Assert) IsNotNil(v any) {
 	if v == nil || (reflect.ValueOf(v).Kind() == reflect.Ptr && reflect.ValueOf(v).IsNil()) {
 		makeTestFailed(a.T, a.CaseName, "not nil", v)
+	}
+}
+
+func (a *Assert) ErrorContains(err error, contains string) {
+	if !strings.Contains(err.Error(), contains) {
+		makeTestFailed(a.T, a.CaseName, contains, err.Error())
 	}
 }
 

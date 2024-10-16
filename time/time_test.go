@@ -216,3 +216,29 @@ func TestGetBeijingTime(t *testing.T) {
 	_, err = GetBeijingTime(time.RFC3339, "2022-11-04 08:30:00")
 	assert.IsNotNil(err)
 }
+
+func TestGetDayMomentNanoTs(t *testing.T) {
+	assert := internal.NewAssert(t, "TestGetDayMomentNanoTs")
+
+	// China Standard Time
+	cst, err := GetTimezoneTime("Asia/Shanghai", time.DateTime, "2008-08-08 20:08:00")
+	assert.IsNil(err)
+
+	// Eastern Daylight Time
+	nanoTs, err := GetDayMomentNanoTs(cst, "America/New_York", 8, 8, 0, 0)
+	assert.IsNil(err)
+	assert.Equal(cst.UnixNano(), nanoTs)
+}
+
+func TestGetDayMomentTime(t *testing.T) {
+	assert := internal.NewAssert(t, "TestGetDayMomentTime")
+
+	// China Standard Time
+	cst, err := GetTimezoneTime("Asia/Shanghai", time.DateTime, "2008-08-08 20:08:00")
+	assert.IsNil(err)
+
+	// Eastern Daylight Time
+	edt, err := GetDayMomentTime(cst, "America/New_York", 8, 8, 0, 0)
+	assert.IsNil(err)
+	assert.Equal(cst.UnixNano(), edt.UnixNano())
+}

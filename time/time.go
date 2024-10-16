@@ -16,11 +16,11 @@ const (
 	HFormatNum        = "15"
 	HMFormatNum       = "1504"
 	TimeFormatNum     = "150405"
-	// Deprecated: please use standard library time.DateOnly as of go 1.20
+	// Deprecated: please use standard library time.DateOnly since go 1.20
 	DateFormat = "2006-01-02"
-	// Deprecated: please use standard library time.TimeOnly as of go 1.20
+	// Deprecated: please use standard library time.TimeOnly since go 1.20
 	TimeFormat = "15:04:05"
-	// Deprecated: please use standard library time.DateTime as of go 1.20
+	// Deprecated: please use standard library time.DateTime since go 1.20
 	DateTimeFormat      = "2006-01-02 15:04:05"
 	DateTimeFormatMilli = "2006-01-02 15:04:05.000"
 	DateTimeFormatMicro = "2006-01-02 15:04:05.000000"
@@ -235,10 +235,43 @@ func GetNowUtc() time.Time {
 // GetBeijingTime gets Beijing Time from time layout and value string.
 // The location name Asia/Shanghai from IANA Time Zone Database standards for Beijing Time.
 func GetBeijingTime(layout, value string) (t time.Time, err error) {
-	location, err := time.LoadLocation("Asia/Shanghai")
+	loc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
 		return
 	}
-	t, err = time.ParseInLocation(layout, value, location)
-	return
+	return time.ParseInLocation(layout, value, loc)
+}
+
+// GetTimezoneTime gets time.Time based on specified timezone, layout and value string.
+func GetTimezoneTime(timezone string, layout, value string) (t time.Time, err error) {
+	loc, err := time.LoadLocation(timezone)
+	if err != nil {
+		return
+	}
+	return time.ParseInLocation(layout, value, loc)
+}
+
+// GetDayMomentNanoTs gets the nanosecond timestamp based on specified day and moment.
+// If you want get more info about timezone, please refer to [IANA Time Zone Database](https://www.iana.org/time-zones).
+// Common timezone are: Asia/Shanghai, America/New_York, Europe/London etc.
+func GetDayMomentNanoTs(t time.Time, timezone string, hour, minute, second, nsec int) (int64, error) {
+	loc, err := time.LoadLocation(timezone)
+	if err != nil {
+		return 0, err
+	}
+
+	year, month, day := t.In(loc).Date()
+	r := time.Date(year, month, day, hour, minute, second, nsec, loc)
+	return r.UnixNano(), nil
+}
+
+// GetDayMomentTime gets the time.Time based on specified day and moment.
+func GetDayMomentTime(t time.Time, timezone string, hour, minute, second, nsec int) (time.Time, error) {
+	loc, err := time.LoadLocation(timezone)
+	if err != nil {
+		return time.Time{}, err
+	}
+
+	year, month, day := t.In(loc).Date()
+	return time.Date(year, month, day, hour, minute, second, nsec, loc), nil
 }
