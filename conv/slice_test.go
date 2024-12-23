@@ -4,11 +4,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestToSlice(t *testing.T) {
-	assert := internal.NewAssert(t, "TestToSlice")
+	assert := utest.NewAssert(t, "TestToSlice")
 
 	// to bool slice
 	assert.Equal([]bool{true, false, true}, ToSlice[bool]([]bool{true, false, true}))
@@ -95,7 +95,7 @@ func TestToSlice(t *testing.T) {
 }
 
 func TestJsonToSlice(t *testing.T) {
-	assert := internal.NewAssert(t, "TestJsonToSlice")
+	assert := utest.NewAssert(t, "TestJsonToSlice")
 
 	assert.Equal([]int{1, 2, 3}, JsonToSlice[[]int]([]byte("[1,2,3]")))
 	assert.Equal([]float64{1.1, 2.2, 3.3}, JsonToSlice[[]float64]([]byte("[1.1,2.2,3.3]")))
@@ -103,7 +103,7 @@ func TestJsonToSlice(t *testing.T) {
 }
 
 func TestMapKeys(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMapKeys")
+	assert := utest.NewAssert(t, "TestMapKeys")
 
 	// to ints
 	ks := MapKeys(map[int]int{1: 1, 2: 2, 3: 3})
@@ -111,7 +111,7 @@ func TestMapKeys(t *testing.T) {
 }
 
 func TestMapVals(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMapVals")
+	assert := utest.NewAssert(t, "TestMapVals")
 
 	// to ints
 	vs := MapVals(map[int]int{1: 1, 2: 2, 3: 3})
@@ -119,7 +119,7 @@ func TestMapVals(t *testing.T) {
 }
 
 func TestMapKeyVals(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMapKeyVals")
+	assert := utest.NewAssert(t, "TestMapKeyVals")
 
 	ks, vs := MapKeyVals(map[string]int{"foo": 1, "bar": 2, "baz": 3})
 	assert.Equal(3, len(ks))
@@ -127,7 +127,7 @@ func TestMapKeyVals(t *testing.T) {
 }
 
 func TestMapToSlice(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMapToSlice")
+	assert := utest.NewAssert(t, "TestMapToSlice")
 
 	ks, vs := MapToSlice(map[string]string{"1": "1", "2": "2", "3": "3"})
 	assert.Equal(3, len(ks.([]string)))
@@ -148,7 +148,7 @@ func TestMapToSlice(t *testing.T) {
 }
 
 func TestSplitStrToSlice(t *testing.T) {
-	assert := internal.NewAssert(t, "TestSplitStrToSlice")
+	assert := utest.NewAssert(t, "TestSplitStrToSlice")
 
 	// to int slice
 	assert.Equal([]int{1, 2, 3}, SplitStrToSlice[int]("1,2,3", ","))

@@ -5,13 +5,13 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 const dir = "unit_test_dir"
 
 func TestCreateFile(t *testing.T) {
-	assert := internal.NewAssert(t, "TestCreateFile")
+	assert := utest.NewAssert(t, "TestCreateFile")
 
 	path := "file_unit_test_tmp.txt"
 	err := CreateFile(path)
@@ -30,7 +30,7 @@ func TestCreateFile(t *testing.T) {
 }
 
 func TestBytesToFile_FileToBytes_ClearFile(t *testing.T) {
-	assert := internal.NewAssert(t, "BytesToFile and FileToBytes and ClearFile")
+	assert := utest.NewAssert(t, "BytesToFile and FileToBytes and ClearFile")
 
 	path := filepath.Join(dir, "foo.txt")
 	err := BytesToFile(path, []byte("hello world"))

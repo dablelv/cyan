@@ -6,23 +6,23 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestDoWithRetry(t *testing.T) {
 	ctx := context.Background()
 
-	assert1 := internal.NewAssert(t, "f return success, should no retry")
+	assert1 := utest.NewAssert(t, "f return success, should no retry")
 	f1 := func() error { return nil }
 	err := DoWithRetry(ctx, f1, 3, 10*time.Millisecond)
 	assert1.IsNil(err)
 
-	assert2 := internal.NewAssert(t, "f always fail, should return error")
+	assert2 := utest.NewAssert(t, "f always fail, should return error")
 	f2 := func() error { return errors.New("some error") }
 	err = DoWithRetry(ctx, f2, 3, 10*time.Millisecond)
 	assert2.ErrorContains(err, "some error")
 
-	assert3 := internal.NewAssert(t, "context cancelled, should return context canceled")
+	assert3 := utest.NewAssert(t, "context cancelled, should return context canceled")
 	cancelctx, cancel := context.WithCancel(context.Background())
 	go func() {
 		<-time.After(10 * time.Millisecond)

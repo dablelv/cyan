@@ -5,11 +5,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestReadLines(t *testing.T) {
-	assert := internal.NewAssert(t, "TestReadLines")
+	assert := utest.NewAssert(t, "TestReadLines")
 
 	path := filepath.Join(dir, "foo.txt")
 	f, err := Create(path)
@@ -32,7 +32,7 @@ func TestReadLines(t *testing.T) {
 }
 
 func TestReadLinesV2(t *testing.T) {
-	assert := internal.NewAssert(t, "TestReadLinesV2")
+	assert := utest.NewAssert(t, "TestReadLinesV2")
 
 	path := filepath.Join(dir, "foo.txt")
 	f, _ := Create(path)
@@ -56,7 +56,7 @@ func TestReadLinesV2(t *testing.T) {
 }
 
 func TestReadLinesV3(t *testing.T) {
-	assert := internal.NewAssert(t, "TestReadLinesV3")
+	assert := utest.NewAssert(t, "TestReadLinesV3")
 
 	path := filepath.Join(dir, "foo.txt")
 	f, _ := Create(path)
@@ -80,7 +80,7 @@ func TestReadLinesV3(t *testing.T) {
 }
 
 func TestListDir(t *testing.T) {
-	assert := internal.NewAssert(t, "TestListDir")
+	assert := utest.NewAssert(t, "TestListDir")
 
 	path := filepath.Join(dir, "foo.txt")
 	err := CreateFile(path)
@@ -99,7 +99,7 @@ func TestListDir(t *testing.T) {
 }
 
 func TestListFilenames(t *testing.T) {
-	assert := internal.NewAssert(t, "TestListFilenames")
+	assert := utest.NewAssert(t, "TestListFilenames")
 
 	err := CreateFile(filepath.Join(dir, "a.txt"))
 	assert.IsNil(err)
@@ -119,7 +119,7 @@ func TestListFilenames(t *testing.T) {
 }
 
 func TestFileMD5(t *testing.T) {
-	assert := internal.NewAssert(t, "TestFileMD5")
+	assert := utest.NewAssert(t, "TestFileMD5")
 
 	path := filepath.Join(dir, "foo.txt")
 	err := CreateFile(path)
@@ -138,7 +138,7 @@ func TestFileMD5(t *testing.T) {
 }
 
 func TestFileMD5Reader(t *testing.T) {
-	assert := internal.NewAssert(t, "TestFileMD5Reader")
+	assert := utest.NewAssert(t, "TestFileMD5Reader")
 
 	path := filepath.Join(dir, "foo.txt")
 	f, err := Create(path)
@@ -154,7 +154,7 @@ func TestFileMD5Reader(t *testing.T) {
 }
 
 func TestFileSize(t *testing.T) {
-	assert := internal.NewAssert(t, "TestFileSize")
+	assert := utest.NewAssert(t, "TestFileSize")
 
 	path := filepath.Join(dir, "foo.txt")
 	f, err := Create(path)
@@ -177,7 +177,7 @@ func TestFileSize(t *testing.T) {
 }
 
 func TestListDirEntryPaths(t *testing.T) {
-	assert := internal.NewAssert(t, "TestListDirEntryPaths")
+	assert := utest.NewAssert(t, "TestListDirEntryPaths")
 
 	path1 := filepath.Join(dir, "a.txt")
 	err := CreateFile(path1)
@@ -201,7 +201,7 @@ func TestListDirEntryPaths(t *testing.T) {
 }
 
 func TestListDirEntryPathsSymlink(t *testing.T) {
-	assert := internal.NewAssert(t, "TestListDirEntryPathsSymlink")
+	assert := utest.NewAssert(t, "TestListDirEntryPathsSymlink")
 
 	path1 := filepath.Join(dir, "a.txt")
 	err := CreateFile(path1)

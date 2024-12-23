@@ -3,11 +3,11 @@ package slice
 import (
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestRandomElem(t *testing.T) {
-	assert := internal.NewAssert(t, "TestRandomElem")
+	assert := utest.NewAssert(t, "TestRandomElem")
 
 	got := RandomElem([]int{1})
 	assert.Equal(1, got)
@@ -17,7 +17,7 @@ func TestRandomElem(t *testing.T) {
 }
 
 func TestMin(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMin")
+	assert := utest.NewAssert(t, "TestMin")
 
 	assert.Equal(1, Min([]int{1, 2, 3}))
 	assert.Equal(0, Min([]int{}))
@@ -29,7 +29,7 @@ func TestMin(t *testing.T) {
 }
 
 func TestMax(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMax")
+	assert := utest.NewAssert(t, "TestMax")
 
 	assert.Equal(3, Max([]int{1, 2, 3}))
 	assert.Equal(0, Max([]int{}))
@@ -41,7 +41,7 @@ func TestMax(t *testing.T) {
 }
 
 func TestMinRef(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMaxRef")
+	assert := utest.NewAssert(t, "TestMaxRef")
 
 	assert.Equal(1, MinRef([]int{1, 2, 3}))
 	assert.IsNil(MinRef([]int{}))
@@ -60,7 +60,7 @@ func TestMinRef(t *testing.T) {
 }
 
 func TestMaxRef(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMaxRef")
+	assert := utest.NewAssert(t, "TestMaxRef")
 
 	assert.Equal(3, MaxRef([]int{1, 2, 3}))
 	assert.IsNil(MaxRef([]int{}))
@@ -78,7 +78,7 @@ func TestMaxRef(t *testing.T) {
 }
 
 func TestSum(t *testing.T) {
-	assert := internal.NewAssert(t, "TestSum")
+	assert := utest.NewAssert(t, "TestSum")
 
 	assert.Equal(float64(55), Sum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}))
 	assert.Equal(float64(55), Sum([]float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}))

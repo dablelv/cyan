@@ -5,7 +5,7 @@ import (
 	"net"
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestIsReservedIP(t *testing.T) {
@@ -41,7 +41,7 @@ func TestIsReservedIP(t *testing.T) {
 }
 
 func TestHtons(t *testing.T) {
-	assert := internal.NewAssert(t, "TestHtons")
+	assert := utest.NewAssert(t, "TestHtons")
 
 	got := Htons(0x1234)
 	if GetNativeEndian() == binary.BigEndian {
@@ -52,7 +52,7 @@ func TestHtons(t *testing.T) {
 }
 
 func TestHtonl(t *testing.T) {
-	assert := internal.NewAssert(t, "TestHtonl")
+	assert := utest.NewAssert(t, "TestHtonl")
 
 	got := Htonl(0x12345678)
 	if GetNativeEndian() == binary.BigEndian {
@@ -63,7 +63,7 @@ func TestHtonl(t *testing.T) {
 }
 
 func TestNtohs(t *testing.T) {
-	assert := internal.NewAssert(t, "TestNtohs")
+	assert := utest.NewAssert(t, "TestNtohs")
 
 	got := Ntohs(0x3412)
 	if GetNativeEndian() == binary.BigEndian {
@@ -74,7 +74,7 @@ func TestNtohs(t *testing.T) {
 }
 
 func TestNtohl(t *testing.T) {
-	assert := internal.NewAssert(t, "TestNtohl")
+	assert := utest.NewAssert(t, "TestNtohl")
 
 	got := Ntohl(0x78563412)
 	if GetNativeEndian() == binary.BigEndian {
@@ -85,7 +85,7 @@ func TestNtohl(t *testing.T) {
 }
 
 func TestIPv4ToU32(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIPv4ToU32")
+	assert := utest.NewAssert(t, "TestIPv4ToU32")
 
 	got := IPv4ToU32(net.IPv4(127, 0, 0, 1))
 	assert.Equal(uint32(0x7f000001), got)
@@ -94,14 +94,14 @@ func TestIPv4ToU32(t *testing.T) {
 }
 
 func TestU32ToIPv4(t *testing.T) {
-	assert := internal.NewAssert(t, "TestU32ToIPv4")
+	assert := utest.NewAssert(t, "TestU32ToIPv4")
 
 	got := U32ToIPv4(0x7f000001)
 	assert.Equal(net.IPv4(127, 0, 0, 1), got)
 }
 
 func TestIPv4StrToU32(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIPv4StrToU32")
+	assert := utest.NewAssert(t, "TestIPv4StrToU32")
 
 	got := IPv4StrToU32("127.0.0.1")
 	assert.Equal(uint32(0x7f000001), got)
@@ -112,14 +112,14 @@ func TestIPv4StrToU32(t *testing.T) {
 }
 
 func TestU32ToIPv4Str(t *testing.T) {
-	assert := internal.NewAssert(t, "TestU32ToIPv4Str")
+	assert := utest.NewAssert(t, "TestU32ToIPv4Str")
 
 	got := U32ToIPv4Str(0x7f000001)
 	assert.Equal("127.0.0.1", got)
 }
 
 func TestIsLittleEndian(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsLittleEndian")
+	assert := utest.NewAssert(t, "TestIsLittleEndian")
 
 	got := IsLittleEndian()
 	if GetNativeEndian() == binary.BigEndian {

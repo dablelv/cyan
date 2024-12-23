@@ -3,7 +3,7 @@ package cmp
 import (
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestVerGTVer(t *testing.T) {
@@ -37,7 +37,7 @@ func TestVerGTVer(t *testing.T) {
 }
 
 func TestVerGEVer(t *testing.T) {
-	assert := internal.NewAssert(t, "TestVerGEVer")
+	assert := utest.NewAssert(t, "TestVerGEVer")
 	type args struct {
 		ver0 string
 		ver1 string
@@ -91,7 +91,7 @@ func TestVerLTVer(t *testing.T) {
 }
 
 func TestVerLEVer(t *testing.T) {
-	assert := internal.NewAssert(t, "TestVerLEVer")
+	assert := utest.NewAssert(t, "TestVerLEVer")
 	type args struct {
 		ver0 string
 		ver1 string

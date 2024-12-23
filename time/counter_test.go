@@ -4,11 +4,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestTimeCounter(t *testing.T) {
-	assert := internal.NewAssert(t, "TestTimeCounter")
+	assert := utest.NewAssert(t, "TestTimeCounter")
 
 	c := NewTimeCounter()
 
@@ -31,7 +31,7 @@ func TestTimeCounter(t *testing.T) {
 }
 
 func TestTimeCost(t *testing.T) {
-	assert := internal.NewAssert(t, "TestTimeCost")
+	assert := utest.NewAssert(t, "TestTimeCost")
 
 	cost := TimeCost()
 	time.Sleep(time.Second)

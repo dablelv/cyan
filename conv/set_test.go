@@ -4,11 +4,11 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestToSet(t *testing.T) {
-	assert := internal.NewAssert(t, "TestToSet")
+	assert := utest.NewAssert(t, "TestToSet")
 
 	// To bool set.
 	assert.Equal(map[bool]struct{}{true: {}, false: {}}, ToSet[bool]([]bool{true, true, false, false}))

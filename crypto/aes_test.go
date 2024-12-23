@@ -3,11 +3,11 @@ package crypto
 import (
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestAESCBCEncrypt(t *testing.T) {
-	assert := internal.NewAssert(t, "TestAESCBCEncrypt")
+	assert := utest.NewAssert(t, "TestAESCBCEncrypt")
 
 	// AES key length must be 16、24 or 32 bytes to select AES-128, AES-192, or AES-256.
 	key := []byte("12345678abcdefgh")
@@ -17,7 +17,7 @@ func TestAESCBCEncrypt(t *testing.T) {
 }
 
 func TestAESCBCDecrypt(t *testing.T) {
-	assert := internal.NewAssert(t, "TestAESCBCDecrypt")
+	assert := utest.NewAssert(t, "TestAESCBCDecrypt")
 
 	// AES key length must be 16、24 or 32 bytes to select AES-128, AES-192, or AES-256.
 	key := []byte("12345678abcdefgh")
@@ -27,7 +27,7 @@ func TestAESCBCDecrypt(t *testing.T) {
 }
 
 func TestBase64AESCBCEncrypt(t *testing.T) {
-	assert := internal.NewAssert(t, "TestBase64AESCBCEncrypt")
+	assert := utest.NewAssert(t, "TestBase64AESCBCEncrypt")
 
 	p := []byte("plaintext")
 	key := []byte("12345678abcdefgh")
@@ -41,7 +41,7 @@ func TestBase64AESCBCEncrypt(t *testing.T) {
 }
 
 func TestBase64AESCBCDecrypt(t *testing.T) {
-	assert := internal.NewAssert(t, "TestBase64AESCBCDecrypt")
+	assert := utest.NewAssert(t, "TestBase64AESCBCDecrypt")
 
 	c := "A67NhD3RBiNaMgG6HTm8LQ=="
 	key := []byte("12345678abcdefgh")

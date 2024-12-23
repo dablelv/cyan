@@ -4,11 +4,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestGetDaysBtwTs(t *testing.T) {
-	assert := internal.NewAssert(t, "TestGetDaysBtwTs")
+	assert := utest.NewAssert(t, "TestGetDaysBtwTs")
 	type args struct {
 		ts0 int64
 		ts1 int64
@@ -29,7 +29,7 @@ func TestGetDaysBtwTs(t *testing.T) {
 }
 
 func TestGetHoursBtwTs(t *testing.T) {
-	assert := internal.NewAssert(t, "TestGetHoursBtwTs")
+	assert := utest.NewAssert(t, "TestGetHoursBtwTs")
 	type args struct {
 		ts0 int64
 		ts1 int64
@@ -50,7 +50,7 @@ func TestGetHoursBtwTs(t *testing.T) {
 }
 
 func TestGetMinutesBtwTs(t *testing.T) {
-	assert := internal.NewAssert(t, "TestGetMinutesBtwTs")
+	assert := utest.NewAssert(t, "TestGetMinutesBtwTs")
 	type args struct {
 		ts0 int64
 		ts1 int64
@@ -71,7 +71,7 @@ func TestGetMinutesBtwTs(t *testing.T) {
 }
 
 func TestIsLeapYear(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsLeapYear")
+	assert := utest.NewAssert(t, "TestIsLeapYear")
 
 	assert.Equal(true, IsLeapYear(2000))
 	assert.Equal(false, IsLeapYear(2001))
@@ -79,7 +79,7 @@ func TestIsLeapYear(t *testing.T) {
 }
 
 func TestIsSameYear(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsSameYear")
+	assert := utest.NewAssert(t, "TestIsSameYear")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -99,7 +99,7 @@ func TestIsSameYear(t *testing.T) {
 }
 
 func TestIsSameMonth(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsSameMonth")
+	assert := utest.NewAssert(t, "TestIsSameMonth")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -119,7 +119,7 @@ func TestIsSameMonth(t *testing.T) {
 }
 
 func TestIsSameDay(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsSameDay")
+	assert := utest.NewAssert(t, "TestIsSameDay")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -139,7 +139,7 @@ func TestIsSameDay(t *testing.T) {
 }
 
 func TestIsSameHour(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsSameHour")
+	assert := utest.NewAssert(t, "TestIsSameHour")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -159,7 +159,7 @@ func TestIsSameHour(t *testing.T) {
 }
 
 func TestIsSameMinute(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsSameMinute")
+	assert := utest.NewAssert(t, "TestIsSameMinute")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -180,7 +180,7 @@ func TestIsSameMinute(t *testing.T) {
 }
 
 func TestIsSameWeek(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsSameWeek")
+	assert := utest.NewAssert(t, "TestIsSameWeek")
 	type args struct {
 		uts1 int64
 		uts2 int64
@@ -200,14 +200,14 @@ func TestIsSameWeek(t *testing.T) {
 }
 
 func TestGetNowUtc(t *testing.T) {
-	assert := internal.NewAssert(t, "TestGetNowUtc")
+	assert := utest.NewAssert(t, "TestGetNowUtc")
 	name, offset := GetNowUtc().Zone()
 	assert.Equal("UTC", name)
 	assert.Equal(0, offset)
 }
 
 func TestGetBeijingTime(t *testing.T) {
-	assert := internal.NewAssert(t, "TestGetBeijingTime")
+	assert := utest.NewAssert(t, "TestGetBeijingTime")
 
 	got, err := GetBeijingTime(time.DateTime, "2022-11-04 08:30:00")
 	assert.IsNil(err)
@@ -218,7 +218,7 @@ func TestGetBeijingTime(t *testing.T) {
 }
 
 func TestGetDayMomentNanoTs(t *testing.T) {
-	assert := internal.NewAssert(t, "TestGetDayMomentNanoTs")
+	assert := utest.NewAssert(t, "TestGetDayMomentNanoTs")
 
 	// China Standard Time
 	cst, err := GetTimezoneTime("Asia/Shanghai", time.DateTime, "2008-08-08 20:08:00")
@@ -231,7 +231,7 @@ func TestGetDayMomentNanoTs(t *testing.T) {
 }
 
 func TestGetDayMomentTime(t *testing.T) {
-	assert := internal.NewAssert(t, "TestGetDayMomentTime")
+	assert := utest.NewAssert(t, "TestGetDayMomentTime")
 
 	// China Standard Time
 	cst, err := GetTimezoneTime("Asia/Shanghai", time.DateTime, "2008-08-08 20:08:00")

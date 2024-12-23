@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestSplit(t *testing.T) {
@@ -43,7 +43,7 @@ func TestSplit(t *testing.T) {
 }
 
 func TestSplitSeps(t *testing.T) {
-	assert := internal.NewAssert(t, "TestSplitSeps")
+	assert := utest.NewAssert(t, "TestSplitSeps")
 
 	assert.Equal([]string{"foo", "bar", "baz"}, SplitSeps("foo,bar,baz", ","))
 	assert.Equal([]string{"foo", "bar", "baz"}, SplitSeps("foo,bar|baz", ",", "|"))
@@ -54,7 +54,7 @@ func TestSplitSeps(t *testing.T) {
 }
 
 func TestJoinNonEmptyStrs(t *testing.T) {
-	assert := internal.NewAssert(t, "TestJoinNonEmptyStrs")
+	assert := utest.NewAssert(t, "TestJoinNonEmptyStrs")
 
 	got := JoinNonEmptyStrs(",", []string{"foo", "bar", "baz"}...)
 	assert.Equal("foo,bar,baz", got)
@@ -64,7 +64,7 @@ func TestJoinNonEmptyStrs(t *testing.T) {
 }
 
 func TestJoin(t *testing.T) {
-	assert := internal.NewAssert(t, "TestJoin")
+	assert := utest.NewAssert(t, "TestJoin")
 
 	got := Join([]string{"foo", "bar", "baz"}, ",")
 	assert.Equal("foo,bar,baz", got)
@@ -86,13 +86,13 @@ func TestJoin(t *testing.T) {
 }
 
 func TestReverse(t *testing.T) {
-	assert := internal.NewAssert(t, "TestReverse")
+	assert := utest.NewAssert(t, "TestReverse")
 	assert.Equal("foo", Reverse("oof"))
 	assert.Equal("123", Reverse("321"))
 }
 
 func TestAlphanumericNum(t *testing.T) {
-	assert := internal.NewAssert(t, "TestAlphanumericNum")
+	assert := utest.NewAssert(t, "TestAlphanumericNum")
 
 	assert.Equal(3, AlphanumericNum("108条梁山好汉"))
 	assert.Equal(3, AlphanumericNum("一百条梁山man"))
@@ -100,7 +100,7 @@ func TestAlphanumericNum(t *testing.T) {
 }
 
 func TestAlphanumericNumV2(t *testing.T) {
-	assert := internal.NewAssert(t, "TestAlphanumericNumV2")
+	assert := utest.NewAssert(t, "TestAlphanumericNumV2")
 
 	assert.Equal(3, AlphanumericNumV2("108条梁山好汉"))
 	assert.Equal(3, AlphanumericNumV2("一百条梁山man"))
@@ -108,7 +108,7 @@ func TestAlphanumericNumV2(t *testing.T) {
 }
 
 func TestAlphanumericNumRegExp(t *testing.T) {
-	assert := internal.NewAssert(t, "TestAlphanumericNumRegExp")
+	assert := utest.NewAssert(t, "TestAlphanumericNumRegExp")
 
 	assert.Equal(3, AlphanumericNumRegExp("108条梁山好汉"))
 	assert.Equal(3, AlphanumericNumRegExp("一百条梁山man"))
@@ -134,7 +134,7 @@ func BenchmarkGetAlphanumericNumByRegExp(b *testing.B) {
 }
 
 func TestClearWhiteSpace(t *testing.T) {
-	assert := internal.NewAssert(t, "TestClearWhiteSpace")
+	assert := utest.NewAssert(t, "TestClearWhiteSpace")
 
 	assert.Equal("abc", ClearWhiteSpace("a b c"))
 	assert.Equal("", ClearWhiteSpace("   "))
@@ -142,7 +142,7 @@ func TestClearWhiteSpace(t *testing.T) {
 }
 
 func TestIndexOfDiff(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIndexOfDiff")
+	assert := utest.NewAssert(t, "TestIndexOfDiff")
 
 	assert.Equal(-1, IndexOfDiff("abc", "abc"))
 	assert.Equal(0, IndexOfDiff("abc", "d"))
@@ -150,7 +150,7 @@ func TestIndexOfDiff(t *testing.T) {
 }
 
 func TestIndexOffset(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIndexOffset")
+	assert := utest.NewAssert(t, "TestIndexOffset")
 
 	assert.Equal(3, IndexOffset("abcde", "d", 2))
 	assert.Equal(-1, IndexOffset("abcde", "d", 5))
@@ -160,14 +160,14 @@ func TestIndexOffset(t *testing.T) {
 }
 
 func TestDefault(t *testing.T) {
-	assert := internal.NewAssert(t, "TestDefault")
+	assert := utest.NewAssert(t, "TestDefault")
 
 	assert.Equal("abc", Default("abc", "d"))
 	assert.Equal("d", Default("", "d"))
 }
 
 func TestDefaultIfBlank(t *testing.T) {
-	assert := internal.NewAssert(t, "TestDefaultIfBlank")
+	assert := utest.NewAssert(t, "TestDefaultIfBlank")
 
 	assert.Equal("abc", DefaultIfBlank("abc", "d"))
 	assert.Equal("d", DefaultIfBlank("", "d"))

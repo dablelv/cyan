@@ -3,11 +3,11 @@ package slice
 import (
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestInsert(t *testing.T) {
-	assert := internal.NewAssert(t, "TestInsert")
+	assert := utest.NewAssert(t, "TestInsert")
 
 	s := Insert([]string{"foo", "qux"}, 1, "bar", "baz")
 	assert.Equal([]string{"foo", "bar", "baz", "qux"}, s)
@@ -20,7 +20,7 @@ func TestInsert(t *testing.T) {
 }
 
 func TestInsertRef(t *testing.T) {
-	assert := internal.NewAssert(t, "TestInsertRef")
+	assert := utest.NewAssert(t, "TestInsertRef")
 
 	r := InsertRef([]string{"bar", "baz"}, 0, "foo")
 	assert.Equal([]string{"foo", "bar", "baz"}, r)
@@ -33,7 +33,7 @@ func TestInsertRef(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	assert := internal.NewAssert(t, "TestDelete")
+	assert := utest.NewAssert(t, "TestDelete")
 
 	s := Delete([]int{1, 2, 3}, 0)
 	assert.Equal([]int{2, 3}, s)
@@ -49,7 +49,7 @@ func TestDelete(t *testing.T) {
 }
 
 func TestDeleteRef(t *testing.T) {
-	assert := internal.NewAssert(t, "TestDeleteRef")
+	assert := utest.NewAssert(t, "TestDeleteRef")
 
 	s := DeleteRef([]int{1, 2, 3}, 0)
 	assert.Equal([]int{2, 3}, s)
@@ -65,7 +65,7 @@ func TestDeleteRef(t *testing.T) {
 }
 
 func TestDeleteElems(t *testing.T) {
-	assert := internal.NewAssert(t, "TestDeleteElems")
+	assert := utest.NewAssert(t, "TestDeleteElems")
 
 	s := DeleteElems([]string{"a", "b", "b", "c"}, "b", "c")
 	assert.Equal([]string{"a"}, s)
@@ -78,7 +78,7 @@ func TestDeleteElems(t *testing.T) {
 }
 
 func TestDeleteElemsRef(t *testing.T) {
-	assert := internal.NewAssert(t, "TestDeleteElemsRef")
+	assert := utest.NewAssert(t, "TestDeleteElemsRef")
 
 	s := DeleteElemsRef([]string{"a", "b", "b", "c"}, "b", "c")
 	assert.Equal([]string{"a"}, s)
@@ -91,7 +91,7 @@ func TestDeleteElemsRef(t *testing.T) {
 }
 
 func TestIndexes(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIndexes")
+	assert := utest.NewAssert(t, "TestIndexes")
 
 	s := Indexes([]int{1, 2, 3}, 1)
 	assert.Equal([]int{0}, s)
@@ -107,7 +107,7 @@ func TestIndexes(t *testing.T) {
 }
 
 func TestIndexesRef(t *testing.T) {
-	assert := internal.NewAssert(t, "IndexesRef")
+	assert := utest.NewAssert(t, "IndexesRef")
 
 	s := IndexesRef([]int{1, 2, 3}, 2)
 	assert.Equal([]int{1}, s)
@@ -123,7 +123,7 @@ func TestIndexesRef(t *testing.T) {
 }
 
 func TestIndexessFunc(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIndexessFunc")
+	assert := utest.NewAssert(t, "TestIndexessFunc")
 
 	f := func(e int) bool {
 		return e <= 1
@@ -139,7 +139,7 @@ func TestIndexessFunc(t *testing.T) {
 }
 
 func TestReplace(t *testing.T) {
-	assert := internal.NewAssert(t, "TestReplace")
+	assert := utest.NewAssert(t, "TestReplace")
 
 	r1 := Replace([]string{"fooo", "barr", "baz", "qux"}, 0, 2, "foo", "bar")
 	assert.Equal([]string{"foo", "bar", "baz", "qux"}, r1)
@@ -149,7 +149,7 @@ func TestReplace(t *testing.T) {
 }
 
 func TestReplaceRef(t *testing.T) {
-	assert := internal.NewAssert(t, "TestReplaceRef")
+	assert := utest.NewAssert(t, "TestReplaceRef")
 
 	r1 := ReplaceRef([]string{"fooo", "barr", "baz", "qux"}, 0, 2, "foo", "bar")
 	assert.Equal([]string{"foo", "bar", "baz", "qux"}, r1)

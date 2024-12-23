@@ -1,8 +1,8 @@
 // This file is copied from https://github.com/duke-git/lancet/interanl
 // and modified on demand.
 
-// Package internal is for internal use.
-package internal
+// Package utest is for internal unit test.
+package utest
 
 import (
 	"fmt"
@@ -25,12 +25,12 @@ type Assert struct {
 	CaseName string
 }
 
-// NewAssert return instance of Assert
+// NewAssert return instance of Assert.
 func NewAssert(t *testing.T, caseName string) *Assert {
 	return &Assert{T: t, CaseName: caseName}
 }
 
-// Equal check if expected is equal with actual
+// Equal check if expected is equal with actual.
 func (a *Assert) Equal(expected, actual any) {
 	if compare(expected, actual) != compareEqual {
 		makeTestFailed(a.T, a.CaseName, expected, actual)

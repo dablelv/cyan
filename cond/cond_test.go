@@ -6,11 +6,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestBool(t *testing.T) {
-	assert := internal.NewAssert(t, "TestBool")
+	assert := utest.NewAssert(t, "TestBool")
 
 	// bool
 	assert.Equal(false, Bool(false))
@@ -62,7 +62,7 @@ func TestBool(t *testing.T) {
 }
 
 func TestAnd(t *testing.T) {
-	assert := internal.NewAssert(t, "TestAnd")
+	assert := utest.NewAssert(t, "TestAnd")
 	assert.Equal(false, And(0, 1))
 	assert.Equal(false, And(0, ""))
 	assert.Equal(false, And(0, "0"))
@@ -70,7 +70,7 @@ func TestAnd(t *testing.T) {
 }
 
 func TestOr(t *testing.T) {
-	assert := internal.NewAssert(t, "TestOr")
+	assert := utest.NewAssert(t, "TestOr")
 	assert.Equal(false, Or(0, ""))
 	assert.Equal(true, Or(0, 1))
 	assert.Equal(true, Or(0, "0"))
@@ -78,7 +78,7 @@ func TestOr(t *testing.T) {
 }
 
 func TestXor(t *testing.T) {
-	assert := internal.NewAssert(t, "TestOr")
+	assert := utest.NewAssert(t, "TestOr")
 	assert.Equal(false, Xor(0, 0))
 	assert.Equal(true, Xor(0, 1))
 	assert.Equal(true, Xor(1, 0))
@@ -86,7 +86,7 @@ func TestXor(t *testing.T) {
 }
 
 func TestNor(t *testing.T) {
-	assert := internal.NewAssert(t, "TestNor")
+	assert := utest.NewAssert(t, "TestNor")
 	assert.Equal(true, Nor(0, 0))
 	assert.Equal(false, Nor(0, 1))
 	assert.Equal(false, Nor(1, 0))
@@ -94,7 +94,7 @@ func TestNor(t *testing.T) {
 }
 
 func TestXnor(t *testing.T) {
-	assert := internal.NewAssert(t, "TestXnor")
+	assert := utest.NewAssert(t, "TestXnor")
 	assert.Equal(true, Xnor(0, 0))
 	assert.Equal(false, Xnor(0, 1))
 	assert.Equal(false, Xnor(1, 0))
@@ -102,7 +102,7 @@ func TestXnor(t *testing.T) {
 }
 
 func TestNand(t *testing.T) {
-	assert := internal.NewAssert(t, "TestNand")
+	assert := utest.NewAssert(t, "TestNand")
 	assert.Equal(true, Nand(0, 0))
 	assert.Equal(true, Nand(0, 1))
 	assert.Equal(true, Nand(1, 0))

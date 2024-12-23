@@ -3,11 +3,11 @@ package safegroup
 import (
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestGroup_Go(t *testing.T) {
-	assert := internal.NewAssert(t, "TestGroup_Go")
+	assert := utest.NewAssert(t, "TestGroup_Go")
 	var sg Group
 	sg.Go(func() error {
 		return nil

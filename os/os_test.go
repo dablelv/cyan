@@ -6,11 +6,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestIsWin(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsWin")
+	assert := utest.NewAssert(t, "TestIsWin")
 
 	is := IsWin()
 	if runtime.GOOS == "windows" {
@@ -21,7 +21,7 @@ func TestIsWin(t *testing.T) {
 }
 
 func TestIsMac(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsMac")
+	assert := utest.NewAssert(t, "TestIsMac")
 
 	is := IsMac()
 	if runtime.GOOS == "darwin" {
@@ -32,7 +32,7 @@ func TestIsMac(t *testing.T) {
 }
 
 func TestIsLinux(t *testing.T) {
-	assert := internal.NewAssert(t, "IsLinux")
+	assert := utest.NewAssert(t, "IsLinux")
 
 	is := IsLinux()
 	if runtime.GOOS == "linux" {
@@ -43,7 +43,7 @@ func TestIsLinux(t *testing.T) {
 }
 
 func TestIsSupportColor(t *testing.T) {
-	assert := internal.NewAssert(t, "IsSupportColor")
+	assert := utest.NewAssert(t, "IsSupportColor")
 
 	support := IsSupportColor()
 	envTerm := os.Getenv("TERM")
@@ -59,7 +59,7 @@ func TestIsSupportColor(t *testing.T) {
 }
 
 func TestIsSupport256Color(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsSupport256Color")
+	assert := utest.NewAssert(t, "TestIsSupport256Color")
 
 	support := IsSupport256Color()
 	if strings.Contains(os.Getenv("TERM"), "256color") {
@@ -70,7 +70,7 @@ func TestIsSupport256Color(t *testing.T) {
 }
 
 func TestIsSupportTrueColor(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsSupportTrueColor")
+	assert := utest.NewAssert(t, "TestIsSupportTrueColor")
 
 	support := IsSupportTrueColor()
 	if strings.Contains(os.Getenv("COLORTERM"), "truecolor") {

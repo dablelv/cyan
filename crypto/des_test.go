@@ -3,11 +3,11 @@ package crypto
 import (
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestBase64DESCBCEncrypt(t *testing.T) {
-	assert := internal.NewAssert(t, "TestBase64DESCBCEncrypt")
+	assert := utest.NewAssert(t, "TestBase64DESCBCEncrypt")
 
 	p := []byte("plaintext")
 	key := []byte("12345678")
@@ -20,7 +20,7 @@ func TestBase64DESCBCEncrypt(t *testing.T) {
 }
 
 func TestBase64DESCBCDecrypt(t *testing.T) {
-	assert := internal.NewAssert(t, "TestBase64DESCBCDecrypt")
+	assert := utest.NewAssert(t, "TestBase64DESCBCDecrypt")
 
 	c := "UZS/y4By6ksePYMBbvZdig=="
 	key := []byte("12345678")
@@ -37,7 +37,7 @@ func TestBase64DESCBCDecrypt(t *testing.T) {
 }
 
 func TestBase64TriDESCBCEncrypt(t *testing.T) {
-	assert := internal.NewAssert(t, "TestBase64TriDESCBCEncrypt")
+	assert := utest.NewAssert(t, "TestBase64TriDESCBCEncrypt")
 
 	p := []byte("plaintext")
 	key := []byte("12345678abcdefgh12345678")
@@ -50,7 +50,7 @@ func TestBase64TriDESCBCEncrypt(t *testing.T) {
 }
 
 func TestBase64TriDESCBCDecrypt(t *testing.T) {
-	assert := internal.NewAssert(t, "TestBase64TriDESCBCDecrypt")
+	assert := utest.NewAssert(t, "TestBase64TriDESCBCDecrypt")
 
 	c := "dau0DzmDGQbHasZaOvxxwg=="
 	key := []byte("12345678abcdefgh12345678")

@@ -5,11 +5,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestIsExist(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsExist")
+	assert := utest.NewAssert(t, "TestIsExist")
 
 	path := filepath.Join("unit_test_dir", "a.txt")
 	err := CreateFile(path)
@@ -24,7 +24,7 @@ func TestIsExist(t *testing.T) {
 }
 
 func TestIsDir(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsDir")
+	assert := utest.NewAssert(t, "TestIsDir")
 
 	err := os.Mkdir(dir, os.ModePerm)
 	assert.IsNil(err)
@@ -41,7 +41,7 @@ func TestIsDir(t *testing.T) {
 }
 
 func TestIsFile(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsFile")
+	assert := utest.NewAssert(t, "TestIsFile")
 
 	path := filepath.Join(dir, "a.txt")
 	err := CreateFile(path)
@@ -59,7 +59,7 @@ func TestIsFile(t *testing.T) {
 }
 
 func TestIsShortcut(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsFile")
+	assert := utest.NewAssert(t, "TestIsFile")
 
 	path := filepath.Join(dir, "a.lnk")
 	err := CreateFile(path)
@@ -78,13 +78,13 @@ func TestIsShortcut(t *testing.T) {
 }
 
 func TestIsSymlink(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsSymlink")
+	assert := utest.NewAssert(t, "TestIsSymlink")
 	is := IsSymlink("file_not_exist")
 	assert.Equal(false, is)
 }
 
 func TestIsSymlinkE(t *testing.T) {
-	assert := internal.NewAssert(t, "TestIsSymlinkE")
+	assert := utest.NewAssert(t, "TestIsSymlinkE")
 	_, err := IsSymlinkE("file_not_exist")
 	assert.IsNotNil(err)
 }

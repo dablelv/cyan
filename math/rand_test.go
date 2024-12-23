@@ -3,11 +3,11 @@ package math
 import (
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestRandIntRange(t *testing.T) {
-	assert := internal.NewAssert(t, "TestRandIntRange")
+	assert := utest.NewAssert(t, "TestRandIntRange")
 	type args struct {
 		min int
 		max int
@@ -30,19 +30,19 @@ func TestRandIntRange(t *testing.T) {
 }
 
 func TestRandIntn(t *testing.T) {
-	assert := internal.NewAssert(t, "TestRandIntn")
+	assert := utest.NewAssert(t, "TestRandIntn")
 	got := RandIntn(0)
 	assert.Equal(0, got)
 }
 
 func TestRandInts(t *testing.T) {
-	assert := internal.NewAssert(t, "TestRandIntSlice")
+	assert := utest.NewAssert(t, "TestRandIntSlice")
 	s := RandInts(3, 1)
 	assert.Equal([]int{0, 0, 0}, s)
 }
 
 func TestRandBytes(t *testing.T) {
-	assert := internal.NewAssert(t, "TestRandByteSlice")
+	assert := utest.NewAssert(t, "TestRandByteSlice")
 	s := RandBytes(8)
 	assert.NotEqual([]int{0, 0, 0, 0, 0, 0, 0, 0}, s)
 }

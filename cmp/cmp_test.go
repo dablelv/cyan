@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 	"golang.org/x/exp/constraints"
 )
 
@@ -97,7 +97,7 @@ func TestCompare(t *testing.T) {
 }
 
 func TestMin(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMin")
+	assert := utest.NewAssert(t, "TestMin")
 
 	assert.Equal(1, Min(1, 2))
 	assert.Equal(1.1, Min(2.2, 1.1))
@@ -105,7 +105,7 @@ func TestMin(t *testing.T) {
 }
 
 func TestMax(t *testing.T) {
-	assert := internal.NewAssert(t, "TestMax")
+	assert := utest.NewAssert(t, "TestMax")
 
 	assert.Equal(2, Max(1, 2))
 	assert.Equal(2.2, Max(2.2, 1.1))

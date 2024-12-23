@@ -3,11 +3,11 @@ package slice
 import (
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestContains(t *testing.T) {
-	assert := internal.NewAssert(t, "TestContains")
+	assert := utest.NewAssert(t, "TestContains")
 
 	assert.Equal(true, Contains([]string{"foo", "bar", "baz"}, "bar"))
 	assert.Equal(false, Contains([]string{"foo", "bar", "baz"}, "qux"))
@@ -15,7 +15,7 @@ func TestContains(t *testing.T) {
 }
 
 func TestContainsRef(t *testing.T) {
-	assert := internal.NewAssert(t, "TestContainsRef")
+	assert := utest.NewAssert(t, "TestContainsRef")
 
 	assert.Equal(true, ContainsRef([]string{"foo", "bar", "baz"}, "bar"))
 	assert.Equal(false, ContainsRef([]string{"foo", "bar", "baz"}, "qux"))
@@ -24,7 +24,7 @@ func TestContainsRef(t *testing.T) {
 }
 
 func TestClearZero(t *testing.T) {
-	assert := internal.NewAssert(t, "TestClearZero")
+	assert := utest.NewAssert(t, "TestClearZero")
 
 	assert.Equal([]bool{true, true}, ClearZero([]bool{true, false, true}))
 	assert.Equal([]int{1, 2, 3}, ClearZero([]int{1, 2, 0, 3}))
@@ -32,7 +32,7 @@ func TestClearZero(t *testing.T) {
 }
 
 func TestClearZeroRef(t *testing.T) {
-	assert := internal.NewAssert(t, "TestClearZeroRef")
+	assert := utest.NewAssert(t, "TestClearZeroRef")
 
 	assert.Equal([]bool{true, true}, ClearZeroRef([]bool{true, false, true}))
 	assert.Equal([]int{1, 2, 3}, ClearZeroRef([]int{1, 2, 0, 3}))
@@ -47,7 +47,7 @@ func TestClearZeroRef(t *testing.T) {
 }
 
 func TestReverse(t *testing.T) {
-	assert := internal.NewAssert(t, "TestReverse")
+	assert := utest.NewAssert(t, "TestReverse")
 
 	r := Reverse([]int{1, 2, 3})
 	assert.Equal([]int{3, 2, 1}, r)
@@ -66,7 +66,7 @@ func TestReverse(t *testing.T) {
 }
 
 func TestReverseRef(t *testing.T) {
-	assert := internal.NewAssert(t, "TestReverseRef")
+	assert := utest.NewAssert(t, "TestReverseRef")
 
 	r := ReverseRef([]int{1, 2, 3})
 	assert.Equal([]int{3, 2, 1}, r)
@@ -85,7 +85,7 @@ func TestReverseRef(t *testing.T) {
 }
 
 func TestUnique(t *testing.T) {
-	assert := internal.NewAssert(t, "TestUnique")
+	assert := utest.NewAssert(t, "TestUnique")
 
 	assert.Equal([]int{1, 2, 3}, Unique([]int{1, 2, 2, 3}))
 	assert.Equal([]int{}, Unique([]int{}))
@@ -93,7 +93,7 @@ func TestUnique(t *testing.T) {
 }
 
 func TestUniqueRef(t *testing.T) {
-	assert := internal.NewAssert(t, "TestUniqueRef")
+	assert := utest.NewAssert(t, "TestUniqueRef")
 
 	assert.Equal([]int{1, 2, 3}, UniqueRef([]int{1, 2, 2, 3}))
 	assert.Equal([]int{}, UniqueRef([]int{}))

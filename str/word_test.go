@@ -3,11 +3,11 @@ package str
 import (
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestCapitalize(t *testing.T) {
-	assert := internal.NewAssert(t, "TestCapitalize")
+	assert := utest.NewAssert(t, "TestCapitalize")
 
 	// Test 1: Checks empty string.
 	assert.Equal("", Capitalize(""))
@@ -22,7 +22,7 @@ func TestCapitalize(t *testing.T) {
 }
 
 func TestCapitalizeFully(t *testing.T) {
-	assert := internal.NewAssert(t, "CapitalizeFully")
+	assert := utest.NewAssert(t, "CapitalizeFully")
 
 	assert.Equal("", CapitalizeFully(""))
 
@@ -35,7 +35,7 @@ func TestCapitalizeFully(t *testing.T) {
 }
 
 func TestUncapitalize(t *testing.T) {
-	assert := internal.NewAssert(t, "Uncapitalize")
+	assert := utest.NewAssert(t, "Uncapitalize")
 
 	assert.Equal("", Uncapitalize(""))
 
@@ -48,7 +48,7 @@ func TestUncapitalize(t *testing.T) {
 }
 
 func TestInitials(t *testing.T) {
-	assert := internal.NewAssert(t, "Initials")
+	assert := utest.NewAssert(t, "Initials")
 
 	assert.Equal("", Initials(""))
 

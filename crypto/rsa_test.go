@@ -4,11 +4,11 @@ import (
 	"crypto"
 	"testing"
 
-	"github.com/dablelv/cyan/internal"
+	"github.com/dablelv/cyan/internal/utest"
 )
 
 func TestRsaEncryptDecrypt(t *testing.T) {
-	assert := internal.NewAssert(t, "RsaEncryptDecrypt")
+	assert := utest.NewAssert(t, "RsaEncryptDecrypt")
 
 	data := []byte("foo")
 
@@ -56,7 +56,7 @@ func TestRsaEncryptDecrypt(t *testing.T) {
 }
 
 func TestRsaSignAndVerify(t *testing.T) {
-	assert := internal.NewAssert(t, "RsaSignAndVerify")
+	assert := utest.NewAssert(t, "RsaSignAndVerify")
 
 	msg := []byte("foo")
 	prvkey, pubkey, err := GenRsaKey(2048)
