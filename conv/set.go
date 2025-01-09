@@ -64,3 +64,24 @@ func SplitStrToSet(s string, sep string) map[string]struct{} {
 	}
 	return m
 }
+
+// SliceToSet converts a slice of type T into a map.
+// T can be any type but must be comparable.
+func SliceToSet[T comparable](s []T) map[T]struct{} {
+	m := make(map[T]struct{}, len(s))
+	for _, v := range s {
+		m[v] = struct{}{}
+	}
+	return m
+}
+
+// SliceToSetFunc converts a slice of type T into a map, using a specified key extraction function.
+// T can be any type, and K is the type of the keys used in the resulting map, which must be comparable.
+func SliceToSetFunc[T any, K comparable](data []T, getKey func(e T) K) map[K]struct{} {
+	m := make(map[K]struct{}, len(data))
+
+	for _, e := range data {
+		m[getKey(e)] = struct{}{}
+	}
+	return m
+}

@@ -9,7 +9,7 @@ import (
 //
 // All of the functions in this file are the supplement to the standard library slices package.
 // The standard library functions implemented by generics in the
-// https://pkg.go.dev/golang.org/x/exp/slices package should be used first.
+// https://pkg.go.dev/slices package should be used first.
 //
 
 // Contains reports whether slice contains any one of target elements.

@@ -31,31 +31,41 @@ func NewAssert(t *testing.T, caseName string) *Assert {
 }
 
 // Equal check if expected is equal with actual.
-func (a *Assert) Equal(expected, actual any) {
-	if compare(expected, actual) != compareEqual {
-		makeTestFailed(a.T, a.CaseName, expected, actual)
+func (a *Assert) Equal(actual, expected any) {
+	if compare(actual, expected) != compareEqual {
+		makeTestFailed(a.T, a.CaseName, actual, expected)
 	}
 }
 
+// False check if expected is false.
+func (a *Assert) False(actual any) {
+	a.Equal(actual, false)
+}
+
+// True check if expected is true.
+func (a *Assert) True(actual any) {
+	a.Equal(actual, true)
+}
+
 // NotEqual check if expected is not equal with actual
-func (a *Assert) NotEqual(expected, actual any) {
-	if compare(expected, actual) == compareEqual {
+func (a *Assert) NotEqual(actual, expected any) {
+	if compare(actual, expected) == compareEqual {
 		expectedInfo := fmt.Sprintf("not %v", expected)
 		makeTestFailed(a.T, a.CaseName, expectedInfo, actual)
 	}
 }
 
 // Greater check if expected is greate than actual
-func (a *Assert) Greater(expected, actual any) {
-	if compare(expected, actual) != compareGreater {
+func (a *Assert) Greater(actual, expected any) {
+	if compare(actual, expected) != compareGreater {
 		expectedInfo := fmt.Sprintf("> %v", expected)
 		makeTestFailed(a.T, a.CaseName, expectedInfo, actual)
 	}
 }
 
 // GreaterOrEqual check if expected is greate than or equal with actual
-func (a *Assert) GreaterOrEqual(expected, actual any) {
-	isGreatOrEqual := compare(expected, actual) == compareGreater || compare(expected, actual) == compareEqual
+func (a *Assert) GreaterOrEqual(actual, expected any) {
+	isGreatOrEqual := compare(actual, expected) == compareGreater || compare(actual, expected) == compareEqual
 	if !isGreatOrEqual {
 		expectedInfo := fmt.Sprintf(">= %v", expected)
 		makeTestFailed(a.T, a.CaseName, expectedInfo, actual)
@@ -63,16 +73,16 @@ func (a *Assert) GreaterOrEqual(expected, actual any) {
 }
 
 // Less check if expected is less than actual
-func (a *Assert) Less(expected, actual any) {
-	if compare(expected, actual) != compareLess {
+func (a *Assert) Less(actual, expected any) {
+	if compare(actual, expected) != compareLess {
 		expectedInfo := fmt.Sprintf("< %v", expected)
 		makeTestFailed(a.T, a.CaseName, expectedInfo, actual)
 	}
 }
 
 // LessOrEqual check if expected is less than or equal with actual
-func (a *Assert) LessOrEqual(expected, actual any) {
-	isLessOrEqual := compare(expected, actual) == compareLess || compare(expected, actual) == compareEqual
+func (a *Assert) LessOrEqual(actual, expected any) {
+	isLessOrEqual := compare(actual, expected) == compareLess || compare(actual, expected) == compareEqual
 	if !isLessOrEqual {
 		expectedInfo := fmt.Sprintf("<= %v", expected)
 		makeTestFailed(a.T, a.CaseName, expectedInfo, actual)
@@ -98,10 +108,33 @@ func (a *Assert) IsNotNil(v any) {
 }
 
 func (a *Assert) ErrorContains(err error, contains string) {
+	if err == nil {
+		makeTestFailed(a.T, a.CaseName, err, contains)
+	}
 	if !strings.Contains(err.Error(), contains) {
-		makeTestFailed(a.T, a.CaseName, contains, err.Error())
+		makeTestFailed(a.T, a.CaseName, err, contains)
 	}
 }
+
+// ShouldBeError asserts that the first argument implements the error interface.
+// It also compares the first argument against the second argument if provided
+// (which must be an error message string or another error value).
+// func (a *Assert) IsError(actual, expected any) string {
+// 	if !isError(actual) {
+// 		return fmt.Sprintf(shouldBeError, reflect.TypeOf(actual))
+
+// 		makeTestFailed(a.T, a.CaseName, "not nil", v)
+// 	}
+
+// 	if len(expected) == 0 {
+// 		return success
+// 	}
+
+// 	if expected := expected[0]; !isString(expected) && !isError(expected) {
+// 		return fmt.Sprintf(shouldBeErrorInvalidComparisonValue, reflect.TypeOf(expected))
+// 	}
+// 	return ShouldEqual(fmt.Sprint(actual), fmt.Sprint(expected[0]))
+// }
 
 // compare x and y return :
 // x > y -> 1, x < y -> -1, x == y -> 0, x != y -> -2
@@ -172,9 +205,12 @@ func compare(x, y any) int {
 }
 
 // logFailedInfo make test failed and log error info.
-func makeTestFailed(t *testing.T, caseName string, expected, actual any) {
+func makeTestFailed(t *testing.T, caseName string, actual, expected any) {
 	_, file, line, _ := runtime.Caller(2)
-	errInfo := fmt.Sprintf("Case %v failed. file: %v, line: %v, expected: %v, actual: %v.", caseName, file, line, expected, actual)
+	errInfo := fmt.Sprintf("Case %v failed. file: %v, line: %v, actual: %v, expected: %v.", caseName, file, line, actual, expected)
 	t.Error(errInfo)
 	t.FailNow()
 }
+
+func isString(value interface{}) bool { _, ok := value.(string); return ok }
+func isError(value interface{}) bool  { _, ok := value.(error); return ok }

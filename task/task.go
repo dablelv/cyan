@@ -3,33 +3,68 @@ package task
 import (
 	"context"
 	"fmt"
+
+	"golang.org/x/sync/errgroup"
 )
 
-// AsyncResult 异步执行函数的结果，包含结果值和错误
+// AsyncResult is the result of the function executed asynchronously.
 type AsyncResult[T any] struct {
-	Value T
-	Err   error
+	Val T
+	Err error
 }
 
 // AsyncExecute executes function asynchronously.
 func AsyncExecute[T any](ctx context.Context, fn func(ctx context.Context) (T, error)) <-chan AsyncResult[T] {
-	resultCh := make(chan AsyncResult[T], 1)
+	rsltCh := make(chan AsyncResult[T], 1)
 	go func() {
 		defer func() {
 			if e := recover(); e != nil {
-				resultCh <- AsyncResult[T]{Err: fmt.Errorf("panic: %v", e)}
+				rsltCh <- AsyncResult[T]{Err: fmt.Errorf("panic: %v", e)}
 			}
-			close(resultCh)
+			close(rsltCh)
 		}()
 		select {
 		// Check if ctx has timed out or been cancelled.
 		case <-ctx.Done():
-			resultCh <- AsyncResult[T]{Err: ctx.Err()}
+			rsltCh <- AsyncResult[T]{Err: ctx.Err()}
 		// Execute asynchronous function.
 		default:
-			value, err := fn(ctx)
-			resultCh <- AsyncResult[T]{Value: value, Err: err}
+			v, err := fn(ctx)
+			rsltCh <- AsyncResult[T]{Val: v, Err: err}
 		}
 	}()
-	return resultCh
+	return rsltCh
+}
+
+// BatchConcurrent batch execute function concurrently.
+// concurrency indicates how many fn are executing at the same time.
+func BatchConcurrent[T any, R any](ctx context.Context, concurrency int, slice []T, fn func(context.Context, T) (R, error)) ([]R, error) {
+	var eg errgroup.Group
+	r := make([]R, len(slice))
+
+	for i := 0; i < len(slice); {
+		for j := 0; j < concurrency; j++ {
+			idx := i + j
+
+			// The last batch is less than the specified quantity.
+			if idx == len(slice) {
+				break
+			}
+			eg.Go(func() (err error) {
+				defer func() {
+					if e := recover(); e != nil {
+						err = fmt.Errorf("panic: %v", e)
+					}
+				}()
+				r[idx], err = fn(ctx, slice[idx])
+				return
+			})
+		}
+		if err := eg.Wait(); err != nil {
+			return nil, err
+		}
+		// Next batch.
+		i += concurrency
+	}
+	return r, nil
 }

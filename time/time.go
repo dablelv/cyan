@@ -227,30 +227,6 @@ func IsSameWeek(ts1, ts2 int64) bool {
 	return GetMonDate(t1) == GetMonDate(t2)
 }
 
-// GetNowUtc returns now UTC time.
-func GetNowUtc() time.Time {
-	return time.Now().UTC()
-}
-
-// GetBeijingTime gets Beijing Time from time layout and value string.
-// The location name Asia/Shanghai from IANA Time Zone Database standards for Beijing Time.
-func GetBeijingTime(layout, value string) (t time.Time, err error) {
-	loc, err := time.LoadLocation("Asia/Shanghai")
-	if err != nil {
-		return
-	}
-	return time.ParseInLocation(layout, value, loc)
-}
-
-// GetTimezoneTime gets time.Time based on specified timezone, layout and value string.
-func GetTimezoneTime(timezone string, layout, value string) (t time.Time, err error) {
-	loc, err := time.LoadLocation(timezone)
-	if err != nil {
-		return
-	}
-	return time.ParseInLocation(layout, value, loc)
-}
-
 // GetDayMomentNanoTs gets the nanosecond timestamp based on specified day and moment.
 // If you want get more info about timezone, please refer to [IANA Time Zone Database](https://www.iana.org/time-zones).
 // Common timezone are: Asia/Shanghai, America/New_York, Europe/London etc.
@@ -274,4 +250,57 @@ func GetDayMomentTime(t time.Time, timezone string, hour, minute, second, nsec i
 
 	year, month, day := t.In(loc).Date()
 	return time.Date(year, month, day, hour, minute, second, nsec, loc), nil
+}
+
+// NowUtc returns now UTC time.
+func NowUtc() time.Time {
+	return time.Now().UTC()
+}
+
+// NowEst returns now EST(Eastern Standard Time) time.
+func NowEst() time.Time {
+	return time.Now().In(LocAmericaNewYork)
+}
+
+// NowCst returns now CST(China Standard Time) time.
+func NowCst() time.Time {
+	return time.Now().In(LocAsiaShanghai)
+}
+
+// TodayMidnight returns the time of today's midnight (00:00:00).
+func TodayMidnight() time.Time {
+	n := time.Now()
+	return time.Date(n.Year(), n.Month(), n.Day(), 0, 0, 0, 0, n.Location())
+}
+
+// IsCloseIn check the cond of left <= target <= right.
+func IsCloseIn(target, left, right time.Time) bool {
+	if right.Before(left) {
+		return false
+	}
+	return !target.Before(left) && !target.After(right)
+}
+
+// IsLeftCloseIn check the cond of left <= target < right.
+func IsLeftCloseIn(target, left, right time.Time) bool {
+	if !right.After(left) {
+		return false
+	}
+	return !target.Before(left) && target.Before(right)
+}
+
+// IsRightCloseIn check the cond of left < target <= right.
+func IsRightCloseIn(target, left, right time.Time) bool {
+	if !right.After(left) {
+		return false
+	}
+	return target.After(left) && !target.After(right)
+}
+
+// IsOpenIn check the cond of left < target < right.
+func IsOpenIn(target, left, right time.Time) bool {
+	if !right.After(left) {
+		return false
+	}
+	return target.After(left) && target.Before(right)
 }

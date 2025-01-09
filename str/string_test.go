@@ -7,6 +7,35 @@ import (
 	"github.com/dablelv/cyan/internal/utest"
 )
 
+func TestHead(t *testing.T) {
+	s := "123456"
+	{
+		assert := utest.NewAssert(t, "TestHead")
+		r := Head(s, len(s)-1)
+		assert.Equal(r, "12345")
+	}
+	{
+		assert := utest.NewAssert(t, "TestHeadMore")
+		r := Head(s, len(s)+1)
+		assert.Equal(r, s)
+	}
+}
+
+func TestTail(t *testing.T) {
+	s := "123456"
+
+	{
+		assert := utest.NewAssert(t, "TestTail")
+		r := Tail(s, len(s)-1)
+		assert.Equal(r, "23456")
+	}
+	{
+		assert := utest.NewAssert(t, "TestTailMore")
+		r := Tail(s, len(s)+1)
+		assert.Equal(r, s)
+	}
+}
+
 func TestSplit(t *testing.T) {
 	type args struct {
 		s   string
@@ -173,4 +202,19 @@ func TestDefaultIfBlank(t *testing.T) {
 	assert.Equal("d", DefaultIfBlank("", "d"))
 	assert.Equal("d", DefaultIfBlank(" ", "d"))
 	assert.Equal("d", DefaultIfBlank("\r\n\t", "d"))
+}
+
+func TestBinToHex(t *testing.T) {
+	bin := []byte{0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f}
+	expected := string("0102030405060708090a0b0c0d0e0f")
+
+	assert := utest.NewAssert(t, "TestBinToHex")
+	assert.Equal(BinToHex(bin), expected)
+}
+
+func TestStringToConstBytes(t *testing.T) {
+	bytes := []byte{'1', '2', '3'}
+
+	assert := utest.NewAssert(t, "TestStringToConstBytes")
+	assert.Equal(StringToConstBytes(string(bytes)), bytes)
 }

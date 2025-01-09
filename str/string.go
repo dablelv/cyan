@@ -2,15 +2,35 @@ package str
 
 import (
 	"bytes"
+	"encoding/hex"
 	"reflect"
 	"regexp"
 	"strings"
 	"unicode"
+	"unsafe"
 
 	"github.com/dablelv/cyan/conv"
 )
 
 const INDEX_NOT_FOUND = -1
+
+// Head return the first n length of substring if len(str) greater than n,
+// or else return the raw s.
+func Head(s string, n int) string {
+	if 0 <= n && n < len(s) {
+		return s[:n]
+	}
+	return s
+}
+
+// Tail return the last n length of substring if len(str) greater than n,
+// or else return th raw s.
+func Tail(s string, n int) string {
+	if 0 <= n && n < len(s) {
+		return s[len(s)-n:]
+	}
+	return s
+}
 
 // Split replaces std lib strings.Split.
 // strings.Split has a giant pit because strings.Split ("", ",") will return a slice with an empty string.
@@ -144,8 +164,7 @@ func AlphanumericNumRegExp(s string) int {
 // It returns the string without whitespaces.
 func ClearWhiteSpace(s string) string {
 	var buf bytes.Buffer
-	runes := []rune(s)
-	for _, c := range runes {
+	for _, c := range s {
 		if !unicode.IsSpace(c) {
 			buf.WriteRune(c)
 		}
@@ -209,7 +228,7 @@ func IsBlank(s string) bool {
 	if s == "" {
 		return true
 	}
-	for _, v := range []rune(s) {
+	for _, v := range s {
 		if !unicode.IsSpace(v) {
 			return false
 		}
@@ -231,4 +250,31 @@ func DefaultIfBlank(s, d string) string {
 		return d
 	}
 	return s
+}
+
+// BinToHex returns the hexadecimal encoding of src buffer.
+func BinToHex(src []byte) string {
+	dst := make([]byte, hex.EncodedLen(len(src)))
+	hex.Encode(dst, src)
+	// No copy operation, better performance than string(dst).
+	return ConstBytesToString(dst)
+}
+
+// ConstBytesToString transfer bytes to string without copy real buffer.
+// You must NOT modify the input bytes, otherwise the output string is NOT constant!
+// Call it only if necessary.
+func ConstBytesToString(buf []byte) string {
+	return *(*string)(unsafe.Pointer(&buf))
+}
+
+// StringToConstBytes transfer string to const bytes without copy real buffer.
+// You must NOT modify the output bytes, otherwise the input string is modified or process will coredump!!!
+// Call it only if necessary
+func StringToConstBytes(s string) (ret []byte) {
+	stringHeader := (*reflect.StringHeader)(unsafe.Pointer(&s))
+	sliceHeader := (*reflect.SliceHeader)(unsafe.Pointer(&ret))
+
+	sliceHeader.Data = stringHeader.Data
+	sliceHeader.Len, sliceHeader.Cap = stringHeader.Len, stringHeader.Len
+	return ret
 }

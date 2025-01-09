@@ -101,3 +101,14 @@ func jsonStringToObject(s string, v any) error {
 	data := []byte(s)
 	return json.Unmarshal(data, v)
 }
+
+// SliceToMap converts a slice of type T into a map, using a specified key extraction function.
+// T can be any type, and K is the type of the keys used in the resulting map, which must be comparable.
+func SliceToMap[T any, K comparable](data []T, getKey func(e T) K) map[K]T {
+	m := make(map[K]T, len(data))
+
+	for _, e := range data {
+		m[getKey(e)] = e
+	}
+	return m
+}

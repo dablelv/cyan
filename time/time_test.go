@@ -199,9 +199,9 @@ func TestIsSameWeek(t *testing.T) {
 	}
 }
 
-func TestGetNowUtc(t *testing.T) {
-	assert := utest.NewAssert(t, "TestGetNowUtc")
-	name, offset := GetNowUtc().Zone()
+func TestNowUtc(t *testing.T) {
+	assert := utest.NewAssert(t, "TestNowUtc")
+	name, offset := NowUtc().Zone()
 	assert.Equal("UTC", name)
 	assert.Equal(0, offset)
 }
@@ -221,11 +221,11 @@ func TestGetDayMomentNanoTs(t *testing.T) {
 	assert := utest.NewAssert(t, "TestGetDayMomentNanoTs")
 
 	// China Standard Time
-	cst, err := GetTimezoneTime("Asia/Shanghai", time.DateTime, "2008-08-08 20:08:00")
+	cst, err := GetTimezoneTime("Asia/Shanghai", time.DateTime, "2008-08-08 20:00:00")
 	assert.IsNil(err)
 
 	// Eastern Daylight Time
-	nanoTs, err := GetDayMomentNanoTs(cst, "America/New_York", 8, 8, 0, 0)
+	nanoTs, err := GetDayMomentNanoTs(cst, "America/New_York", 8, 0, 0, 0)
 	assert.IsNil(err)
 	assert.Equal(cst.UnixNano(), nanoTs)
 }
@@ -234,11 +234,201 @@ func TestGetDayMomentTime(t *testing.T) {
 	assert := utest.NewAssert(t, "TestGetDayMomentTime")
 
 	// China Standard Time
-	cst, err := GetTimezoneTime("Asia/Shanghai", time.DateTime, "2008-08-08 20:08:00")
+	cst, err := GetTimezoneTime("Asia/Shanghai", time.DateTime, "2008-08-08 20:00:00")
 	assert.IsNil(err)
 
 	// Eastern Daylight Time
-	edt, err := GetDayMomentTime(cst, "America/New_York", 8, 8, 0, 0)
+	edt, err := GetDayMomentTime(cst, "America/New_York", 8, 0, 0, 0)
 	assert.IsNil(err)
 	assert.Equal(cst.UnixNano(), edt.UnixNano())
+}
+
+func TestIsCloseIn(t *testing.T) {
+	// 2008-08-08 20:00:00 UTC+8
+	ms := int64(1218196800000)
+
+	{
+		// target < left
+		assert := utest.NewAssert(t, "TestIsCloseIn_target<left")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms+1, LocAsiaShanghai)
+		right := FromMs(ms+2, LocAsiaShanghai)
+		b := IsCloseIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// target > right
+		assert := utest.NewAssert(t, "TestIsCloseIn_target>left")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms-2, LocAsiaShanghai)
+		right := FromMs(ms-1, LocAsiaShanghai)
+		b := IsCloseIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// left = target < right
+		assert := utest.NewAssert(t, "TestIsCloseIn_left=target<right")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms, LocAsiaShanghai)
+		right := FromMs(ms+1, LocAsiaShanghai)
+		b := IsCloseIn(target, left, right)
+		assert.True(b)
+	}
+
+	{
+		// left < target = right
+		assert := utest.NewAssert(t, "TestIsCloseIn_left<target=right")
+		target := FromMs(ms+1, LocAsiaShanghai)
+		left := FromMs(ms, LocAsiaShanghai)
+		right := FromMs(ms+1, LocAsiaShanghai)
+		b := IsCloseIn(target, left, right)
+		assert.True(b)
+	}
+}
+
+func TestIsLeftCloseIn(t *testing.T) {
+	// 2008-08-08 20:00:00 UTC+8
+	ms := int64(1218196800000)
+
+	{
+		// target < left
+		assert := utest.NewAssert(t, "TestIsLeftCloseIn_target<left")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms+1, LocAsiaShanghai)
+		right := FromMs(ms+2, LocAsiaShanghai)
+		b := IsLeftCloseIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// target > right
+		assert := utest.NewAssert(t, "TestIsLeftCloseIn_target>left")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms-2, LocAsiaShanghai)
+		right := FromMs(ms-1, LocAsiaShanghai)
+		b := IsLeftCloseIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// left = target < right
+		assert := utest.NewAssert(t, "TestIsLeftCloseIn_left=target<right")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms, LocAsiaShanghai)
+		right := FromMs(ms+1, LocAsiaShanghai)
+		b := IsLeftCloseIn(target, left, right)
+		assert.True(b)
+	}
+
+	{
+		// left < target = right
+		assert := utest.NewAssert(t, "TestIsLeftCloseIn_left<target=right")
+		target := FromMs(ms+1, LocAsiaShanghai)
+		left := FromMs(ms, LocAsiaShanghai)
+		right := FromMs(ms+1, LocAsiaShanghai)
+		b := IsLeftCloseIn(target, left, right)
+		assert.False(b)
+	}
+}
+
+func TestIsRightCloseIn(t *testing.T) {
+	// 2008-08-08 20:00:00 UTC+8
+	ms := int64(1218196800000)
+
+	{
+		// target < left
+		assert := utest.NewAssert(t, "TestIsRightCloseIn_target<left")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms+1, LocAsiaShanghai)
+		right := FromMs(ms+2, LocAsiaShanghai)
+		b := IsRightCloseIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// target > right
+		assert := utest.NewAssert(t, "TestIsRightCloseIn_target>left")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms-2, LocAsiaShanghai)
+		right := FromMs(ms-1, LocAsiaShanghai)
+		b := IsRightCloseIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// left = target < right
+		assert := utest.NewAssert(t, "TestIsRightCloseIn_left=target<right")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms, LocAsiaShanghai)
+		right := FromMs(ms+1, LocAsiaShanghai)
+		b := IsRightCloseIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// left < target = right
+		assert := utest.NewAssert(t, "TestIsRightCloseIn_left<target=right")
+		target := FromMs(ms+1, LocAsiaShanghai)
+		left := FromMs(ms, LocAsiaShanghai)
+		right := FromMs(ms+1, LocAsiaShanghai)
+		b := IsRightCloseIn(target, left, right)
+		assert.True(b)
+	}
+}
+
+func TestIsOpenIn(t *testing.T) {
+	// 2008-08-08 20:00:00 UTC+8
+	ms := int64(1218196800000)
+
+	{
+		// target < left
+		assert := utest.NewAssert(t, "TestIsOpenIn_target<left")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms+1, LocAsiaShanghai)
+		right := FromMs(ms+2, LocAsiaShanghai)
+		b := IsOpenIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// target > right
+		assert := utest.NewAssert(t, "TestIsOpenIn_target>left")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms-2, LocAsiaShanghai)
+		right := FromMs(ms-1, LocAsiaShanghai)
+		b := IsOpenIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// left = target < right
+		assert := utest.NewAssert(t, "TestIsOpenIn_left=target<right")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms, LocAsiaShanghai)
+		right := FromMs(ms+1, LocAsiaShanghai)
+		b := IsOpenIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// left < target = right
+		assert := utest.NewAssert(t, "TestIsOpenIn_left<target=right")
+		target := FromMs(ms+1, LocAsiaShanghai)
+		left := FromMs(ms, LocAsiaShanghai)
+		right := FromMs(ms+1, LocAsiaShanghai)
+		b := IsOpenIn(target, left, right)
+		assert.False(b)
+	}
+
+	{
+		// left < target < right
+		assert := utest.NewAssert(t, "TestIsOpenIn_left<target=right")
+		target := FromMs(ms, LocAsiaShanghai)
+		left := FromMs(ms-1, LocAsiaShanghai)
+		right := FromMs(ms+1, LocAsiaShanghai)
+		b := IsOpenIn(target, left, right)
+		assert.True(b)
+	}
 }

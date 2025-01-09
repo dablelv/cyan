@@ -46,5 +46,4 @@ func TestAssert(t *testing.T) {
 
 	assert.IsNil(nil)
 	assert.IsNotNil("abc")
-
 }

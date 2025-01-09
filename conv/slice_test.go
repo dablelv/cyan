@@ -94,12 +94,34 @@ func TestToSlice(t *testing.T) {
 	assert.IsNil(ss)
 }
 
-func TestJsonToSlice(t *testing.T) {
-	assert := utest.NewAssert(t, "TestJsonToSlice")
+func TestJsonToSliceE(t *testing.T) {
+	{
+		assert := utest.NewAssert(t, "success")
 
-	assert.Equal([]int{1, 2, 3}, JsonToSlice[[]int]([]byte("[1,2,3]")))
-	assert.Equal([]float64{1.1, 2.2, 3.3}, JsonToSlice[[]float64]([]byte("[1.1,2.2,3.3]")))
-	assert.Equal([]string{"foo", "bar", "baz"}, JsonToSlice[[]string]([]byte(`["foo","bar","baz"]`)))
+		r1, err := JsonToSliceE[[]int]([]byte("[1,2,3]"))
+		assert.IsNil(err)
+		assert.Equal(r1, []int{1, 2, 3})
+
+		r2, err := JsonToSliceE[[]float64]([]byte("[1.1,2.2,3.3]"))
+		assert.IsNil(err)
+		assert.Equal(r2, []float64{1.1, 2.2, 3.3})
+
+		r3, err := JsonToSliceE[[]string]([]byte(`["foo","bar","baz"]`))
+		assert.IsNil(err)
+		assert.Equal(r3, []string{"foo", "bar", "baz"})
+	}
+	{
+		assert := utest.NewAssert(t, "success but zero value")
+		r, err := JsonToSliceE[[]int]([]byte(`[1,2,3,"bar"]`))
+		assert.IsNotNil(err)
+		assert.Equal(r, []int{1, 2, 3, 0})
+	}
+	{
+		assert := utest.NewAssert(t, "error:invalid json")
+		r, err := JsonToSliceE[[]int]([]byte(`[1,2,3,"bar"`))
+		assert.IsNotNil(err)
+		assert.IsNil(r)
+	}
 }
 
 func TestMapKeys(t *testing.T) {
