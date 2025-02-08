@@ -29,15 +29,21 @@ func TestAESCBCDecrypt(t *testing.T) {
 func TestBase64AESCBCEncrypt(t *testing.T) {
 	assert := utest.NewAssert(t, "TestBase64AESCBCEncrypt")
 
-	p := []byte("plaintext")
-	key := []byte("12345678abcdefgh")
-	c, _ := Base64AESCBCEncrypt(p, key)
-	assert.Equal("A67NhD3RBiNaMgG6HTm8LQ==", c)
+	// success.
+	{
+		p := []byte("plaintext")
+		key := []byte("12345678abcdefgh")
+		c, _ := Base64AESCBCEncrypt(p, key)
+		assert.Equal("A67NhD3RBiNaMgG6HTm8LQ==", c)
+	}
 
-	p = []byte("plaintext")
-	key = []byte("12345678abcdefghi")
-	_, err := Base64AESCBCEncrypt(p, key)
-	assert.IsNotNil(err)
+	// fail: key is invalid.
+	{
+		p := []byte("plaintext")
+		key := []byte("12345678abcdefghi")
+		_, err := Base64AESCBCEncrypt(p, key)
+		assert.IsNotNil(err)
+	}
 }
 
 func TestBase64AESCBCDecrypt(t *testing.T) {

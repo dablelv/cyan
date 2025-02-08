@@ -34,12 +34,12 @@ func GetNowS() int64 {
 
 // GetNowMs gets unix timestamp in millisecond.
 func GetNowMs() int64 {
-	return time.Now().UnixNano() / int64(time.Millisecond)
+	return time.Now().UnixMilli()
 }
 
 // GetNowUs gets unix timestamp in microsecond.
 func GetNowUs() int64 {
-	return time.Now().UnixNano() / int64(time.Microsecond)
+	return time.Now().UnixMicro()
 }
 
 // GetNowNs gets unix timestamp in nanosecond.
@@ -303,4 +303,24 @@ func IsOpenIn(target, left, right time.Time) bool {
 		return false
 	}
 	return target.After(left) && target.Before(right)
+}
+
+// Sec return "unix second" of the given time.
+func Sec(t time.Time) int64 {
+	return t.Unix()
+}
+
+// Ms return "unix millisecond" of the given time.
+func Ms(t time.Time) int64 {
+	return t.UnixMilli()
+}
+
+// Us return "unix microsecond" of the given time.
+func Us(t time.Time) int64 {
+	return t.UnixMicro()
+}
+
+// Ns return "unix nanosecond" of the given time.
+func Ns(t time.Time) int64 {
+	return t.UnixNano()
 }

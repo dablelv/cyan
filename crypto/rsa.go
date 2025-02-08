@@ -12,6 +12,9 @@ import (
 )
 
 // GenRsaKey generates an PKCS#1 RSA keypair of the given bit size in PEM format.
+// Common key bit size include 1024, 2048, 3072 and 4096 bits etc.
+// Note 2048 bits is the current recommended standard, and 3072 bits and 4096 bits
+// are suitable for situations where higher security is required.
 func GenRsaKey(bits int) (prvkey, pubkey []byte, err error) {
 	// Generates private key.
 	privateKey, err := rsa.GenerateKey(rand.Reader, bits)

@@ -74,7 +74,7 @@ func JsonToSliceE[S ~[]E, E any](data []byte) (s S, err error) {
 
 // MapKeys returns a slice of all the keys in m.
 // The keys returned are in indeterminate order.
-// Deprecated: As of Go 1.18, please use standard library golang.org/x/exp/maps#Keys.
+// As of Go 1.23, you can also use standard library https://pkg.go.dev/maps#Keys.
 func MapKeys[K comparable, V any, M ~map[K]V](m M) []K {
 	s := make([]K, 0, len(m))
 	for k := range m {
@@ -85,7 +85,7 @@ func MapKeys[K comparable, V any, M ~map[K]V](m M) []K {
 
 // MapVals returns a slice of all the values in m.
 // The values returned are in indeterminate order.
-// Deprecated: As of Go 1.18, please use standard library golang.org/x/exp/maps#Values.
+// As of Go 1.23, you can also use standard library https://pkg.go.dev/maps#Values.
 func MapVals[K comparable, V any, M ~map[K]V](m M) []V {
 	s := make([]V, 0, len(m))
 	for _, v := range m {
