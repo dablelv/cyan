@@ -197,10 +197,10 @@ func MaxRefE(a any) (any, error) {
 
 // Sum calculates the sum of slice elements.
 // Sum implemented by generics is recommended to be used.
-func Sum[S ~[]E, E numerical](s S) float64 {
-	var sum float64
+func Sum[S ~[]E, E numerical](s S) E {
+	var sum E
 	for _, v := range s {
-		sum += float64(v)
+		sum += v
 	}
 	return sum
 }

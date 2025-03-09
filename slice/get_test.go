@@ -80,8 +80,9 @@ func TestMaxRef(t *testing.T) {
 func TestSum(t *testing.T) {
 	assert := utest.NewAssert(t, "TestSum")
 
-	assert.Equal(float64(55), Sum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}))
-	assert.Equal(float64(55), Sum([]float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}))
+	assert.Equal(Sum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 55)
+	assert.Equal(Sum([]uint{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), uint(55))
+	assert.Equal(Sum([]float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 55.0)
 }
 
 func TestSumRef(t *testing.T) {
