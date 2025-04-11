@@ -132,12 +132,28 @@ func TestMapKeys(t *testing.T) {
 	assert.Equal(3, len(ks))
 }
 
+func TestMapSortedKeys(t *testing.T) {
+	assert := utest.NewAssert(t, "TestMapSortedKeys")
+
+	// to strings
+	ks := MapSortedKeys(map[string]int{"a": 1, "b": 2, "c": 3})
+	assert.Equal(ks, []string{"a", "b", "c"})
+}
+
 func TestMapVals(t *testing.T) {
 	assert := utest.NewAssert(t, "TestMapVals")
 
 	// to ints
 	vs := MapVals(map[int]int{1: 1, 2: 2, 3: 3})
 	assert.Equal(3, len(vs))
+}
+
+func TestMapSortedVals(t *testing.T) {
+	assert := utest.NewAssert(t, "TestMapSortedVals")
+
+	// to strings
+	vs := MapSortedVals(map[int]string{1: "a", 2: "b", 3: "c"})
+	assert.Equal(vs, []string{"a", "b", "c"})
 }
 
 func TestMapKeyVals(t *testing.T) {

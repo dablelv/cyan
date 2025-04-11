@@ -1,9 +1,11 @@
 package conv
 
 import (
+	"cmp"
 	"encoding/json"
 	"fmt"
 	"reflect"
+	"slices"
 	"strings"
 )
 
@@ -83,15 +85,29 @@ func MapKeys[K comparable, V any, M ~map[K]V](m M) []K {
 	return s
 }
 
+// MapSortedKeys returns the keys from a map in ascending order.
+func MapSortedKeys[K cmp.Ordered, V any, M ~map[K]V](m M) []K {
+	ks := MapKeys(m)
+	slices.Sort(ks)
+	return ks
+}
+
 // MapVals returns a slice of all the values in m.
 // The values returned are in indeterminate order.
 // As of Go 1.23, you can also use standard library https://pkg.go.dev/maps#Values.
 func MapVals[K comparable, V any, M ~map[K]V](m M) []V {
-	s := make([]V, 0, len(m))
+	vs := make([]V, 0, len(m))
 	for _, v := range m {
-		s = append(s, v)
+		vs = append(vs, v)
 	}
-	return s
+	return vs
+}
+
+// MapSortedVals returns the values from a map in ascending order.
+func MapSortedVals[K comparable, V cmp.Ordered, M ~map[K]V](m M) []V {
+	vs := MapVals(m)
+	slices.Sort(vs)
+	return vs
 }
 
 // MapKeyVals returns two slice of all the keys and values in m.
