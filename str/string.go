@@ -269,7 +269,7 @@ func ConstBytesToString(buf []byte) string {
 
 // StringToConstBytes transfer string to const bytes without copy real buffer.
 // You must NOT modify the output bytes, otherwise the input string is modified or process will coredump!!!
-// Call it only if necessary
+// Call it only if necessary.
 func StringToConstBytes(s string) (ret []byte) {
 	stringHeader := (*reflect.StringHeader)(unsafe.Pointer(&s))
 	sliceHeader := (*reflect.SliceHeader)(unsafe.Pointer(&ret))

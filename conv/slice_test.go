@@ -124,67 +124,6 @@ func TestJsonToSliceE(t *testing.T) {
 	}
 }
 
-func TestMapKeys(t *testing.T) {
-	assert := utest.NewAssert(t, "TestMapKeys")
-
-	// to ints
-	ks := MapKeys(map[int]int{1: 1, 2: 2, 3: 3})
-	assert.Equal(3, len(ks))
-}
-
-func TestMapSortedKeys(t *testing.T) {
-	assert := utest.NewAssert(t, "TestMapSortedKeys")
-
-	// to strings
-	ks := MapSortedKeys(map[string]int{"a": 1, "b": 2, "c": 3})
-	assert.Equal(ks, []string{"a", "b", "c"})
-}
-
-func TestMapVals(t *testing.T) {
-	assert := utest.NewAssert(t, "TestMapVals")
-
-	// to ints
-	vs := MapVals(map[int]int{1: 1, 2: 2, 3: 3})
-	assert.Equal(3, len(vs))
-}
-
-func TestMapSortedVals(t *testing.T) {
-	assert := utest.NewAssert(t, "TestMapSortedVals")
-
-	// to strings
-	vs := MapSortedVals(map[int]string{1: "a", 2: "b", 3: "c"})
-	assert.Equal(vs, []string{"a", "b", "c"})
-}
-
-func TestMapKeyVals(t *testing.T) {
-	assert := utest.NewAssert(t, "TestMapKeyVals")
-
-	ks, vs := MapKeyVals(map[string]int{"foo": 1, "bar": 2, "baz": 3})
-	assert.Equal(3, len(ks))
-	assert.Equal(3, len(vs))
-}
-
-func TestMapToSlice(t *testing.T) {
-	assert := utest.NewAssert(t, "TestMapToSlice")
-
-	ks, vs := MapToSlice(map[string]string{"1": "1", "2": "2", "3": "3"})
-	assert.Equal(3, len(ks.([]string)))
-	assert.Equal(3, len(vs.([]string)))
-
-	ks, vs = MapToSlice(map[int]int{1: 1, 2: 2, 3: 3})
-	assert.Equal(3, len(ks.([]int)))
-	assert.Equal(3, len(vs.([]int)))
-
-	// empty map[int]int to slice
-	ks, vs = MapToSlice(map[int]int{})
-	assert.Equal(0, len(ks.([]int)))
-	assert.Equal(0, len(vs.([]int)))
-
-	// not map failed
-	_, _, err := MapToSliceE(1)
-	assert.IsNotNil(err)
-}
-
 func TestSplitStrToSlice(t *testing.T) {
 	assert := utest.NewAssert(t, "TestSplitStrToSlice")
 
@@ -207,5 +146,26 @@ func TestSplitStrToSlice(t *testing.T) {
 	assert.Equal([]bool{true, false, true}, SplitStrToSlice[bool]("1,0,1", ","))
 	assert.Equal([]bool{true, false, true}, SplitStrToSlice[bool]("true,false,true", ","))
 	_, err = SplitStrToSliceE[bool]("1,0,2", ",")
+	assert.IsNotNil(err)
+}
+
+func TestMapToSlice(t *testing.T) {
+	assert := utest.NewAssert(t, "TestMapToSlice")
+
+	ks, vs := MapToSlice(map[string]string{"1": "1", "2": "2", "3": "3"})
+	assert.Equal(3, len(ks.([]string)))
+	assert.Equal(3, len(vs.([]string)))
+
+	ks, vs = MapToSlice(map[int]int{1: 1, 2: 2, 3: 3})
+	assert.Equal(3, len(ks.([]int)))
+	assert.Equal(3, len(vs.([]int)))
+
+	// empty map[int]int to slice
+	ks, vs = MapToSlice(map[int]int{})
+	assert.Equal(0, len(ks.([]int)))
+	assert.Equal(0, len(vs.([]int)))
+
+	// not map failed
+	_, _, err := MapToSliceE(1)
 	assert.IsNotNil(err)
 }

@@ -1,6 +1,7 @@
 package slice
 
 import (
+	"cmp"
 	"errors"
 	"fmt"
 	"reflect"
@@ -23,7 +24,7 @@ func RandomElem(a any) any {
 
 // Min returns the smallest element of the slice and an error if occurred.
 // Min implemented by generics is recomended to be used.
-func Min[T constraints.Ordered](s []T) T {
+func Min[T cmp.Ordered](s []T) T {
 	var t T
 	if len(s) == 0 {
 		return t
@@ -39,7 +40,7 @@ func Min[T constraints.Ordered](s []T) T {
 
 // Max returns the largest element of the slice.
 // Max implemented by generics is recomended to be used.
-func Max[T constraints.Ordered](s []T) T {
+func Max[T cmp.Ordered](s []T) T {
 	var t T
 	if len(s) == 0 {
 		return t
@@ -64,7 +65,7 @@ func MinRef(a any) any {
 func MinRefE(a any) (any, error) {
 	val := reflect.ValueOf(a)
 	if val.Len() == 0 {
-		return nil, errors.New("No elements")
+		return nil, errors.New("no elements")
 	}
 	min := val.Index(0).Interface()
 	for i := 1; i < val.Len(); i++ {
@@ -118,7 +119,7 @@ func MinRefE(a any) (any, error) {
 				min = v
 			}
 		default:
-			return nil, fmt.Errorf("The element %#v of type %T isn't numerical type", v, v)
+			return nil, fmt.Errorf("the element %#v of type %T isn't numerical type", v, v)
 		}
 	}
 	return min, nil
@@ -135,7 +136,7 @@ func MaxRef(a any) any {
 func MaxRefE(a any) (any, error) {
 	v := reflect.ValueOf(a)
 	if v.Len() == 0 {
-		return nil, errors.New("No elements")
+		return nil, errors.New("no elements")
 	}
 	max := v.Index(0).Interface()
 	for i := 1; i < v.Len(); i++ {
@@ -189,7 +190,7 @@ func MaxRefE(a any) (any, error) {
 				max = v
 			}
 		default:
-			return nil, fmt.Errorf("The element %#v of type %T isn't numerical type", v, v)
+			return nil, fmt.Errorf("the element %#v of type %T isn't numerical type", v, v)
 		}
 	}
 	return max, nil
@@ -245,7 +246,7 @@ func SumRefE(a any) (float64, error) {
 		case float64:
 			sum += v
 		default:
-			return 0.0, fmt.Errorf("The element %#v of slice type %T isn't numerical type", v, v)
+			return 0.0, fmt.Errorf("the element %#v of slice type %T isn't numerical type", v, v)
 		}
 	}
 	return sum, nil

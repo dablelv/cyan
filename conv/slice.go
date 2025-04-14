@@ -1,11 +1,9 @@
 package conv
 
 import (
-	"cmp"
 	"encoding/json"
 	"fmt"
 	"reflect"
-	"slices"
 	"strings"
 )
 
@@ -69,56 +67,26 @@ func JsonToSliceE[S ~[]E, E any](data []byte) (s S, err error) {
 	return
 }
 
-//
-// Convert map keys and values to slice in indeterminate order.
-// E.g. covert map[string]int{"a":1,"b":2, "c":3} to []string{"a", "c", "b"} and []int{1, 3, 2}.
-//
+// SplitStrToSlice splits a string to a slice by the specified separator.
+func SplitStrToSlice[T any](s, sep string) []T {
+	v, _ := SplitStrToSliceE[T](s, sep)
+	return v
+}
 
-// MapKeys returns a slice of all the keys in m.
-// The keys returned are in indeterminate order.
-// As of Go 1.23, you can also use standard library https://pkg.go.dev/maps#Keys.
-func MapKeys[K comparable, V any, M ~map[K]V](m M) []K {
-	s := make([]K, 0, len(m))
-	for k := range m {
-		s = append(s, k)
+// SplitStrToSliceE splits a string to a slice by the specified separator and returns an error if occurred.
+// Note that this function is implemented through 1.18 generics, so the element type needs to
+// be specified when calling it, e.g. SplitStrToSliceE[int]("1,2,3", ",").
+func SplitStrToSliceE[T any](s, sep string) ([]T, error) {
+	ss := strings.Split(s, sep)
+	r := make([]T, len(ss))
+	for i := range ss {
+		v, err := ToAnyE[T](ss[i])
+		if err != nil {
+			return nil, err
+		}
+		r[i] = v
 	}
-	return s
-}
-
-// MapSortedKeys returns the keys from a map in ascending order.
-func MapSortedKeys[K cmp.Ordered, V any, M ~map[K]V](m M) []K {
-	ks := MapKeys(m)
-	slices.Sort(ks)
-	return ks
-}
-
-// MapVals returns a slice of all the values in m.
-// The values returned are in indeterminate order.
-// As of Go 1.23, you can also use standard library https://pkg.go.dev/maps#Values.
-func MapVals[K comparable, V any, M ~map[K]V](m M) []V {
-	vs := make([]V, 0, len(m))
-	for _, v := range m {
-		vs = append(vs, v)
-	}
-	return vs
-}
-
-// MapSortedVals returns the values from a map in ascending order.
-func MapSortedVals[K comparable, V cmp.Ordered, M ~map[K]V](m M) []V {
-	vs := MapVals(m)
-	slices.Sort(vs)
-	return vs
-}
-
-// MapKeyVals returns two slice of all the keys and values in m.
-// The keys and values are returned in an indeterminate order.
-func MapKeyVals[K comparable, V any, M ~map[K]V](m M) ([]K, []V) {
-	ks, vs := make([]K, 0, len(m)), make([]V, 0, len(m))
-	for k, v := range m {
-		ks = append(ks, k)
-		vs = append(vs, v)
-	}
-	return ks, vs
+	return r, nil
 }
 
 // MapToSlice converts map keys and values to slice in indeterminate order.
@@ -147,26 +115,4 @@ func MapToSliceE(a any) (ks, vs any, err error) {
 		vsV = reflect.Append(vsV, m.MapIndex(k))
 	}
 	return ksV.Interface(), vsV.Interface(), nil
-}
-
-// SplitStrToSlice splits a string to a slice by the specified separator.
-func SplitStrToSlice[T any](s, sep string) []T {
-	v, _ := SplitStrToSliceE[T](s, sep)
-	return v
-}
-
-// SplitStrToSliceE splits a string to a slice by the specified separator and returns an error if occurred.
-// Note that this function is implemented through 1.18 generics, so the element type needs to
-// be specified when calling it, e.g. SplitStrToSliceE[int]("1,2,3", ",").
-func SplitStrToSliceE[T any](s, sep string) ([]T, error) {
-	ss := strings.Split(s, sep)
-	r := make([]T, len(ss))
-	for i := range ss {
-		v, err := ToAnyE[T](ss[i])
-		if err != nil {
-			return nil, err
-		}
-		r[i] = v
-	}
-	return r, nil
 }

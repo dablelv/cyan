@@ -21,7 +21,7 @@ func Make[E any](e E, size ...int) []E {
 	return slice
 }
 
-// Chunk divide the slice into chunks.
+// Chunk divides the slice into chunks.
 func Chunk[T any](slice []T, chunkSize int) [][]T {
 	var chunks [][]T
 	for i := 0; i < len(slice); i += chunkSize {

@@ -124,6 +124,24 @@ func Unique[E comparable, S ~[]E](s S) S {
 	return r
 }
 
+// UniqueBy replaces repeated elements with a single copy and returns a new slice.
+// Is same element determined by the getKey function.
+func UniqueBy[E any, K comparable, S ~[]E](s S, getKey func(item E) K) S {
+	if s == nil {
+		return s
+	}
+	r := make(S, 0, len(s))
+	m := make(map[K]struct{})
+	for _, v := range s {
+		key := getKey(v)
+		if _, ok := m[key]; !ok {
+			m[key] = struct{}{}
+			r = append(r, v)
+		}
+	}
+	return r
+}
+
 // UniqueRef replaces repeated elements with a single copy and returns a new slice.
 // The original slice will not be modified.
 func UniqueRef(a any) any {
