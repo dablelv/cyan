@@ -46,41 +46,21 @@ func Filter[T any](data []T, retain func(T) bool) []T {
 	return res
 }
 
-// Map applies a transformation function to each element of the input slice
-// and returns a new slice containing the results.
-// T is the type of the input slice elements, and U is the type of the output slice elements.
-func Map[T, U any](data []T, f func(T) U) []U {
-	res := make([]U, 0, len(data))
-
-	for _, e := range data {
-		res = append(res, f(e))
-	}
-	return res
-}
-
-// GroupFunc groups elements of the input slice based on a key extraction function.
-// T is the type of the input slice elements, and U is the type of the keys.
-// The keys must be comparable, meaning they can be used as map keys.
-func GroupFunc[T, U comparable](data []T, key func(T) U) map[U][]T {
-	res := make(map[U][]T, len(data))
-
-	for _, e := range data {
-		res[key(e)] = append(res[key(e)], e)
-	}
-	return res
-}
-
 // Distinct returns a new slice containing only the unique elements from the input slice.
 // T is the type of the input slice elements, and it must be comparable.
-func Distinct[T comparable](data []T) []T {
-	r := make([]T, 0, len(data))
-	m := make(map[T]struct{}, len(data))
+func Distinct[E comparable, S ~[]E](s S) S {
+	if s == nil {
+		return s
+	}
 
-	for _, n := range data {
-		if _, ok := m[n]; !ok {
-			r = append(r, n)
+	r := make(S, 0, len(s))
+	m := make(map[E]struct{}, len(s))
+
+	for _, v := range s {
+		if _, ok := m[v]; !ok {
+			r = append(r, v)
+			m[v] = struct{}{}
 		}
-		m[n] = struct{}{}
 	}
 	return r
 }
@@ -89,15 +69,20 @@ func Distinct[T comparable](data []T) []T {
 // based on a key extraction function that determines the uniqueness of each element.
 // T is the type of the input slice elements, and TK is the type of the keys used for comparison.
 // TK must be comparable, meaning it can be used as a key in a map.
-func DistinctFunc[T any, K comparable](data []T, key func(item T) K) []T {
-	r := make([]T, 0, len(data))
-	m := make(map[K]struct{}, len(data))
-	for _, v := range data {
-		k := key(v)
-		if _, ok := m[k]; !ok {
+func DistinctFunc[E any, K comparable, S ~[]E](s S, getKey func(item E) K) S {
+	if s == nil {
+		return s
+	}
+
+	r := make(S, 0, len(s))
+	m := make(map[K]struct{}, len(s))
+
+	for _, v := range s {
+		key := getKey(v)
+		if _, ok := m[key]; !ok {
 			r = append(r, v)
+			m[key] = struct{}{}
 		}
-		m[k] = struct{}{}
 	}
 	return r
 }

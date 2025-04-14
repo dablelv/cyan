@@ -100,32 +100,3 @@ func TestUniqueRef(t *testing.T) {
 	assert.Equal([]string{"foo", "bar", "baz"}, UniqueRef([]string{"foo", "bar", "bar", "baz"}))
 	assert.Equal([]string{}, UniqueRef([]string{}))
 }
-
-func TestUniqueBy(t *testing.T) {
-	type User struct {
-		Name  string
-		Class int
-	}
-
-	// no repeated elements.
-	{
-		assert := utest.NewAssert(t, "TestUniqueBy_no_repeated_element")
-		users := []User{{"alice", 1}, {"bob", 2}, {"carl", 3}}
-		getKey := func(user User) int {
-			return user.Class
-		}
-		r := UniqueBy(users, getKey)
-		assert.Equal(r, users)
-	}
-
-	// has repeated elements.
-	{
-		assert := utest.NewAssert(t, "TestUniqueBy_no_repeated_element")
-		users := []User{{"alice", 1}, {"bob", 2}, {"bob", 2}}
-		getKey := func(user User) int {
-			return user.Class
-		}
-		r := UniqueBy(users, getKey)
-		assert.Equal(r, []User{{"alice", 1}, {"bob", 2}})
-	}
-}

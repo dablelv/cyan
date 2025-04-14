@@ -6,7 +6,7 @@ import (
 	"github.com/dablelv/cyan/internal/utest"
 )
 
-func TestGroupBy(t *testing.T) {
+func TestGroupFunc(t *testing.T) {
 	type User struct {
 		Name  string
 		Class int
@@ -30,13 +30,13 @@ func TestGroupBy(t *testing.T) {
 				{Name: "foo", Class: 3},
 			},
 		}
-		m := GroupBy(users, getKey)
+		m := GroupFunc(users, getKey)
 		assert.Equal(m, want)
 	}
 
 	// has same class.
 	{
-		assert := utest.NewAssert(t, "TestGroupBy_HasSameClass")
+		assert := utest.NewAssert(t, "TestGroupFunc_HasSameClass")
 		users := []User{{"alice", 1}, {"bob", 1}, {"foo", 3}}
 		getKey := func(user User) int {
 			return user.Class
@@ -50,19 +50,19 @@ func TestGroupBy(t *testing.T) {
 				{Name: "foo", Class: 3},
 			},
 		}
-		m := GroupBy(users, getKey)
+		m := GroupFunc(users, getKey)
 		assert.Equal(m, want)
 	}
 
 	// no item.
 	{
-		assert := utest.NewAssert(t, "TestGroupBy_NoItem")
+		assert := utest.NewAssert(t, "TestGroupFunc_NoItem")
 		users := []User{}
 		getKey := func(user User) int {
 			return user.Class
 		}
 		want := map[int][]User{}
-		m := GroupBy(users, getKey)
+		m := GroupFunc(users, getKey)
 		assert.Equal(m, want)
 	}
 }
