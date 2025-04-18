@@ -45,3 +45,29 @@ func TestMapKeyVals(t *testing.T) {
 	assert.Equal(3, len(ks))
 	assert.Equal(3, len(vs))
 }
+
+func TestMerge(t *testing.T) {
+	{
+		assert := utest.NewAssert(t, "TestMerge_one_map")
+		m := map[string]int{"foo": 1, "bar": 2, "baz": 3}
+		r := Merge(m)
+		assert.Equal(r, m)
+	}
+
+	{
+		assert := utest.NewAssert(t, "TestMerge_two_map")
+		m1 := map[string]int{"foo": 1, "bar": 2, "baz": 3}
+		m2 := map[string]int{"qux": 4}
+		r := Merge(m1, m2)
+		assert.Equal(r, map[string]int{"foo": 1, "bar": 2, "baz": 3, "qux": 4})
+	}
+
+	{
+		assert := utest.NewAssert(t, "TestMerge_three_map")
+		m1 := map[string]int{"foo": 1, "bar": 2, "baz": 3}
+		m2 := map[string]int{"qux": 4}
+		m3 := map[string]int{"foo": 0}
+		r := Merge(m1, m2, m3)
+		assert.Equal(r, map[string]int{"foo": 0, "bar": 2, "baz": 3, "qux": 4})
+	}
+}

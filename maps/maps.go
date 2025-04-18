@@ -2,10 +2,11 @@ package maps
 
 import (
 	"cmp"
+	stdmaps "maps"
 	"slices"
 )
 
-// Keys returns a slice of all the keys in m.
+// Keys returns the all keys of a map.
 // The keys returned are in indeterminate order.
 // As of Go 1.23, you can also use standard library https://pkg.go.dev/maps#Keys.
 func Keys[K comparable, V any, M ~map[K]V](m M) []K {
@@ -49,4 +50,17 @@ func KeyVals[K comparable, V any, M ~map[K]V](m M) ([]K, []V) {
 		vs = append(vs, v)
 	}
 	return ks, vs
+}
+
+// Merge merges multiple maps into a new map.
+func Merge[K comparable, V any](ms ...map[K]V) map[K]V {
+	if len(ms) == 0 {
+		return nil
+	}
+
+	m := make(map[K]V)
+	for _, v := range ms {
+		stdmaps.Copy(m, v)
+	}
+	return m
 }
