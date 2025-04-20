@@ -5,8 +5,6 @@ package cmp
 import (
 	"cmp"
 	"reflect"
-
-	"golang.org/x/exp/constraints"
 )
 
 type CMPRSLT int8
@@ -19,11 +17,12 @@ const (
 )
 
 // Cmp compares two numeric values or strings size.
-func Cmp[T constraints.Ordered](lhs, rhs T) CMPRSLT {
+// Deprecated: as of Go 1.21, plz use standard lib func cmp.Compare.
+func Cmp[T cmp.Ordered](l, r T) CMPRSLT {
 	switch {
-	case lhs < rhs:
+	case l < r:
 		return LT
-	case lhs == rhs:
+	case l == r:
 		return EQ
 	default:
 		return GT
@@ -32,7 +31,7 @@ func Cmp[T constraints.Ordered](lhs, rhs T) CMPRSLT {
 
 // Compare compares two numeric values or strings size.
 // The result is INCMP(incomparable), LT(less than), EQ(equal) or GT(greater than).
-// Note that after Go 1.18, this function is deprecated, please use the function Cmp implemented by generics.
+// Deprecated: as of Go 1.18, plz use the generic func Cmp.
 func Compare(lhs, rhs any) CMPRSLT {
 	if !isComparable(lhs, rhs) {
 		return INCMP

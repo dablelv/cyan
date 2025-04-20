@@ -29,12 +29,12 @@ func IntersectionFunc[T any, K comparable](s1, s2 []T, getKey func(e T) K) []T {
 }
 
 // Diff computes the difference of set1 relative to set2.
-func Diff[T comparable](set1 []T, set2 []T) []T {
-	m := conv.SliceToSet(set2)
-	r := make([]T, 0, len(set1))
-	for _, item := range set1 {
-		if _, ok := m[item]; !ok {
-			r = append(r, item)
+func Diff[T comparable](s1 []T, s2 []T) []T {
+	m := conv.SliceToSet(s2)
+	r := make([]T, 0, len(s1))
+	for _, v := range s1 {
+		if _, ok := m[v]; !ok {
+			r = append(r, v)
 		}
 	}
 	return r

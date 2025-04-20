@@ -6,63 +6,19 @@ import (
 	"github.com/dablelv/cyan/internal/utest"
 )
 
-func TestGroupFunc(t *testing.T) {
-	type User struct {
-		Name  string
-		Class int
+func TestToMap(t *testing.T) {
+
+	getKey := func(v string) string {
+		return "prefix_" + v
 	}
 
-	// no same class.
-	{
-		assert := utest.NewAssert(t, "TestGroupBy_NoSameClass")
-		users := []User{{"alice", 1}, {"bob", 2}, {"foo", 3}}
-		getKey := func(user User) int {
-			return user.Class
-		}
-		want := map[int][]User{
-			1: {
-				{Name: "alice", Class: 1},
-			},
-			2: {
-				{Name: "bob", Class: 2},
-			},
-			3: {
-				{Name: "foo", Class: 3},
-			},
-		}
-		m := GroupFunc(users, getKey)
-		assert.Equal(m, want)
-	}
+	s := []string{"foo", "bar", "baz"}
 
-	// has same class.
-	{
-		assert := utest.NewAssert(t, "TestGroupFunc_HasSameClass")
-		users := []User{{"alice", 1}, {"bob", 1}, {"foo", 3}}
-		getKey := func(user User) int {
-			return user.Class
-		}
-		want := map[int][]User{
-			1: {
-				{Name: "alice", Class: 1},
-				{Name: "bob", Class: 1},
-			},
-			3: {
-				{Name: "foo", Class: 3},
-			},
-		}
-		m := GroupFunc(users, getKey)
-		assert.Equal(m, want)
-	}
-
-	// no item.
-	{
-		assert := utest.NewAssert(t, "TestGroupFunc_NoItem")
-		users := []User{}
-		getKey := func(user User) int {
-			return user.Class
-		}
-		want := map[int][]User{}
-		m := GroupFunc(users, getKey)
-		assert.Equal(m, want)
-	}
+	assert := utest.NewAssert(t, "Succ")
+	m := ToMap(s, getKey)
+	assert.Equal(m, map[string]string{
+		"prefix_foo": "foo",
+		"prefix_bar": "bar",
+		"prefix_baz": "baz",
+	})
 }

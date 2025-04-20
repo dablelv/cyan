@@ -1,6 +1,8 @@
 package slice
 
 import (
+	"errors"
+	"fmt"
 	"reflect"
 
 	"github.com/dablelv/cyan/cond"
@@ -104,29 +106,53 @@ func ReverseRef(a any) any {
 	return r.Interface()
 }
 
-// Unique replaces repeated elements with a single copy and returns a new slice.
-// Unique is like the experimental lib function https://pkg.go.dev/golang.org/x/exp/slices#Compact,
-// but Unique do not modify the original slice and the original slice also doesn't need to be sorted.
-// Unique implemented by generics is recommended to be used.
-// E.g. input []int{1, 2, 3, 2} and output is []int{1, 2, 3}.
-func Unique[E comparable, S ~[]E](s S) S {
-	if s == nil {
-		return s
+// Chunk divides the slice into chunks.
+func Chunk[T any](slice []T, chunkSize int) [][]T {
+	var chunks [][]T
+	for i := 0; i < len(slice); i += chunkSize {
+		end := i + chunkSize
+		if end > len(slice) {
+			end = len(slice)
+		}
+		chunks = append(chunks, slice[i:end])
 	}
-	r := make(S, 0, len(s))
-	m := make(map[E]struct{})
-	for i := range s {
-		if _, ok := m[s[i]]; !ok {
-			r = append(r, s[i])
-			m[s[i]] = struct{}{}
+	return chunks
+}
+
+// FilterFunc filters out elements that do not meet the conditions.
+func FilterFunc[T any](data []T, retain func(T) bool) []T {
+	r := make([]T, 0, len(data))
+	for _, e := range data {
+		if retain(e) {
+			r = append(r, e)
 		}
 	}
 	return r
 }
 
-// UniqueRef replaces repeated elements with a single copy and returns a new slice.
-// The original slice will not be modified.
-func UniqueRef(a any) any {
+// Distinct returns a new slice containing only the unique elements from the input slice.
+// T is the type of the input slice elements, and it must be comparable.
+func Distinct[E comparable, S ~[]E](s S) S {
+	if s == nil {
+		return s
+	}
+
+	r := make(S, 0, len(s))
+	m := make(map[E]struct{}, len(s))
+
+	for _, v := range s {
+		if _, ok := m[v]; !ok {
+			r = append(r, v)
+			m[v] = struct{}{}
+		}
+	}
+	return r
+}
+
+// DistinctRef returns a new slice containing only the unique elements from the input slice.
+// T is the type of the input slice elements, and it must be comparable.
+// Deprecated: plz use generic func Distinct first.
+func DistinctRef(a any) any {
 	v := reflect.ValueOf(a)
 	r := reflect.MakeSlice(reflect.TypeOf(a), 0, v.Len())
 	m := make(map[any]struct{})
@@ -137,4 +163,69 @@ func UniqueRef(a any) any {
 		}
 	}
 	return r.Interface()
+}
+
+// DistinctFunc returns a new slice containing only the unique elements from the input slice,
+// based on a key extraction function that determines the uniqueness of each element.
+func DistinctFunc[E any, K comparable, S ~[]E](s S, getKey func(item E) K) S {
+	if s == nil {
+		return s
+	}
+
+	r := make(S, 0, len(s))
+	m := make(map[K]struct{}, len(s))
+
+	for _, v := range s {
+		key := getKey(v)
+		if _, ok := m[key]; !ok {
+			r = append(r, v)
+			m[key] = struct{}{}
+		}
+	}
+	return r
+}
+
+// Merge takes multiple slices of type T and combines them into a single slice.
+// T can be any type, allowing this function to work with slices of different data types.
+func Merge[T any](ss ...[]T) []T {
+	var r []T
+	for _, s := range ss {
+		r = append(r, s...)
+	}
+	return r
+}
+
+// GroupFunc groups elements of the slice based on a key extraction function.
+// T is the type of the input slice elements, and U is the type of the keys.
+// The keys must be comparable, meaning they can be used as map keys.
+func GroupFunc[E any, K comparable, S ~[]E](s S, getKey func(E) K) map[K]S {
+	m := make(map[K]S, len(s))
+
+	for _, item := range s {
+		k := getKey(item)
+		m[k] = append(m[k], item)
+	}
+	return m
+}
+
+// ExtractField takes a slice of structs and a field name, and returns a slice of values for that field.
+func ExtractField[S, E any](s []S, fieldName string) ([]E, error) {
+	if len(s) == 0 {
+		return nil, nil
+	}
+
+	rv := reflect.Indirect(reflect.ValueOf(s))
+	if reflect.Indirect(rv.Index(0)).Kind() != reflect.Struct {
+		return nil, errors.New("the type of slices element is not struct")
+	}
+
+	vals := make([]E, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		field := reflect.Indirect(rv.Index(i)).FieldByName(fieldName)
+		if !field.IsValid() {
+			return nil, fmt.Errorf("no such field: %s in item %#v", fieldName, rv.Index(i))
+		}
+		vals[i] = field.Interface().(E)
+	}
+	return vals, nil
 }

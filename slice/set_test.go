@@ -77,6 +77,21 @@ func TestIntersectionFunc(t *testing.T) {
 	}
 }
 
+func TestDiff(t *testing.T) {
+	{
+		assert := utest.NewAssert(t, "set2_is_nil")
+		s1 := []string{"foo", "bar", "baz"}
+		r := Diff(s1, nil)
+		assert.Equal(r, s1)
+	}
+	{
+		assert := utest.NewAssert(t, "set2_is_not_nil")
+		s1 := []string{"foo", "bar", "baz"}
+		r := Diff(s1, []string{"bar", "baz"})
+		assert.Equal(r, []string{"foo"})
+	}
+}
+
 func TestDiffFunc(t *testing.T) {
 	type User struct {
 		Name string

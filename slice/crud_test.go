@@ -1,6 +1,7 @@
 package slice
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/dablelv/cyan/internal/utest"
@@ -75,6 +76,30 @@ func TestDeleteElems(t *testing.T) {
 
 	r := DeleteElems([]int{1, 2, 2, 3}, 2)
 	assert.Equal([]int{1, 3}, r)
+}
+
+func TestDeleteFunc(t *testing.T) {
+	{
+		// delete the sepecified prefix strings.
+		assert := utest.NewAssert(t, "DeleteString")
+		s := []string{"foo", "bar", "baz", "qux"}
+		r := DeleteFunc(s, func(s string) bool {
+			return strings.HasPrefix(s, "b")
+		})
+		assert.Equal(r, []string{"foo", "qux"})
+		assert.Equal(s, []string{"foo", "bar", "baz", "qux"})
+	}
+
+	{
+		// delete the odd numbers.
+		assert := utest.NewAssert(t, "DeleteOdd")
+		s := []int{0, 1, 1, 2, 3, 5, 8}
+		r := DeleteFunc(s, func(n int) bool {
+			return n%2 != 0
+		})
+		assert.Equal(r, []int{0, 2, 8})
+		assert.Equal(s, []int{0, 1, 1, 2, 3, 5, 8})
+	}
 }
 
 func TestDeleteElemsRef(t *testing.T) {

@@ -37,7 +37,7 @@ func InsertRef(a any, i int, v ...any) any {
 }
 
 // Delete removes the specified indexes elements from the slice.
-// Unlike the standard library function Delete, Delete won't modify the original slice.
+// Note that the original slice will not be modified.
 func Delete[S ~[]E, E any](s S, indexes ...int) S {
 	// Convert the indexes to map set.
 	m := make(map[int]struct{})
@@ -88,6 +88,18 @@ func DeleteElems[S ~[]E, E comparable](s S, elms ...E) S {
 	r := make(S, 0, len(s))
 	for i := range s {
 		if _, ok := m[s[i]]; !ok {
+			r = append(r, s[i])
+		}
+	}
+	return r
+}
+
+// DeleteFunc removes any elements from s for which del returns true, returning the new slice.
+// Unlike the standard lib func DeleteFunc, this func won't modify the original slice.
+func DeleteFunc[S ~[]E, E any](s S, del func(E) bool) S {
+	r := make(S, 0, len(s))
+	for i := range s {
+		if !del(s[i]) {
 			r = append(r, s[i])
 		}
 	}
