@@ -71,3 +71,35 @@ func TestMerge(t *testing.T) {
 		assert.Equal(r, map[string]int{"foo": 0, "bar": 2, "baz": 3, "qux": 4})
 	}
 }
+
+func TestContainsAllKeys(t *testing.T) {
+	{
+		assert := utest.NewAssert(t, "exist")
+		m := map[string]int{"foo": 1, "bar": 2, "baz": 3}
+		b := ContainsAllKeys(m, []string{"foo", "bar", "baz"})
+		assert.True(b)
+	}
+
+	{
+		assert := utest.NewAssert(t, "not_exist")
+		m := map[string]int{"foo": 1, "bar": 2, "baz": 3}
+		b := ContainsAllKeys(m, []string{"foo", "bar", "baz", "qux"})
+		assert.False(b)
+	}
+}
+
+func TestContainsAnyKey(t *testing.T) {
+	{
+		assert := utest.NewAssert(t, "exist")
+		m := map[string]int{"foo": 1, "bar": 2, "baz": 3}
+		b := ContainsAnyKey(m, []string{"foo", "bar", "baz"})
+		assert.True(b)
+	}
+
+	{
+		assert := utest.NewAssert(t, "not_exist")
+		m := map[string]int{"foo": 1, "bar": 2, "baz": 3}
+		b := ContainsAnyKey(m, []string{"qux"})
+		assert.False(b)
+	}
+}

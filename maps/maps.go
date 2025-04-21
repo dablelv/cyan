@@ -53,7 +53,7 @@ func KeyVals[K comparable, V any, M ~map[K]V](m M) ([]K, []V) {
 }
 
 // Merge merges multiple maps into a new map.
-func Merge[K comparable, V any](ms ...map[K]V) map[K]V {
+func Merge[K comparable, V any, M ~map[K]V](ms ...M) map[K]V {
 	if len(ms) == 0 {
 		return nil
 	}
@@ -63,4 +63,24 @@ func Merge[K comparable, V any](ms ...map[K]V) map[K]V {
 		stdmaps.Copy(m, v)
 	}
 	return m
+}
+
+// ContainsAllKeys checks whether all given keys exist in the target map.
+func ContainsAllKeys[K comparable, V any, M ~map[K]V](m M, keys []K) bool {
+	for _, key := range keys {
+		if _, exists := m[key]; !exists {
+			return false
+		}
+	}
+	return true
+}
+
+// ContainsAnyKey checks whether at least one of the given keys exists in the target map.
+func ContainsAnyKey[K comparable, V any, M ~map[K]V](m M, keys []K) bool {
+	for _, key := range keys {
+		if _, exists := m[key]; exists {
+			return true
+		}
+	}
+	return false
 }
