@@ -1,4 +1,4 @@
-package str
+package strings
 
 import (
 	"reflect"
@@ -10,29 +10,94 @@ import (
 func TestHead(t *testing.T) {
 	s := "123456"
 	{
-		assert := utest.NewAssert(t, "TestHead")
+		assert := utest.NewAssert(t, "Haead-1")
+		r := Head(s, -1)
+		assert.Equal(r, "")
+	}
+	{
+		assert := utest.NewAssert(t, "Haead0")
+		r := Head(s, -1)
+		assert.Equal(r, "")
+	}
+	{
+		assert := utest.NewAssert(t, "TestHeadNormal")
 		r := Head(s, len(s)-1)
 		assert.Equal(r, "12345")
 	}
 	{
-		assert := utest.NewAssert(t, "TestHeadMore")
+		assert := utest.NewAssert(t, "TestHeadOverflow")
 		r := Head(s, len(s)+1)
 		assert.Equal(r, s)
 	}
 }
 
-func TestTail(t *testing.T) {
-	s := "123456"
-
+func TestHeadRunes(t *testing.T) {
 	{
-		assert := utest.NewAssert(t, "TestTail")
-		r := Tail(s, len(s)-1)
-		assert.Equal(r, "23456")
+		assert := utest.NewAssert(t, "empty string")
+		r := HeadRunes("", 1)
+		assert.Equal(r, "")
 	}
 	{
-		assert := utest.NewAssert(t, "TestTailMore")
+		assert := utest.NewAssert(t, "head english string")
+		r := HeadRunes("english", 1)
+		assert.Equal(r, "e")
+	}
+	{
+		assert := utest.NewAssert(t, "head chinese string")
+		r := HeadRunes("中文", 1)
+		assert.Equal(r, "中")
+	}
+	{
+		assert := utest.NewAssert(t, "head chinese string overflow")
+		r := HeadRunes("中文", 3)
+		assert.Equal(r, "中文")
+	}
+}
+
+func TestTail(t *testing.T) {
+	s := "123456"
+	{
+		assert := utest.NewAssert(t, "Tail-1")
+		r := Tail(s, -1)
+		assert.Equal(r, "")
+	}
+	{
+		assert := utest.NewAssert(t, "Tail0")
+		r := Tail(s, 0)
+		assert.Equal(r, "")
+	}
+	{
+		assert := utest.NewAssert(t, "TailNormal")
+		r := Tail(s, 3)
+		assert.Equal(r, "456")
+	}
+	{
+		assert := utest.NewAssert(t, "TailOverflow")
 		r := Tail(s, len(s)+1)
 		assert.Equal(r, s)
+	}
+}
+
+func TestTailRunes(t *testing.T) {
+	{
+		assert := utest.NewAssert(t, "empty string")
+		r := TailRunes("", 1)
+		assert.Equal(r, "")
+	}
+	{
+		assert := utest.NewAssert(t, "tail english string")
+		r := TailRunes("english", 1)
+		assert.Equal(r, "h")
+	}
+	{
+		assert := utest.NewAssert(t, "tail chinese string")
+		r := TailRunes("中文", 1)
+		assert.Equal(r, "文")
+	}
+	{
+		assert := utest.NewAssert(t, "tail chinese string overflow")
+		r := TailRunes("中文", 3)
+		assert.Equal(r, "中文")
 	}
 }
 
@@ -217,4 +282,133 @@ func TestStringToConstBytes(t *testing.T) {
 
 	assert := utest.NewAssert(t, "TestStringToConstBytes")
 	assert.Equal(StringToConstBytes(string(bytes)), bytes)
+}
+
+func TestSplitChunk(t *testing.T) {
+	type args struct {
+		input string
+		sep   string
+		size  int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "empty string",
+			args: args{
+				input: "",
+				sep:   "",
+				size:  0,
+			},
+			want: "",
+		},
+		{
+			name: "separator string is empty",
+			args: args{
+				input: "123456",
+				sep:   "",
+				size:  2,
+			},
+			want: "123456",
+		},
+		{
+			name: "size is 0",
+			args: args{
+				input: "123456",
+				sep:   ",",
+				size:  0,
+			},
+			want: "123456",
+		},
+		{
+			name: "size is greater than string length",
+			args: args{
+				input: "123456",
+				sep:   ",",
+				size:  10,
+			},
+			want: "123456",
+		},
+		{
+			name: "size is equal to string length",
+			args: args{
+				input: "123456",
+				sep:   ",",
+				size:  6,
+			},
+			want: "123456",
+		},
+		{
+			name: "size is less than string length",
+			args: args{
+				input: "1234567",
+				sep:   ",",
+				size:  2,
+			},
+			want: "12,34,56,7",
+		},
+		{
+			name: "just split",
+			args: args{
+				input: "12345678",
+				sep:   ",",
+				size:  2,
+			},
+			want: "12,34,56,78",
+		},
+		{
+			name: "split chinese string",
+			args: args{
+				input: "你的名字",
+				sep:   ",",
+				size:  2,
+			},
+			want: "你的,名字",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := SplitChunk(tt.args.input, tt.args.sep, tt.args.size); got != tt.want {
+				t.Errorf("SplitChunk() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestSplitChunkWithSpace(t *testing.T) {
+	type args struct {
+		input string
+		size  int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "just split",
+			args: args{
+				input: "12345678",
+				size:  2,
+			},
+			want: "12 34 56 78",
+		},
+		{
+			name: "split chinese string",
+			args: args{
+				input: "你的名字",
+				size:  2,
+			},
+			want: "你的 名字",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := SplitChunkWithSpace(tt.args.input, tt.args.size); got != tt.want {
+				t.Errorf("SplitChunkWithSpace() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 }

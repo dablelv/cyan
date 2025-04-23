@@ -6,23 +6,6 @@ import (
 	"github.com/dablelv/cyan/internal/utest"
 )
 
-func TestContains(t *testing.T) {
-	assert := utest.NewAssert(t, "TestContains")
-
-	assert.Equal(true, Contains([]string{"foo", "bar", "baz"}, "bar"))
-	assert.Equal(false, Contains([]string{"foo", "bar", "baz"}, "qux"))
-	assert.Equal(true, Contains([]int{1, 2, 3}, 1))
-}
-
-func TestContainsRef(t *testing.T) {
-	assert := utest.NewAssert(t, "TestContainsRef")
-
-	assert.Equal(true, ContainsRef([]string{"foo", "bar", "baz"}, "bar"))
-	assert.Equal(false, ContainsRef([]string{"foo", "bar", "baz"}, "qux"))
-	assert.Equal(true, ContainsRef([]int{1, 2, 3}, 1))
-	assert.Equal(false, ContainsRef([]int32{1, 2, 3}, 1))
-}
-
 func TestClearZero(t *testing.T) {
 	assert := utest.NewAssert(t, "TestClearZero")
 

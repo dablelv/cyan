@@ -1,4 +1,4 @@
-package str
+package strings
 
 import (
 	"bytes"

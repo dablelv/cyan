@@ -6,13 +6,37 @@ import (
 	"github.com/dablelv/cyan/internal/utest"
 )
 
+func TestIntersection(t *testing.T) {
+	{
+		assert := utest.NewAssert(t, "left slice is nil")
+		r := Intersection(nil, []string{"foo", "bar", "baz"})
+		assert.IsNil(r)
+	}
+	{
+		assert := utest.NewAssert(t, "right slice is nil")
+		r := Intersection([]string{"foo", "bar", "baz"}, nil)
+		assert.IsNil(r)
+	}
+	{
+		assert := utest.NewAssert(t, "has intersection")
+		s1 := []string{"foo", "bar", "baz"}
+		r := Intersection(s1, []string{"bar", "baz", "qux"})
+		assert.Equal(r, []string{"bar", "baz"})
+	}
+	{
+		assert := utest.NewAssert(t, "no intersection")
+		r := Intersection([]string{"foo", "bar", "baz"}, []string{"qux", "quux"})
+		assert.Equal(r, []string{})
+	}
+}
+
 func TestIntersectionFunc(t *testing.T) {
 	type User struct {
 		Name string
 	}
 
 	{
-		assert := utest.NewAssert(t, "TestIntersectionFunc_set1_is_nil")
+		assert := utest.NewAssert(t, "set1_is_nil")
 		set1 := []User{}
 		set2 := []User{
 			{
@@ -27,7 +51,7 @@ func TestIntersectionFunc(t *testing.T) {
 	}
 
 	{
-		assert := utest.NewAssert(t, "TestIntersectionFunc_no_intersection")
+		assert := utest.NewAssert(t, "no_intersection")
 		set1 := []User{
 			{
 				Name: "a",
@@ -46,7 +70,7 @@ func TestIntersectionFunc(t *testing.T) {
 	}
 
 	{
-		assert := utest.NewAssert(t, "TestIntersectionFunc_has_intersection")
+		assert := utest.NewAssert(t, "has_intersection")
 		set1 := []User{
 			{
 				Name: "a",
@@ -79,13 +103,18 @@ func TestIntersectionFunc(t *testing.T) {
 
 func TestDiff(t *testing.T) {
 	{
-		assert := utest.NewAssert(t, "set2_is_nil")
+		assert := utest.NewAssert(t, "left slice is nil")
+		r := Diff(nil, []string{"foo", "bar", "baz"})
+		assert.IsNil(r)
+	}
+	{
+		assert := utest.NewAssert(t, "right slice is nil")
 		s1 := []string{"foo", "bar", "baz"}
 		r := Diff(s1, nil)
 		assert.Equal(r, s1)
 	}
 	{
-		assert := utest.NewAssert(t, "set2_is_not_nil")
+		assert := utest.NewAssert(t, "right slice is not nil")
 		s1 := []string{"foo", "bar", "baz"}
 		r := Diff(s1, []string{"bar", "baz"})
 		assert.Equal(r, []string{"foo"})
@@ -99,7 +128,7 @@ func TestDiffFunc(t *testing.T) {
 
 	{
 		assert := utest.NewAssert(t, "TestDiffFunc_set1_is_nil")
-		set1 := []User{}
+		set1 := []User(nil)
 		set2 := []User{
 			{
 				Name: "a",
@@ -109,7 +138,7 @@ func TestDiffFunc(t *testing.T) {
 			return s.Name
 		}
 		r := DiffFunc(set1, set2, getKey)
-		assert.Equal(r, []User{})
+		assert.IsNil(r)
 	}
 
 	{

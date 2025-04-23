@@ -79,7 +79,7 @@ func TestBatchConcurrent(t *testing.T) {
 		concurrency := 4
 		fn := func(ctx context.Context, i int) (int, error) {
 			if i == 4 {
-				panic("a panic")
+				panic(errors.New("a panic"))
 			}
 			return i * 2, nil
 		}

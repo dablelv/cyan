@@ -1,4 +1,4 @@
-package str
+package strings
 
 import (
 	"bytes"
@@ -14,25 +14,63 @@ import (
 
 const INDEX_NOT_FOUND = -1
 
-// Head return the first n length of substring if len(str) greater than n,
-// or else return the raw s.
+// Head returns the first n bytes of the string s if len(s) greater than n,
+// or else returns the raw s.
 func Head(s string, n int) string {
-	if 0 <= n && n < len(s) {
+	switch {
+	case n < 0:
+		return ""
+	case n < len(s):
 		return s[:n]
+	default:
+		return s
 	}
-	return s
 }
 
-// Tail return the last n length of substring if len(str) greater than n,
+// HeadRunes returns the first n runes of the string s.
+// HeadRunes properly handles string containing multibyte characters by converting
+// the string to a slice of runes, ensuring accurate indexing by character rather than by byte.
+func HeadRunes(s string, n int) string {
+	runes := []rune(s)
+	switch {
+	case n < 0:
+		return ""
+	case n < len(runes):
+		return string(runes[:n])
+	default:
+		return s
+	}
+}
+
+// Tail return the last n length of substring if len(s) greater than n,
 // or else return th raw s.
 func Tail(s string, n int) string {
-	if 0 <= n && n < len(s) {
+	switch {
+	case n < 0:
+		return ""
+	case n < len(s):
 		return s[len(s)-n:]
+	default:
+		return s
 	}
-	return s
 }
 
-// Split replaces std lib strings.Split.
+// TailRunes returns the last n runes of the string s.
+// HeadRunes properly handles string containing multibyte characters by converting
+// the string to a slice of runes, ensuring accurate indexing by character rather than by byte.
+func TailRunes(s string, n int) string {
+	runes := []rune(s)
+	switch {
+	case n < 0:
+		return ""
+	case n < len(runes):
+		return string(runes[len(runes)-n:])
+	default:
+		return s
+	}
+}
+
+// Split replaces standard lib strings.Split.
 // strings.Split has a giant pit because strings.Split ("", ",") will return a slice with an empty string.
 func Split(s, sep string) []string {
 	if s == "" {
@@ -58,6 +96,34 @@ func SplitSeps(s string, seps ...string) []string {
 		result = temp
 	}
 	return result
+}
+
+// SplitChunk splits the string according to the specified number and separator string into a new string.
+func SplitChunk(input, sep string, size int) string {
+	if size <= 0 {
+		return input
+	}
+
+	result := ""
+	// Convert the string to a rune slice to support multi-byte characters.
+	runeStr := []rune(input)
+	for i := 0; i < len(runeStr); i += size {
+		end := i + size
+		if end > len(runeStr) {
+			end = len(runeStr)
+		}
+		if i == 0 {
+			result += string(runeStr[i:end])
+		} else {
+			result += sep + string(runeStr[i:end])
+		}
+	}
+	return result
+}
+
+// SplitChunkWithSpace splits the string according to the specified number using space character into a new string.
+func SplitChunkWithSpace(input string, size int) string {
+	return SplitChunk(input, " ", size)
 }
 
 // JoinNonEmptyStrs concatenates multiple strings to a single string with the specified separator and skips the empty
@@ -216,24 +282,6 @@ func IndexOffset(s, sub string, start int) int {
 		return INDEX_NOT_FOUND
 	}
 	return partialIndex + start
-}
-
-// IsEmpty checks if a string is empty ("").
-func IsEmpty(s string) bool {
-	return s == ""
-}
-
-// IsBlank checks if a string is whitespace or empty ("").
-func IsBlank(s string) bool {
-	if s == "" {
-		return true
-	}
-	for _, v := range s {
-		if !unicode.IsSpace(v) {
-			return false
-		}
-	}
-	return true
 }
 
 // Default returns either the passed in string, or if the string is empty, the value of default string.

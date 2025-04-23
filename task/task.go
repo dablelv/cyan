@@ -37,8 +37,8 @@ func AsyncExecute[T any](ctx context.Context, fn func(ctx context.Context) (T, e
 }
 
 // BatchConcurrent batch execute function concurrently.
-// concurrency indicates how many fn are executing at the same time.
-func BatchConcurrent[T any, R any](ctx context.Context, concurrency int, slice []T, fn func(context.Context, T) (R, error)) ([]R, error) {
+// The concurrency indicates how many fn are executing at the same time.
+func BatchConcurrent[T, R any](ctx context.Context, concurrency int, slice []T, fn func(context.Context, T) (R, error)) ([]R, error) {
 	var eg errgroup.Group
 	r := make([]R, len(slice))
 
@@ -46,14 +46,14 @@ func BatchConcurrent[T any, R any](ctx context.Context, concurrency int, slice [
 		for j := 0; j < concurrency; j++ {
 			idx := i + j
 
-			// The last batch is less than the specified quantity.
+			// The last batch less than the specified quantity.
 			if idx == len(slice) {
 				break
 			}
 			eg.Go(func() (err error) {
 				defer func() {
 					if e := recover(); e != nil {
-						err = fmt.Errorf("panic: %v", e)
+						err = fmt.Errorf("panic: %w", e.(error))
 					}
 				}()
 				r[idx], err = fn(ctx, slice[idx])

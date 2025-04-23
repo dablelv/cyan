@@ -14,47 +14,6 @@ import (
 // https://pkg.go.dev/slices package should be used first.
 //
 
-// Contains reports whether slice contains any one of target elements.
-func Contains[E comparable](s []E, targets ...E) bool {
-	// Convert the targets to map set.
-	m := make(map[E]struct{})
-	for i := range targets {
-		m[targets[i]] = struct{}{}
-	}
-
-	for i := range s {
-		if _, ok := m[s[i]]; ok {
-			return true
-		}
-	}
-	return false
-}
-
-// ContainsRef reports whether slice contains any one of target elements.
-// Note that if the target elements are a numeric literal, please specify their type explicitly,
-// otherwise type defaults to int.
-// E.g. you might call like ContainsRef([]int32{1,2,3}, int32(1)).
-// ContainsRef will panic if argument a isn't slice.
-func ContainsRef(a any, targets ...any) bool {
-	v := reflect.ValueOf(a)
-	if v.IsNil() {
-		return false
-	}
-
-	// Convert the targets to map set.
-	m := make(map[any]struct{})
-	for i := range targets {
-		m[targets[i]] = struct{}{}
-	}
-
-	for i := 0; i < v.Len(); i++ {
-		if _, ok := m[v.Index(i).Interface()]; ok {
-			return true
-		}
-	}
-	return false
-}
-
 // ClearZero creates a slice with all zero values removed.
 func ClearZero[S ~[]E, E comparable](s S) S {
 	r := make([]E, 0, len(s))

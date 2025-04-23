@@ -55,7 +55,7 @@ func (a *Assert) NotEqual(actual, expected any) {
 	}
 }
 
-// Greater check if expected is greate than actual
+// Greater check if actual is greate than  expected.
 func (a *Assert) Greater(actual, expected any) {
 	if compare(actual, expected) != compareGreater {
 		expectedInfo := fmt.Sprintf("> %v", expected)
