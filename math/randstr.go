@@ -3,10 +3,10 @@ package math
 import "strings"
 
 const (
-	alphabetic           = "abcdefghijklmnopqrstuvwxyz"
-	alphabeticLen        = len(alphabetic)
-	alphabeticMix        = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	alphabeticMixLen     = len(alphabeticMix)
+	alphabet             = "abcdefghijklmnopqrstuvwxyz"
+	alphabetLen          = len(alphabet)
+	fullAlphabet         = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	fullAlphabetLen      = len(fullAlphabet)
 	alphanumeric         = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	alphanumericLen      = len(alphanumeric)
 	lowerAlphanumeric    = "abcdefghijklmnopqrstuvwxyz0123456789"
@@ -17,7 +17,7 @@ const (
 func RandLowerStr(l uint32) string {
 	b := make([]byte, l)
 	for i := range b {
-		b[i] = alphabetic[RandIntn(alphabeticLen)]
+		b[i] = alphabet[RandIntn(alphabetLen)]
 	}
 	return string(b)
 }
@@ -32,7 +32,7 @@ func RandUpperStr(l uint32) string {
 func RandStr(l int) string {
 	s := make([]byte, l)
 	for i := range s {
-		s[i] = alphabeticMix[RandIntn(alphabeticMixLen)]
+		s[i] = fullAlphabet[RandIntn(fullAlphabetLen)]
 	}
 	return string(s)
 }
