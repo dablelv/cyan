@@ -69,27 +69,27 @@ func TestPhoneDesensitization(t *testing.T) {
 	}{
 		{
 			name: "mainland phone",
-			args: args{enum.PhoneRegionMainland, "13800138000"},
+			args: args{enum.PhoneCountryCodeMainland, "13800138000"},
 			want: "138****8000",
 		},
 		{
 			name: "hong kong phone",
-			args: args{enum.PhoneRegionHongKong, "52123456"},
+			args: args{enum.PhoneCountryCodeHongKong, "52123456"},
 			want: "52****56",
 		},
 		{
 			name: "macao phone",
-			args: args{enum.PhoneRegionMacao, "52123456"},
+			args: args{enum.PhoneCountryCodeMacao, "52123456"},
 			want: "52****56",
 		},
 		{
 			name: "taiwan phone",
-			args: args{enum.PhoneRegionTaiwan, "0912345678"},
+			args: args{enum.PhoneCountryCodeTaiwan, "0912345678"},
 			want: "09****678",
 		},
 		{
 			name: "other region phone",
-			args: args{enum.PhoneRegionJapan, "07012345678"},
+			args: args{enum.PhoneCountryCodeJapan, "07012345678"},
 			want: "07****78",
 		},
 	}

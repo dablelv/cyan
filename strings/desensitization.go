@@ -33,20 +33,20 @@ func EmailDesensitization(email string) string {
 	return string(local[0:3]) + "***@" + parts[1]
 }
 
-// PhoneDesensitization desensitizes mobile phone number.
+// PhoneDesensitization desensitizes telephone number.
 func PhoneDesensitization(region, number string) string {
 	var (
 		phoneLen      = len(number)
 		before, after int
 	)
 	switch region {
-	case enum.PhoneRegionMainland:
+	case enum.PhoneCountryCodeMainland:
 		before = 3
 		after = 4
-	case enum.PhoneRegionHongKong, enum.PhoneRegionMacao:
+	case enum.PhoneCountryCodeHongKong, enum.PhoneCountryCodeMacao:
 		before = 2
 		after = 2
-	case enum.PhoneRegionTaiwan:
+	case enum.PhoneCountryCodeTaiwan:
 		before = 2
 		after = 3
 	default:
