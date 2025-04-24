@@ -141,9 +141,37 @@ func TestIf(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := If(tt.args.condition, tt.args.trueVal, tt.args.falseVal); !reflect.DeepEqual(got, tt.want) {
+			if got := IfElse(tt.args.condition, tt.args.trueVal, tt.args.falseVal); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("If() = %v, want %v", got, tt.want)
 			}
 		})
+	}
+}
+
+func TestIfElseF(t *testing.T) {
+	type TestStruct struct {
+		ID   int
+		Name string
+	}
+
+	{
+		assert := utest.NewAssert(t, "true with string")
+		r := IfElseF(true, func() string { return "true" }, func() string { return "false" })
+		assert.Equal(r, "true")
+	}
+	{
+		assert := utest.NewAssert(t, "false with string")
+		r := IfElseF(false, func() string { return "true" }, func() string { return "false" })
+		assert.Equal(r, "false")
+	}
+	{
+		assert := utest.NewAssert(t, "true with struct")
+		r := IfElseF(true, func() TestStruct { return TestStruct{ID: 1, Name: "a"} }, func() TestStruct { return TestStruct{ID: 2, Name: "b"} })
+		assert.Equal(r, TestStruct{ID: 1, Name: "a"})
+	}
+	{
+		assert := utest.NewAssert(t, "false with struct")
+		r := IfElseF(false, func() TestStruct { return TestStruct{ID: 1, Name: "a"} }, func() TestStruct { return TestStruct{ID: 2, Name: "b"} })
+		assert.Equal(r, TestStruct{ID: 2, Name: "b"})
 	}
 }

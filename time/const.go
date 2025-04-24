@@ -3,12 +3,26 @@ package time
 import "time"
 
 const (
-	DayTime = "20060102150405"
-	DayOnly = "20060102"
+	YearOnly         = "2006"
+	YearMonth        = "200601"
+	DayOnly          = "20060102"
+	DayHour          = "2006010215"
+	DayHourMinute    = "200601021504"
+	DayHourMinuteSec = "20060102150405"
+	HourOnly         = "15"
+	HourMinute       = "1504"
+	HourMinuteSec    = "150405"
+	DateTimeMilli    = "2006-01-02 15:04:05.000"
+	DateTimeMicro    = "2006-01-02 15:04:05.000000"
+	DateTimeNano     = "2006-01-02 15:04:05.000000000"
+	DateTimeZone     = "2006-01-02 15:04:05 Z07:00"
 )
 
 const (
-	DayDuration time.Duration = time.Hour * 24
+	HoursPerDay                  = 24
+	DayDuration    time.Duration = time.Hour * HoursPerDay
+	SecondsPerHour               = int64(time.Hour / time.Second)
+	SecondsPerDay                = int64(DayDuration / time.Second)
 )
 
 // Common timezone strings defined as constants.

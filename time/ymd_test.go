@@ -7,13 +7,13 @@ import (
 	"github.com/dablelv/cyan/internal/utest"
 )
 
-func TestToYmd(t *testing.T) {
+func TestTimeToYmd(t *testing.T) {
 	assert := utest.NewAssert(t, "TestToYmd")
 
 	l, _ := time.LoadLocation(AsiaShanghai)
 	tim, _ := time.ParseInLocation(time.DateTime, "2008-08-08 20:00:00", l)
-	ymd := ToYmd(tim)
-	assert.Equal(ymd, 20080808)
+	ymd := TimeToYmd(tim)
+	assert.Equal(ymd, Ymd(20080808))
 }
 
 func TestYmd_Sub(t *testing.T) {

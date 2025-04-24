@@ -63,10 +63,18 @@ func Nand[T, U any](a T, b U) bool {
 	return !Bool(a) || !Bool(b)
 }
 
-// If simulates the conditional operator used in C, C++ and Java.
-func If[T any](b bool, trueVal, falseVal T) T {
+// IfElse simulates the conditional operator used in C, C++ and Java.
+func IfElse[T any](b bool, trueVal, falseVal T) T {
 	if b {
 		return trueVal
 	}
 	return falseVal
+}
+
+// IfElseF is similar to IfElse, but takes functions as arguments instead of values.
+func IfElseF[T any](condition bool, ifFunc, elseFunc func() T) T {
+	if condition {
+		return ifFunc()
+	}
+	return elseFunc()
 }
