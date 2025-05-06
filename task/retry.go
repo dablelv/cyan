@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// DoWithRetry executes a given function f with exponential backoff retry logic.
 func DoWithRetry(ctx context.Context, f func() error, maxAttempts int, backoff time.Duration) error {
 	var err error
 	for attempts := 0; attempts < maxAttempts; attempts++ {
